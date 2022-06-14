@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 
@@ -17,7 +18,8 @@ class HeaderTitle extends StatelessWidget {
             style: TextStyle(
               fontFamily: "Sushi",
               fontSize: 70,
-              fontWeight: FontWeight.w600,
+              fontWeight: FontWeight.bold,
+              color: Colors.black,
             ),
           ),
           Image.asset("./assets/images/toprightlogo.png", scale: 6,),
