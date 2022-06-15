@@ -1,5 +1,7 @@
 import "package:flutter/material.dart";
 import 'package:sushi_scouts/src/views/util/footer.dart';
+import 'package:sushi_scouts/src/views/util/Header/HeaderTitle.dart';
+import 'package:sushi_scouts/src/views/util/header/HeaderNav.dart';
 
 void main() => runApp(SushiScouts());
 
@@ -12,7 +14,9 @@ class SushiScouts extends StatelessWidget {
       home: Scaffold(
         body: ListView(
           children: const [
-            Footer(nextPage: true, previousPage: true, pageTitle: "AUTO",)
+            HeaderTitle(),
+            HeaderNav(currentPage: "ORDINAL"),
+            Footer(nextPage: true, previousPage: true, pageTitle: "AUTO",),
           ],
         )
       )
