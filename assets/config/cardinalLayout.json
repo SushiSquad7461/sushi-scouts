@@ -1,0 +1,73 @@
+{
+    "pregame" : [
+        {
+            "name" : "match #",
+            "dataType" : "string",
+            "inputType" : "text"
+        },
+        {
+            "name" : "station",
+            "dataType" : "string",
+            "inputType" : "dropdown",
+            "options" : ["R1", "R2", "R3", "B1", "B2", "B3"]
+        },
+        {
+            "name" : "team #",
+            "dataType" : "number",
+            "inputType" : "number"
+        },
+        {
+            "name" : "match type",
+            "dataType" : "string",
+            "inputType" : "dropdown",
+            "options" : ["Quals", "Elims", "Practice"]
+        }
+    ],
+    "auto" : [
+        {
+            "name" : "No Show",
+            "dataType" : "boolean",
+            "inputType" : "checkbox"
+        },
+        {
+            "name" : "Tarmac",
+            "dataType" : "boolean",
+            "inputType" : "checkbox"
+        },
+        {
+            "name" : "Low Hub",
+            "dataType" : "number",
+            "inputType" : "increment"
+        },
+        {
+            "name" : "High Hub",
+            "dataType" : "number",
+            "inputType" : "increment"
+        },
+        {
+            "name" : "HP",
+            "dataType" : "number",
+            "inputType" : "increment"
+        }
+    ],
+    "teleop" : [
+        {
+            "name" : "Low Hub",
+            "dataType" : "number",
+            "inputType" : "increment"
+        },
+        {
+            "name" : "High Hub",
+            "dataType" : "number",
+            "inputType" : "increment"
+        }
+    ],
+    "endgame" : [
+        {
+            "name" : "Climb Level",
+            "dataType" : "string",
+            "inputType" : "dropdown",
+            "options" : ["No Climb", "Low Climb", "Mid Climb", "High Climb", "Traversal"]
+        }
+    ]
+}
