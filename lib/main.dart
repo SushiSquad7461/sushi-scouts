@@ -1,25 +1,22 @@
 import "package:flutter/material.dart";
+import 'package:sushi_scouts/src/views/util/Header/HeaderTitle.dart';
+import 'package:sushi_scouts/src/views/util/header/HeaderNav.dart';
 
-void main() {
+void main() => runApp(SushiScouts());
 
-  runApp( MyApp() );
-}
-
-class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+class SushiScouts extends StatelessWidget {
+  const SushiScouts({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
-        appBar: AppBar(
-          backgroundColor: Colors.red,
-          title: const Text("help why flutter confusing"),
-        ),
-        body: const Center(child: Padding(
-          padding: EdgeInsets.all(8.0),
-          child: Text("Sushi Scouts"),
-        )),
+        body: ListView(
+          children: const [
+            HeaderTitle(),
+            HeaderNav(currentPage: "ORDINAL"),
+          ],
+        )
       )
     );
   }
