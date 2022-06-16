@@ -2,19 +2,18 @@ import 'package:sushi_scouts/src/logic/data/scoutingData.dart';
 
 class PitData extends ScoutingData {
   Map<String, String> _info = {};
-  Map<String, String> _subsystems = {};
-  Map<String, String> _auto = {};
+  Map<String, String> _capabilities = {};
   Map<String, String> _problems = {};
+
+  PitData(String configFilePath) { }
 
   @override
   String stringify() {
     String ret = "";
     ret += "P\nI\n${_addSection(_info, ret)}";
-    ret += "S\n${_addSection(_subsystems, ret)}";
-    ret += "A\n${_addSection(_auto, ret)}";
+    ret += "C\n${_addSection(_capabilities, ret)}";
     ret += "P\n${_addSection(_problems, ret)}";
     ret += "\n";
-
     return ret;
   }
 
@@ -23,18 +22,15 @@ class PitData extends ScoutingData {
     return string;
   }
 
-  bool updateVal(String section, String key, String val) {
+  bool updateVal(PitScouting section, String key, String val) {
     switch (section) {
-      case "I":
+      case PitScouting.info:
         _info[key] = val;
         break;
-      case "S":
-        _subsystems[key] = val;
+      case PitScouting.capabilities:
+        _capabilities[key] = val;
         break;
-      case "A":
-        _auto[key] = val;
-        break;
-      case "P":
+      case PitScouting.problems:
         _problems[key] = val;
         break;
       default:
@@ -45,13 +41,11 @@ class PitData extends ScoutingData {
 
   String? getVal(String section, String key) {
     switch (section) {
-      case "I":
+      case PitScouting.info:
         return _info[key];
-      case "S":
-        return _subsystems[key];
-      case "A":
-        return _auto[key];
-      case "P":
+      case PitScouting.capabilities:
+        return _capabilities[key];
+      case PitScouting.problems:
         return _problems[key];
     }
     return null;
