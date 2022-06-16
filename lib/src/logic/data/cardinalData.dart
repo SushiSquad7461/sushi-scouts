@@ -9,9 +9,9 @@ List teleopConfig = [];
 List endgameConfig = [];
 
 class Data {
-  String type = "";
-  String words = "";
-  double num = 0;
+  String type;
+  String words;
+  double num;
   Data(this.type, {this.words = "", this.num = 0});
   void set({double number = 0, String string = ""}) {
     if (type == "String") {
@@ -53,10 +53,10 @@ class Data {
 }
 
 class CardinalData extends ScoutingData {
-  Map _pregameData = {};
-  Map _autoData = {};
-  Map _teleopData = {};
-  Map _endgameData = {};
+  Map _pregameData;
+  Map _autoData;
+  Map _teleopData;
+  Map _endgameData;
 
   CardinalData(
       this._pregameData, this._autoData, this._teleopData, this._endgameData);
@@ -70,22 +70,27 @@ class CardinalData extends ScoutingData {
     endgameConfig = data["endgame"];
   }
 
-  static Future<CardinalData> create() async {
+  static Future<CardinalData> firstCreate() async {
+    await _getConfig();
+    return create();
+  }
+
+  static CardinalData create() {
     Map pregameData = {};
     Map autoData = {};
     Map teleopData = {};
     Map endgameData = {};
     for (dynamic item in pregameConfig) {
-      pregameData[item["name"]] = Data(item["dataType"]);
+      pregameData[item["name"]] = Data(item["type"]);
     }
     for (dynamic item in autoConfig) {
-      autoData[item["name"]] = Data(item["dataType"]);
+      autoData[item["name"]] = Data(item["type"]);
     }
     for (dynamic item in teleopConfig) {
-      teleopData[item["name"]] = Data(item["dataType"]);
+      teleopData[item["name"]] = Data(item["type"]);
     }
     for (dynamic item in endgameConfig) {
-      endgameData[item["name"]] = Data(item["dataType"]);
+      endgameData[item["name"]] = Data(item["type"]);
     }
     return CardinalData(pregameData, autoData, teleopData, endgameData);
   }
