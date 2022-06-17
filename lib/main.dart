@@ -3,7 +3,6 @@ import 'package:sushi_scouts/src/logic/data/cardinalData.dart';
 import 'package:sushi_scouts/src/views/util/footer.dart';
 import 'package:sushi_scouts/src/views/util/Header/HeaderTitle.dart';
 import 'package:sushi_scouts/src/views/util/header/HeaderNav.dart';
-import 'package:sushi_scouts/src/views/util/inputs/textInput.dart';
 
 void main() => runApp(SushiScouts());
 

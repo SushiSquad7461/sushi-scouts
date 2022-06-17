@@ -52,11 +52,13 @@ class Data {
   }
 }
 
+enum MatchStage { pregame, auto, teleop, endgame }
+
 class CardinalData extends ScoutingData {
-  Map _pregameData;
-  Map _autoData;
-  Map _teleopData;
-  Map _endgameData;
+  Map<String, Data> _pregameData;
+  Map<String, Data> _autoData;
+  Map<String, Data> _teleopData;
+  Map<String, Data> _endgameData;
 
   CardinalData(
       this._pregameData, this._autoData, this._teleopData, this._endgameData);
@@ -76,10 +78,10 @@ class CardinalData extends ScoutingData {
   }
 
   static CardinalData create() {
-    Map pregameData = {};
-    Map autoData = {};
-    Map teleopData = {};
-    Map endgameData = {};
+    Map<String, Data> pregameData = {};
+    Map<String, Data> autoData = {};
+    Map<String, Data> teleopData = {};
+    Map<String, Data> endgameData = {};
     for (dynamic item in pregameConfig) {
       pregameData[item["name"]] = Data(item["type"]);
     }
@@ -129,30 +131,51 @@ class CardinalData extends ScoutingData {
 
   String getPregame(String key) {
     if (_pregameData.containsKey(key)) {
-      return (_pregameData[key].get());
+      return (_pregameData[key]!.get());
     }
     return "null";
   }
 
   String getAuto(String key) {
     if (_autoData.containsKey(key)) {
-      return (_autoData[key].get());
+      return (_autoData[key]!.get());
     }
     return "null";
   }
 
   String getTeleop(String key) {
     if (_teleopData.containsKey(key)) {
-      return (_teleopData[key].get());
+      return (_teleopData[key]!.get());
     }
     return "null";
   }
 
   String getEndgame(String key) {
     if (_endgameData.containsKey(key)) {
-      return (_endgameData[key].get());
+      return (_endgameData[key]!.get());
     }
     return "null";
+  }
+
+  List<String> getNames(MatchStage stage) {
+    switch (stage) {
+      case MatchStage.pregame:
+        {
+          return _pregameData.keys.toList();
+        }
+      case MatchStage.auto:
+        {
+          return _autoData.keys.toList();
+        }
+      case MatchStage.teleop:
+        {
+          return _teleopData.keys.toList();
+        }
+      case MatchStage.endgame:
+        {
+          return _endgameData.keys.toList();
+        }
+    }
   }
 
   @override
