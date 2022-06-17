@@ -9,7 +9,9 @@ class NumberInput extends StatelessWidget {
     Key? key,
     required this.name, required this.onSubmit
   }) : super(key: key);
-
+  static NumberInput create(String name, void Function(String name, Data value) onSubmit) {
+    return NumberInput(name: name, onSubmit: onSubmit);
+  }
   @override
   Widget build(BuildContext context) {
     return Padding(

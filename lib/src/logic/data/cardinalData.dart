@@ -178,6 +178,40 @@ class CardinalData extends ScoutingData {
     }
   }
 
+  List<String> getComponents(MatchStage stage) {
+    List<String> components = [];
+    switch (stage) {
+      case MatchStage.pregame:
+        {
+          for (dynamic item in pregameConfig) {
+            components.add(item["component"]);
+          }
+        }
+        break;
+      case MatchStage.auto:
+        {
+          for (dynamic item in autoConfig) {
+            components.add(item["component"]);
+          }
+        }
+        break;
+      case MatchStage.teleop:
+        {
+          for (dynamic item in teleopConfig) {
+            components.add(item["component"]);
+          }
+        }
+        break;
+      case MatchStage.endgame:
+        {
+          for (dynamic item in endgameConfig) {
+            components.add(item["component"]);
+          }
+        }
+    }
+    return components;
+  }
+
   @override
   String stringfy() {
     return ("Prematch : $_pregameData\nAuto : $_autoData\nTeleop : $_teleopData\nEndgame : $_endgameData");
