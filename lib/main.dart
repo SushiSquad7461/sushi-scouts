@@ -1,6 +1,6 @@
 import "package:flutter/material.dart";
 import 'package:sushi_scouts/src/logic/enums/Pages.dart';
-import 'package:sushi_scouts/src/views/ui/Cardinal.dart';
+import 'package:sushi_scouts/src/views/ui/Cardinall.dart';
 import 'package:sushi_scouts/src/views/ui/Login.dart';
 import 'package:sushi_scouts/src/views/ui/Ordinal.dart';
 import 'package:sushi_scouts/src/views/ui/Pit.dart';
