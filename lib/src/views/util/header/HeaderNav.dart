@@ -41,7 +41,7 @@ class HeaderNav extends StatelessWidget {
                         border: Border.all(color: HexColor("#56CBF9"), width: 5),
                         borderRadius: const BorderRadius.all(Radius.circular(5)),
                       ) :  BoxDecoration(
-                        border: Border.all(color: Colors.white, width: 5)
+                        border: Border.all(color: Color(0xfafafa), width: 5)
                       )
                     ),
                     child: Padding(

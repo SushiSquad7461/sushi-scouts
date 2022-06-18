@@ -53,7 +53,7 @@ class Footer extends StatelessWidget {
                   iconSize: 100,
                   icon:Icon(
                     Icons.arrow_left_rounded,
-                    color: (previousPage==null ? Colors.white : Colors.black),
+                    color: (previousPage==null ? Color(0xfafafa) : Colors.black),
                     semanticLabel: 'Back Arrow',
                   ),
                 ),
@@ -72,7 +72,7 @@ class Footer extends StatelessWidget {
                   iconSize: 100,
                   icon: Icon(
                     Icons.arrow_right_rounded,
-                    color: (nextPage==null ? Colors.white : Colors.black),
+                    color: (nextPage==null ? Color(0xfafafa) : Colors.black),
                     size: 100.0,
                     semanticLabel: 'Forward Arrow',
                   ),
@@ -83,7 +83,7 @@ class Footer extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.only(left: 0, right: 0, top: 10, bottom: 0) ,
             child: Text(
-              pageTitle,
+              getPageTitle(),
               style: const TextStyle(
                 fontFamily: "Sushi",
                 fontSize: 25,
