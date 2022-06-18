@@ -19,7 +19,7 @@ class Pit extends StatelessWidget {
           children: [
             const HeaderTitle(),
             HeaderNav(currentPage: Pages.pit, changePage: changePage,),
-            const Footer(nextPage: true, previousPage: false,),
+            const Footer(),
           ],
         )
     );

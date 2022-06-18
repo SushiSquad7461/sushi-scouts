@@ -3,13 +3,40 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:sushi_scouts/src/logic/data/cardinalData.dart';
 
 class Footer extends StatelessWidget {
   final String pageTitle;
-  final bool nextPage;
-  final bool previousPage;
+  final bool Function(MatchStage)? nextPage;
+  final bool Function(MatchStage)? previousPage;
+  final MatchStage? stage;
+  static const Map<MatchStage, String> pageNames = {
+    MatchStage.pregame: "Info",
+    MatchStage.auto: "Auto",
+    MatchStage.teleop: "Teleop",
+    MatchStage.endgame: "Endgame"
+  };
 
-  const Footer({Key? key, this.pageTitle="", required this.nextPage, required this.previousPage}) : super(key: key);
+  String getPageTitle() {
+    if(stage==null){
+      return pageTitle;
+    }
+    return pageNames[stage]!;
+  }
+
+  void nextPagePressed() {
+    if(!(nextPage==null)){
+      nextPage!(stage!);
+    }
+  }
+
+  void previousPagePressed() {
+    if(!(previousPage==null)){
+      previousPage!(stage!);
+    }
+  }
+
+  const Footer({Key? key, this.pageTitle="", this.stage,  this.nextPage,  this.previousPage}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -20,11 +47,15 @@ class Footer extends StatelessWidget {
             Row (
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Icon(
-                  Icons.arrow_left_rounded,
-                  color: (previousPage ? Colors.black : Colors.white),
-                  size: 100.0,
-                  semanticLabel: 'Back Arrow',
+                IconButton(
+                  padding: const EdgeInsets.all(0),
+                  onPressed: previousPagePressed, 
+                  icon:Icon(
+                    Icons.arrow_left_rounded,
+                    color: (previousPage==null ? Colors.white : Colors.black),
+                    size: 100.0,
+                    semanticLabel: 'Back Arrow',
+                  ),
                 ),
                 ConstrainedBox(
                   constraints: const BoxConstraints(
@@ -35,12 +66,16 @@ class Footer extends StatelessWidget {
                   ),
                   child: SvgPicture.asset("./assets/images/nori.svg",)
                 ),
-                Icon(
-                  Icons.arrow_right_rounded,
-                  color: (nextPage ? Colors.black : Colors.white),
-                  size: 100.0,
-                  semanticLabel: 'Forward Arrow',
-                ),
+                IconButton(
+                  padding: const EdgeInsets.all(0),
+                  onPressed: nextPagePressed,
+                  icon: Icon(
+                    Icons.arrow_right_rounded,
+                    color: (nextPage==null ? Colors.white : Colors.black),
+                    size: 100.0,
+                    semanticLabel: 'Forward Arrow',
+                  ),
+                )
               ]
             ),
           Image.asset("./assets/images/colorbar.png", scale: 6,),

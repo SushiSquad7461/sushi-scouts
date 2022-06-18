@@ -97,64 +97,74 @@ class CardinalData extends ScoutingData {
     return CardinalData(pregameData, autoData, teleopData, endgameData);
   }
 
-  bool setPregame(String key, Data data) {
-    if (_pregameData.containsKey(key)) {
-      _pregameData[key] = data;
-      return true;
+  bool set(String key, Data data, MatchStage stage) {
+    switch (stage) {
+      case MatchStage.pregame:
+        {
+          if (_pregameData.containsKey(key)) {
+            _pregameData[key] = data;
+            return true;
+          }
+          return false;
+        }
+      case MatchStage.auto:
+        {
+          if (_autoData.containsKey(key)) {
+            _autoData[key] = data;
+            return true;
+          }
+          return false;
+        }
+      case MatchStage.teleop:
+        {
+          if (_teleopData.containsKey(key)) {
+            _teleopData[key] = data;
+            return true;
+          }
+          return false;
+        }
+      case MatchStage.endgame:
+        {
+          if (_endgameData.containsKey(key)) {
+            _endgameData[key] = data;
+            return true;
+          }
+          return false;
+        }
     }
-    return false;
   }
 
-  bool setAuto(String key, Data data) {
-    if (_autoData.containsKey(key)) {
-      _autoData[key] = data;
-      return true;
+  String get(String key, MatchStage stage) {
+    switch (stage) {
+      case MatchStage.pregame:
+        {
+          if (_pregameData.containsKey(key)) {
+            return (_pregameData[key]!.get());
+          }
+          return "null";
+        }
+      case MatchStage.auto:
+        {
+          if (_autoData.containsKey(key)) {
+            return (_autoData[key]!.get());
+          }
+          return "";
+        }
+      case MatchStage.teleop:
+        {
+          if (_teleopData.containsKey(key)) {
+            return (_teleopData[key]!.get());
+          }
+          return "";
+        }
+      case MatchStage.endgame:
+        {
+          if (_endgameData.containsKey(key)) {
+            return (_endgameData[key]!.get());
+          }
+          return "";
+        }
     }
-    return false;
-  }
-
-  bool setTeleop(String key, Data data) {
-    if (_teleopData.containsKey(key)) {
-      _teleopData[key] = data;
-      return true;
-    }
-    return false;
-  }
-
-  bool setEndgame(String key, Data data) {
-    if (_endgameData.containsKey(key)) {
-      _endgameData[key] = data;
-      return true;
-    }
-    return false;
-  }
-
-  String getPregame(String key) {
-    if (_pregameData.containsKey(key)) {
-      return (_pregameData[key]!.get());
-    }
-    return "null";
-  }
-
-  String getAuto(String key) {
-    if (_autoData.containsKey(key)) {
-      return (_autoData[key]!.get());
-    }
-    return "null";
-  }
-
-  String getTeleop(String key) {
-    if (_teleopData.containsKey(key)) {
-      return (_teleopData[key]!.get());
-    }
-    return "null";
-  }
-
-  String getEndgame(String key) {
-    if (_endgameData.containsKey(key)) {
-      return (_endgameData[key]!.get());
-    }
-    return "null";
   }
 
   List<String> getNames(MatchStage stage) {
