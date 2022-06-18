@@ -50,10 +50,10 @@ class Footer extends StatelessWidget {
                 IconButton(
                   padding: const EdgeInsets.all(0),
                   onPressed: previousPagePressed, 
+                  iconSize: 100,
                   icon:Icon(
                     Icons.arrow_left_rounded,
                     color: (previousPage==null ? Colors.white : Colors.black),
-                    size: 100.0,
                     semanticLabel: 'Back Arrow',
                   ),
                 ),
@@ -69,6 +69,7 @@ class Footer extends StatelessWidget {
                 IconButton(
                   padding: const EdgeInsets.all(0),
                   onPressed: nextPagePressed,
+                  iconSize: 100,
                   icon: Icon(
                     Icons.arrow_right_rounded,
                     color: (nextPage==null ? Colors.white : Colors.black),
