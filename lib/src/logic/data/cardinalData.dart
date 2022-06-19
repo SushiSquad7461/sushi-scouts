@@ -52,7 +52,7 @@ class Data {
   }
 }
 
-enum MatchStage { pregame, auto, teleop, endgame }
+enum MatchStage { pregame, auto, teleop, endgame, submit }
 
 class CardinalData extends ScoutingData {
   Map<String, Data> _pregameData;
@@ -132,6 +132,7 @@ class CardinalData extends ScoutingData {
           return false;
         }
     }
+    return false;
   }
 
   String get(String key, MatchStage stage) {
@@ -165,9 +166,11 @@ class CardinalData extends ScoutingData {
           return "";
         }
     }
+    return "";
   }
 
   List<String> getNames(MatchStage stage) {
+    List<String> empty = [];
     switch (stage) {
       case MatchStage.pregame:
         {
@@ -186,6 +189,7 @@ class CardinalData extends ScoutingData {
           return _endgameData.keys.toList();
         }
     }
+    return empty;
   }
 
   List<List<dynamic>?> getValues(MatchStage stage) {

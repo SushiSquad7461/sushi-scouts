@@ -14,7 +14,8 @@ class Footer extends StatelessWidget {
     MatchStage.pregame: "Info",
     MatchStage.auto: "Auto",
     MatchStage.teleop: "Teleop",
-    MatchStage.endgame: "Endgame"
+    MatchStage.endgame: "Endgame",
+    MatchStage.submit: "Submit"
   };
 
   String getPageTitle() {
@@ -44,6 +45,7 @@ class Footer extends StatelessWidget {
       padding: const EdgeInsets.all(0),
       child: Column(
         children: [
+          !(stage == MatchStage.submit) ? (
             Row (
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -57,27 +59,77 @@ class Footer extends StatelessWidget {
                     semanticLabel: 'Back Arrow',
                   ),
                 ),
-                ConstrainedBox(
-                  constraints: const BoxConstraints(
-                    minWidth: 57,
-                    minHeight: 57,
-                    maxWidth: 59,
-                    maxHeight: 59,
-                  ),
-                  child: SvgPicture.asset("./assets/images/nori.svg",)
-                ),
-                IconButton(
-                  padding: const EdgeInsets.all(0),
-                  onPressed: nextPagePressed,
-                  iconSize: 100,
-                  icon: Icon(
-                    Icons.arrow_right_rounded,
-                    color: (nextPage==null ? Color(0xfafafa) : Colors.black),
-                    size: 100.0,
-                    semanticLabel: 'Forward Arrow',
-                  ),
+                !(stage == MatchStage.endgame) ? (
+                Row(
+                  children: [
+                    ConstrainedBox(
+                      constraints: const BoxConstraints(
+                        minWidth: 57,
+                        minHeight: 57,
+                        maxWidth: 59,
+                        maxHeight: 59,
+                      ),
+                      child: SvgPicture.asset("./assets/images/nori.svg",)
+                    ),
+                    IconButton(
+                      padding: const EdgeInsets.all(0),
+                      onPressed: nextPagePressed,
+                      iconSize: 100,
+                      icon:
+                        Icon(
+                          Icons.arrow_right_rounded,
+                          color: (nextPage==null ? Color(0xfafafa) : Colors.black),
+                          size: 100.0,
+                          semanticLabel: 'Forward Arrow'
+                        ),
+                    )
+                  ],
                 )
+                ) :
+                (
+                Container(
+                  width: 130,
+                  height: 60,
+                  decoration: BoxDecoration(
+                    border: Border.all(color: Colors.black, width: 4),
+                    color: const Color(0xfafafa),
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  child: TextButton(
+                    onPressed: nextPagePressed,
+                    child: const Text('Submit',
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontFamily: "Sushi",
+                        color: Colors.black,
+                        fontWeight: FontWeight.bold
+                      ),
+                    ),
+                ))
+              )
               ]
+            )) : 
+            Padding(
+              padding: EdgeInsets.all(20),
+              child: Container(
+                width: 200,
+                height: 60,
+                decoration: BoxDecoration(
+                  border: Border.all(color: Colors.black, width: 4),
+                  color: const Color(0xfafafa),
+                  borderRadius: BorderRadius.circular(20),
+                ),
+                child: TextButton(
+                  onPressed: nextPagePressed,
+                  child: const Text('Next Match',
+                    style: TextStyle(
+                      fontSize: 25,
+                      fontFamily: "Sushi",
+                      color: Colors.black,
+                      fontWeight: FontWeight.bold
+                    ),
+                  ),
+              )),
             ),
           Image.asset("./assets/images/colorbar.png", scale: 6,),
           Padding(
