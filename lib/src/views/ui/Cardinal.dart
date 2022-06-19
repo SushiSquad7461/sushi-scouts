@@ -94,6 +94,7 @@ class CardinalState extends State<Cardinal> {
 
   @override
   Widget build(BuildContext context) {
+    final Size mediaQuerySize = MediaQuery.of(context).size;
     print("building");
     return Scaffold(
         body: ListView(
@@ -110,7 +111,9 @@ class CardinalState extends State<Cardinal> {
                   ? Row(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        Expanded(
+                        SizedBox(
+                          width: (mediaQuerySize.width*0.5),
+                          height: (mediaQuerySize.height*0.6),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.stretch,
                             children: [
@@ -137,31 +140,36 @@ class CardinalState extends State<Cardinal> {
                             ],
                           ),
                         ),
-                        Expanded(
+                        SizedBox(
+                            width: (mediaQuerySize.width*0.5), 
+                            height: (mediaQuerySize.height*0.6),
                             child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.stretch,
-                          children: [
-                            for (index = index;
-                                index < components!.length;
-                                index++)
-                              widget.allComponents
-                                      .containsKey(components![index])
-                                  ? widget.allComponents[components![index]](
-                                      names![index], onSubmit, values![index])
-                                  : SizedBox(
-                                      width: 50,
-                                      child: Text(
-                                        "The widget type ${components![index]} is not defined",
-                                        style: const TextStyle(
-                                            fontFamily: "Sushi",
-                                            fontSize: 15,
-                                            fontWeight: FontWeight.bold,
-                                            color: Colors.black,
-                                            overflow: TextOverflow.ellipsis),
-                                      ),
-                                    )
-                          ],
-                        )),
+                              crossAxisAlignment: CrossAxisAlignment.stretch,
+                              children: [
+                                for (index = index;
+                                    index < components!.length;
+                                    index++)
+                                  widget.allComponents
+                                          .containsKey(components![index])
+                                      ? widget.allComponents[
+                                              components![index]](names![index],
+                                          onSubmit, values![index])
+                                      : SizedBox(
+                                          width: 50,
+                                          child: Text(
+                                            "The widget type ${components![index]} is not defined",
+                                            style: const TextStyle(
+                                                fontFamily: "Sushi",
+                                                fontSize: 15,
+                                                fontWeight: FontWeight.bold,
+                                                color: Colors.black,
+                                                overflow:
+                                                    TextOverflow.ellipsis),
+                                          ),
+                                        )
+                              ],
+                            )
+                          ),
                       ],
                     )
                   : const CircularProgressIndicator();
