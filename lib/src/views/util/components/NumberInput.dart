@@ -4,13 +4,11 @@ import 'package:sushi_scouts/src/logic/data/cardinalData.dart';
 
 class NumberInput extends StatelessWidget {
   final String name;
-  final Function(String name, Data value) onSubmit;
-  const NumberInput({Key? key, required this.name, required this.onSubmit})
+  final Data data;
+  const NumberInput({Key? key, required this.name, required this.data})
       : super(key: key);
-  static NumberInput create(
-      String name, void Function(String name, Data value) onSubmit,
-      List<dynamic>? values) {
-    return NumberInput(name: name, onSubmit: onSubmit);
+  static NumberInput create(String name, Data data, List<dynamic>? values) {
+    return NumberInput(name: name, data: data);
   }
 
   @override
@@ -34,7 +32,7 @@ class NumberInput extends StatelessWidget {
                       FilteringTextInputFormatter.digitsOnly
                     ],
                     onFieldSubmitted: (value) {
-                      onSubmit(name, Data("number", num: double.parse(value)));
+                      data.set(number: double.parse(value));
                     }))
           ]),
           const Divider(color: Colors.black, thickness: 3)

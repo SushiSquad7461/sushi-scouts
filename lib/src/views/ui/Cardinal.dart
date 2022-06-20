@@ -141,7 +141,7 @@ class CardinalState extends State<Cardinal> {
                                         ? widget.allComponents[
                                                 components![index]](
                                             names![index],
-                                            onSubmit,
+                                            widget.data!.getData(stage, names![index]),
                                             values![index])
                                         : SizedBox(
                                             width: 50,
@@ -173,7 +173,7 @@ class CardinalState extends State<Cardinal> {
                                           ? widget.allComponents[
                                                   components![index]](
                                               names![index],
-                                              onSubmit,
+                                              widget.data!.getData(stage, names![index]),
                                               values![index])
                                           : SizedBox(
                                               width: 50,

@@ -169,6 +169,40 @@ class CardinalData extends ScoutingData {
     return "";
   }
 
+  Data getData(MatchStage stage, String key) {
+    switch (stage) {
+      case MatchStage.pregame:
+        {
+          if (_pregameData.containsKey(key)) {
+            return _pregameData[key]!;
+          }
+        }
+        break;
+      case MatchStage.auto:
+        {
+          if (_autoData.containsKey(key)) {
+            return _autoData[key]!;
+          }
+        }
+        break;
+      case MatchStage.teleop:
+        {
+          if (_teleopData.containsKey(key)) {
+            return _teleopData[key]!;
+          }
+        }
+        break;
+      case MatchStage.endgame:
+        {
+          if (_endgameData.containsKey(key)) {
+            return _endgameData[key]!;
+          }
+        }
+        break;
+    }
+    return Data("number");
+  }
+
   List<String> getNames(MatchStage stage) {
     List<String> empty = [];
     switch (stage) {
