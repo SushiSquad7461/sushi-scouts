@@ -19,7 +19,7 @@ class Settings extends StatelessWidget {
           children: [
             const HeaderTitle(),
             HeaderNav(currentPage: Pages.settings, changePage: changePage,),
-            const Footer(),
+            const Footer(pageTitle: "Settings"),
           ],
         )
     );

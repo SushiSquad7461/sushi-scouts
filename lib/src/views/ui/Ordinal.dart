@@ -19,7 +19,7 @@ class Ordinal extends StatelessWidget {
           children: [
             const HeaderTitle(),
             HeaderNav(currentPage: Pages.ordinal, changePage: changePage,),
-            const Footer(),
+            const Footer(pageTitle: "Ordinal",),
           ],
         )
     );

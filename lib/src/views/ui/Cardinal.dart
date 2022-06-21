@@ -4,6 +4,7 @@ import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:sushi_scouts/src/logic/enums/Pages.dart';
+import 'package:sushi_scouts/src/views/util/Cardinal/CardinalFooter.dart';
 
 import '../util/Header/HeaderTitle.dart';
 import '../util/footer.dart';
@@ -198,7 +199,7 @@ class CardinalState extends State<Cardinal> {
                 padding: EdgeInsets.all(20),
                 child: QrImage(data: stringifiedData),
               ),
-        Footer(
+        CardinalFooter(
           stage: stage,
           nextPage: (nextPageExists() ? nextPage : null),
           previousPage: (previousPageExists() ? previousPage : null),
