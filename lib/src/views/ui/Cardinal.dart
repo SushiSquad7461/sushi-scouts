@@ -96,9 +96,7 @@ class CardinalState extends State<Cardinal> {
     return true;
   }
 
-  Widget _buildBody(Size mediaQuerySize){
-    print(mediaQuerySize.width);
-    print(mediaQuerySize.height);
+  Widget _buildBody(Size mediaQuerySize, Color color){
     return Row(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
@@ -119,7 +117,7 @@ class CardinalState extends State<Cardinal> {
                             components![index]](
                         names![index],
                         widget.data!.getData(stage, names![index]),
-                        values![index])
+                        values![index], Data("number", num: 0), color, mediaQuerySize.width)
                     : SizedBox(
                         width: mediaQuerySize.width/12.0,
                         child: Text(
@@ -151,7 +149,7 @@ class CardinalState extends State<Cardinal> {
                               components![index]](
                           names![index],
                           widget.data!.getData(stage, names![index]),
-                          values![index])
+                          values![index], Data("number", num: 0), color, mediaQuerySize.width)
                       : SizedBox(
                           width: mediaQuerySize.width/12.0,
                           child: Text(
@@ -187,7 +185,7 @@ class CardinalState extends State<Cardinal> {
                 future: _setData(),
                 builder: (BuildContext context, AsyncSnapshot snapshot) {
                   return snapshot.hasData
-                      ? _buildBody(mediaQuerySize)
+                      ? _buildBody(mediaQuerySize, Colors.black)
                       : const CircularProgressIndicator();
                 })
             : Padding(

@@ -12,8 +12,10 @@ class Data {
   String type;
   String words;
   double num;
-  Data(this.type, {this.words = "", this.num = 0});
-  void set({double number = 0, String string = ""}) {
+  bool setByUser;
+  Data(this.type, {this.words = "", this.num = 0, this.setByUser=false});
+  void set({double number = 0, String string = "", bool setByUser=false}) {
+    this.setByUser=setByUser;
     if (type == "String") {
       words = string;
     }
