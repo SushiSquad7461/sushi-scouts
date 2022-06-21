@@ -14,8 +14,8 @@ class Login extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         body: ListView(
-          children: const [
-            HeaderTitle(),
+          children: [
+            HeaderTitle(size: MediaQuery.of(context).size),
           ],
         )
     );

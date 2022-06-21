@@ -176,10 +176,11 @@ class CardinalState extends State<Cardinal> {
     return Scaffold(
         body: ListView(
       children: [
-        const HeaderTitle(),
+        HeaderTitle(size: mediaQuerySize),
         HeaderNav(
           currentPage: Pages.cardinal,
           changePage: widget.changePage,
+          size: mediaQuerySize
         ),
         !(stage == MatchStage.submit)
             ? FutureBuilder(
@@ -197,6 +198,7 @@ class CardinalState extends State<Cardinal> {
           stage: stage,
           nextPage: (_nextPageExists() ? _nextPage : null),
           previousPage: (_previousPageExists() ? _previousPage : null),
+          size: mediaQuerySize,
         ),
       ],
     ));

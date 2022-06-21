@@ -14,12 +14,13 @@ class Settings extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+  Size size = MediaQuery.of(context).size;
     return Scaffold(
         body: ListView(
           children: [
-            const HeaderTitle(),
-            HeaderNav(currentPage: Pages.settings, changePage: changePage,),
-            const Footer(pageTitle: "Settings"),
+            HeaderTitle(size: size),
+            HeaderNav(currentPage: Pages.settings, changePage: changePage, size: size),
+            Footer(pageTitle: "Settings", size: size,)
           ],
         )
     );

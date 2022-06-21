@@ -8,44 +8,47 @@ import 'package:sushi_scouts/src/logic/enums/Pages.dart';
 import 'package:enum_to_string/enum_to_string.dart';
 
 class HeaderNav extends StatelessWidget {
-  final TextStyle _pageStyle = const TextStyle(
-    fontFamily: "Sushi",
-    fontSize: 25,
-    fontWeight: FontWeight.bold,
-  );
 
   final Pages currentPage;
   final ValueChanged changePage;
+  final Size size;
 
-  const HeaderNav({Key? key, required this.currentPage, required this.changePage}) : super(key: key);
+  HeaderNav({Key? key, required this.currentPage, required this.changePage, required this.size}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    double swu = size.width/600.0; //standardized width unit
+    double shu = size.width/900.0; //standard height unit
+    final TextStyle _pageStyle = TextStyle(
+      fontFamily: "Sushi",
+      fontSize: 25*swu,
+      fontWeight: FontWeight.bold,
+    );
     return Padding(
-      padding: const EdgeInsets.only(left: 0, right: 0, top: 7, bottom: 0),
+      padding: EdgeInsets.only(left: 0, right: 0, top: 7*shu, bottom: 0),
       child: Column(
         children: [
-          const Divider(
+          Divider(
             color: Colors.black,
-            thickness: 6,
+            thickness: 6*shu,
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               for (final page in Pages.values) if (page != Pages.login) Padding(
-                padding: const EdgeInsets.only(left: 0, right: 0, top: 8, bottom: 8),
+                padding: EdgeInsets.only(left: 0, right: 0, top: 8*shu, bottom: 8*shu),
                 child: GestureDetector(
                   onTap: () => changePage(page),
                   child: Container(
                     decoration: ((currentPage == page) ?  BoxDecoration(
-                        border: Border.all(color: HexColor("#56CBF9"), width: 5),
-                        borderRadius: const BorderRadius.all(Radius.circular(5)),
+                        border: Border.all(color: HexColor("#56CBF9"), width: 5*swu),
+                        borderRadius: BorderRadius.all(Radius.circular(5*swu)),
                       ) :  BoxDecoration(
-                        border: Border.all(color: Color(0xfafafa), width: 5)
+                        border: Border.all(color: Color(0xfafafa), width: 5*swu)
                       )
                     ),
                     child: Padding(
-                      padding: const EdgeInsets.only(left: 4, right: 4, top: 2, bottom: 2),
+                      padding: EdgeInsets.only(left: 4*swu, right: 4*swu, top: 2*shu, bottom: 2*shu),
                       child: Text(
                         EnumToString.convertToString(page).toUpperCase(),
                         style: GoogleFonts.mohave(
@@ -58,9 +61,9 @@ class HeaderNav extends StatelessWidget {
               )
             ]
           ),
-          const Divider(
+          Divider(
             color: Colors.black,
-            thickness: 6,
+            thickness: 6*shu,
           ),
         ],
       )

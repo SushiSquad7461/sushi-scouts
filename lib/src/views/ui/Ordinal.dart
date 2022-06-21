@@ -14,12 +14,13 @@ class Ordinal extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
     return Scaffold(
         body: ListView(
           children: [
-            const HeaderTitle(),
-            HeaderNav(currentPage: Pages.ordinal, changePage: changePage,),
-            const Footer(pageTitle: "Ordinal",),
+            HeaderTitle(size: size),
+            HeaderNav(currentPage: Pages.ordinal, changePage: changePage, size: size),
+            Footer(pageTitle: "Ordinal", size: size),
           ],
         )
     );

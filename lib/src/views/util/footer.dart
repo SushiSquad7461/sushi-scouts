@@ -7,23 +7,23 @@ import 'package:sushi_scouts/src/logic/data/cardinalData.dart';
 
 class Footer extends StatelessWidget {
   final String pageTitle;
-
-  const Footer({Key? key, required this.pageTitle}) : super(key: key);
+  final Size size;
+  const Footer({Key? key, required this.pageTitle, required this.size}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Column(children: [
       Image.asset(
         "./assets/images/colorbar.png",
-        scale: 6,
+        scale: 3600.0/size.width,
       ),
       Padding(
-          padding: const EdgeInsets.only(left: 0, right: 0, top: 10, bottom: 0),
+          padding: EdgeInsets.only(left: 0, right: 0, top: size.height/90.0, bottom: 0),
           child: Text(
             pageTitle,
-            style: const TextStyle(
+            style: TextStyle(
               fontFamily: "Sushi",
-              fontSize: 25,
+              fontSize: size.width/24.0,
               fontWeight: FontWeight.bold,
               color: Colors.black,
             ),

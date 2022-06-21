@@ -14,12 +14,13 @@ class Pit extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
     return Scaffold(
         body: ListView(
           children: [
-            const HeaderTitle(),
-            HeaderNav(currentPage: Pages.pit, changePage: changePage,),
-            const Footer(pageTitle: "Pit"),
+            HeaderTitle(size: size),
+            HeaderNav(currentPage: Pages.pit, changePage: changePage, size: size),
+            Footer(pageTitle: "Pit", size: size),
           ],
         )
     );
