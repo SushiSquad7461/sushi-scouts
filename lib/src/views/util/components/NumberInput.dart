@@ -5,37 +5,40 @@ import 'package:sushi_scouts/src/logic/data/cardinalData.dart';
 class NumberInput extends StatelessWidget {
   final String name;
   final Data data;
-  const NumberInput({Key? key, required this.name, required this.data})
+  final Data defaultValue;
+  final Color color;
+  final double width;
+  const NumberInput({Key? key, required this.name, required this.data, required this.defaultValue, required this.color, required this.width})
       : super(key: key);
-  static NumberInput create(String name, Data data, List<dynamic>? values) {
-    return NumberInput(name: name, data: data);
+  static NumberInput create(String name, Data data, List<dynamic>? values, Data defaultValue, Color color, double width) {
+    return NumberInput(name: name, data: data, width: width, defaultValue: defaultValue, color: color);
   }
 
   @override
   Widget build(BuildContext context) {
     return Padding(
         padding:
-            const EdgeInsets.only(left: 10, right: 10, top: 20, bottom: 20),
+            EdgeInsets.only(left: width/60, right: width/60, top: width/30, bottom: width/30),
         child: Column(children: [
           Row(children: [
             Text(name,
-                style: const TextStyle(
+                style: TextStyle(
                     fontFamily: "Sushi",
-                    fontSize: 15,
+                    fontSize: width/40,
                     fontWeight: FontWeight.bold,
-                    color: Colors.black)),
+                    color: color)),
             SizedBox(
-                width: 20,
+                width: width/30,
                 child: TextFormField(
                     keyboardType: TextInputType.number,
                     inputFormatters: <TextInputFormatter>[
                       FilteringTextInputFormatter.digitsOnly
                     ],
                     onFieldSubmitted: (value) {
-                      data.set(number: double.parse(value));
+                      data.set(number: double.parse(value), setByUser: true);
                     }))
           ]),
-          const Divider(color: Colors.black, thickness: 3)
+          Divider(color: color, thickness: width/200)
         ]));
   }
 }
