@@ -19,26 +19,49 @@ class NumberInput extends StatelessWidget {
     return Padding(
         padding:
             EdgeInsets.only(left: width/60, right: width/60, top: width/30, bottom: width/30),
-        child: Column(children: [
-          Row(children: [
-            Text(name,
+        child: SizedBox(
+          width: width*0.6,
+          child: Column(
+            children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+              Text(name,
                 style: TextStyle(
                     fontFamily: "Sushi",
-                    fontSize: width/40,
+                    fontSize: width/10,
                     fontWeight: FontWeight.bold,
-                    color: color)),
-            SizedBox(
-                width: width/30,
+                    color: color
+                  )
+              ),
+              Expanded(
                 child: TextFormField(
-                    keyboardType: TextInputType.number,
-                    inputFormatters: <TextInputFormatter>[
-                      FilteringTextInputFormatter.digitsOnly
-                    ],
-                    onFieldSubmitted: (value) {
-                      data.set(number: double.parse(value), setByUser: true);
-                    }))
-          ]),
-          Divider(color: color, thickness: width/200)
-        ]));
+                  decoration: InputDecoration(
+                    border: InputBorder.none,
+                    constraints: BoxConstraints(maxWidth: width/6.0),
+                  ),
+                  style: TextStyle(
+                    fontFamily: "Sushi",
+                    fontSize: width/10,
+                    fontWeight: FontWeight.bold,
+                    color: color
+                  ),
+                  textAlign: TextAlign.right,
+                  initialValue: double.parse(defaultValue.get()).floor().toString(),
+                  keyboardType: TextInputType.number,
+                  inputFormatters: <TextInputFormatter>[
+                    FilteringTextInputFormatter.digitsOnly
+                  ],
+                  onFieldSubmitted: (value) {
+                    data.set(number: double.parse(value), setByUser: true);
+                  }
+                )
+              )
+            ]),
+            Divider(color: color, thickness: width/100)
+            ]
+          )
+        )
+    );
   }
 }

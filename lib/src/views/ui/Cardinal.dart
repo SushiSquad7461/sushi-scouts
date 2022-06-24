@@ -97,82 +97,59 @@ class CardinalState extends State<Cardinal> {
     return true;
   }
 
-  Widget _buildBody(Size mediaQuerySize, Color color){
-    return Row(
+  Widget _buildComponents(double height, double width, Color color, int start, int end) {
+    return SizedBox(
+      width: (width),
+      height: (height * 0.4+72000.0/width),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          for (index = start; index < end; index++)
+            widget.allComponents.containsKey(components![index])
+              ? widget.allComponents[components![index]](
+                  names![index],
+                  widget.data!.getData(stage, names![index]),
+                  values![index], Data("number", num: 0), color, width)
+              : SizedBox(
+                width: width,
+                child: Text(
+                  "The widget type ${components![index]} is not defined",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontFamily: "Sushi",
+                    fontSize: width/40.0,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black,
+                    overflow:
+                      TextOverflow.visible)),
+                )
+        ],
+      ),
+    );
+  }
+
+  Widget _buildBody(Size size, Color color){
+    return size.width>=600 ? Row(
       crossAxisAlignment: CrossAxisAlignment.center,
+      mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        SizedBox(
-          width: (mediaQuerySize.width * 0.5),
-          height: (mediaQuerySize.height * 0.6),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              for (index = 0;
-                  index <
-                      (components!.length / 2.0 + 0.5)
-                          .floor();
-                  index++)
-                widget.allComponents
-                        .containsKey(components![index])
-                    ? widget.allComponents[
-                            components![index]](
-                        names![index],
-                        widget.data!.getData(stage, names![index]),
-                        values![index], Data("number", num: 0), color, mediaQuerySize.width)
-                    : SizedBox(
-                        width: mediaQuerySize.width/12.0,
-                        child: Text(
-                            "The widget type ${components![index]} is not defined",
-                            style: TextStyle(
-                                fontFamily: "Sushi",
-                                fontSize: mediaQuerySize.width/40.0,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.black,
-                                overflow:
-                                    TextOverflow.ellipsis)),
-                      )
-            ],
-          ),
-        ),
-        SizedBox(
-            width: (mediaQuerySize.width * 0.5),
-            height: (mediaQuerySize.height * 0.6),
-            child: Column(
-              crossAxisAlignment:
-                  CrossAxisAlignment.stretch,
-              children: [
-                for (index = index;
-                    index < components!.length;
-                    index++)
-                  widget.allComponents
-                          .containsKey(components![index])
-                      ? widget.allComponents[
-                              components![index]](
-                          names![index],
-                          widget.data!.getData(stage, names![index]),
-                          values![index], Data("number", num: 0), color, mediaQuerySize.width)
-                      : SizedBox(
-                          width: mediaQuerySize.width/12.0,
-                          child: Text(
-                            "The widget type ${components![index]} is not defined",
-                            style: TextStyle(
-                                fontFamily: "Sushi",
-                                fontSize: mediaQuerySize.width/40.0,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.black,
-                                overflow:
-                                    TextOverflow.ellipsis),
-                          ),
-                        )
-              ],
-            )),
-      ],
+        _buildComponents(size.height, size.width/2.0, color, 0, (components!.length / 2.0 + 0.5).floor()),
+        _buildComponents(size.height, size.width/2.0, color, index, components!.length),
+      ]
+    ): Row(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        _buildComponents(size.height, size.width, color, 0, (components!.length)),
+      ]
     );
   }
 
   @override
   Widget build(BuildContext context) {
     final Size mediaQuerySize = MediaQuery.of(context).size;
+    print(mediaQuerySize.height);
+    print(mediaQuerySize.width);
     return Scaffold(
         body: ListView(
       children: [
