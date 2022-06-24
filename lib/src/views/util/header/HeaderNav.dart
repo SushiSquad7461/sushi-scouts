@@ -7,10 +7,12 @@ import 'package:sushi_scouts/src/logic/color/HexColor.dart';
 import 'package:sushi_scouts/src/logic/enums/Pages.dart';
 import 'package:enum_to_string/enum_to_string.dart';
 
+import '../../../logic/data/cardinalData.dart';
+
 class HeaderNav extends StatelessWidget {
 
   final Pages currentPage;
-  final ValueChanged changePage;
+  final Function(dynamic, {CardinalData? previousData}) changePage;
   final Size size;
 
   HeaderNav({Key? key, required this.currentPage, required this.changePage, required this.size}) : super(key: key);

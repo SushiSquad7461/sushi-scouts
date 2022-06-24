@@ -1,4 +1,5 @@
 import "package:flutter/material.dart";
+import 'package:sushi_scouts/src/logic/data/cardinalData.dart';
 import 'package:sushi_scouts/src/logic/enums/Pages.dart';
 import 'package:sushi_scouts/src/views/ui/Cardinal.dart';
 import 'package:sushi_scouts/src/views/ui/Login.dart';
@@ -21,16 +22,22 @@ class SushiScouts extends StatefulWidget {
 class _SushiScoutsState extends State<SushiScouts> {
   // TODO: CHANGE VAL TO Pages.login WHEN LOGIN PAGE IS MADE
   Pages _currentPage = Pages.cardinal;
-
-  void setCurrentPage(newPage) {
+  CardinalData? previousCardinalData;
+  void setCurrentPage(newPage, {CardinalData? previousData=null}) {
+    print("changing");
+    if(previousData!=null){
+      previousCardinalData=previousData;
+    }
     setState(() {
       _currentPage = newPage;
+      print(_currentPage.toString());
     });
+    build(context);
   }
 
   late final Map<Pages, MaterialPage> _pages = {
     Pages.login: const MaterialPage(child: Login()),
-    Pages.cardinal: MaterialPage(child: Cardinal(changePage: setCurrentPage,)),
+    Pages.cardinal: MaterialPage(child: Cardinal(changePage: setCurrentPage, previousData: previousCardinalData)),
     Pages.ordinal: MaterialPage(child: Ordinal(changePage: setCurrentPage,)),
     Pages.pit: MaterialPage(child: Pit(changePage: setCurrentPage,)),
     Pages.settings: MaterialPage(child: Settings(changePage: setCurrentPage,)),

@@ -14,23 +14,22 @@ import 'package:sushi_scouts/src/views/util/components/NumberInput.dart';
 
 class Cardinal extends StatefulWidget {
   CardinalData? data;
+  CardinalData? previousData;
   final Map<MatchStage, int> screenOrder = {
     MatchStage.pregame: 0,
     MatchStage.auto: 1,
     MatchStage.teleop: 2,
     MatchStage.endgame: 3,
-    MatchStage.submit: 4
   };
   final List<MatchStage> stages = [
     MatchStage.pregame,
     MatchStage.auto,
     MatchStage.teleop,
     MatchStage.endgame,
-    MatchStage.submit
   ];
   final Map allComponents = {"number input": NumberInput.create};
-  final ValueChanged changePage;
-  Cardinal({Key? key, required this.changePage}) : super(key: key);
+  final Function(dynamic, {CardinalData? previousData}) changePage;
+  Cardinal({Key? key, required this.changePage, this.previousData}) : super(key: key);
   @override
   CardinalState createState() => CardinalState(MatchStage.pregame);
 }
@@ -43,7 +42,7 @@ class CardinalState extends State<Cardinal> {
   MatchStage stage;
 
   bool _nextPageExists() {
-    if (widget.screenOrder[stage]! + 1 > 5) {
+    if (widget.screenOrder[stage]! + 1 > 4) {
       return false;
     }
     return true;
@@ -58,10 +57,10 @@ class CardinalState extends State<Cardinal> {
 
   bool _nextPage(MatchStage stage) {
     int nextNumber = widget.screenOrder[stage]! + 1;
-    if (nextNumber > 5) {
+    if (nextNumber > 4) {
       return false;
     }
-    if (nextNumber == 5) {
+    if (nextNumber == 4) {
       setState(() {
         widget.data = null;
         this.stage = MatchStage.pregame;
@@ -151,33 +150,33 @@ class CardinalState extends State<Cardinal> {
     print(mediaQuerySize.height);
     print(mediaQuerySize.width);
     return Scaffold(
-        body: ListView(
-      children: [
-        HeaderTitle(size: mediaQuerySize),
-        HeaderNav(
-          currentPage: Pages.cardinal,
-          changePage: widget.changePage,
-          size: mediaQuerySize
-        ),
-        !(stage == MatchStage.submit)
-            ? FutureBuilder(
-                future: _setData(),
-                builder: (BuildContext context, AsyncSnapshot snapshot) {
-                  return snapshot.hasData
-                      ? _buildBody(mediaQuerySize, Colors.black)
-                      : const CircularProgressIndicator();
-                })
-            : Padding(
-                padding: EdgeInsets.all(mediaQuerySize.width/40.0),
-                child: QrImage(data: widget.data!.stringfy()),
-              ),
-        CardinalFooter(
-          stage: stage,
-          nextPage: (_nextPageExists() ? _nextPage : null),
-          previousPage: (_previousPageExists() ? _previousPage : null),
-          size: mediaQuerySize,
-        ),
-      ],
-    ));
+      body: 
+      FutureBuilder(
+        future: _setData(),
+        builder: (BuildContext context, AsyncSnapshot snapshot) {
+          return snapshot.hasData
+            ? 
+            ListView(
+              children: [
+                HeaderTitle(size: mediaQuerySize),
+                HeaderNav(
+                  currentPage: Pages.cardinal,
+                  changePage: widget.changePage,
+                  size: mediaQuerySize
+                ),
+                _buildBody(mediaQuerySize, Colors.black),
+                CardinalFooter(
+                  stage: stage,
+                  nextPage: (_nextPageExists() ? _nextPage : null),
+                  previousPage: (_previousPageExists() ? _previousPage : null),
+                  size: mediaQuerySize,
+                  changePage: widget.changePage,
+                  data: widget.data!
+                ),
+              ],
+            )
+          : const CircularProgressIndicator();
+      }),
+    );
   }
 }

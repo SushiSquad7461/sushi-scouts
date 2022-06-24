@@ -1,20 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:sushi_scouts/src/logic/enums/Pages.dart';
 
 import '../../../logic/data/cardinalData.dart';
 import '../footer.dart';
+import 'package:sushi_scouts/src/views/ui/QRScreen.dart';
 
 class CardinalFooter extends StatelessWidget {
   final bool Function(MatchStage)? nextPage;
   final bool Function(MatchStage)? previousPage;
   final MatchStage? stage;
   final Size size;
+  final Function(dynamic, {CardinalData? previousData}) changePage;
+  final CardinalData data;
   static const Map<MatchStage, String> pageNames = {
     MatchStage.pregame: "Info",
     MatchStage.auto: "Auto",
     MatchStage.teleop: "Teleop",
     MatchStage.endgame: "Endgame",
-    MatchStage.submit: "Submit"
   };
 
   void nextPagePressed() {
@@ -29,7 +32,7 @@ class CardinalFooter extends StatelessWidget {
     }
   }
 
-  const CardinalFooter({Key? key, this.stage, this.nextPage, this.previousPage, required this.size})
+  const CardinalFooter({Key? key, this.stage, this.nextPage, this.previousPage, required this.size, required this.changePage, required this.data})
       : super(key: key);
 
   @override
@@ -39,8 +42,7 @@ class CardinalFooter extends StatelessWidget {
     return Padding(
         padding: const EdgeInsets.all(0),
         child: Column(children: [
-          !(stage == MatchStage.submit)
-              ? (Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+          Row(mainAxisAlignment: MainAxisAlignment.center, children: [
                   IconButton(
                     padding: const EdgeInsets.all(0),
                     onPressed: previousPagePressed,
@@ -84,7 +86,10 @@ class CardinalFooter extends StatelessWidget {
                             borderRadius: BorderRadius.circular(20*swu),
                           ),
                           child: TextButton(
-                            onPressed: nextPagePressed,
+                            onPressed: () { Navigator.push(
+                                context,
+                                MaterialPageRoute(builder: (context) => QRScreen(changePage: changePage, previousPage: Pages.cardinal, cardinalData: data ))
+                              );},
                             child: Text(
                               'Submit',
                               style: TextStyle(
@@ -94,30 +99,8 @@ class CardinalFooter extends StatelessWidget {
                                   fontWeight: FontWeight.bold),
                             ),
                           )))
-                ]))
-              : Padding(
-                  padding: EdgeInsets.all(20*swu),
-                  child: Container(
-                      width: 200*swu,
-                      height: 60*swu,
-                      decoration: BoxDecoration(
-                        border: Border.all(color: Colors.black, width: 4),
-                        color: const Color(0xfafafa),
-                        borderRadius: BorderRadius.circular(20*swu),
-                      ),
-                      child: TextButton(
-                        onPressed: nextPagePressed,
-                        child: Text(
-                          'Next Match',
-                          style: TextStyle(
-                              fontSize: 25*swu,
-                              fontFamily: "Sushi",
-                              color: Colors.black,
-                              fontWeight: FontWeight.bold),
-                        ),
-                      )),
-                ),
-          Footer(pageTitle: pageNames[stage!]!, size: size)
+                ]),
+            Footer(pageTitle: pageNames[stage!]!, size: size)
         ]));
   }
 }

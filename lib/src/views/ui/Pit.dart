@@ -4,12 +4,13 @@ import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:sushi_scouts/src/logic/enums/Pages.dart';
 
+import '../../logic/data/cardinalData.dart';
 import '../util/Header/HeaderTitle.dart';
 import '../util/footer.dart';
 import '../util/header/HeaderNav.dart';
 
 class Pit extends StatelessWidget {
-  final ValueChanged changePage;
+  final Function(dynamic, {CardinalData? previousData}) changePage;
   const Pit({Key? key, required this.changePage}) : super(key: key);
 
   @override

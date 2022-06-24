@@ -54,7 +54,7 @@ class Data {
   }
 }
 
-enum MatchStage { pregame, auto, teleop, endgame, submit }
+enum MatchStage { pregame, auto, teleop, endgame }
 
 class CardinalData extends ScoutingData {
   Map<String, Data> _pregameData;
