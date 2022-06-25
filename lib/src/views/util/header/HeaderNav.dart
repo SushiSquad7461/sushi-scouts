@@ -37,7 +37,7 @@ class HeaderNav extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              for (final page in Pages.values) if (page != Pages.login) Padding(
+              for (final page in Pages.values) if (page != Pages.login && page != Pages.qrcode) Padding(
                 padding: EdgeInsets.only(left: 0, right: 0, top: 8*shu, bottom: 8*shu),
                 child: GestureDetector(
                   onTap: () => changePage(page),

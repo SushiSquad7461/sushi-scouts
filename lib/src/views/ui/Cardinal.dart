@@ -7,6 +7,7 @@ import 'package:sushi_scouts/src/logic/enums/Pages.dart';
 import 'package:sushi_scouts/src/views/util/Cardinal/CardinalFooter.dart';
 
 import '../util/Header/HeaderTitle.dart';
+import '../util/components/Dropdown.dart';
 import '../util/footer.dart';
 import '../util/header/HeaderNav.dart';
 import 'package:sushi_scouts/src/logic/data/cardinalData.dart';
@@ -27,8 +28,8 @@ class Cardinal extends StatefulWidget {
     MatchStage.teleop,
     MatchStage.endgame,
   ];
-  final Map allComponents = {"number input": NumberInput.create};
-  final Function(dynamic, {CardinalData? previousData}) changePage;
+  final Map allComponents = {"number input": NumberInput.create, "dropdown": Dropdown.create};
+  final Function(dynamic, {CardinalData? previousData, Pages? previousPage}) changePage;
   Cardinal({Key? key, required this.changePage, this.previousData}) : super(key: key);
   @override
   CardinalState createState() => CardinalState(MatchStage.pregame);
@@ -37,7 +38,7 @@ class Cardinal extends StatefulWidget {
 class CardinalState extends State<Cardinal> {
   List<String>? names;
   List<String>? components;
-  List<List<dynamic>?>? values;
+  List<List<String>?>? values;
   int index = 0;
   MatchStage stage;
 

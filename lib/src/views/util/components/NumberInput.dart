@@ -20,7 +20,7 @@ class NumberInput extends StatelessWidget {
         padding:
             EdgeInsets.only(left: width/60, right: width/60, top: width/30, bottom: width/30),
         child: SizedBox(
-          width: width*0.6,
+          width: width*0.9,
           child: Column(
             children: [
             Row(

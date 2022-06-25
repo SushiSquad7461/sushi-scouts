@@ -3,5 +3,6 @@ enum Pages {
   ordinal,
   cardinal,
   pit,
-  settings
+  settings,
+  qrcode
 }

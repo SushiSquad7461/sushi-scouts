@@ -11,7 +11,7 @@ class CardinalFooter extends StatelessWidget {
   final bool Function(MatchStage)? previousPage;
   final MatchStage? stage;
   final Size size;
-  final Function(dynamic, {CardinalData? previousData}) changePage;
+  final Function(dynamic, {CardinalData? previousData, Pages? previousPage}) changePage;
   final CardinalData data;
   static const Map<MatchStage, String> pageNames = {
     MatchStage.pregame: "Info",
@@ -86,10 +86,7 @@ class CardinalFooter extends StatelessWidget {
                             borderRadius: BorderRadius.circular(20*swu),
                           ),
                           child: TextButton(
-                            onPressed: () { Navigator.push(
-                                context,
-                                MaterialPageRoute(builder: (context) => QRScreen(changePage: changePage, previousPage: Pages.cardinal, cardinalData: data ))
-                              );},
+                            onPressed: () => changePage(Pages.qrcode, previousData: data, previousPage: Pages.cardinal),
                             child: Text(
                               'Submit',
                               style: TextStyle(

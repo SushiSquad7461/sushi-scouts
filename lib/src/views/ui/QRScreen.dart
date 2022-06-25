@@ -10,7 +10,7 @@ import '../util/header/HeaderNav.dart';
 import 'Cardinal.dart';
 
 class QRScreen extends StatelessWidget {
-  final Function(dynamic, {CardinalData? previousData}) changePage;
+  final Function(dynamic, {CardinalData? previousData, Pages? previousPage}) changePage;
   final Pages previousPage;
   final CardinalData? cardinalData;
   String? stringifiedData;
@@ -47,11 +47,7 @@ class QRScreen extends StatelessWidget {
                         borderRadius: BorderRadius.circular(20*swu),
                       ),
                       child: TextButton(
-                        onPressed: () {
-                          Navigator.push(
-                                context,
-                                MaterialPageRoute(builder: (context) => Cardinal(changePage: changePage, previousData: cardinalData,))
-                          );},  
+                        onPressed: () => changePage(Pages.cardinal),                        
                         child: Text(
                           'Next Match',
                           style: TextStyle(

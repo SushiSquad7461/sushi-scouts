@@ -16,7 +16,7 @@ class Data {
   Data(this.type, {this.words = "", this.num = 0, this.setByUser=false});
   void set({double number = 0, String string = "", bool setByUser=false}) {
     this.setByUser=setByUser;
-    if (type == "String") {
+    if (type == "string") {
       words = string;
     }
     if (type == "number") {
@@ -228,34 +228,59 @@ class CardinalData extends ScoutingData {
     return empty;
   }
 
-  List<List<dynamic>?> getValues(MatchStage stage) {
-    List<List<dynamic>?> values = [];
+  List<List<String>?> getValues(MatchStage stage) {
+    List<List<String>?> values = [];
+    List<String> componentValues = [];
     switch (stage) {
       case MatchStage.pregame:
         {
-          for (dynamic item in pregameConfig) {
-            values.add(item["values"]);
+          for (dynamic list in pregameConfig) {
+            componentValues = [];
+            if(list["values"]!=null){
+              for(dynamic item in list["values"]) {
+                componentValues.add(item.toString());
+              }
+            }
+            values.add(componentValues);
           }
         }
         break;
       case MatchStage.auto:
         {
-          for (dynamic item in autoConfig) {
-            values.add(item["values"]);
+          for (dynamic list in autoConfig) {
+            componentValues = [];
+            if(list["values"]!=null){
+              for(dynamic item in list["values"]) {
+                componentValues.add(item.toString());
+              }
+            }
+            values.add(componentValues);
           }
         }
         break;
       case MatchStage.teleop:
         {
-          for (dynamic item in teleopConfig) {
-            values.add(item["values"]);
+          for (dynamic list in teleopConfig) {
+            componentValues = [];
+            if(list["values"]!=null){
+              for(dynamic item in list["values"]) {
+                componentValues.add(item.toString());
+              }
+            }
+            values.add(componentValues);
           }
         }
         break;
       case MatchStage.endgame:
         {
-          for (dynamic item in endgameConfig) {
-            values.add(item["values"]);
+          for (dynamic list in endgameConfig) {
+            componentValues = [];
+            if(list["values"]!=null){
+              for(dynamic item in list["values"]) {
+                componentValues.add(item.toString());
+              }
+            }
+            values.add(componentValues);
           }
         }
     }
