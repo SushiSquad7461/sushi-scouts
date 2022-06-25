@@ -37,6 +37,7 @@ class CheckboxState extends State<CheckboxInput>{
   @override
   Widget build(BuildContext context) {
     double width = widget.width;
+    widget.data.set(string: widget.checked.toString(), setByUser: true);
     return Padding(
         padding:
             EdgeInsets.only(left: width/60, right: width/60, top: width/30, bottom: width/30),

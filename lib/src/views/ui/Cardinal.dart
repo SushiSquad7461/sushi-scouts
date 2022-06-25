@@ -6,6 +6,7 @@ import 'package:qr_flutter/qr_flutter.dart';
 import 'package:sushi_scouts/src/logic/enums/Pages.dart';
 import 'package:sushi_scouts/src/views/util/Cardinal/CardinalFooter.dart';
 import 'package:sushi_scouts/src/views/util/components/Checkbox.dart';
+import 'package:sushi_scouts/src/views/util/components/Increment.dart';
 
 import '../util/Header/HeaderTitle.dart';
 import '../util/components/Dropdown.dart';
@@ -29,7 +30,7 @@ class Cardinal extends StatefulWidget {
     MatchStage.teleop,
     MatchStage.endgame,
   ];
-  final Map allComponents = {"number input": NumberInput.create, "dropdown": Dropdown.create, "checkbox": CheckboxInput.create};
+  final Map allComponents = {"number input": NumberInput.create, "dropdown": Dropdown.create, "checkbox": CheckboxInput.create, "increment": Increment.create};
   final Function(dynamic, {CardinalData? previousData, Pages? previousPage}) changePage;
   Cardinal({Key? key, required this.changePage, this.previousData}) : super(key: key);
   @override
