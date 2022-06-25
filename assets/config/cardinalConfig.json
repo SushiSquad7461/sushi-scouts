@@ -26,12 +26,12 @@
     "auto" : [
         {
             "name" : "No Show",
-            "type" : "boolean",
+            "type" : "string",
             "component" : "checkbox"
         },
         {
             "name" : "Tarmac",
-            "type" : "boolean",
+            "type" : "string",
             "component" : "checkbox"
         },
         {
