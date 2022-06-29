@@ -4,18 +4,18 @@ import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:sushi_scouts/src/logic/color/HexColor.dart';
-import 'package:sushi_scouts/src/logic/enums/Pages.dart';
 import 'package:enum_to_string/enum_to_string.dart';
-
-import '../../../logic/data/cardinalData.dart';
+import 'package:sushi_scouts/src/logic/data/Data.dart';
+import '../../../logic/data/ScoutingData.dart';
 
 class HeaderNav extends StatelessWidget {
 
-  final Pages currentPage;
-  final Function(dynamic, {CardinalData? previousData}) changePage;
+  final String currentPage;
+  final Function(String newPage, String previousPage, {ScoutingData? previousData}) changePage;
   final Size size;
+  final List<String> screens;
 
-  HeaderNav({Key? key, required this.currentPage, required this.changePage, required this.size}) : super(key: key);
+  HeaderNav({Key? key, required this.currentPage, required this.changePage, required this.size, required this.screens}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -37,12 +37,12 @@ class HeaderNav extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              for (final page in Pages.values) if (page != Pages.login && page != Pages.qrcode) Padding(
+              for (final String screen in screens) Padding(
                 padding: EdgeInsets.only(left: 0, right: 0, top: 8*shu, bottom: 8*shu),
                 child: GestureDetector(
-                  onTap: () => changePage(page),
+                  onTap: () => changePage(screen, currentPage),
                   child: Container(
-                    decoration: ((currentPage == page) ?  BoxDecoration(
+                    decoration: ((currentPage == screen) ?  BoxDecoration(
                         border: Border.all(color: HexColor("#56CBF9"), width: 5*swu),
                         borderRadius: BorderRadius.all(Radius.circular(5*swu)),
                       ) :  BoxDecoration(
@@ -52,7 +52,7 @@ class HeaderNav extends StatelessWidget {
                     child: Padding(
                       padding: EdgeInsets.only(left: 4*swu, right: 4*swu, top: 2*shu, bottom: 2*shu),
                       child: Text(
-                        EnumToString.convertToString(page).toUpperCase(),
+                        screen.toUpperCase(),
                         style: GoogleFonts.mohave(
                           textStyle: _pageStyle
                         ),

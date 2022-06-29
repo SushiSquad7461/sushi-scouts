@@ -1,10 +1,8 @@
 import "package:flutter/material.dart";
-import 'package:sushi_scouts/src/logic/data/cardinalData.dart';
-import 'package:sushi_scouts/src/logic/enums/Pages.dart';
-import 'package:sushi_scouts/src/views/ui/Cardinal.dart';
+import 'package:sushi_scouts/src/logic/data/Data.dart';
+import 'package:sushi_scouts/src/logic/data/ScoutingData.dart';
+import 'package:sushi_scouts/src/views/ui/Scouting.dart';
 import 'package:sushi_scouts/src/views/ui/Login.dart';
-import 'package:sushi_scouts/src/views/ui/Ordinal.dart';
-import 'package:sushi_scouts/src/views/ui/Pit.dart';
 import 'package:sushi_scouts/src/views/ui/QRScreen.dart';
 import 'package:sushi_scouts/src/views/ui/Settings.dart';
 import 'package:sushi_scouts/src/views/util/footer.dart';
@@ -22,52 +20,77 @@ class SushiScouts extends StatefulWidget {
 
 class _SushiScoutsState extends State<SushiScouts> {
   // TODO: CHANGE VAL TO Pages.login WHEN LOGIN PAGE IS MADE
-  Pages _currentPage = Pages.cardinal;
-  Pages _previousPage = Pages.cardinal;
-  CardinalData? previousCardinalData;
+  String _currentPage = "cardinal";
+  String _previousPage = "cardinal";
+  Map<String, ScoutingData?> previousData = {};
+  List<String>? screens;
   final  GlobalKey<NavigatorState> navigatorKey =  GlobalKey<NavigatorState>();
 
-  void setCurrentPage(newPage, {CardinalData? previousData=null, Pages? previousPage = null}) {
-    print("changing");
+  Future<bool> _setScreens() async{
+    screens = await ScoutingData.getScreens();
+    for(String screen in screens!) {
+      previousData[screen] = null;
+    }
+    return true;
+  }
+
+  void setCurrentPage(String newPage, String previousPage, {ScoutingData? previousData=null}) {
     if(previousData != null){
-      print("setting");
-      previousCardinalData=previousData;
-      print(previousCardinalData!.stringfy());
+      this.previousData[previousPage] = previousData;
     }
     if(previousPage != null) {
       _previousPage = previousPage;
     }
     setState(() {
       _currentPage = newPage;
-      print(_currentPage.toString());
     });
     build(context);
   }
 
-  late final Map<Pages, MaterialPage> _pages = {
-    Pages.login: const MaterialPage(child: Login()),
-    Pages.cardinal: MaterialPage(child: Cardinal(changePage: setCurrentPage, previousData: previousCardinalData)),
-    Pages.ordinal: MaterialPage(child: Ordinal(changePage: setCurrentPage,)),
-    Pages.pit: MaterialPage(child: Pit(changePage: setCurrentPage,)),
-    Pages.settings: MaterialPage(child: Settings(changePage: setCurrentPage,)),
-    Pages.qrcode: MaterialPage(child: QRScreen(changePage: setCurrentPage, previousPage: _previousPage, cardinalData: previousCardinalData))
-  };
-
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: Navigator(
+      home: screens==null ?
+      FutureBuilder(
+        future: _setScreens(),
+        builder: (BuildContext context, AsyncSnapshot snapshot) {
+          return snapshot.hasData ?
+            Navigator(
+              key: navigatorKey,
+              pages: <Page<void>>[
+                if(_currentPage=="qrcode")
+                  MaterialPage(child: QRScreen(changePage: setCurrentPage, previousPage: _previousPage, data: previousData[_previousPage], screens: screens!))
+                else if(_currentPage=="settings")
+                  MaterialPage(child: Settings(changePage: setCurrentPage, screens: screens!))
+                else if(_currentPage=="login")
+                  MaterialPage(child: Login())
+                else if(screens!.contains(_currentPage))
+                   MaterialPage(child: Scouting(screen: _currentPage, changePage: setCurrentPage, previousData: previousData[_currentPage], screens: screens!))
+                else
+                  MaterialPage(child: Text("page does not exist"))
+              ],
+              onPopPage: (route, result) {
+                return route.didPop(result);
+              }) : 
+            const CircularProgressIndicator();
+        }) : 
+      Navigator(
         key: navigatorKey,
         pages: <Page<void>>[
-          if(_currentPage==Pages.qrcode)
-            MaterialPage(child: QRScreen(changePage: setCurrentPage, previousPage: _previousPage, cardinalData: previousCardinalData))
+          if(_currentPage=="qrcode")
+            MaterialPage(child: QRScreen(changePage: setCurrentPage, previousPage: _previousPage, data: previousData[_previousPage], screens: screens!))
+          else if(_currentPage=="settings")
+            MaterialPage(child: Settings(changePage: setCurrentPage, screens: screens!))
+          else if(_currentPage=="login")
+            MaterialPage(child: Login())
+          else if(screens!.contains(_currentPage))
+              MaterialPage(child: Scouting(screen: _currentPage, changePage: setCurrentPage, previousData: previousData[_currentPage], screens: screens!))
           else
-            _pages[_currentPage]!
+            MaterialPage(child: Text("page does not exist"))
         ],
         onPopPage: (route, result) {
           return route.didPop(result);
-        },
+        }
       )
     );
   }

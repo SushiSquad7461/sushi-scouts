@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:sushi_scouts/src/logic/data/cardinalData.dart';
+import 'package:sushi_scouts/src/logic/data/Data.dart';
 
 class NumberInput extends StatelessWidget {
   final String name;
@@ -31,7 +31,7 @@ class NumberInput extends StatelessWidget {
                     fontFamily: "Sushi",
                     fontSize: width/10,
                     fontWeight: FontWeight.bold,
-                    color: color
+                    color:  color
                   )
               ),
               Expanded(

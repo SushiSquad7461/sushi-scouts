@@ -1,38 +1,34 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:sushi_scouts/src/logic/enums/Pages.dart';
-
-import '../../../logic/data/cardinalData.dart';
+import 'package:sushi_scouts/src/logic/data/Data.dart';
+import 'package:sushi_scouts/src/logic/data/ScoutingData.dart';
 import '../footer.dart';
 import 'package:sushi_scouts/src/views/ui/QRScreen.dart';
 
-class CardinalFooter extends StatelessWidget {
-  final bool Function(MatchStage)? nextPage;
-  final bool Function(MatchStage)? previousPage;
-  final MatchStage? stage;
+class ScoutingFooter extends StatelessWidget {
+  final bool Function(String)? nextPage;
+  final bool Function(String)? previousPage;
+  final String stage;
   final Size size;
-  final Function(dynamic, {CardinalData? previousData, Pages? previousPage}) changePage;
-  final CardinalData data;
-  static const Map<MatchStage, String> pageNames = {
-    MatchStage.pregame: "Info",
-    MatchStage.auto: "Auto",
-    MatchStage.teleop: "Teleop",
-    MatchStage.endgame: "Endgame",
-  };
-
+  final Function(String newPage, String previousPage, {ScoutingData? previousData}) changePage;
+  final ScoutingData data;
+  final String screen;
+  final List<String> stages;
+  
   void nextPagePressed() {
     if (!(nextPage == null)) {
-      nextPage!(stage!);
+      print(stage);
+      nextPage!(stage);
     }
   }
 
   void previousPagePressed() {
     if (!(previousPage == null)) {
-      previousPage!(stage!);
+      previousPage!(stage);
     }
   }
 
-  const CardinalFooter({Key? key, this.stage, this.nextPage, this.previousPage, required this.size, required this.changePage, required this.data})
+  const ScoutingFooter({Key? key, required this.stage, this.nextPage, this.previousPage, required this.size, required this.changePage, required this.data, required this.stages, required this.screen})
       : super(key: key);
 
   @override
@@ -55,7 +51,7 @@ class CardinalFooter extends StatelessWidget {
                       semanticLabel: 'Back Arrow',
                     ),
                   ),
-                  !(stage == MatchStage.endgame)
+                  !(stage == stages[stages.length-1])
                       ? (Row(
                           children: [
                             SizedBox(
@@ -86,7 +82,7 @@ class CardinalFooter extends StatelessWidget {
                             borderRadius: BorderRadius.circular(20*swu),
                           ),
                           child: TextButton(
-                            onPressed: () => changePage(Pages.qrcode, previousData: data, previousPage: Pages.cardinal),
+                            onPressed: () => changePage("qrcode", screen, previousData: data),
                             child: Text(
                               'Submit',
                               style: TextStyle(
@@ -97,7 +93,7 @@ class CardinalFooter extends StatelessWidget {
                             ),
                           )))
                 ]),
-            Footer(pageTitle: pageNames[stage!]!, size: size)
+            Footer(pageTitle: stage, size: size)
         ]));
   }
 }

@@ -1,0 +1,115 @@
+{
+    "cardinal":{
+        "pregame" : [
+            {
+                "properties":{
+                    "color":"0xff76a2",
+                    "rows":2,
+                    "textColor":"000000",
+                    "footer":"Info"
+                },
+                "components":[
+                    {
+                        "name" : "match #",
+                        "type" : "number",
+                        "component" : "number input"
+                    },
+                    {
+                        "name" : "station",
+                        "type" : "string",
+                        "component" : "dropdown",
+                        "values" : ["R1", "R2", "R3", "B1", "B2", "B3"]
+                    },
+                    {
+                        "name" : "team #",
+                        "type" : "number",
+                        "component" : "number input"
+                    },
+                    {
+                        "name" : "match type",
+                        "type" : "string",
+                        "component" : "dropdown",
+                        "values" : ["Quals", "Elims", "Practice"]
+                    }
+                ]
+            }
+        ],
+        "auto" : [
+            {
+                "properties":{
+                    "color":"0x63cff9",
+                    "rows":2,
+                    "textColor":"000000",
+                    "footer":"Info"
+                },
+                "components":[
+                    {
+                        "name" : "No Show",
+                        "type" : "string",
+                        "component" : "checkbox"
+                    },
+                    {
+                        "name" : "Tarmac",
+                        "type" : "string",
+                        "component" : "checkbox"
+                    },
+                    {
+                        "name" : "Low Hub",
+                        "type" : "number",
+                        "component" : "increment"
+                    },
+                    {
+                        "name" : "High Hub",
+                        "type" : "number",
+                        "component" : "increment"
+                    },
+                    {
+                        "name" : "HP",
+                        "type" : "number",
+                        "component" : "increment"
+                    }
+                ]
+            }
+        ],
+        "teleop" : [
+            {
+                "properties":{
+                    "color":"0x81f4e1",
+                    "rows":2,
+                    "textColor":"000000",
+                    "footer":"Info"
+                },
+                "components":[
+                    {
+                        "name" : "Low Hub",
+                        "type" : "number",
+                        "component" : "increment"
+                    },
+                    {
+                        "name" : "High Hub",
+                        "type" : "number",
+                        "component" : "increment"
+                    }       
+                ]
+            }
+        ],
+        "endgame" : [
+            {
+                "properties":{
+                    "color":"0xff76a2",
+                    "rows":1,
+                    "textColor":"000000",
+                    "footer":"Info"
+                },
+                "components":[
+                    {
+                        "name" : "Climb Level",
+                        "type" : "string",
+                        "component" : "dropdown",
+                        "values" : ["No Climb", "Low Climb", "Mid Climb", "High Climb", "Traversal"]
+                    }  
+                ]
+            }
+        ]
+    }
+}

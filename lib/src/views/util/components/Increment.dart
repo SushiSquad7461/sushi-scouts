@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:sushi_scouts/src/logic/data/cardinalData.dart';
+import 'package:sushi_scouts/src/logic/data/Data.dart';
 
 class Increment extends StatefulWidget {
   final String name;
@@ -8,14 +8,14 @@ class Increment extends StatefulWidget {
   final Data defaultValue;
   final Color color;
   final double width;
-  final List<String> values;
+  final List<String>? values;
   int value = 0;
-  Increment({Key? key, required this.name, required this.data, required this.defaultValue, required this.color, required this.width, required this.values})
+  Increment({Key? key, required this.name, required this.data, required this.defaultValue, required this.color, required this.width, this.values})
     : super(key: key){
       value = double.parse(defaultValue.get()).floor();
     }
   static Increment create(String name, Data data, List<String>? values, Data defaultValue, Color color, double width) {
-    return Increment(name: name, data: data, width: width, defaultValue: defaultValue, color: color, values: values!);
+    return Increment(name: name, data: data, width: width, defaultValue: defaultValue, color: color, values: values);
   }
   @override 
   IncrementState createState() => IncrementState();

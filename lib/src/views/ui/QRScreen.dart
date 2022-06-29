@@ -1,24 +1,23 @@
 import 'package:enum_to_string/enum_to_string.dart';
 import 'package:flutter/material.dart';
 import 'package:qr_flutter/qr_flutter.dart';
-import 'package:sushi_scouts/src/logic/data/cardinalData.dart';
-
-import '../../logic/enums/Pages.dart';
+import 'package:sushi_scouts/src/logic/data/ScoutingData.dart';
 import '../util/Header/HeaderTitle.dart';
 import '../util/Footer.dart';
 import '../util/header/HeaderNav.dart';
-import 'Cardinal.dart';
+import 'Scouting.dart';
 
 class QRScreen extends StatelessWidget {
-  final Function(dynamic, {CardinalData? previousData, Pages? previousPage}) changePage;
-  final Pages previousPage;
-  final CardinalData? cardinalData;
+  final Function(String newPage, String previousPage, {ScoutingData? previousData}) changePage;  
+  final String previousPage;
+  final ScoutingData? data;
   String? stringifiedData;
+  List<String> screens;
 
-  QRScreen({Key? key, required this.changePage, required this.previousPage, this.cardinalData}) : super(key: key);
+  QRScreen({Key? key, required this.changePage, required this.previousPage, this.data, required this.screens}) : super(key: key);
 
   void convertData(){
-    stringifiedData = cardinalData!.stringfy();
+    stringifiedData = data!.stringfy();
   }
 
   @override
@@ -31,7 +30,7 @@ class QRScreen extends StatelessWidget {
         body: ListView(
           children: [
             HeaderTitle(size: size),
-            HeaderNav(currentPage: previousPage, changePage: changePage, size: size),
+            HeaderNav(currentPage: previousPage, changePage: changePage, size: size, screens: screens),
             SizedBox(
               height: (size.height * 0.5+72000.0/size.width),
               child: QrImage(data: stringifiedData!),
@@ -47,7 +46,7 @@ class QRScreen extends StatelessWidget {
                         borderRadius: BorderRadius.circular(20*swu),
                       ),
                       child: TextButton(
-                        onPressed: () => changePage(Pages.cardinal),                        
+                        onPressed: () => changePage(previousPage, previousPage),                        
                         child: Text(
                           'Next Match',
                           style: TextStyle(
@@ -58,7 +57,7 @@ class QRScreen extends StatelessWidget {
                         ),
                       )),
                 ),
-            Footer(pageTitle: EnumToString.convertToString(previousPage).toUpperCase(), size: size),
+            Footer(pageTitle: previousPage.toUpperCase(), size: size),
           ],
         )
     );

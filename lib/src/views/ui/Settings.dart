@@ -2,16 +2,15 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
-import 'package:sushi_scouts/src/logic/enums/Pages.dart';
-
-import '../../logic/data/cardinalData.dart';
+import 'package:sushi_scouts/src/logic/data/ScoutingData.dart';
 import '../util/Header/HeaderTitle.dart';
 import '../util/footer.dart';
 import '../util/header/HeaderNav.dart';
 
 class Settings extends StatelessWidget {
-  final Function(dynamic, {CardinalData? previousData}) changePage;
-  const Settings({Key? key, required this.changePage}) : super(key: key);
+  final Function(String newPage, String previousPage, {ScoutingData? previousData}) changePage;
+  final List<String> screens;
+  const Settings({Key? key, required this.changePage, required this.screens}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +19,7 @@ class Settings extends StatelessWidget {
         body: ListView(
           children: [
             HeaderTitle(size: size),
-            HeaderNav(currentPage: Pages.settings, changePage: changePage, size: size),
+            HeaderNav(currentPage: "settings", changePage: changePage, size: size, screens: screens),
             Footer(pageTitle: "Settings", size: size,)
           ],
         )

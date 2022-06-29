@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:sushi_scouts/src/logic/data/cardinalData.dart';
+import 'package:sushi_scouts/src/logic/data/Data.dart';
 
 class CheckboxInput extends StatefulWidget {
   final String name;
@@ -8,12 +8,12 @@ class CheckboxInput extends StatefulWidget {
   final Data defaultValue;
   final Color color;
   final double width;
-  final List<String> values;
+  final List<String>? values;
   bool checked = false;
-  CheckboxInput({Key? key, required this.name, required this.data, required this.defaultValue, required this.color, required this.width, required this.values})
+  CheckboxInput({Key? key, required this.name, required this.data, required this.defaultValue, required this.color, required this.width, this.values})
     : super(key: key);
   static CheckboxInput create(String name, Data data, List<String>? values, Data defaultValue, Color color, double width) {
-    return CheckboxInput(name: name, data: data, width: width, defaultValue: defaultValue, color: color, values: values!);
+    return CheckboxInput(name: name, data: data, width: width, defaultValue: defaultValue, color: color, values: values);
   }
   @override 
   CheckboxState createState() => CheckboxState();
