@@ -20,8 +20,8 @@ class SushiScouts extends StatefulWidget {
 
 class _SushiScoutsState extends State<SushiScouts> {
   // TODO: CHANGE VAL TO Pages.login WHEN LOGIN PAGE IS MADE
-  String _currentPage = "cardinal";
-  String _previousPage = "cardinal";
+  String _currentPage = "ordinal";
+  String _previousPage = "ordinal";
   Map<String, ScoutingData?> previousData = {};
   List<String>? screens;
   final  GlobalKey<NavigatorState> navigatorKey =  GlobalKey<NavigatorState>();
@@ -49,6 +49,7 @@ class _SushiScoutsState extends State<SushiScouts> {
 
   @override
   Widget build(BuildContext context) {
+    print(_currentPage);
     return MaterialApp(
       home: screens==null ?
       FutureBuilder(

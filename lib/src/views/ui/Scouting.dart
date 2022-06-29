@@ -18,7 +18,7 @@ import 'package:sushi_scouts/src/views/util/components/NumberInput.dart';
 class Scouting extends StatefulWidget {
   ScoutingData? data;
   ScoutingData? previousData;
-  List<String>? stages;
+  List<String> stages = [];
   String screen;
   List<String> screens;
   final Map allComponents = {"number input": NumberInput.create, "dropdown": Dropdown.create, "checkbox": CheckboxInput.create, "increment": Increment.create};
@@ -35,6 +35,9 @@ class ScoutingState extends State<Scouting> {
   String stage = "uninitialized";
 
   bool _nextPageExists() {
+    print(widget.screen);
+    print(widget.data);
+    print(stage);
     if (widget.stages!.indexOf(stage) + 1 >= widget.stages!.length) {
       return false;
     }
@@ -86,6 +89,12 @@ class ScoutingState extends State<Scouting> {
     data = widget.data!.data;
     components = widget.data!.components;
     return true;
+  }
+
+  void setStage() {
+    sections = widget.data!.sections[stage];
+    data = widget.data!.data;
+    components = widget.data!.components;
   }
 
   Widget _buildComponents(double width, Color color, int start, int end, int rows, Color textColor) {
@@ -146,43 +155,88 @@ class ScoutingState extends State<Scouting> {
   @override
   Widget build(BuildContext context) {
     final Size mediaQuerySize = MediaQuery.of(context).size;
-    print(mediaQuerySize.height);
-    print(mediaQuerySize.width);
+    if(widget.data!=null) {
+      setStage();
+    }
     return Scaffold(
-      body: 
+      body: widget.data == null ?
       FutureBuilder(
         future: _setData(),
         builder: (BuildContext context, AsyncSnapshot snapshot) {
-          return snapshot.hasData
-            ? 
-            ListView(
-              children: [
-                HeaderTitle(size: mediaQuerySize),
-                HeaderNav(
-                  currentPage: widget.screen,
-                  changePage: widget.changePage,
-                  size: mediaQuerySize,
-                  screens: widget.screens
-                ),
-                SizedBox(
-                  width: mediaQuerySize.width,
-                  height: mediaQuerySize.height*0.4+135000/mediaQuerySize.width,
-                  child: _buildBody(mediaQuerySize),
-                ),                
-                ScoutingFooter(
-                  stage: stage,
-                  nextPage: (_nextPageExists() ? _nextPage : null),
-                  previousPage: (_previousPageExists() ? _previousPage : null),
-                  size: mediaQuerySize,
-                  changePage: widget.changePage,
-                  data: widget.data!,
-                  screen: widget.screen,
-                  stages: widget.stages!
-                ),
-              ],
-            )
-          : const CircularProgressIndicator();
-      }),
+          if (snapshot.connectionState == ConnectionState.done) {
+              // If we got an error
+              if (snapshot.hasError) {
+                return Center(
+                  child: Text(
+                    '${snapshot.error} occurred',
+                    style: TextStyle(fontSize: 18),
+                  ),
+                );
+ 
+                // if we got our data
+              } else if (snapshot.hasData) {
+                // Extracting data from snapshot object
+                final data = snapshot.data;
+                return ListView(
+                  children: [
+                    HeaderTitle(size: mediaQuerySize),
+                    HeaderNav(
+                      currentPage: widget.screen,
+                      changePage: widget.changePage,
+                      size: mediaQuerySize,
+                      screens: widget.screens
+                    ),
+                    SizedBox(
+                      width: mediaQuerySize.width,
+                      height: mediaQuerySize.height*0.4+135000/mediaQuerySize.width,
+                      child: _buildBody(mediaQuerySize),
+                    ),                
+                    ScoutingFooter(
+                      stage: stage,
+                      nextPage: (_nextPageExists() ? _nextPage : null),
+                      previousPage: (_previousPageExists() ? _previousPage : null),
+                      size: mediaQuerySize,
+                      changePage: widget.changePage,
+                      data: widget.data!,
+                      screen: widget.screen,
+                      stages: widget.stages!
+                    ),
+                  ],
+                );
+              }
+            }
+            // Displaying LoadingSpinner to indicate waiting state
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          }, 
+      ) :
+      ListView(
+        children: [
+          HeaderTitle(size: mediaQuerySize),
+          HeaderNav(
+            currentPage: widget.screen,
+            changePage: widget.changePage,
+            size: mediaQuerySize,
+            screens: widget.screens
+          ),
+          SizedBox(
+            width: mediaQuerySize.width,
+            height: mediaQuerySize.height*0.4+135000/mediaQuerySize.width,
+            child: _buildBody(mediaQuerySize),
+          ),                
+          ScoutingFooter(
+            stage: stage,
+            nextPage: (_nextPageExists() ? _nextPage : null),
+            previousPage: (_previousPageExists() ? _previousPage : null),
+            size: mediaQuerySize,
+            changePage: widget.changePage,
+            data: widget.data!,
+            screen: widget.screen,
+            stages: widget.stages!
+          ),
+        ],
+      )
     );
   }
 }
