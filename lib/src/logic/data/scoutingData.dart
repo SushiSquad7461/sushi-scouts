@@ -6,12 +6,12 @@ import 'dart:convert';
 
 const String CONFIG_PATH = "assets/config/config.json";
 
-class Component {
+class ComponentDetails {
   String name;
   List<String>? values;
   String component;
   String type;
-  Component(this.name, this.type, this.component, {this.values=null});
+  ComponentDetails(this.name, this.type, this.component, {this.values=null});
 }
 
 class Section {
@@ -25,7 +25,7 @@ class Section {
 }
 
 class ScoutingData {
-  Map<int, Component> components; 
+  Map<int, ComponentDetails> components; 
   Map<int, Data> data;
   Map<String, List<Section>> sections;
 
@@ -40,7 +40,7 @@ class ScoutingData {
   static Future<ScoutingData> create(String screen) async {
     final String response = await rootBundle.loadString(CONFIG_PATH);
     final dynamic config = await json.decode(response)[screen];
-    Map<int, Component> components = {}; 
+    Map<int, ComponentDetails> components = {}; 
     Map<int, Data> data = {};
     Map<String, List<Section>> sections = {};
     int startValue = 0;
@@ -55,7 +55,7 @@ class ScoutingData {
         int start = startValue;
         for(int i = startValue; i<end; i++) {
           Map component = localComponents[i-start]; 
-          components[i] = Component(component["name"], component["type"], component["component"], values: (component["values"]!=null ? (component['values'] as List)?.map((item) => item as String)?.toList() : null));
+          components[i] = ComponentDetails(component["name"], component["type"], component["component"], values: (component["values"]!=null ? (component['values'] as List)?.map((item) => item as String)?.toList() : null));
           data[i] = Data(component["type"]);
           startValue++;
         }
@@ -70,19 +70,19 @@ class ScoutingData {
   }
 
   String stringfy() {
-    String stringified = "";
+    String stringified = "{";
     List<String> stages = sections.keys.toList();
     for(String stage in stages) {
       int startValue = sections[stage]![0].startValue;
       int end = sections[stage]![sections[stage]!.length-1].startValue+sections[stage]![sections[stage]!.length-1].length;
-      stringified = "$stringified$stage : {";
+      stringified = "$stringified\"$stage\" : {";
       for(int i = startValue; i<end; i++) {
         String name = components[i]!.name;
         Data value = data[i]!;
-        stringified = "$stringified $name : $value,";
+        stringified = "$stringified \"$name\" : \"$value\",";
       }
       stringified = "$stringified}\n";
     }
-    return stringified;
+    return "$stringified}";
   }
 }

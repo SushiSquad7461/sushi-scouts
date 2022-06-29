@@ -30,7 +30,7 @@ class Scouting extends StatefulWidget {
 
 class ScoutingState extends State<Scouting> {
   List<Section>? sections;
-  Map<int, Component>? components; 
+  Map<int, ComponentDetails>? components; 
   Map<int, Data>? data;
   String stage = "uninitialized";
 
@@ -50,8 +50,6 @@ class ScoutingState extends State<Scouting> {
 
   bool _nextPage(String stage) {
     int nextNumber = widget.stages!.indexOf(stage) + 1;
-    print(nextNumber);
-    print(widget.stages);
     if (nextNumber > 4) {
       return false;
     } else {
@@ -80,7 +78,6 @@ class ScoutingState extends State<Scouting> {
 
   Future<bool> _setData() async {
     widget.data ??= await ScoutingData.create(widget.screen);
-    print(widget.data!.stringfy());
     widget.stages = widget.data!.getStages();
     if(stage=="uninitialized") {
       stage = widget.stages![0];
@@ -91,11 +88,12 @@ class ScoutingState extends State<Scouting> {
     return true;
   }
 
-  Widget _buildComponents(double height, double width, Color color, int start, int end, int rows) {
+  Widget _buildComponents(double width, Color color, int start, int end, int rows) {
+    double scaledWidth = (width>400 ? 400 : width);
     return SizedBox(
-      width: (width),
-      height: (height * 0.4+144000.0/rows/width),
+      width: scaledWidth,
       child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           for (int index = start; index < end; index++)
@@ -104,15 +102,15 @@ class ScoutingState extends State<Scouting> {
                   components![index]!.name,
                   data![index]!,
                   components![index]!.values, 
-                  Data("number", num: 0), color, width)
+                  Data("number", num: 0), color, scaledWidth)
               : SizedBox(
-                width: width,
+                width: scaledWidth,
                 child: Text(
                   "The widget type ${components![index]!.component} is not defined",
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     fontFamily: "Sushi",
-                    fontSize: width/40.0,
+                    fontSize: scaledWidth/40.0,
                     fontWeight: FontWeight.bold,
                     color: Colors.black,
                     overflow:
@@ -127,16 +125,15 @@ class ScoutingState extends State<Scouting> {
     List<Row> builtSections = [];
     for(Section section in sections!) {
       Color color = Color(section.color);
-      print(color);
-      int rows = section.rows;
+      int rows = size.width/section.rows<300 ? (size.width/300).floor() : section.rows;
       int start = section.startValue;
       int length = section.length;
       builtSections.add(Row(
-        crossAxisAlignment: CrossAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           for(int i = 0; i<rows; i++)
-          _buildComponents(size.height, size.width/rows, color, (start + i*length/rows).floor(), (start + (i+1)*length/rows).floor(), rows),
+          _buildComponents(size.width/rows, color, (start + i*length/rows).floor(), (start + (i+1)*length/rows).floor(), rows),
         ]
       ));
     }
@@ -166,7 +163,11 @@ class ScoutingState extends State<Scouting> {
                   size: mediaQuerySize,
                   screens: widget.screens
                 ),
-                _buildBody(mediaQuerySize),
+                SizedBox(
+                  width: mediaQuerySize.width,
+                  height: mediaQuerySize.height*0.4+135000/mediaQuerySize.width,
+                  child: _buildBody(mediaQuerySize),
+                ),                
                 ScoutingFooter(
                   stage: stage,
                   nextPage: (_nextPageExists() ? _nextPage : null),

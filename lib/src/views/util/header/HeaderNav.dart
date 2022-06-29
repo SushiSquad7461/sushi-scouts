@@ -21,6 +21,8 @@ class HeaderNav extends StatelessWidget {
   Widget build(BuildContext context) {
     double swu = size.width/600.0; //standardized width unit
     double shu = size.width/900.0; //standard height unit
+    List<String> allScreens = List<String>.from(screens);
+    allScreens.add("settings");
     final TextStyle _pageStyle = TextStyle(
       fontFamily: "Sushi",
       fontSize: 25*swu,
@@ -37,7 +39,7 @@ class HeaderNav extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              for (final String screen in screens) Padding(
+              for (final String screen in allScreens) Padding(
                 padding: EdgeInsets.only(left: 0, right: 0, top: 8*shu, bottom: 8*shu),
                 child: GestureDetector(
                   onTap: () => changePage(screen, currentPage),

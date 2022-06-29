@@ -19,7 +19,7 @@ class Footer extends StatelessWidget {
       Padding(
           padding: EdgeInsets.only(left: 0, right: 0, top: size.height/90.0, bottom: 0),
           child: Text(
-            pageTitle,
+            pageTitle.toUpperCase(),
             style: TextStyle(
               fontFamily: "Sushi",
               fontSize: size.width/24.0,
