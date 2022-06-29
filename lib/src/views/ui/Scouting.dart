@@ -30,7 +30,7 @@ class Scouting extends StatefulWidget {
 
 class ScoutingState extends State<Scouting> {
   List<Section>? sections;
-  Map<int, ComponentDetails>? components; 
+  Map<int, Component>? components; 
   Map<int, Data>? data;
   String stage = "uninitialized";
 
@@ -88,7 +88,7 @@ class ScoutingState extends State<Scouting> {
     return true;
   }
 
-  Widget _buildComponents(double width, Color color, int start, int end, int rows) {
+  Widget _buildComponents(double width, Color color, int start, int end, int rows, Color textColor) {
     double scaledWidth = (width>400 ? 400 : width);
     return SizedBox(
       width: scaledWidth,
@@ -102,7 +102,7 @@ class ScoutingState extends State<Scouting> {
                   components![index]!.name,
                   data![index]!,
                   components![index]!.values, 
-                  Data("number", num: 0), color, scaledWidth)
+                  Data("number", num: 0), color, scaledWidth, textColor)
               : SizedBox(
                 width: scaledWidth,
                 child: Text(
@@ -125,6 +125,7 @@ class ScoutingState extends State<Scouting> {
     List<Row> builtSections = [];
     for(Section section in sections!) {
       Color color = Color(section.color);
+      Color textColor = Color(section.textColor);
       int rows = size.width/section.rows<300 ? (size.width/300).floor() : section.rows;
       int start = section.startValue;
       int length = section.length;
@@ -133,7 +134,7 @@ class ScoutingState extends State<Scouting> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           for(int i = 0; i<rows; i++)
-          _buildComponents(size.width/rows, color, (start + i*length/rows).floor(), (start + (i+1)*length/rows).floor(), rows),
+          _buildComponents(size.width/rows, color, (start + i*length/rows).floor(), (start + (i+1)*length/rows).floor(), rows, textColor),
         ]
       ));
     }

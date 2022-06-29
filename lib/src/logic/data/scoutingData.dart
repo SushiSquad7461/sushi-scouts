@@ -6,12 +6,12 @@ import 'dart:convert';
 
 const String CONFIG_PATH = "assets/config/config.json";
 
-class ComponentDetails {
+class Component {
   String name;
   List<String>? values;
   String component;
   String type;
-  ComponentDetails(this.name, this.type, this.component, {this.values=null});
+  Component(this.name, this.type, this.component, {this.values=null});
 }
 
 class Section {
@@ -25,7 +25,7 @@ class Section {
 }
 
 class ScoutingData {
-  Map<int, ComponentDetails> components; 
+  Map<int, Component> components; 
   Map<int, Data> data;
   Map<String, List<Section>> sections;
 
@@ -40,7 +40,7 @@ class ScoutingData {
   static Future<ScoutingData> create(String screen) async {
     final String response = await rootBundle.loadString(CONFIG_PATH);
     final dynamic config = await json.decode(response)[screen];
-    Map<int, ComponentDetails> components = {}; 
+    Map<int, Component> components = {}; 
     Map<int, Data> data = {};
     Map<String, List<Section>> sections = {};
     int startValue = 0;
@@ -50,12 +50,12 @@ class ScoutingData {
         int length = item["components"].toList().length;
         Map properties = item["properties"];
         List localComponents = item["components"].toList();
-        section.add(Section(startValue, length, int.parse(properties["color"])+0xff000000, properties["rows"], int.parse(properties["textColor"]), properties["footer"]));
+        section.add(Section(startValue, length, int.parse(properties["color"])+0xff000000, properties["rows"], int.parse(properties["textColor"])+0xff000000, properties["footer"]));
         int end = startValue + length;
         int start = startValue;
         for(int i = startValue; i<end; i++) {
           Map component = localComponents[i-start]; 
-          components[i] = ComponentDetails(component["name"], component["type"], component["component"], values: (component["values"]!=null ? (component['values'] as List)?.map((item) => item as String)?.toList() : null));
+          components[i] = Component(component["name"], component["type"], component["component"], values: (component["values"]!=null ? (component['values'] as List)?.map((item) => item as String)?.toList() : null));
           data[i] = Data(component["type"]);
           startValue++;
         }

@@ -7,11 +7,13 @@ class NumberInput extends StatelessWidget {
   final Data data;
   final Data defaultValue;
   final Color color;
+  final Color textColor;
   final double width;
-  const NumberInput({Key? key, required this.name, required this.data, required this.defaultValue, required this.color, required this.width})
-      : super(key: key);
-  static NumberInput create(String name, Data data, List<dynamic>? values, Data defaultValue, Color color, double width) {
-    return NumberInput(name: name, data: data, width: width, defaultValue: defaultValue, color: color);
+  final List<String>? values;
+  NumberInput({Key? key, required this.name, required this.data, required this.defaultValue, required this.color, required this.width, required this.textColor, this.values})
+    : super(key: key);
+  static NumberInput create(String name, Data data, List<String>? values, Data defaultValue, Color color, double width, Color textColor) {
+    return NumberInput(name: name, data: data, width: width, defaultValue: defaultValue, color: color, values: values, textColor: textColor,);
   }
 
   @override
@@ -31,7 +33,7 @@ class NumberInput extends StatelessWidget {
                     fontFamily: "Sushi",
                     fontSize: width/10,
                     fontWeight: FontWeight.bold,
-                    color:  color
+                    color:  textColor
                   )
               ),
               Expanded(
@@ -44,7 +46,7 @@ class NumberInput extends StatelessWidget {
                     fontFamily: "Sushi",
                     fontSize: width/10,
                     fontWeight: FontWeight.bold,
-                    color: color
+                    color: textColor
                   ),
                   textAlign: TextAlign.right,
                   initialValue: double.parse(defaultValue.get()).floor().toString(),
@@ -58,7 +60,7 @@ class NumberInput extends StatelessWidget {
                 )
               )
             ]),
-            Divider(color: color, thickness: width/100)
+            Divider(color: textColor, thickness: width/100)
             ]
           )
         )

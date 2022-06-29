@@ -7,15 +7,14 @@ class Increment extends StatefulWidget {
   final Data data;
   final Data defaultValue;
   final Color color;
+  final Color textColor;
   final double width;
   final List<String>? values;
   int value = 0;
-  Increment({Key? key, required this.name, required this.data, required this.defaultValue, required this.color, required this.width, this.values})
-    : super(key: key){
-      value = double.parse(defaultValue.get()).floor();
-    }
-  static Increment create(String name, Data data, List<String>? values, Data defaultValue, Color color, double width) {
-    return Increment(name: name, data: data, width: width, defaultValue: defaultValue, color: color, values: values);
+  Increment({Key? key, required this.name, required this.data, required this.defaultValue, required this.color, required this.width, required this.textColor, this.values})
+    : super(key: key);
+  static Increment create(String name, Data data, List<String>? values, Data defaultValue, Color color, double width, Color textColor) {
+    return Increment(name: name, data: data, width: width, defaultValue: defaultValue, color: color, values: values, textColor: textColor,);
   }
   @override 
   IncrementState createState() => IncrementState();
@@ -57,7 +56,7 @@ class IncrementState extends State<Increment>{
                     fontFamily: "Sushi",
                     fontSize: width/10,
                     fontWeight: FontWeight.bold,
-                    color: widget.color
+                    color: widget.textColor
                   )
               ),
             ]),
@@ -88,7 +87,7 @@ class IncrementState extends State<Increment>{
                     decoration: InputDecoration(
                       border: OutlineInputBorder(
                         borderSide: BorderSide(
-                          color: widget.color,
+                          color: widget.textColor,
                           width: width/10,
                           style: BorderStyle.solid
                         )

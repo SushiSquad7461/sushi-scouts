@@ -7,15 +7,16 @@ class Dropdown extends StatefulWidget {
   final Data data;
   final Data defaultValue;
   final Color color;
+  final Color textColor;
   final double width;
   final List<String> values;
   String currentValue = "";
-  Dropdown({Key? key, required this.name, required this.data, required this.defaultValue, required this.color, required this.width, required this.values})
+  Dropdown({Key? key, required this.name, required this.data, required this.defaultValue, required this.color, required this.width, required this.textColor, required this.values})
     : super(key: key){
-    currentValue = values[0];
-  }
-  static Dropdown create(String name, Data data, List<String>? values, Data defaultValue, Color color, double width) {
-    return Dropdown(name: name, data: data, width: width, defaultValue: defaultValue, color: color, values: values!);
+      currentValue = values[0];
+    }
+  static Dropdown create(String name, Data data, List<String> values, Data defaultValue, Color color, double width, Color textColor) {
+    return Dropdown(name: name, data: data, width: width, defaultValue: defaultValue, color: color, values: values, textColor: textColor,);
   }
   @override 
   DropdownState createState() => DropdownState();
@@ -42,7 +43,7 @@ class DropdownState extends State<Dropdown>{
                     fontFamily: "Sushi",
                     fontSize: width/10,
                     fontWeight: FontWeight.bold,
-                    color: widget.color
+                    color: widget.textColor
                   )
               ),
               Expanded(
@@ -55,7 +56,7 @@ class DropdownState extends State<Dropdown>{
                       fontFamily: "Sushi",
                       fontSize: width/10,
                       fontWeight: FontWeight.bold,
-                      color: widget.color,
+                      color: widget.textColor,
                       overflow: TextOverflow.ellipsis
                     ),
                     alignment: AlignmentDirectional.center,
@@ -79,7 +80,7 @@ class DropdownState extends State<Dropdown>{
                 )
               )
             ]),
-            Divider(color: widget.color, thickness: width/100)
+            Divider(color: Colors.black, thickness: width/100)
             ]
           )
         )

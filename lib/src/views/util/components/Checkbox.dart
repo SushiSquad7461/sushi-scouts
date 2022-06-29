@@ -7,13 +7,14 @@ class CheckboxInput extends StatefulWidget {
   final Data data;
   final Data defaultValue;
   final Color color;
+  final Color textColor;
   final double width;
   final List<String>? values;
   bool checked = false;
-  CheckboxInput({Key? key, required this.name, required this.data, required this.defaultValue, required this.color, required this.width, this.values})
+  CheckboxInput({Key? key, required this.name, required this.data, required this.defaultValue, required this.color, required this.width, required this.textColor, this.values})
     : super(key: key);
-  static CheckboxInput create(String name, Data data, List<String>? values, Data defaultValue, Color color, double width) {
-    return CheckboxInput(name: name, data: data, width: width, defaultValue: defaultValue, color: color, values: values);
+  static CheckboxInput create(String name, Data data, List<String>? values, Data defaultValue, Color color, double width, Color textColor) {
+    return CheckboxInput(name: name, data: data, width: width, defaultValue: defaultValue, color: color, values: values, textColor: textColor,);
   }
   @override 
   CheckboxState createState() => CheckboxState();
@@ -29,7 +30,7 @@ class CheckboxState extends State<CheckboxInput>{
         MaterialState.focused,
       };
       if (states.any(interactiveStates.contains)) {
-        return Colors.blue;
+        return Colors.white;
       }
       return Colors.black;
     }
@@ -53,7 +54,7 @@ class CheckboxState extends State<CheckboxInput>{
                     fontFamily: "Sushi",
                     fontSize: width/10,
                     fontWeight: FontWeight.bold,
-                    color: widget.color
+                    color: widget.textColor
                   )
               ),
               Expanded(
