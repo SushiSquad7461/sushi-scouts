@@ -32,6 +32,7 @@ class ScoutingState extends State<Scouting> {
   List<Section>? sections;
   Map<int, Component>? components; 
   Map<int, Data>? data;
+  double teamNumber = 7461;
   String stage = "uninitialized";
 
   //says if another match stage exists after this one
@@ -105,33 +106,52 @@ class ScoutingState extends State<Scouting> {
   //builds the components in a certain section
   Widget _buildComponents(double width, Color color, int start, int end, int rows, Color textColor) {
     double scaledWidth = (width>400 ? 400 : width);
+    List<Widget> builtComponents = [];
+    for (int index = start; index < end; index++) {
+      Data defaultValue;
+      if(data![index]!.setByUser){
+        if(components![index!]!.type == "number")
+          defaultValue = Data<double>(double.parse(data![index]!.get()));
+        else
+          defaultValue = Data<String>(data![index]!.get());
+      } else {
+        if(components![index]!.name=="match #")
+          defaultValue = widget.previousData==null ? Data<double>(1) : Data<double>(double.parse(widget.previousData!.data[index]!.get())+1);
+        else if(components![index]!.name=="team #")
+          defaultValue = Data<double>(teamNumber);
+        else if(components![index!]!.type == "number")
+          defaultValue = Data<double>(0);
+        else
+          defaultValue = Data<String>("");
+      }
+      builtComponents.add( 
+        widget.allComponents.containsKey(components![index]!.component)
+          ? widget.allComponents[components![index]!.component](
+              components![index]!.name,
+              data![index]!,
+              components![index]!.values, 
+              defaultValue, color, scaledWidth, textColor)
+          : SizedBox(
+            width: scaledWidth,
+            child: Text(
+              "The widget type ${components![index]!.component} is not defined",
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                fontFamily: "Sushi",
+                fontSize: scaledWidth/40.0,
+                fontWeight: FontWeight.bold,
+                color: Colors.black,
+                overflow:
+                  TextOverflow.visible)),
+            )
+      );
+    }
     return SizedBox(
       width: scaledWidth,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          for (int index = start; index < end; index++)
-            widget.allComponents.containsKey(components![index]!.component)
-              ? widget.allComponents[components![index]!.component](
-                  components![index]!.name,
-                  data![index]!,
-                  components![index]!.values, 
-                  Data<int>(0), color, scaledWidth, textColor)
-              : SizedBox(
-                width: scaledWidth,
-                child: Text(
-                  "The widget type ${components![index]!.component} is not defined",
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontFamily: "Sushi",
-                    fontSize: scaledWidth/40.0,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black,
-                    overflow:
-                      TextOverflow.visible)),
-                )
-        ],
+        children: builtComponents
       ),
     );
   }
