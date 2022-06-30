@@ -1,45 +1,40 @@
-class Data {
-  String type;
-  String words;
-  double num;
+/*
+  The Data classes purpose is to store the current value of a component.
+  It currently supports strings and numbers.
+*/
+class Data<ValueType> {
+  // Current value of the component
+  ValueType currValue;
   bool setByUser;
-  Data(this.type, {this.words = "", this.num = 0, this.setByUser=false});
-  void set({double number = 0, String string = "", bool setByUser=false}) {
-    this.setByUser=setByUser;
-    if (type == "string") {
-      words = string;
-    }
-    if (type == "number") {
-      num = number;
-    }
+
+  Data(this.currValue, {this.setByUser = false});
+
+  // Set the current value
+  void set(ValueType newVal, {bool setByUser = false}) {
+    this.setByUser = setByUser;
+    currValue = newVal;
   }
 
+  // Increments the current value if it is an number and retuns true, otherwise returns false
   bool increment() {
-    if (type == "number") {
-      num++;
+    if (currValue is double) {
+      currValue = ((currValue as double) + 1) as ValueType;
       return true;
     }
     return false;
   }
 
+  // Decrements the current value if it is an number and retuns true, otherwise returns false
   bool decrement() {
-    if (type == "number") {
-      num--;
+    if (currValue is double) {
+      currValue = ((currValue as double) - 1) as ValueType;
       return true;
     }
     return false;
   }
 
+  // Gets the current value as a string
   String get() {
-    if (type == "number") {
-      return num.toString();
-    } else {
-      return words;
-    }
-  }
-
-  @override
-  String toString() {
-    return get();
+    return (currValue is double || currValue is double) ? (currValue as double).toString() : (currValue as String);
   }
 }

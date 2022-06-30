@@ -38,7 +38,7 @@ class IncrementState extends State<Increment>{
   @override
   Widget build(BuildContext context) {
     double width = widget.width;
-    widget.data.set(number: widget.value*1.0, setByUser: true);
+    widget.data.set(widget.value*1.0, setByUser: true);
     final TextEditingController _controller = TextEditingController();
     _controller.text = (widget.value).toString();
     return Padding(
@@ -98,7 +98,7 @@ class IncrementState extends State<Increment>{
                       fontFamily: "Sushi",
                       fontSize: width/10,
                       fontWeight: FontWeight.bold,
-                      color: widget.color
+                      color: widget.textColor
                     ),
                     textAlign: TextAlign.center,
                     keyboardType: TextInputType.number,
@@ -106,7 +106,7 @@ class IncrementState extends State<Increment>{
                       FilteringTextInputFormatter.digitsOnly
                     ],
                     onFieldSubmitted: (value) {
-                      widget.data.set(number: double.parse(value), setByUser: true);
+                      widget.data.set(double.parse(value), setByUser: true);
                     }
                   ),
                   IconButton(

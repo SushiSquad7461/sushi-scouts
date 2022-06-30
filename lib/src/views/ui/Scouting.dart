@@ -32,8 +32,10 @@ class ScoutingState extends State<Scouting> {
   List<Section>? sections;
   Map<int, Component>? components; 
   Map<int, Data>? data;
+  double teamNumber = 7461;
   String stage = "uninitialized";
 
+  //says if another match stage exists after this one
   bool _nextPageExists() {
     print(widget.screen);
     print(widget.data);
@@ -44,6 +46,7 @@ class ScoutingState extends State<Scouting> {
     return true;
   }
 
+  //says if a previous match stage exists before this one
   bool _previousPageExists() {
     if (widget.stages!.indexOf(stage) - 1 < 0) {
       return false;
@@ -51,6 +54,7 @@ class ScoutingState extends State<Scouting> {
     return true;
   }
 
+  //switches to the next match stage
   bool _nextPage(String stage) {
     int nextNumber = widget.stages!.indexOf(stage) + 1;
     if (nextNumber > 4) {
@@ -65,6 +69,7 @@ class ScoutingState extends State<Scouting> {
     return true;
   }
 
+  //switches to the previous match stage
   bool _previousPage(String stage) {
     int previousNumber = widget.stages!.indexOf(stage) - 1;
     if (previousNumber < 0) {
@@ -77,59 +82,81 @@ class ScoutingState extends State<Scouting> {
     return true;
   }
 
+  //constructor which takes the match stage
   ScoutingState({this.stage = "uninitialized"}) : super();
 
+  //initially creates the data object from the json file
   Future<bool> _setData() async {
     widget.data ??= await ScoutingData.create(widget.screen);
     widget.stages = widget.data!.getStages();
-    if(stage=="uninitialized") {
-      stage = widget.stages![0];
-    }
+    stage = widget.stages![0];
     sections = widget.data!.sections[stage];
     data = widget.data!.data;
     components = widget.data!.components;
     return true;
   }
 
+  //sets stage information after data is initially read
   void setStage() {
     sections = widget.data!.sections[stage];
     data = widget.data!.data;
     components = widget.data!.components;
   }
 
+  //builds the components in a certain section
   Widget _buildComponents(double width, Color color, int start, int end, int rows, Color textColor) {
     double scaledWidth = (width>400 ? 400 : width);
+    List<Widget> builtComponents = [];
+    for (int index = start; index < end; index++) {
+      Data defaultValue;
+      if(data![index]!.setByUser){
+        if(components![index!]!.type == "number")
+          defaultValue = Data<double>(double.parse(data![index]!.get()));
+        else
+          defaultValue = Data<String>(data![index]!.get());
+      } else {
+        if(components![index]!.name=="match #")
+          defaultValue = widget.previousData==null ? Data<double>(1) : Data<double>(double.parse(widget.previousData!.data[index]!.get())+1);
+        else if(components![index]!.name=="team #")
+          defaultValue = Data<double>(teamNumber);
+        else if(components![index!]!.type == "number")
+          defaultValue = Data<double>(0);
+        else
+          defaultValue = Data<String>("");
+      }
+      builtComponents.add( 
+        widget.allComponents.containsKey(components![index]!.component)
+          ? widget.allComponents[components![index]!.component](
+              components![index]!.name,
+              data![index]!,
+              components![index]!.values, 
+              defaultValue, color, scaledWidth, textColor)
+          : SizedBox(
+            width: scaledWidth,
+            child: Text(
+              "The widget type ${components![index]!.component} is not defined",
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                fontFamily: "Sushi",
+                fontSize: scaledWidth/40.0,
+                fontWeight: FontWeight.bold,
+                color: Colors.black,
+                overflow:
+                  TextOverflow.visible)),
+            )
+      );
+    }
     return SizedBox(
       width: scaledWidth,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          for (int index = start; index < end; index++)
-            widget.allComponents.containsKey(components![index]!.component)
-              ? widget.allComponents[components![index]!.component](
-                  components![index]!.name,
-                  data![index]!,
-                  components![index]!.values, 
-                  Data("number", num: 0), color, scaledWidth, textColor)
-              : SizedBox(
-                width: scaledWidth,
-                child: Text(
-                  "The widget type ${components![index]!.component} is not defined",
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontFamily: "Sushi",
-                    fontSize: scaledWidth/40.0,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black,
-                    overflow:
-                      TextOverflow.visible)),
-                )
-        ],
+        children: builtComponents
       ),
     );
   }
 
+  //builds the body of the screen
   Widget _buildBody(Size size){
     List<Row> builtSections = [];
     for(Section section in sections!) {
@@ -143,7 +170,7 @@ class ScoutingState extends State<Scouting> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           for(int i = 0; i<rows; i++)
-          _buildComponents(size.width/rows, color, (start + i*length/rows).floor(), (start + (i+1)*length/rows).floor(), rows, textColor),
+          _buildComponents(size.width/rows, color, (start + i*length/rows).ceil(), (start + (i+1)*length/rows).ceil(), rows, textColor),
         ]
       ));
     }
@@ -155,10 +182,12 @@ class ScoutingState extends State<Scouting> {
   @override
   Widget build(BuildContext context) {
     final Size mediaQuerySize = MediaQuery.of(context).size;
+    //if widget data already exists we can get the match stage information without rereading the json file
     if(widget.data!=null) {
       setStage();
     }
     return Scaffold(
+      //if widget data is not set yet, then we use future builder to read the json file
       body: widget.data == null ?
       FutureBuilder(
         future: _setData(),
