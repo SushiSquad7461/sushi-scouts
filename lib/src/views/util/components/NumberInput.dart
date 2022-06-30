@@ -55,7 +55,7 @@ class NumberInput extends StatelessWidget {
                     FilteringTextInputFormatter.digitsOnly
                   ],
                   onFieldSubmitted: (value) {
-                    data.set(number: double.parse(value), setByUser: true);
+                    data.set(double.parse(value), setByUser: true);
                   }
                 )
               )

@@ -1,41 +1,32 @@
-class Data {
-  String type;
-  String words;
-  double num;
+class Data<ValueType> {
+  ValueType currValue;
   bool setByUser;
-  Data(this.type, {this.words = "", this.num = 0, this.setByUser=false});
-  void set({double number = 0, String string = "", bool setByUser=false}) {
-    this.setByUser=setByUser;
-    if (type == "string") {
-      words = string;
-    }
-    if (type == "number") {
-      num = number;
-    }
+
+  Data(this.currValue, {this.setByUser = false});
+
+  void set(ValueType newVal, {bool setByUser = false}) {
+    this.setByUser = setByUser;
+    currValue = newVal;
   }
 
   bool increment() {
-    if (type == "number") {
-      num++;
+    if (currValue is int) {
+      currValue = ((currValue as int) + 1) as ValueType;
       return true;
     }
     return false;
   }
 
   bool decrement() {
-    if (type == "number") {
-      num--;
+    if (currValue is int) {
+      currValue = ((currValue as int) + 1) as ValueType;
       return true;
     }
     return false;
   }
 
   String get() {
-    if (type == "number") {
-      return num.toString();
-    } else {
-      return words;
-    }
+    return (currValue is int) ? (currValue as int).toString() : (currValue as String);
   }
 
   @override

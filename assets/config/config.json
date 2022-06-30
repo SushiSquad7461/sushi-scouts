@@ -3,10 +3,10 @@
         "pregame" : [
             {
                 "properties":{
-                    "color":"0xff76a2",
-                    "rows":2,
-                    "textColor":"000000",
-                    "footer":"Info"
+                    "color": "0xff76a2",
+                    "rows": 2,
+                    "textColor": "000000",
+                    "footer": "Info"
                 },
                 "components":[
                     {

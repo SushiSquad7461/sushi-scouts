@@ -38,7 +38,7 @@ class CheckboxState extends State<CheckboxInput>{
   @override
   Widget build(BuildContext context) {
     double width = widget.width;
-    widget.data.set(string: widget.checked.toString(), setByUser: true);
+    widget.data.set(widget.checked.toString(), setByUser: true);
     return Padding(
         padding:
             EdgeInsets.only(left: width/60, right: width/60, top: width/30, bottom: width/30),
@@ -68,7 +68,7 @@ class CheckboxState extends State<CheckboxInput>{
                       fillColor: MaterialStateProperty.resolveWith(getColor),
                       value: widget.checked,
                       onChanged: (bool? value) {
-                      widget.data.set(string: value.toString(), setByUser: true);
+                      widget.data.set(value.toString(), setByUser: true);
                       setState(() {
                         widget.checked = value!;
                       });}

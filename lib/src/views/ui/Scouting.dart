@@ -111,7 +111,7 @@ class ScoutingState extends State<Scouting> {
                   components![index]!.name,
                   data![index]!,
                   components![index]!.values, 
-                  Data("number", num: 0), color, scaledWidth, textColor)
+                  Data<int>(0), color, scaledWidth, textColor)
               : SizedBox(
                 width: scaledWidth,
                 child: Text(
