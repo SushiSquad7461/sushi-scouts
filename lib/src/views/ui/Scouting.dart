@@ -34,6 +34,7 @@ class ScoutingState extends State<Scouting> {
   Map<int, Data>? data;
   String stage = "uninitialized";
 
+  //says if another match stage exists after this one
   bool _nextPageExists() {
     print(widget.screen);
     print(widget.data);
@@ -44,6 +45,7 @@ class ScoutingState extends State<Scouting> {
     return true;
   }
 
+  //says if a previous match stage exists before this one
   bool _previousPageExists() {
     if (widget.stages!.indexOf(stage) - 1 < 0) {
       return false;
@@ -51,6 +53,7 @@ class ScoutingState extends State<Scouting> {
     return true;
   }
 
+  //switches to the next match stage
   bool _nextPage(String stage) {
     int nextNumber = widget.stages!.indexOf(stage) + 1;
     if (nextNumber > 4) {
@@ -65,6 +68,7 @@ class ScoutingState extends State<Scouting> {
     return true;
   }
 
+  //switches to the previous match stage
   bool _previousPage(String stage) {
     int previousNumber = widget.stages!.indexOf(stage) - 1;
     if (previousNumber < 0) {
@@ -77,26 +81,28 @@ class ScoutingState extends State<Scouting> {
     return true;
   }
 
+  //constructor which takes the match stage
   ScoutingState({this.stage = "uninitialized"}) : super();
 
+  //initially creates the data object from the json file
   Future<bool> _setData() async {
     widget.data ??= await ScoutingData.create(widget.screen);
     widget.stages = widget.data!.getStages();
-    if(stage=="uninitialized") {
-      stage = widget.stages![0];
-    }
+    stage = widget.stages![0];
     sections = widget.data!.sections[stage];
     data = widget.data!.data;
     components = widget.data!.components;
     return true;
   }
 
+  //sets stage information after data is initially read
   void setStage() {
     sections = widget.data!.sections[stage];
     data = widget.data!.data;
     components = widget.data!.components;
   }
 
+  //builds the components in a certain section
   Widget _buildComponents(double width, Color color, int start, int end, int rows, Color textColor) {
     double scaledWidth = (width>400 ? 400 : width);
     return SizedBox(
@@ -130,6 +136,7 @@ class ScoutingState extends State<Scouting> {
     );
   }
 
+  //builds the body of the screen
   Widget _buildBody(Size size){
     List<Row> builtSections = [];
     for(Section section in sections!) {
@@ -143,7 +150,7 @@ class ScoutingState extends State<Scouting> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           for(int i = 0; i<rows; i++)
-          _buildComponents(size.width/rows, color, (start + i*length/rows).floor(), (start + (i+1)*length/rows).floor(), rows, textColor),
+          _buildComponents(size.width/rows, color, (start + i*length/rows).ceil(), (start + (i+1)*length/rows).ceil(), rows, textColor),
         ]
       ));
     }
@@ -155,10 +162,12 @@ class ScoutingState extends State<Scouting> {
   @override
   Widget build(BuildContext context) {
     final Size mediaQuerySize = MediaQuery.of(context).size;
+    //if widget data already exists we can get the match stage information without rereading the json file
     if(widget.data!=null) {
       setStage();
     }
     return Scaffold(
+      //if widget data is not set yet, then we use future builder to read the json file
       body: widget.data == null ?
       FutureBuilder(
         future: _setData(),

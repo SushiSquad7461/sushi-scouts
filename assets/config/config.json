@@ -37,10 +37,10 @@
         "auto" : [
             {
                 "properties":{
-                    "color":"0x63cff9",
-                    "rows":2,
-                    "textColor":"000000",
-                    "footer":"Info"
+                    "color" : "0x63cff9",
+                    "rows" : 2,
+                    "textColor" : "000000",
+                    "footer" : "Info"
                 },
                 "components":[
                     {
@@ -52,7 +52,17 @@
                         "name" : "Tarmac",
                         "type" : "string",
                         "component" : "checkbox"
-                    },
+                    }
+                ]
+            },
+            {
+                "properties":{
+                    "color":"0x63cff9",
+                    "rows":2,
+                    "textColor":"000000",
+                    "footer":"Info"
+                },
+                "components":[
                     {
                         "name" : "Low Hub",
                         "type" : "number",

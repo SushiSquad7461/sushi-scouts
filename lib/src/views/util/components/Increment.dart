@@ -98,7 +98,7 @@ class IncrementState extends State<Increment>{
                       fontFamily: "Sushi",
                       fontSize: width/10,
                       fontWeight: FontWeight.bold,
-                      color: widget.color
+                      color: widget.textColor
                     ),
                     textAlign: TextAlign.center,
                     keyboardType: TextInputType.number,
