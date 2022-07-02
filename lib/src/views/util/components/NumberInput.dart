@@ -18,6 +18,7 @@ class NumberInput extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    data.set(double.parse(defaultValue.get()), setByUser: false);
     return Padding(
         padding:
             EdgeInsets.only(left: width/60, right: width/60, top: width/30, bottom: width/30),

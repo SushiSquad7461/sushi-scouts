@@ -56,7 +56,7 @@ class ScoutingData {
         for(int i = startValue; i<end; i++) {
           Map component = localComponents[i-start]; 
           components[i] = Component(component["name"], component["type"], component["component"], values: (component["values"]!=null ? (component['values'] as List)?.map((item) => item as String)?.toList() : null));
-          data[i] = Data(component["type"]);
+          data[i] = component["type"]=="number" ? Data<double>(0) : Data<String>("");
           startValue++;
         }
       }
@@ -76,12 +76,19 @@ class ScoutingData {
       int startValue = sections[stage]![0].startValue;
       int end = sections[stage]![sections[stage]!.length-1].startValue+sections[stage]![sections[stage]!.length-1].length;
       stringified = "$stringified\"$stage\" : {";
+      print(end);
       for(int i = startValue; i<end; i++) {
         String name = components[i]!.name;
-        Data value = data[i]!;
-        stringified = "$stringified \"$name\" : \"$value\",";
+        String value = data[i]!.get();
+        stringified = "$stringified \"$name\" : \"$value\"";
+        if(i < (end-1)) {
+          stringified = "$stringified, ";
+        }
       }
       stringified = "$stringified}\n";
+      if(stages.indexOf(stage) != stages.length-1) {
+        stringified = "$stringified, ";
+      }
     }
     return "$stringified}";
   }
