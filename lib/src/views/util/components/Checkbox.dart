@@ -32,7 +32,7 @@ class CheckboxState extends State<CheckboxInput>{
       if (states.any(interactiveStates.contains)) {
         return Colors.white;
       }
-      return Colors.black;
+      return widget.color;
     }
 
   @override

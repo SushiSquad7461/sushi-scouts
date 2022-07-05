@@ -80,13 +80,10 @@ class ScoutingState extends State<Scouting> {
     return true;
   }
 
-  //constructor which takes the match stage
-  ScoutingState({this.stage = "uninitialized"}) : super();
-
   //initially creates the data object from the json file
   void _init() {
     widget.stages = widget.data.getStages();
-    if(stage=="uninitialized") {
+    if(!widget.data.sections.containsKey(stage)) {
       stage = widget.stages[0];
     }
     sections = widget.data.sections[stage];
@@ -174,7 +171,6 @@ class ScoutingState extends State<Scouting> {
   Widget build(BuildContext context) {
     _init();    
     return Scaffold(
-      //if widget data is not set yet, then we use future builder to read the json file
       body: ListView(
         children: [
           HeaderTitle(size: ScreenSize.get()),
