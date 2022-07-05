@@ -1,6 +1,9 @@
 import "package:flutter/material.dart";
+import 'package:sushi_scouts/src/logic/Constants.dart';
+import 'package:sushi_scouts/src/logic/data/ConfigFileReader.dart';
 import 'package:sushi_scouts/src/logic/data/Data.dart';
 import 'package:sushi_scouts/src/logic/data/ScoutingData.dart';
+import 'package:sushi_scouts/src/logic/size/ScreenSize.dart';
 import 'package:sushi_scouts/src/views/ui/Scouting.dart';
 import 'package:sushi_scouts/src/views/ui/Login.dart';
 import 'package:sushi_scouts/src/views/ui/QRScreen.dart';
@@ -23,11 +26,13 @@ class _SushiScoutsState extends State<SushiScouts> {
   String _currentPage = "ordinal";
   String _previousPage = "ordinal";
   Map<String, ScoutingData?> previousData = {};
+  ConfigFileReader? config;
   List<String>? screens;
   final  GlobalKey<NavigatorState> navigatorKey =  GlobalKey<NavigatorState>();
 
-  Future<bool> _setScreens() async{
-    screens = await ScoutingData.getScreens();
+  Future<bool> _init() async{
+    config =  await ConfigFileReader.create(CONFIG_FILE_PATH, 2022);
+    screens = config!.getScoutingMethods();
     for(String screen in screens!) {
       previousData[screen] = null;
     }
@@ -49,11 +54,12 @@ class _SushiScoutsState extends State<SushiScouts> {
 
   @override
   Widget build(BuildContext context) {
-    print(_currentPage);
+    ScreenSize.width = 600;
+    ScreenSize.height = 900;
     return MaterialApp(
-      home: screens==null ?
+      home: config==null ?
       FutureBuilder(
-        future: _setScreens(),
+        future: _init(),
         builder: (BuildContext context, AsyncSnapshot snapshot) {
           return snapshot.hasData ?
             Navigator(
@@ -66,7 +72,7 @@ class _SushiScoutsState extends State<SushiScouts> {
                 else if(_currentPage=="login")
                   MaterialPage(child: Login())
                 else if(screens!.contains(_currentPage))
-                   MaterialPage(child: Scouting(screen: _currentPage, changePage: setCurrentPage, previousData: previousData[_currentPage], screens: screens!))
+                   MaterialPage(child: Scouting(screen: _currentPage, changePage: setCurrentPage, previousData: previousData[_currentPage], screens: screens!, data: config!.generateScoutingData(_currentPage)))
                 else
                   MaterialPage(child: Text("page does not exist"))
               ],
@@ -85,7 +91,7 @@ class _SushiScoutsState extends State<SushiScouts> {
           else if(_currentPage=="login")
             MaterialPage(child: Login())
           else if(screens!.contains(_currentPage))
-              MaterialPage(child: Scouting(screen: _currentPage, changePage: setCurrentPage, previousData: previousData[_currentPage], screens: screens!))
+              MaterialPage(child: Scouting(screen: _currentPage, changePage: setCurrentPage, previousData: previousData[_currentPage], screens: screens!,  data: config!.generateScoutingData(_currentPage)))
           else
             MaterialPage(child: Text("page does not exist"))
         ],

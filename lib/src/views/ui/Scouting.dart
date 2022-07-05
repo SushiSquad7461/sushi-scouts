@@ -17,14 +17,14 @@ import '../util/header/HeaderNav.dart';
 import 'package:sushi_scouts/src/views/util/components/NumberInput.dart';
 
 class Scouting extends StatefulWidget {
-  ScoutingData? data;
+  ScoutingData data;
   ScoutingData? previousData;
   List<String> stages = [];
   String screen;
   List<String> screens;
   final Map allComponents = {"number input": NumberInput.create, "dropdown": Dropdown.create, "checkbox": CheckboxInput.create, "increment": Increment.create};
   final Function(String newPage, String previousPage, {ScoutingData? previousData}) changePage;
-  Scouting({Key? key, required this.screen, required this.changePage, this.previousData, required this.screens}) : super(key: key);
+  Scouting({Key? key, required this.screen, required this.changePage, this.previousData, required this.screens, required this.data}) : super(key: key);
   @override
   ScoutingState createState() => ScoutingState();
 }
@@ -38,9 +38,6 @@ class ScoutingState extends State<Scouting> {
 
   //says if another match stage exists after this one
   bool _nextPageExists() {
-    print(widget.screen);
-    print(widget.data);
-    print(stage);
     if (widget.stages!.indexOf(stage) + 1 >= widget.stages!.length) {
       return false;
     }
@@ -87,21 +84,14 @@ class ScoutingState extends State<Scouting> {
   ScoutingState({this.stage = "uninitialized"}) : super();
 
   //initially creates the data object from the json file
-  Future<bool> _setData() async {
-    widget.data ??= await ScoutingData.create(widget.screen);
-    widget.stages = widget.data!.getStages();
-    stage = widget.stages![0];
-    sections = widget.data!.sections[stage];
-    data = widget.data!.data;
-    components = widget.data!.components;
-    return true;
-  }
-
-  //sets stage information after data is initially read
-  void setStage() {
-    sections = widget.data!.sections[stage];
-    data = widget.data!.data;
-    components = widget.data!.components;
+  void _init() {
+    widget.stages = widget.data.getStages();
+    if(stage=="uninitialized") {
+      stage = widget.stages[0];
+    }
+    sections = widget.data.sections[stage];
+    data = widget.data.data;
+    components = widget.data.components;
   }
 
   //builds the components in a certain section
@@ -182,65 +172,10 @@ class ScoutingState extends State<Scouting> {
 
   @override
   Widget build(BuildContext context) {
-    //if widget data already exists we can get the match stage information without rereading the json file
-    if(widget.data!=null) {
-      setStage();
-    }
+    _init();    
     return Scaffold(
       //if widget data is not set yet, then we use future builder to read the json file
-      body: widget.data == null ?
-      FutureBuilder(
-        future: _setData(),
-        builder: (BuildContext context, AsyncSnapshot snapshot) {
-          if (snapshot.connectionState == ConnectionState.done) {
-              // If we got an error
-              if (snapshot.hasError) {
-                return Center(
-                  child: Text(
-                    '${snapshot.error} occurred',
-                    style: TextStyle(fontSize: 18),
-                  ),
-                );
- 
-                // if we got our data
-              } else if (snapshot.hasData) {
-                // Extracting data from snapshot object
-                final data = snapshot.data;
-                return ListView(
-                  children: [
-                    HeaderTitle(size: ScreenSize.get()),
-                    HeaderNav(
-                      currentPage: widget.screen,
-                      changePage: widget.changePage,
-                      size: ScreenSize.get(),
-                      screens: widget.screens
-                    ),
-                    SizedBox(
-                      width: ScreenSize.width,
-                      height: ScreenSize.height*0.4+135000/ScreenSize.width,
-                      child: _buildBody(ScreenSize.get()),
-                    ),                
-                    ScoutingFooter(
-                      stage: stage,
-                      nextPage: (_nextPageExists() ? _nextPage : null),
-                      previousPage: (_previousPageExists() ? _previousPage : null),
-                      size: ScreenSize.get(),
-                      changePage: widget.changePage,
-                      data: widget.data!,
-                      screen: widget.screen,
-                      stages: widget.stages!
-                    ),
-                  ],
-                );
-              }
-            }
-            // Displaying LoadingSpinner to indicate waiting state
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
-          }, 
-      ) :
-      ListView(
+      body: ListView(
         children: [
           HeaderTitle(size: ScreenSize.get()),
           HeaderNav(
@@ -260,9 +195,9 @@ class ScoutingState extends State<Scouting> {
             previousPage: (_previousPageExists() ? _previousPage : null),
             size: ScreenSize.get(),
             changePage: widget.changePage,
-            data: widget.data!,
+            data: widget.data,
             screen: widget.screen,
-            stages: widget.stages!
+            stages: widget.stages
           ),
         ],
       )

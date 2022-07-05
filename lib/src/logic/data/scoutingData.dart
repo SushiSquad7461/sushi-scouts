@@ -25,24 +25,14 @@ class Section {
 }
 
 class ScoutingData {
-  Map<int, Component> components; 
-  Map<int, Data> data;
-  Map<String, List<Section>> sections;
+  late Map<int, Component> components; 
+  late Map<int, Data> data;
+  late Map<String, List<Section>> sections;
 
-  ScoutingData(this.components, this.data, this.sections);
-
-  static Future<List<String>> getScreens() async{
-    final String response = await rootBundle.loadString(CONFIG_PATH);
-    final dynamic config = await json.decode(response);
-    return config.keys.toList();
-  }
-
-  static Future<ScoutingData> create(String screen) async {
-    final String response = await rootBundle.loadString(CONFIG_PATH);
-    final dynamic config = await json.decode(response)[screen];
-    Map<int, Component> components = {}; 
-    Map<int, Data> data = {};
-    Map<String, List<Section>> sections = {};
+  ScoutingData(Map<String, dynamic> config){
+    components = {};
+    data = {};
+    sections = {};
     int startValue = 0;
     for(String key in config.keys.toList()) {
       List<Section> section = [];
@@ -62,7 +52,6 @@ class ScoutingData {
       }
       sections[key] = section;
     }
-    return ScoutingData(components, data, sections);
   }
   
   List<String> getStages() {
