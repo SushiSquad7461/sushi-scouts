@@ -2,6 +2,7 @@ import 'package:enum_to_string/enum_to_string.dart';
 import 'package:flutter/material.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:sushi_scouts/src/logic/data/ScoutingData.dart';
+import 'package:sushi_scouts/src/logic/size/ScreenSize.dart';
 import '../util/Header/HeaderTitle.dart';
 import '../util/Footer.dart';
 import '../util/header/HeaderNav.dart';
@@ -23,41 +24,38 @@ class QRScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     convertData();
-    Size size = MediaQuery.of(context).size;
-    double swu = size.width/600;
-    double shu = size.height/900;
     return Scaffold(
         body: ListView(
           children: [
-            HeaderTitle(size: size),
-            HeaderNav(currentPage: previousPage, changePage: changePage, size: size, screens: screens),
+            HeaderTitle(size: ScreenSize.get()),
+            HeaderNav(currentPage: previousPage, changePage: changePage, size: ScreenSize.get(), screens: screens),
             SizedBox(
-              height: (size.height * 0.5+72000.0/size.width),
+              height: (ScreenSize.height * 0.5+72000.0/ScreenSize.width),
               child: QrImage(data: stringifiedData!),
             ),
             Padding(
-                  padding: EdgeInsets.all(20*swu),
+                  padding: EdgeInsets.all(20*ScreenSize.swu),
                   child: Container(
-                      width: 200*swu,
-                      height: 60*swu,
+                      width: 200*ScreenSize.swu,
+                      height: 60*ScreenSize.swu,
                       decoration: BoxDecoration(
                         border: Border.all(color: Colors.black, width: 4),
                         color: const Color(0xfafafa),
-                        borderRadius: BorderRadius.circular(20*swu),
+                        borderRadius: BorderRadius.circular(20*ScreenSize.swu),
                       ),
                       child: TextButton(
                         onPressed: () => changePage(previousPage, previousPage),                        
                         child: Text(
                           'Next Match',
                           style: TextStyle(
-                              fontSize: 25*swu,
+                              fontSize: 25*ScreenSize.swu,
                               fontFamily: "Sushi",
                               color: Colors.black,
                               fontWeight: FontWeight.bold),
                         ),
                       )),
                 ),
-            Footer(pageTitle: previousPage.toUpperCase(), size: size),
+            Footer(pageTitle: previousPage.toUpperCase(), size: ScreenSize.get()),
           ],
         )
     );

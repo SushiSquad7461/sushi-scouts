@@ -4,6 +4,7 @@ import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:sushi_scouts/src/logic/data/ScoutingData.dart';
+import 'package:sushi_scouts/src/logic/size/ScreenSize.dart';
 import 'package:sushi_scouts/src/views/util/Scouting/ScoutingFooter.dart';
 import 'package:sushi_scouts/src/views/util/components/Checkbox.dart';
 import 'package:sushi_scouts/src/views/util/components/Increment.dart';
@@ -181,7 +182,6 @@ class ScoutingState extends State<Scouting> {
 
   @override
   Widget build(BuildContext context) {
-    final Size mediaQuerySize = MediaQuery.of(context).size;
     //if widget data already exists we can get the match stage information without rereading the json file
     if(widget.data!=null) {
       setStage();
@@ -208,23 +208,23 @@ class ScoutingState extends State<Scouting> {
                 final data = snapshot.data;
                 return ListView(
                   children: [
-                    HeaderTitle(size: mediaQuerySize),
+                    HeaderTitle(size: ScreenSize.get()),
                     HeaderNav(
                       currentPage: widget.screen,
                       changePage: widget.changePage,
-                      size: mediaQuerySize,
+                      size: ScreenSize.get(),
                       screens: widget.screens
                     ),
                     SizedBox(
-                      width: mediaQuerySize.width,
-                      height: mediaQuerySize.height*0.4+135000/mediaQuerySize.width,
-                      child: _buildBody(mediaQuerySize),
+                      width: ScreenSize.width,
+                      height: ScreenSize.height*0.4+135000/ScreenSize.width,
+                      child: _buildBody(ScreenSize.get()),
                     ),                
                     ScoutingFooter(
                       stage: stage,
                       nextPage: (_nextPageExists() ? _nextPage : null),
                       previousPage: (_previousPageExists() ? _previousPage : null),
-                      size: mediaQuerySize,
+                      size: ScreenSize.get(),
                       changePage: widget.changePage,
                       data: widget.data!,
                       screen: widget.screen,
@@ -242,23 +242,23 @@ class ScoutingState extends State<Scouting> {
       ) :
       ListView(
         children: [
-          HeaderTitle(size: mediaQuerySize),
+          HeaderTitle(size: ScreenSize.get()),
           HeaderNav(
             currentPage: widget.screen,
             changePage: widget.changePage,
-            size: mediaQuerySize,
+            size: ScreenSize.get(),
             screens: widget.screens
           ),
           SizedBox(
-            width: mediaQuerySize.width,
-            height: mediaQuerySize.height*0.4+135000/mediaQuerySize.width,
-            child: _buildBody(mediaQuerySize),
+            width: ScreenSize.width,
+            height: ScreenSize.height*0.4+135000/ScreenSize.width,
+            child: _buildBody(ScreenSize.get()),
           ),                
           ScoutingFooter(
             stage: stage,
             nextPage: (_nextPageExists() ? _nextPage : null),
             previousPage: (_previousPageExists() ? _previousPage : null),
-            size: mediaQuerySize,
+            size: ScreenSize.get(),
             changePage: widget.changePage,
             data: widget.data!,
             screen: widget.screen,
