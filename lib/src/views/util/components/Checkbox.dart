@@ -49,6 +49,17 @@ class CheckboxState extends State<CheckboxInput>{
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
+              Checkbox(
+                splashRadius: width/10,
+                checkColor: Colors.white,
+                fillColor: MaterialStateProperty.resolveWith(getColor),
+                value: widget.checked,
+                onChanged: (bool? value) {
+                widget.data.set(value.toString(), setByUser: true);
+                setState(() {
+                  widget.checked = value!;
+                });}
+              ),
               Text(widget.name,
                 style: TextStyle(
                     fontFamily: "Sushi",
@@ -57,29 +68,10 @@ class CheckboxState extends State<CheckboxInput>{
                     color: widget.textColor
                   )
               ),
-              Expanded(
-                child: Align(
-                  alignment: Alignment.centerRight,
-                  child: Transform.scale(
-                    scale: width/200.0,
-                    child: Checkbox(
-                      splashRadius: width/10,
-                      checkColor: Colors.white,
-                      fillColor: MaterialStateProperty.resolveWith(getColor),
-                      value: widget.checked,
-                      onChanged: (bool? value) {
-                      widget.data.set(value.toString(), setByUser: true);
-                      setState(() {
-                        widget.checked = value!;
-                      });}
-                    )
-                  )
-                )
-              )
-            ]),
-            ]
-          )
+          ]),   
+        ]
         )
+      )
     );
   }
 }

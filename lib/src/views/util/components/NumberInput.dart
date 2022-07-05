@@ -29,7 +29,7 @@ class NumberInput extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-              Text(name,
+              Text(name.toUpperCase(),
                 style: TextStyle(
                     fontFamily: "Sushi",
                     fontSize: width/10,

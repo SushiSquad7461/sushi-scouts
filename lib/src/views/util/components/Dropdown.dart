@@ -38,7 +38,7 @@ class DropdownState extends State<Dropdown>{
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-              Text(widget.name,
+              Text(widget.name.toUpperCase(),
                 style: TextStyle(
                     fontFamily: "Sushi",
                     fontSize: width/10,
