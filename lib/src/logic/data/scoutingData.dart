@@ -4,8 +4,6 @@ import 'package:flutter/services.dart';
 import 'package:sushi_scouts/src/logic/data/Data.dart';
 import 'dart:convert';
 
-const String CONFIG_PATH = "assets/config/config.json";
-
 class Component {
   String name;
   List<String>? values;
@@ -28,8 +26,9 @@ class ScoutingData {
   late Map<int, Component> components; 
   late Map<int, Data> data;
   late Map<String, List<Section>> sections;
+  String name;
 
-  ScoutingData(Map<String, dynamic> config){
+  ScoutingData(Map<String, dynamic> config, {required this.name}){
     components = {};
     data = {};
     sections = {};

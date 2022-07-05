@@ -177,13 +177,6 @@ class ScoutingState extends State<Scouting> {
       //if widget data is not set yet, then we use future builder to read the json file
       body: ListView(
         children: [
-          HeaderTitle(size: ScreenSize.get()),
-          HeaderNav(
-            currentPage: widget.screen,
-            changePage: widget.changePage,
-            size: ScreenSize.get(),
-            screens: widget.screens
-          ),
           SizedBox(
             width: ScreenSize.width,
             height: ScreenSize.height*0.4+135000/ScreenSize.width,

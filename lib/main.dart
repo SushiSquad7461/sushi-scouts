@@ -1,104 +1,110 @@
 import "package:flutter/material.dart";
 import 'package:sushi_scouts/src/logic/Constants.dart';
 import 'package:sushi_scouts/src/logic/data/ConfigFileReader.dart';
-import 'package:sushi_scouts/src/logic/data/Data.dart';
 import 'package:sushi_scouts/src/logic/data/ScoutingData.dart';
 import 'package:sushi_scouts/src/logic/size/ScreenSize.dart';
-import 'package:sushi_scouts/src/views/ui/Scouting.dart';
+import 'package:sushi_scouts/src/views/ui/Loading.dart';
 import 'package:sushi_scouts/src/views/ui/Login.dart';
-import 'package:sushi_scouts/src/views/ui/QRScreen.dart';
-import 'package:sushi_scouts/src/views/ui/Settings.dart';
-import 'package:sushi_scouts/src/views/util/footer.dart';
-import 'package:sushi_scouts/src/views/util/Header/HeaderTitle.dart';
+import 'package:sushi_scouts/src/views/ui/Scouting.dart';
 import 'package:sushi_scouts/src/views/util/header/HeaderNav.dart';
+import 'package:sushi_scouts/src/views/util/header/HeaderTitle.dart';
 
-void main() => runApp(const SushiScouts());
+void main() => runApp(const Wraper());
+
+class Wraper extends StatelessWidget {
+  const Wraper({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return const MaterialApp(
+      home: Scaffold(
+        body: SushiScouts(),
+      ),
+    );
+  }
+}
 
 class SushiScouts extends StatefulWidget {
   const SushiScouts({Key? key}) : super(key: key);
-  //CardinalData data = await CardinalData.create();
+
   @override
   State<SushiScouts> createState() => _SushiScoutsState();
 }
 
 class _SushiScoutsState extends State<SushiScouts> {
-  // TODO: CHANGE VAL TO Pages.login WHEN LOGIN PAGE IS MADE
-  String _currentPage = "ordinal";
-  String _previousPage = "ordinal";
-  Map<String, ScoutingData?> previousData = {};
-  ConfigFileReader? config;
-  List<String>? screens;
-  final  GlobalKey<NavigatorState> navigatorKey =  GlobalKey<NavigatorState>();
+  // CHANGE HOW YEAR WORKS
+  ConfigFileReader fileReader = ConfigFileReader(CONFIG_FILE_PATH, 2022);
+  String _currentPage = "loading";
+  Map<String, ScoutingData> scoutingPages = {};
+  List<String> _headerNavNeeded = [];
 
-  Future<bool> _init() async{
-    config =  await ConfigFileReader.create(CONFIG_FILE_PATH, 2022);
-    screens = config!.getScoutingMethods();
-    for(String screen in screens!) {
-      previousData[screen] = null;
-    }
-    return true;
-  }
-
-  void setCurrentPage(String newPage, String previousPage, {ScoutingData? previousData=null}) {
-    if(previousData != null){
-      this.previousData[previousPage] = previousData;
-    }
-    if(previousPage != null) {
-      _previousPage = previousPage;
-    }
+  // Change current page
+  void setCurrentPage(newPage) {
     setState(() {
       _currentPage = newPage;
     });
-    build(context);
+  }
+
+  Future<void> readConfigFile() async {
+    try {
+      await fileReader.readConfig();
+
+      setState(() {
+        for (var i in fileReader.getScoutingDataClasses()) {
+          scoutingPages[i.scoutingMethodName] = i;
+        }
+
+        _headerNavNeeded = fileReader.getScoutingMethods();
+        _headerNavNeeded.add("settings");
+
+        _currentPage = "login";
+      });
+    } catch (err) {
+      setState(() {
+        _currentPage = "error";
+      });
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    readConfigFile();
   }
 
   @override
   Widget build(BuildContext context) {
-    ScreenSize.width = 600;
-    ScreenSize.height = 900;
-    return MaterialApp(
-      home: config==null ?
-      FutureBuilder(
-        future: _init(),
-        builder: (BuildContext context, AsyncSnapshot snapshot) {
-          return snapshot.hasData ?
-            Navigator(
-              key: navigatorKey,
-              pages: <Page<void>>[
-                if(_currentPage=="qrcode")
-                  MaterialPage(child: QRScreen(changePage: setCurrentPage, previousPage: _previousPage, data: previousData[_previousPage], screens: screens!))
-                else if(_currentPage=="settings")
-                  MaterialPage(child: Settings(changePage: setCurrentPage, screens: screens!))
-                else if(_currentPage=="login")
-                  MaterialPage(child: Login())
-                else if(screens!.contains(_currentPage))
-                   MaterialPage(child: Scouting(screen: _currentPage, changePage: setCurrentPage, previousData: previousData[_currentPage], screens: screens!, data: config!.generateScoutingData(_currentPage)))
-                else
-                  MaterialPage(child: Text("page does not exist"))
-              ],
-              onPopPage: (route, result) {
-                return route.didPop(result);
-              }) : 
-            const CircularProgressIndicator();
-        }) : 
-      Navigator(
-        key: navigatorKey,
-        pages: <Page<void>>[
-          if(_currentPage=="qrcode")
-            MaterialPage(child: QRScreen(changePage: setCurrentPage, previousPage: _previousPage, data: previousData[_previousPage], screens: screens!))
-          else if(_currentPage=="settings")
-            MaterialPage(child: Settings(changePage: setCurrentPage, screens: screens!))
-          else if(_currentPage=="login")
-            MaterialPage(child: Login())
-          else if(screens!.contains(_currentPage))
-              MaterialPage(child: Scouting(screen: _currentPage, changePage: setCurrentPage, previousData: previousData[_currentPage], screens: screens!,  data: config!.generateScoutingData(_currentPage)))
-          else
-            MaterialPage(child: Text("page does not exist"))
-        ],
-        onPopPage: (route, result) {
-          return route.didPop(result);
-        }
-      )
-    );
+    ScreenSize.width = MediaQuery.of(context).size.width;
+    ScreenSize.height = MediaQuery.of(context).size.height;
+
+    return Column(children: [
+      const HeaderTitle(),
+      if (_headerNavNeeded.contains(_currentPage))
+        HeaderNav(
+            currentPage: _currentPage,
+            changePage: setCurrentPage,
+            screens: _headerNavNeeded),
+      SizedBox(
+        height: _headerNavNeeded.contains(_currentPage)
+            ? ScreenSize.shu * 0.5
+            : ScreenSize.shu * 0.5,
+        width: ScreenSize.swu,
+        child: Navigator(
+          pages: [
+            if (_currentPage == "login")
+              const MaterialPage(child: Login())
+            else if (_currentPage == "loading") // TODO: FIX LOADING PAGE
+              const MaterialPage(child: Loading())
+            else if (_currentPage == "error") // TODO: ADD ERROR PAGE
+              const MaterialPage(child: Text("Error"))
+            else if (fileReader.getScoutingMethods().contains(_currentPage))
+              MaterialPage(child: Scouting(name: scoutingPages[_currentPage]!))
+          ],
+          onPopPage: (route, result) {
+            return route.didPop(result);
+          },
+        ),
+      ),
+    ]);
   }
 }

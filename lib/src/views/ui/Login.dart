@@ -16,7 +16,6 @@ class Login extends StatelessWidget {
     return Scaffold(
         body: ListView(
           children: [
-            HeaderTitle(size: ScreenSize.get()),
           ],
         )
     );

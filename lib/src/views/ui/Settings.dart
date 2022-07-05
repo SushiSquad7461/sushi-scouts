@@ -18,8 +18,6 @@ class Settings extends StatelessWidget {
     return Scaffold(
         body: ListView(
           children: [
-            HeaderTitle(size: ScreenSize.get()),
-            HeaderNav(currentPage: "settings", changePage: changePage, size: ScreenSize.get(), screens: screens),
             Footer(pageTitle: "Settings", size: ScreenSize.get(),)
           ],
         )
