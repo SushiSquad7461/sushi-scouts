@@ -47,35 +47,38 @@ class DropdownState extends State<Dropdown>{
                   )
               ),
               Expanded(
-                child: DropdownButtonHideUnderline(
-                  child: DropdownButton<String>(
-                    value: widget.currentValue,
-                    icon: Icon(Icons.arrow_drop_down_rounded),
-                    elevation: (width/100.0*3).floor(),
-                    style: TextStyle(
-                      fontFamily: "Sushi",
-                      fontSize: width/10,
-                      fontWeight: FontWeight.bold,
-                      color: widget.textColor,
-                      overflow: TextOverflow.ellipsis
-                    ),
-                    alignment: AlignmentDirectional.center,
-                    onChanged: (String? newValue) {
-                      if(newValue!=null){
-                        widget.data.set(newValue, setByUser: true);
-                        setState(() {
-                          widget.currentValue = newValue;
-                        });
-                        build(context);
-                      }
-                    },
-                    items: widget.values
-                        .map<DropdownMenuItem<String>>((String value) {
-                      return DropdownMenuItem<String>(
-                        value: value,
-                        child: Center(child: Text(value)),
-                      );
-                    }).toList(),
+                child: Align(
+                  alignment: Alignment.centerRight,
+                  child: DropdownButtonHideUnderline(
+                    child: DropdownButton<String>(
+                      value: widget.currentValue,
+                      icon: Icon(Icons.arrow_drop_down_rounded),
+                      elevation: (width/100.0*3).floor(),
+                      style: TextStyle(
+                        fontFamily: "Sushi",
+                        fontSize: width/10,
+                        fontWeight: FontWeight.bold,
+                        color: widget.textColor,
+                        overflow: TextOverflow.ellipsis
+                      ),
+                      alignment: AlignmentDirectional.center,
+                      onChanged: (String? newValue) {
+                        if(newValue!=null){
+                          widget.data.set(newValue, setByUser: true);
+                          setState(() {
+                            widget.currentValue = newValue;
+                          });
+                          build(context);
+                        }
+                      },
+                      items: widget.values
+                          .map<DropdownMenuItem<String>>((String value) {
+                        return DropdownMenuItem<String>(
+                          value: value,
+                          child: Center(child: Text(value)),
+                        );
+                      }).toList(),
+                    )
                   )
                 )
               )
