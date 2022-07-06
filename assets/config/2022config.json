@@ -191,17 +191,20 @@
                         {
                             "name" : "Defence",
                             "type" : "string",
-                            "component" : "ranking"
+                            "component" : "ranking",
+                            "values" : ["7461", "2910", "4911"]
                         },
                         {
                             "name" : "Shooting",
                             "type" : "string",
-                            "component" : "ranking"
+                            "component" : "ranking",
+                            "values" : ["7461", "2910", "4911"]
                         },
                         {
                             "name" : "Driving",
                             "type" : "string",
-                            "component" : "ranking"
+                            "component" : "ranking",
+                            "values" : ["7461", "2910", "4911"]
                         }
                     ]
                 }

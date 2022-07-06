@@ -9,6 +9,7 @@ import 'package:sushi_scouts/src/views/util/Scouting/ScoutingFooter.dart';
 import 'package:sushi_scouts/src/views/util/components/Checkbox.dart';
 import 'package:sushi_scouts/src/views/util/components/Increment.dart';
 import 'package:sushi_scouts/src/views/util/components/Multiselect.dart';
+import 'package:sushi_scouts/src/views/util/components/Ranking.dart';
 
 import '../../logic/data/Data.dart';
 import '../util/Header/HeaderTitle.dart';
@@ -23,7 +24,7 @@ class Scouting extends StatefulWidget {
   List<String> stages = [];
   String screen;
   List<String> screens;
-  final Map allComponents = {"number input": NumberInput.create, "dropdown": Dropdown.create, "checkbox": CheckboxInput.create, "increment": Increment.create, "multiselect": Multiselect.create};
+  final Map allComponents = {"number input": NumberInput.create, "dropdown": Dropdown.create, "checkbox": CheckboxInput.create, "increment": Increment.create, "multiselect": Multiselect.create, "ranking": Ranking.create};
   final Function(String newPage, String previousPage, {ScoutingData? previousData}) changePage;
   Scouting({Key? key, required this.screen, required this.changePage, this.previousData, required this.screens, required this.data}) : super(key: key);
   @override
