@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:sushi_scouts/src/logic/data/ScoutingData.dart';
+import 'package:sushi_scouts/src/logic/size/ScreenSize.dart';
 import '../util/Header/HeaderTitle.dart';
 import '../util/footer.dart';
 import '../util/header/HeaderNav.dart';
@@ -14,13 +15,10 @@ class Settings extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-  Size size = MediaQuery.of(context).size;
     return Scaffold(
         body: ListView(
           children: [
-            HeaderTitle(size: size),
-            HeaderNav(currentPage: "settings", changePage: changePage, size: size, screens: screens),
-            Footer(pageTitle: "Settings", size: size,)
+            Footer(pageTitle: "Settings", size: ScreenSize.get(),)
           ],
         )
     );

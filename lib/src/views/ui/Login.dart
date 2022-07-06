@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:sushi_scouts/src/logic/size/ScreenSize.dart';
 
 import '../util/Header/HeaderTitle.dart';
 import '../util/footer.dart';
@@ -15,7 +16,6 @@ class Login extends StatelessWidget {
     return Scaffold(
         body: ListView(
           children: [
-            HeaderTitle(size: MediaQuery.of(context).size),
           ],
         )
     );
