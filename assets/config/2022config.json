@@ -30,7 +30,7 @@
                         {
                             "name" : "match type",
                             "type" : "string",
-                            "component" : "dropdown",
+                            "component" : "multiselect",
                             "values" : ["Quals", "Elims", "Practice"]
                         }
                     ]
@@ -117,7 +117,7 @@
                         {
                             "name" : "Climb Level",
                             "type" : "string",
-                            "component" : "dropdown",
+                            "component" : "multiselect",
                             "values" : ["No Climb", "Low Climb", "Mid Climb", "High Climb", "Traversal"]
                         }  
                     ]
@@ -147,7 +147,7 @@
                         {
                             "name" : "match type",
                             "type" : "string",
-                            "component" : "dropdown",
+                            "component" : "multiselect",
                             "values" : ["Quals", "Elims", "Practice"]
                         }
                     ]
@@ -173,7 +173,7 @@
                         {
                             "name" : "Side",
                             "type" : "string",
-                            "component" : "dropdown",
+                            "component" : "multiselect",
                             "values" : ["Red", "Blue"]
                         }
                     ]
