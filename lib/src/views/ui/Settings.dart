@@ -5,7 +5,7 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:sushi_scouts/src/logic/data/ScoutingData.dart';
 import 'package:sushi_scouts/src/logic/size/ScreenSize.dart';
 import '../util/Header/HeaderTitle.dart';
-import '../util/footer.dart';
+import '../util/Footer/Footer.dart';
 import '../util/header/HeaderNav.dart';
 
 class Settings extends StatelessWidget {
@@ -18,7 +18,6 @@ class Settings extends StatelessWidget {
     return Scaffold(
         body: ListView(
           children: [
-            Footer(pageTitle: "Settings", size: ScreenSize.get(),)
           ],
         )
     );

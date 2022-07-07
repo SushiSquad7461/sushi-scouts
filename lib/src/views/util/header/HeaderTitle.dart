@@ -22,14 +22,14 @@ class HeaderTitle extends StatelessWidget {
               "sushi scouts",
               style: TextStyle(
                 fontFamily: "Sushi",
-                fontSize: 70 * ScreenSize.swu,
+                fontSize: 75 * ScreenSize.swu,
                 fontWeight: FontWeight.bold,
                 color: Colors.black,
               ),
             ),
             Image.asset(
               "./assets/images/toprightlogo.png",
-              scale: 6.0 / ScreenSize.swu,
+              scale: 6.5 / ScreenSize.swu,
             ),
           ],
         ));

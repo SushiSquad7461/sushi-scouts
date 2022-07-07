@@ -42,7 +42,7 @@
             },
             "auto" : {
                 "footer": "auto",
-                "components": [
+                "sections": [
                     {
                         "properties":{
                             "color" : "#63cff9",
@@ -94,7 +94,7 @@
             },
             "teleop" : { 
                 "footer": "teleop",
-                "components": [
+                "sections": [
                     {
                         "properties":{
                             "color":"#81f4e1",
@@ -120,7 +120,7 @@
             },
             "endgame" : {
                 "footer": "endgame",
-                "components": [
+                "sections": [
                     {
                         "properties":{
                             "color":"#ff76a2",

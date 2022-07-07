@@ -21,7 +21,7 @@ class HeaderNav extends StatelessWidget {
     final TextStyle pageStyle = TextStyle(
       fontFamily: "Sushi",
       fontSize: 25 * ScreenSize.swu,
-      fontWeight: FontWeight.bold,
+      fontWeight: FontWeight.w700,
     );
 
     return Padding(
@@ -30,13 +30,13 @@ class HeaderNav extends StatelessWidget {
           children: [
             Divider(
               color: Colors.black,
-              thickness: 6 * ScreenSize.shu,
+              thickness: 4 * ScreenSize.shu,
             ),
             Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
               for (final String screen in screens)
                 Padding(
                     padding: EdgeInsets.only(
-                        left: 0, right: 0, top: 8 * ScreenSize.shu, bottom: 8 * ScreenSize.shu),
+                        left: 0, right: 0, top: 0 * ScreenSize.shu, bottom: 0 * ScreenSize.shu),
                     child: GestureDetector(
                         onTap: () => changePage(screen),
                         child: Container(
@@ -66,7 +66,7 @@ class HeaderNav extends StatelessWidget {
             ]),
             Divider(
               color: Colors.black,
-              thickness: 6 * ScreenSize.shu,
+              thickness: 4 * ScreenSize.shu,
             ),
           ],
         ));

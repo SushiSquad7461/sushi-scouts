@@ -18,6 +18,7 @@ class Wraper extends StatelessWidget {
   Widget build(BuildContext context) {
     return const MaterialApp(
       home: Scaffold(
+        backgroundColor: Colors.white,
         body: SushiScouts(),
       ),
     );
@@ -37,6 +38,7 @@ class _SushiScoutsState extends State<SushiScouts> {
   String _currentPage = "loading";
   Map<String, ScoutingData> scoutingPages = {};
   List<String> _headerNavNeeded = [];
+  String currErr = "";
 
   // Change current page
   void setCurrentPage(newPage) {
@@ -53,15 +55,15 @@ class _SushiScoutsState extends State<SushiScouts> {
         for (var i in fileReader.getScoutingDataClasses()) {
           scoutingPages[i.name] = i;
         }
-
         _headerNavNeeded = fileReader.getScoutingMethods();
         _headerNavNeeded.add("settings");
 
-        _currentPage = "login";
+        _currentPage = "cardinal";
       });
     } catch (err) {
       setState(() {
         _currentPage = "error";
+        currErr = err.toString();
       });
     }
   }
@@ -85,10 +87,8 @@ class _SushiScoutsState extends State<SushiScouts> {
             changePage: setCurrentPage,
             screens: _headerNavNeeded),
       SizedBox(
-        height: _headerNavNeeded.contains(_currentPage)
-            ? ScreenSize.shu * 0.5
-            : ScreenSize.shu * 0.5,
-        width: ScreenSize.swu,
+        height: ScreenSize.height * 0.823,
+        width: ScreenSize.width,
         child: Navigator(
           pages: [
             if (_currentPage == "login")
@@ -96,7 +96,7 @@ class _SushiScoutsState extends State<SushiScouts> {
             else if (_currentPage == "loading") // TODO: FIX LOADING PAGE
               const MaterialPage(child: Loading())
             else if (_currentPage == "error") // TODO: ADD ERROR PAGE
-              const MaterialPage(child: Text("Error"))
+              MaterialPage(child: Center(child: Text("Error $currErr")))
             else if (fileReader.getScoutingMethods().contains(_currentPage))
               MaterialPage(child: Scouting(data: scoutingPages[_currentPage]))
           ],

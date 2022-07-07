@@ -34,15 +34,15 @@ class Section {
     darkTextColor = HexColor(config["properties"]["darkTextColor"]);
 
     for (var i in config["components"]) {
-      components.add(
-          Component(i["name"], i["type"], i["component"], values: i["values"]));
+      components.add(Component(i["name"], i["type"], i["component"],
+          values: i["values"] == null ? null : List<String>.from(i["values"])));
 
       if (i["type"] == "number") {
-        values.add(Data<double>(i["values"][0] ?? 0));
-      } else if (i["types"] == "string") {
-        values.add(Data<double>(i["values"][0] ?? ""));
+        values.add(Data<double>(i["values"] != null ? i["values"][0] : 0));
+      } else if (i["type"] == "string") {
+        values.add(Data<String>(i["values"] != null ? i["values"][0] : ""));
       } else {
-        throw ArgumentError("Type: ${i["type"]} is an invalid type");
+        throw ArgumentError("Type: ${i["type"]} is an invalid type2");
       }
     }
   }
@@ -55,6 +55,10 @@ class Section {
     }
 
     return ret;
+  }
+
+  int numComponents() {
+    return components.length;
   }
 }
 
@@ -136,5 +140,9 @@ class ScoutingData {
     }
 
     return ret;
+  }
+
+  Page? getCurrentPage() {
+    return pages[pageNames[currPage]];
   }
 }

@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:sushi_scouts/src/logic/data/ScoutingData.dart';
 import 'package:sushi_scouts/src/logic/size/ScreenSize.dart';
 import '../util/Header/HeaderTitle.dart';
-import '../util/Footer.dart';
 import '../util/header/HeaderNav.dart';
 import 'Scouting.dart';
 
@@ -52,7 +51,6 @@ class QRScreen extends StatelessWidget {
                         ),
                       )),
                 ),
-            Footer(pageTitle: previousPage.toUpperCase(), size: ScreenSize.get()),
           ],
         )
     );
