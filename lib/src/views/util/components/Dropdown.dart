@@ -27,7 +27,7 @@ class DropdownState extends State<Dropdown>{
   @override
   Widget build(BuildContext context) {
     double width = widget.width;
-    widget.data.set(widget.currentValue, setByUser: true);
+    widget.data.set(widget.currentValue);
     return Padding(
         padding:
             EdgeInsets.only(left: width/60, right: width/60, top: width/30, bottom: width/30),
@@ -62,7 +62,7 @@ class DropdownState extends State<Dropdown>{
                     alignment: AlignmentDirectional.center,
                     onChanged: (String? newValue) {
                       if(newValue!=null){
-                        widget.data.set(newValue, setByUser: true);
+                        widget.data.set(newValue);
                         setState(() {
                           widget.currentValue = newValue;
                         });

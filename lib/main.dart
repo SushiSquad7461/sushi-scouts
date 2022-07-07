@@ -51,7 +51,7 @@ class _SushiScoutsState extends State<SushiScouts> {
 
       setState(() {
         for (var i in fileReader.getScoutingDataClasses()) {
-          scoutingPages[i.scoutingMethodName] = i;
+          scoutingPages[i.name] = i;
         }
 
         _headerNavNeeded = fileReader.getScoutingMethods();
@@ -98,7 +98,7 @@ class _SushiScoutsState extends State<SushiScouts> {
             else if (_currentPage == "error") // TODO: ADD ERROR PAGE
               const MaterialPage(child: Text("Error"))
             else if (fileReader.getScoutingMethods().contains(_currentPage))
-              MaterialPage(child: Scouting(name: scoutingPages[_currentPage]!))
+              MaterialPage(child: Scouting(data: scoutingPages[_currentPage]))
           ],
           onPopPage: (route, result) {
             return route.didPop(result);

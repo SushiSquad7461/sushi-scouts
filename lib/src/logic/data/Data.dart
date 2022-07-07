@@ -5,13 +5,11 @@
 class Data<ValueType> {
   // Current value of the component
   ValueType currValue;
-  bool setByUser;
 
-  Data(this.currValue, {this.setByUser = false});
+  Data(this.currValue);
 
   // Set the current value
-  void set(ValueType newVal, {bool setByUser = false}) {
-    this.setByUser = setByUser;
+  void set(ValueType newVal) {
     currValue = newVal;
   }
 

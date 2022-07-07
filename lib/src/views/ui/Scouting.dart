@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
-import 'package:qr_flutter/qr_flutter.dart';
+import 'package:sushi_scouts/src/logic/Constants.dart';
 import 'package:sushi_scouts/src/logic/data/ScoutingData.dart';
 import 'package:sushi_scouts/src/logic/size/ScreenSize.dart';
 import 'package:sushi_scouts/src/views/util/Scouting/ScoutingFooter.dart';
@@ -17,14 +17,8 @@ import '../util/header/HeaderNav.dart';
 import 'package:sushi_scouts/src/views/util/components/NumberInput.dart';
 
 class Scouting extends StatefulWidget {
-  ScoutingData data;
-  ScoutingData? previousData;
-  List<String> stages = [];
-  String screen;
-  List<String> screens;
-  final Map allComponents = {"number input": NumberInput.create, "dropdown": Dropdown.create, "checkbox": CheckboxInput.create, "increment": Increment.create};
-  final Function(String newPage, String previousPage, {ScoutingData? previousData}) changePage;
-  Scouting({Key? key, required this.screen, required this.changePage, this.previousData, required this.screens, required this.data}) : super(key: key);
+  final ScoutingData? data;
+  const Scouting({Key? key, required this.data}) : super(key: key);
   @override
   ScoutingState createState() => ScoutingState();
 }
@@ -35,22 +29,6 @@ class ScoutingState extends State<Scouting> {
   Map<int, Data>? data;
   double teamNumber = 7461;
   String stage = "uninitialized";
-
-  //says if another match stage exists after this one
-  bool _nextPageExists() {
-    if (widget.stages!.indexOf(stage) + 1 >= widget.stages!.length) {
-      return false;
-    }
-    return true;
-  }
-
-  //says if a previous match stage exists before this one
-  bool _previousPageExists() {
-    if (widget.stages!.indexOf(stage) - 1 < 0) {
-      return false;
-    }
-    return true;
-  }
 
   //switches to the next match stage
   bool _nextPage(String stage) {
@@ -116,8 +94,8 @@ class ScoutingState extends State<Scouting> {
           defaultValue = Data<String>("");
       }
       builtComponents.add( 
-        widget.allComponents.containsKey(components![index]!.component)
-          ? widget.allComponents[components![index]!.component](
+        COMPONENT_MAP.containsKey(components![index]!.component)
+          ? COMPONENT_MAP[components![index]!.component](
               components![index]!.name,
               data![index]!,
               components![index]!.values, 
@@ -182,16 +160,16 @@ class ScoutingState extends State<Scouting> {
             height: ScreenSize.height*0.4+135000/ScreenSize.width,
             child: _buildBody(ScreenSize.get()),
           ),                
-          ScoutingFooter(
-            stage: stage,
-            nextPage: (_nextPageExists() ? _nextPage : null),
-            previousPage: (_previousPageExists() ? _previousPage : null),
-            size: ScreenSize.get(),
-            changePage: widget.changePage,
-            data: widget.data,
-            screen: widget.screen,
-            stages: widget.stages
-          ),
+          // ScoutingFooter(
+          //   stage: stage,
+          //   nextPage: (_nextPageExists() ? _nextPage : null),
+          //   previousPage: (_previousPageExists() ? _previousPage : null),
+          //   size: ScreenSize.get(),
+          //   changePage: widget.changePage,
+          //   data: widget.data,
+          //   screen: widget.screen,
+          //   stages: widget.stages
+          // ),
         ],
       )
     );

@@ -1,6 +1,5 @@
 import 'package:enum_to_string/enum_to_string.dart';
 import 'package:flutter/material.dart';
-import 'package:qr_flutter/qr_flutter.dart';
 import 'package:sushi_scouts/src/logic/data/ScoutingData.dart';
 import 'package:sushi_scouts/src/logic/size/ScreenSize.dart';
 import '../util/Header/HeaderTitle.dart';
@@ -29,7 +28,7 @@ class QRScreen extends StatelessWidget {
           children: [
             SizedBox(
               height: (ScreenSize.height * 0.5+72000.0/ScreenSize.width),
-              child: QrImage(data: stringifiedData!),
+              // child: QrImage(data: stringifiedData!),
             ),
             Padding(
                   padding: EdgeInsets.all(20*ScreenSize.swu),

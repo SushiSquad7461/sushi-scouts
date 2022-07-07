@@ -18,7 +18,7 @@ class NumberInput extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    data.set(double.parse(defaultValue.get()), setByUser: false);
+    data.set(double.parse(defaultValue.get()));
     return Padding(
         padding:
             EdgeInsets.only(left: width/60, right: width/60, top: width/30, bottom: width/30),
@@ -56,7 +56,7 @@ class NumberInput extends StatelessWidget {
                     FilteringTextInputFormatter.digitsOnly
                   ],
                   onFieldSubmitted: (value) {
-                    data.set(double.parse(value), setByUser: true);
+                    data.set(double.parse(value));
                   }
                 )
               )
