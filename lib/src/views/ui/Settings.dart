@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:localstore/localstore.dart';
 import 'package:sushi_scouts/src/logic/data/ScoutingData.dart';
 import 'package:sushi_scouts/src/logic/size/ScreenSize.dart';
 import '../util/Header/HeaderTitle.dart';
@@ -27,8 +28,12 @@ class _SettingsState extends State<Settings> {
       border: Border.all(color: Colors.black, width: 4 * ScreenSize.shu),
       borderRadius: BorderRadius.all(Radius.circular(20 * ScreenSize.swu)));
 
-  void toggleMode() {
-    print("toggle");
+  final db = Localstore.instance;
+
+  Future<void> toggleMode(String mode) async {
+    db.collection("preferences").doc("mode").set({
+      "mode": mode,
+    });
   }
 
   void downloadMatchSchedule() {}
@@ -59,7 +64,7 @@ class _SettingsState extends State<Settings> {
                       child: Padding(
                         padding: EdgeInsets.all(ScreenSize.width * 0.01),
                         child: TextButton(
-                            onPressed: toggleMode,
+                            onPressed: () => toggleMode("dark"),
                             child: Text(
                               "DARK MODE",
                               style: TextStyle(
@@ -71,7 +76,7 @@ class _SettingsState extends State<Settings> {
                       ),
                     ),
                     TextButton(
-                        onPressed: toggleMode,
+                        onPressed: () => toggleMode("light"),
                         child: Text(
                           "light mode",
                           style: textStyle,

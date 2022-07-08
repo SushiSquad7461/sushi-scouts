@@ -10,7 +10,10 @@ import 'package:sushi_scouts/src/views/ui/Settings.dart';
 import 'package:sushi_scouts/src/views/util/header/HeaderNav.dart';
 import 'package:sushi_scouts/src/views/util/header/HeaderTitle.dart';
 
-void main() => runApp(const Wraper());
+void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+  runApp(const Wraper());
+}
 
 class Wraper extends StatelessWidget {
   const Wraper({Key? key}) : super(key: key);
@@ -98,7 +101,12 @@ class _SushiScoutsState extends State<SushiScouts> {
             else if (_currentPage == "loading") // TODO: FIX LOADING PAGE
               const MaterialPage(child: Loading())
             else if (_currentPage == "error") // TODO: ADD ERROR PAGE
-              MaterialPage(child: Center(child: Text("Error $currErr", style: const TextStyle(color: Colors.red),)))
+              MaterialPage(
+                  child: Center(
+                      child: Text(
+                "Error $currErr",
+                style: const TextStyle(color: Colors.red),
+              )))
             else if (_currentPage == "settings")
               const MaterialPage(child: Settings())
             else if (fileReader.getScoutingMethods().contains(_currentPage))
