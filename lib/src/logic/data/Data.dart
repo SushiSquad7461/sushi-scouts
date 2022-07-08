@@ -41,8 +41,9 @@ class Data<ValueType> {
   }
 
   void empty() {
-    (currValue is double) 
-      ? (currValue = 0.0 as ValueType)
-      : (currValue = '' as ValueType);
+    setByUser = false;
+    (currValue is double)
+        ? (currValue = 0.0 as ValueType)
+        : (currValue = '' as ValueType);
   }
 }
