@@ -54,7 +54,7 @@ class IncrementState extends State<Increment>{
               Text(widget.name,
                 style: TextStyle(
                     fontFamily: "Sushi",
-                    fontSize: width/10,
+                    fontSize: width/8,
                     fontWeight: FontWeight.bold,
                     color: widget.textColor
                   )
@@ -88,7 +88,7 @@ class IncrementState extends State<Increment>{
                       enabledBorder: OutlineInputBorder(
                         borderSide: BorderSide(
                           color: widget.color,
-                          width: width/50,
+                          width: width/40,
                           style: BorderStyle.solid
                         )
                       ),
@@ -96,7 +96,7 @@ class IncrementState extends State<Increment>{
                     ),
                     style: TextStyle(
                       fontFamily: "Sushi",
-                      fontSize: width/10,
+                      fontSize: width/14,
                       fontWeight: FontWeight.bold,
                       color: widget.textColor
                     ),

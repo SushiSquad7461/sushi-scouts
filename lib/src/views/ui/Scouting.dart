@@ -94,7 +94,7 @@ class ScoutingState extends State<Scouting> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             for (int j = 0; j < rows; j++)
-              _buildSection(size.width / rows, i, j),
+              Padding(padding: EdgeInsets.only(bottom: ScreenSize.height * 0.05),child: _buildSection(size.width / rows, i, j)),
           ]));
     }
     return Column(children: builtSections);

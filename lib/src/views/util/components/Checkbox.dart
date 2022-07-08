@@ -48,9 +48,10 @@ class CheckboxState extends State<CheckboxInput>{
             children: [
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
               Transform.scale(
-                scale: width/180,
+                scale: width/170,
                 child: Checkbox(
                   side: BorderSide(
                     color: widget.color,
@@ -71,7 +72,7 @@ class CheckboxState extends State<CheckboxInput>{
               Text(widget.name,
                 style: TextStyle(
                     fontFamily: "Sushi",
-                    fontSize: width/10,
+                    fontSize: width/8,
                     fontWeight: FontWeight.bold,
                     color: widget.textColor
                   )
