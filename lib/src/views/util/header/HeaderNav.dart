@@ -53,8 +53,8 @@ class HeaderNav extends StatelessWidget {
                                         width: 5 * ScreenSize.swu))),
                             child: Padding(
                                 padding: EdgeInsets.only(
-                                    left: 4 * ScreenSize.swu,
-                                    right: 4 * ScreenSize.swu,
+                                    left: 8 * ScreenSize.swu,
+                                    right: 8 * ScreenSize.swu,
                                     top: 2 * ScreenSize.swu,
                                     bottom: 2 * ScreenSize.swu),
                                 child: Text(

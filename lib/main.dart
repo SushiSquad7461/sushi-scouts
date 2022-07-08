@@ -5,6 +5,7 @@ import 'package:sushi_scouts/src/logic/data/ScoutingData.dart';
 import 'package:sushi_scouts/src/logic/size/ScreenSize.dart';
 import 'package:sushi_scouts/src/views/ui/Loading.dart';
 import 'package:sushi_scouts/src/views/ui/Login.dart';
+import 'package:sushi_scouts/src/views/ui/QRScreen.dart';
 import 'package:sushi_scouts/src/views/ui/Scouting.dart';
 import 'package:sushi_scouts/src/views/ui/Settings.dart';
 import 'package:sushi_scouts/src/views/util/header/HeaderNav.dart';
@@ -44,11 +45,20 @@ class _SushiScoutsState extends State<SushiScouts> {
   Map<String, ScoutingData> scoutingPages = {};
   List<String> _headerNavNeeded = [];
   String currErr = "";
+  String pageParams = "";
+  bool qrCode = false;
 
   // Change current page
   void setCurrentPage(newPage) {
     setState(() {
       _currentPage = newPage;
+    });
+  }
+
+  void goToQrCode(String qrCodeString) {
+    setState(() {
+      qrCode = true;
+      pageParams = qrCodeString;
     });
   }
 
@@ -86,13 +96,15 @@ class _SushiScoutsState extends State<SushiScouts> {
 
     return Column(children: [
       const HeaderTitle(),
-      if (_headerNavNeeded.contains(_currentPage))
+      if (_headerNavNeeded.contains(_currentPage) && !qrCode)
         HeaderNav(
             currentPage: _currentPage,
             changePage: setCurrentPage,
             screens: _headerNavNeeded),
       SizedBox(
-        height: ScreenSize.height * 0.823,
+        height: _headerNavNeeded.contains(_currentPage) && !qrCode
+            ? ScreenSize.height * 0.823
+            : ScreenSize.height * 0.91598360,
         width: ScreenSize.width,
         child: Navigator(
           pages: [
@@ -110,7 +122,21 @@ class _SushiScoutsState extends State<SushiScouts> {
             else if (_currentPage == "settings")
               const MaterialPage(child: Settings())
             else if (fileReader.getScoutingMethods().contains(_currentPage))
-              MaterialPage(child: Scouting(data: scoutingPages[_currentPage]))
+              MaterialPage(
+                  child: Scouting(
+                data: scoutingPages[_currentPage],
+                goToQr: goToQrCode,
+              )),
+            if (qrCode)
+              MaterialPage(
+                  child: QRScreen(
+                data: pageParams,
+                nextPage: () {
+                  setState(() {
+                    qrCode = false;
+                  });
+                },
+              ))
           ],
           onPopPage: (route, result) {
             return route.didPop(result);

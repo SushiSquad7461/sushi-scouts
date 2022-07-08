@@ -9,7 +9,9 @@ import '../../logic/data/Data.dart';
 
 class Scouting extends StatefulWidget {
   final ScoutingDataHelpers.ScoutingData? data;
-  const Scouting({Key? key, required this.data}) : super(key: key);
+  final Function(String data) goToQr;
+  const Scouting({Key? key, required this.data, required this.goToQr})
+      : super(key: key);
   @override
   ScoutingState createState() => ScoutingState();
 }
@@ -37,7 +39,9 @@ class ScoutingState extends State<Scouting> {
       startComponent += section.componentsPerRow[i];
     }
 
-    for (var i = startComponent; i < startComponent + section.componentsPerRow[currRow]; ++i) {
+    for (var i = startComponent;
+        i < startComponent + section.componentsPerRow[currRow];
+        ++i) {
       ScoutingDataHelpers.Component currComponent = section.components[i];
       Data currData = section.values[i];
 
@@ -102,6 +106,8 @@ class ScoutingState extends State<Scouting> {
         currPage = widget.data!.getCurrentPage()!;
         build(context);
       });
+    } else {
+      widget.goToQr(widget.data!.stringfy());
     }
   }
 
