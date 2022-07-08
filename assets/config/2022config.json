@@ -32,9 +32,10 @@
                                 "component" : "number input"
                             },
                             {
-                                "name": "Qual",
+                                "name": "match type",
                                 "type": "string",
-                                "component": "checkbox"
+                                "component": "multiselect",
+                                "values" : ["Quals", "Elims", "Prac"]
                             }
                         ]
                     }
@@ -137,9 +138,131 @@
                             {
                                 "name" : "Climb Level",
                                 "type" : "string",
-                                "component" : "dropdown",
+                                "component" : "multiselect",
                                 "values" : ["No Climb", "Low Climb", "Mid Climb", "High Climb", "Traversal"]
                             }  
+                        ]
+                    }
+                ]
+            }
+        },
+        "ordinal":{
+            "pregame" : {
+                "footer": "info",
+                "sections" : [
+                    {
+                        "properties":{
+                            "color": "#ff76a2",
+                            "rows": 2,
+                            "textColor": "#000000",
+                            "darkColor": "#ff",
+                            "darkTextColor": "#fffff",
+                            "componentsInRow": [2, 1]
+                        },
+                        "components":[
+                            {
+                                "name" : "match #",
+                                "type" : "number",
+                                "component" : "number input"
+                            },
+                            {
+                                "name" : "robot #1",
+                                "type" : "number",
+                                "component" : "number input"
+                            },
+                            {
+                                "name": "match type",
+                                "type": "string",
+                                "component": "multiselect",
+                                "values" : ["Quals", "Elims", "Prac"]
+                            }
+                        ]
+                    },
+                    {
+                        "properties":{
+                            "color": "#63cff9",
+                            "rows": 2,
+                            "textColor": "#000000",
+                            "darkColor": "#ff",
+                            "darkTextColor": "#fffff",
+                            "componentsInRow": [2, 1]
+                        },
+                        "components":[
+                            {
+                                "name" : "robot #2",
+                                "type" : "number",
+                                "component" : "number input"
+                            },
+                            {
+                                "name" : "robot #3",
+                                "type" : "number",
+                                "component" : "number input"
+                            },
+                            {
+                                "name": "side",
+                                "type": "string",
+                                "component": "multiselect",
+                                "values" : ["Red", "Blue"]
+                            }
+                        ]
+                    }
+                ]
+            },
+            "ordinal" : {
+                "footer": "ordinal",
+                "sections" : [
+                    {
+                        "properties":{
+                            "color": "#ff76a2",
+                            "rows": 1,
+                            "textColor": "#000000",
+                            "darkColor": "#ff",
+                            "darkTextColor": "#fffff",
+                            "componentsInRow": [1]
+                        },
+                        "components":[
+                            {
+                                "name" : "defence",
+                                "type" : "string",
+                                "component" : "ranking",
+                                "values" : ["7461", "2910", "4911"]
+                            }
+                        ]
+                    },
+                    {
+                        "properties":{
+                            "color": "#81f4e1",
+                            "rows": 1,
+                            "textColor": "#000000",
+                            "darkColor": "#ff",
+                            "darkTextColor": "#fffff",
+                            "componentsInRow": [1]
+                        },
+                        "components":[
+                            {
+                                "name" : "driving",
+                                "type" : "string",
+                                "component" : "ranking",
+                                "values" : ["7461", "2910", "4911"]
+                            }
+                        ]
+                    },
+                    {
+                        "properties":{
+                            "color": "#63cff9",
+                            "rows": 1,
+                            "textColor": "#000000",
+                            "darkColor": "#ff",
+                            "darkTextColor": "#fffff",
+                            "componentsInRow": [1]
+                        },
+                        "components":[
+                            {
+                                "name" : "offense",
+                                "type" : "string",
+                                "component" : "ranking",
+                                "values" : ["7461", "2910", "4911"]
+                            }
                         ]
                     }
                 ]

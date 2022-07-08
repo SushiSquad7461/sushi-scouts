@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:sushi_scouts/src/logic/data/Data.dart';
 
 class Dropdown extends StatefulWidget {
@@ -38,49 +39,49 @@ class DropdownState extends State<Dropdown>{
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-              Text(widget.name,
-                style: TextStyle(
-                    fontFamily: "Sushi",
-                    fontSize: width/10,
-                    fontWeight: FontWeight.bold,
-                    color: widget.textColor
-                  )
+              Text(widget.name.toUpperCase(),
+                style: GoogleFonts.mohave(
+                        fontSize: width/8,
+                        fontWeight: FontWeight.w400,
+                        color: widget.textColor,
+                      ),
               ),
               Expanded(
-                child: DropdownButtonHideUnderline(
-                  child: DropdownButton<String>(
-                    value: widget.currentValue,
-                    icon: Icon(Icons.arrow_drop_down_rounded),
-                    elevation: (width/100.0*3).floor(),
-                    style: TextStyle(
-                      fontFamily: "Sushi",
-                      fontSize: width/10,
-                      fontWeight: FontWeight.bold,
-                      color: widget.textColor,
-                      overflow: TextOverflow.ellipsis
-                    ),
-                    alignment: AlignmentDirectional.center,
-                    onChanged: (String? newValue) {
-                      if(newValue!=null){
-                        widget.data.set(newValue);
-                        setState(() {
-                          widget.currentValue = newValue;
-                        });
-                        build(context);
-                      }
-                    },
-                    items: widget.values
-                        .map<DropdownMenuItem<String>>((String value) {
-                      return DropdownMenuItem<String>(
-                        value: value,
-                        child: Center(child: Text(value)),
-                      );
-                    }).toList(),
+                child: Align(
+                  alignment: Alignment.centerRight,
+                  child: DropdownButtonHideUnderline(
+                    child: DropdownButton<String>(
+                      value: widget.currentValue,
+                      icon: Icon(Icons.arrow_drop_down_rounded),
+                      elevation: (width/100.0*3).floor(),
+                      style: GoogleFonts.mohave(
+                        fontSize: width/8,
+                        fontWeight: FontWeight.w400,
+                        color: widget.textColor,
+                      ),
+                      alignment: AlignmentDirectional.center,
+                      onChanged: (String? newValue) {
+                        if(newValue!=null){
+                          widget.data.set(newValue, setByUser: true);
+                          setState(() {
+                            widget.currentValue = newValue;
+                          });
+                          build(context);
+                        }
+                      },
+                      items: widget.values
+                          .map<DropdownMenuItem<String>>((String value) {
+                        return DropdownMenuItem<String>(
+                          value: value,
+                          child: Center(child: Text(value)),
+                        );
+                      }).toList(),
+                    )
                   )
                 )
               )
             ]),
-            Divider(color: Colors.black, thickness: width/100)
+            Divider(color: Colors.black, thickness: width/50)
             ]
           )
         )

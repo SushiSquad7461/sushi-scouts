@@ -48,7 +48,7 @@ class _SettingsState extends State<Settings> {
       children: [
         SizedBox(
             width: ScreenSize.width,
-            height: ScreenSize.height * 0.74 - ScreenSize.width / 10,
+            height: ScreenSize.height * 0.6,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               crossAxisAlignment: CrossAxisAlignment.center,

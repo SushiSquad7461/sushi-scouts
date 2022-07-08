@@ -85,10 +85,10 @@ class IncrementState extends State<Increment>{
                     TextFormField(
                     controller: _controller,
                     decoration: InputDecoration(
-                      border: OutlineInputBorder(
+                      enabledBorder: OutlineInputBorder(
                         borderSide: BorderSide(
-                          color: widget.textColor,
-                          width: width/10,
+                          color: widget.color,
+                          width: width/50,
                           style: BorderStyle.solid
                         )
                       ),
@@ -106,7 +106,8 @@ class IncrementState extends State<Increment>{
                       FilteringTextInputFormatter.digitsOnly
                     ],
                     onFieldSubmitted: (value) {
-                      widget.data.set(double.parse(value));
+                      widget.value = int.parse(value);
+                      widget.data.set(double.parse(value), setByUser: true);
                     }
                   ),
                   IconButton(

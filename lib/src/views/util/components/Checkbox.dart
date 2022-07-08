@@ -32,7 +32,7 @@ class CheckboxState extends State<CheckboxInput>{
       if (states.any(interactiveStates.contains)) {
         return Colors.white;
       }
-      return Colors.black;
+      return widget.color;
     }
 
   @override
@@ -49,6 +49,25 @@ class CheckboxState extends State<CheckboxInput>{
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
+              Transform.scale(
+                scale: width/180,
+                child: Checkbox(
+                  side: BorderSide(
+                    color: widget.color,
+                    width: width/100,
+                    style: BorderStyle.solid
+                  ),
+                  splashRadius: width/10,
+                  checkColor: Colors.white,
+                  fillColor: MaterialStateProperty.resolveWith(getColor),
+                  value: widget.checked,
+                  onChanged: (bool? value) {
+                  widget.data.set(value.toString(), setByUser: true);
+                  setState(() {
+                    widget.checked = value!;
+                  });}
+                )
+              ),  
               Text(widget.name,
                 style: TextStyle(
                     fontFamily: "Sushi",
@@ -57,29 +76,10 @@ class CheckboxState extends State<CheckboxInput>{
                     color: widget.textColor
                   )
               ),
-              Expanded(
-                child: Align(
-                  alignment: Alignment.centerRight,
-                  child: Transform.scale(
-                    scale: width/200.0,
-                    child: Checkbox(
-                      splashRadius: width/10,
-                      checkColor: Colors.white,
-                      fillColor: MaterialStateProperty.resolveWith(getColor),
-                      value: widget.checked,
-                      onChanged: (bool? value) {
-                      widget.data.set(value.toString());
-                      setState(() {
-                        widget.checked = value!;
-                      });}
-                    )
-                  )
-                )
-              )
-            ]),
-            ]
-          )
+          ]),   
+        ]
         )
+      )
     );
   }
 }
