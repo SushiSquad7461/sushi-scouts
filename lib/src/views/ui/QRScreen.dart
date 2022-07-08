@@ -4,6 +4,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:sushi_scouts/src/logic/data/ScoutingData.dart';
 import 'package:sushi_scouts/src/logic/size/ScreenSize.dart';
+import 'package:sushi_scouts/src/views/util/footer/AngledFooter.dart';
 import '../util/Header/HeaderTitle.dart';
 import '../util/header/HeaderNav.dart';
 import 'Scouting.dart';

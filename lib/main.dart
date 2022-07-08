@@ -46,12 +46,21 @@ class _SushiScoutsState extends State<SushiScouts> {
   Map<String, ScoutingData> scoutingPages = {};
   List<String> _headerNavNeeded = [];
   String currErr = "";
+  String pageParams = "";
+  bool qrCode = false;
 
   // Change current page
   void setCurrentPage(newPage) {
     setState(() {
       _previousPage = _currentPage;
       _currentPage = newPage;
+    });
+  }
+
+  void goToQrCode(String qrCodeString) {
+    setState(() {
+      qrCode = true;
+      pageParams = qrCodeString;
     });
   }
 
@@ -92,7 +101,7 @@ class _SushiScoutsState extends State<SushiScouts> {
 
     return Column(children: [
       const HeaderTitle(),
-      if (_headerNavNeeded.contains(_currentPage))
+      if (_headerNavNeeded.contains(_currentPage) && !qrCode)
         HeaderNav(
             currentPage: _currentPage,
             changePage: setCurrentPage,

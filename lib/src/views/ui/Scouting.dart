@@ -38,7 +38,9 @@ class ScoutingState extends State<Scouting> {
       startComponent += section.componentsPerRow[i];
     }
 
-    for (var i = startComponent; i < startComponent + section.componentsPerRow[currRow]; ++i) {
+    for (var i = startComponent;
+        i < startComponent + section.componentsPerRow[currRow];
+        ++i) {
       ScoutingDataHelpers.Component currComponent = section.components[i];
       Data currData = section.values[i];
 
