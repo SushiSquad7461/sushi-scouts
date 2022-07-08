@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sushi_scouts/src/logic/Constants.dart';
-import 'package:sushi_scouts/src/logic/data/ScoutingData.dart' as ScoutingDataHelpers;
+import 'package:sushi_scouts/src/logic/data/ScoutingData.dart'
+    as ScoutingDataHelpers;
 import 'package:sushi_scouts/src/logic/size/ScreenSize.dart';
 import 'package:sushi_scouts/src/views/util/Footer/ScoutingFooter.dart';
 
@@ -25,12 +26,18 @@ class ScoutingState extends State<Scouting> {
   }
 
   //builds the components in a certain section
-  Widget _buildSection(double width, ScoutingDataHelpers.Section section) {
+  Widget _buildSection(
+      double width, ScoutingDataHelpers.Section section, int currRow) {
     double scaledWidth = (width > 400 ? 400 : width);
 
     List<Widget> builtComponents = [];
 
-    for (var i = 0; i < section.numComponents(); ++i) {
+    int startComponent = 0;
+    for (var i = 0; i < currRow; ++i) {
+      startComponent += section.componentsPerRow[i];
+    }
+
+    for (var i = startComponent; i < startComponent + section.componentsPerRow[currRow]; ++i) {
       ScoutingDataHelpers.Component currComponent = section.components[i];
       Data currData = section.values[i];
 
@@ -82,7 +89,8 @@ class ScoutingState extends State<Scouting> {
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            for (int j = 0; j < rows; j++) _buildSection(size.width / rows, i),
+            for (int j = 0; j < rows; j++)
+              _buildSection(size.width / rows, i, j),
           ]));
     }
     return Column(children: builtSections);
@@ -102,10 +110,14 @@ class ScoutingState extends State<Scouting> {
     _init();
     return Column(
       children: [
-        SizedBox(
-          width: ScreenSize.width,
-          height: ScreenSize.height * 0.655,
-          child: _buildBody(ScreenSize.get()),
+        Padding(
+          padding: EdgeInsets.only(
+              left: 0, right: 0, top: ScreenSize.height / 50, bottom: 0),
+          child: SizedBox(
+            width: ScreenSize.width,
+            height: ScreenSize.height * 0.635,
+            child: _buildBody(ScreenSize.get()),
+          ),
         ),
         ScoutingFooter(
           data: widget.data,

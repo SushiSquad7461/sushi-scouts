@@ -11,7 +11,8 @@
                             "rows": 2,
                             "textColor": "#000000",
                             "darkColor": "#ff",
-                            "darkTextColor": "#fffff"
+                            "darkTextColor": "#fffff",
+                            "componentsInRow": [3, 1]
                         },
                         "components":[
                             {
@@ -29,6 +30,11 @@
                                 "name" : "team #",
                                 "type" : "number",
                                 "component" : "number input"
+                            },
+                            {
+                                "name": "Qual",
+                                "type": "string",
+                                "component": "checkbox"
                             }
                         ]
                     }
@@ -43,7 +49,8 @@
                             "rows" : 2,
                             "darkColor": "#ff",
                             "darkTextColor": "#fffff",
-                            "textColor" : "#000000"
+                            "textColor" : "#000000",
+                            "componentsInRow": [1, 1]
                         },
                         "components":[
                             {
@@ -64,7 +71,8 @@
                             "rows":2,
                             "textColor":"#000000",
                             "darkColor": "#ff",
-                            "darkTextColor": "#fffff"
+                            "darkTextColor": "#fffff",
+                            "componentsInRow": [2, 1]
                         },
                         "components":[
                             {
@@ -91,11 +99,12 @@
                 "sections": [
                     {
                         "properties":{
-                            "color":"#81f4e1",
-                            "rows":2,
+                            "color": "#81f4e1",
+                            "rows": 2,
                             "textColor":"#000000",
                             "darkColor": "#ff",
-                            "darkTextColor": "#fffff"
+                            "darkTextColor": "#fffff",
+                            "componentsInRow": [1, 1]
                         },
                         "components":[
                             {
@@ -121,7 +130,8 @@
                             "rows":1,
                             "textColor":"#000000",
                             "darkColor": "#ff",
-                            "darkTextColor": "#fffff"
+                            "darkTextColor": "#fffff",
+                            "componentsInRow": [1]
                         },
                         "components":[
                             {

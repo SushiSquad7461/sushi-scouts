@@ -22,9 +22,10 @@ class Section {
 
   List<Component> components = [];
   List<Data> values = [];
+  List<int> componentsPerRow = [];
 
   Section.cc(
-      this.color, this.rows, this.textColor, this.components, this.values);
+      this.color, this.rows, this.textColor, this.components, this.values, this.componentsPerRow);
 
   Section(Map<String, dynamic> config) {
     color = HexColor(config["properties"]["color"]);
@@ -32,6 +33,7 @@ class Section {
     textColor = HexColor(config["properties"]["textColor"]);
     darkColor = HexColor(config["properties"]["darkColor"]);
     darkTextColor = HexColor(config["properties"]["darkTextColor"]);
+    componentsPerRow = List<int>.from(config["properties"]["componentsInRow"]);
 
     for (var i in config["components"]) {
       components.add(Component(i["name"], i["type"], i["component"],
