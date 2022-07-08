@@ -1,5 +1,6 @@
 import 'package:enum_to_string/enum_to_string.dart';
 import 'package:flutter/material.dart';
+import 'package:qr_flutter/qr_flutter.dart';
 import 'package:sushi_scouts/src/logic/data/ScoutingData.dart';
 import 'package:sushi_scouts/src/logic/size/ScreenSize.dart';
 import '../util/Header/HeaderTitle.dart';
@@ -7,30 +8,30 @@ import '../util/header/HeaderNav.dart';
 import 'Scouting.dart';
 
 class QRScreen extends StatelessWidget {
-  final Function(String newPage, String previousPage, {ScoutingData? previousData}) changePage;  
+  final Function(String) changePage;  
   final String previousPage;
-  final ScoutingData? data;
+  final ScoutingData data;
   String? stringifiedData;
-  List<String> screens;
 
-  QRScreen({Key? key, required this.changePage, required this.previousPage, this.data, required this.screens}) : super(key: key);
+  QRScreen({Key? key, required this.changePage, required this.previousPage, required this.data}) : super(key: key);
 
   void convertData(){
-    stringifiedData = data!.stringfy();
+    stringifiedData = data.stringfy();
   }
 
   @override
   Widget build(BuildContext context) {
     convertData();
-    return Scaffold(
-        body: ListView(
+    data.empty();
+    return Expanded(
+        child: ListView(
           children: [
             SizedBox(
               height: (ScreenSize.height * 0.5+72000.0/ScreenSize.width),
-              // child: QrImage(data: stringifiedData!),
+                child: QrImage(data: stringifiedData!),
             ),
-            Padding(
-                  padding: EdgeInsets.all(20*ScreenSize.swu),
+            Align(
+                  alignment: AlignmentDirectional.bottomCenter,
                   child: Container(
                       width: 200*ScreenSize.swu,
                       height: 60*ScreenSize.swu,
@@ -40,7 +41,7 @@ class QRScreen extends StatelessWidget {
                         borderRadius: BorderRadius.circular(20*ScreenSize.swu),
                       ),
                       child: TextButton(
-                        onPressed: () => changePage(previousPage, previousPage),                        
+                        onPressed: () => changePage(previousPage),                        
                         child: Text(
                           'Next Match',
                           style: TextStyle(

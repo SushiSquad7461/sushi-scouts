@@ -39,4 +39,10 @@ class Data<ValueType> {
         ? (currValue as double).toString()
         : (currValue as String);
   }
+
+  void empty() {
+    (currValue is double) 
+      ? (currValue = 0.0 as ValueType)
+      : (currValue = '' as ValueType);
+  }
 }

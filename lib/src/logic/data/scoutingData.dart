@@ -62,6 +62,12 @@ class Section {
   int numComponents() {
     return components.length;
   }
+
+  void empty() {
+    for (var value in values) {
+      value.empty();
+    }
+  }
 }
 
 class Page {
@@ -87,13 +93,15 @@ class Page {
 
     return "$ret\n";
   }
+
+  void empty() {
+    for (var section in sections) {
+      section.empty();
+    }
+  }
 }
 
 class ScoutingData {
-  late Map<int, Component> components;
-  late Map<int, Data> data;
-  late Map<String, List<Section>> sections;
-
   String name;
   Map<String, Page> pages = {};
   List<String> pageNames = [];
@@ -130,10 +138,6 @@ class ScoutingData {
     return true;
   }
 
-  List<String> getStages() {
-    return sections.keys.toList();
-  }
-
   String stringfy() {
     String ret = "${name[0].toUpperCase()}\n";
 
@@ -146,5 +150,12 @@ class ScoutingData {
 
   Page? getCurrentPage() {
     return pages[pageNames[currPage]];
+  }
+
+  void empty() {
+    currPage = 0;
+    for (var page in pageNames) {
+      pages[page]!.empty();
+    }
   }
 }

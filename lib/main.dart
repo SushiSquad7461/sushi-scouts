@@ -5,6 +5,7 @@ import 'package:sushi_scouts/src/logic/data/ScoutingData.dart';
 import 'package:sushi_scouts/src/logic/size/ScreenSize.dart';
 import 'package:sushi_scouts/src/views/ui/Loading.dart';
 import 'package:sushi_scouts/src/views/ui/Login.dart';
+import 'package:sushi_scouts/src/views/ui/QRScreen.dart';
 import 'package:sushi_scouts/src/views/ui/Scouting.dart';
 import 'package:sushi_scouts/src/views/ui/Settings.dart';
 import 'package:sushi_scouts/src/views/util/header/HeaderNav.dart';
@@ -40,6 +41,7 @@ class SushiScouts extends StatefulWidget {
 class _SushiScoutsState extends State<SushiScouts> {
   // CHANGE HOW YEAR WORKS
   ConfigFileReader fileReader = ConfigFileReader(CONFIG_FILE_PATH, 2022);
+  String _previousPage = "loading";
   String _currentPage = "loading";
   Map<String, ScoutingData> scoutingPages = {};
   List<String> _headerNavNeeded = [];
@@ -48,6 +50,7 @@ class _SushiScoutsState extends State<SushiScouts> {
   // Change current page
   void setCurrentPage(newPage) {
     setState(() {
+      _previousPage = _currentPage;
       _currentPage = newPage;
     });
   }
@@ -109,8 +112,10 @@ class _SushiScoutsState extends State<SushiScouts> {
               )))
             else if (_currentPage == "settings")
               const MaterialPage(child: Settings())
+            else if (_currentPage == "qrscreen")
+              MaterialPage(child: QRScreen(changePage: setCurrentPage, previousPage: _previousPage, data: scoutingPages[_previousPage]!))
             else if (fileReader.getScoutingMethods().contains(_currentPage))
-              MaterialPage(child: Scouting(data: scoutingPages[_currentPage]))
+              MaterialPage(child: Scouting(data: scoutingPages[_currentPage], changeScreen: setCurrentPage))
           ],
           onPopPage: (route, result) {
             return route.didPop(result);

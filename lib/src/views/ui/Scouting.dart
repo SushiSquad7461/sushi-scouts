@@ -9,7 +9,8 @@ import '../../logic/data/Data.dart';
 
 class Scouting extends StatefulWidget {
   final ScoutingDataHelpers.ScoutingData? data;
-  const Scouting({Key? key, required this.data}) : super(key: key);
+  final Function(String) changeScreen;
+  const Scouting({Key? key, required this.data, required this.changeScreen}) : super(key: key);
   @override
   ScoutingState createState() => ScoutingState();
 }
@@ -102,6 +103,9 @@ class ScoutingState extends State<Scouting> {
         currPage = widget.data!.getCurrentPage()!;
         build(context);
       });
+    }
+    else {
+      widget.changeScreen('qrscreen');
     }
   }
 
