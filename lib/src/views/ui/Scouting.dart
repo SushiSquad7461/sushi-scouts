@@ -10,7 +10,8 @@ import '../../logic/data/Data.dart';
 class Scouting extends StatefulWidget {
   final ScoutingDataHelpers.ScoutingData? data;
   final Function(String) changeScreen;
-  const Scouting({Key? key, required this.data, required this.changeScreen}) : super(key: key);
+  const Scouting({Key? key, required this.data, required this.changeScreen})
+      : super(key: key);
   @override
   ScoutingState createState() => ScoutingState();
 }
@@ -49,16 +50,24 @@ class ScoutingState extends State<Scouting> {
             "No component exsits called: ${currComponent.component}");
       }
 
+      print(currPage!.getComponentsPerRow(currRow));
+
       builtComponents.add(COMPONENT_MAP.containsKey(currComponent.component)
-          ? COMPONENT_MAP[currComponent.component](
-              Key("${widget.data!.name}${currComponent.name}"),
-              currComponent.name,
-              currData,
-              currComponent.values,
-              currData,
-              section.color,
-              scaledWidth,
-              section.textColor)
+          ? Padding(
+              padding: EdgeInsets.only(
+                  top: ScreenSize.height *
+                      (i != startComponent
+                          ? 0.15 / currPage!.getComponentsPerRow(currRow)
+                          : 0)),
+              child: COMPONENT_MAP[currComponent.component](
+                  Key("${widget.data!.name}${currComponent.name}"),
+                  currComponent.name,
+                  currData,
+                  currComponent.values,
+                  currData,
+                  section.color,
+                  scaledWidth,
+                  section.textColor))
           : SizedBox(
               width: scaledWidth,
               child: Text(
@@ -94,7 +103,9 @@ class ScoutingState extends State<Scouting> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             for (int j = 0; j < rows; j++)
-              Padding(padding: EdgeInsets.only(bottom: ScreenSize.height * 0.05),child: _buildSection(size.width / rows, i, j)),
+              Padding(
+                  padding: EdgeInsets.only(bottom: ScreenSize.height * 0.03),
+                  child: _buildSection(size.width / rows, i, j)),
           ]));
     }
     return Column(children: builtSections);
@@ -106,8 +117,7 @@ class ScoutingState extends State<Scouting> {
         currPage = widget.data!.getCurrentPage()!;
         build(context);
       });
-    }
-    else {
+    } else {
       widget.changeScreen('qrscreen');
     }
   }

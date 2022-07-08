@@ -24,8 +24,8 @@ class Section {
   List<Data> values = [];
   List<int> componentsPerRow = [];
 
-  Section.cc(
-      this.color, this.rows, this.textColor, this.components, this.values, this.componentsPerRow);
+  Section.cc(this.color, this.rows, this.textColor, this.components,
+      this.values, this.componentsPerRow);
 
   Section(Map<String, dynamic> config) {
     color = HexColor(config["properties"]["color"]);
@@ -98,6 +98,14 @@ class Page {
     for (var section in sections) {
       section.empty();
     }
+  }
+
+  int getComponentsPerRow(int currRow) {
+    int ret = 0;
+    for (Section i in sections) {
+      ret += i.componentsPerRow[currRow];
+    }
+    return ret;
   }
 }
 
