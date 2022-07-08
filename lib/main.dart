@@ -75,7 +75,7 @@ class _SushiScoutsState extends State<SushiScouts> {
         _headerNavNeeded = fileReader.getScoutingMethods();
         _headerNavNeeded.add("settings");
 
-        _currentPage = "cardinal";
+        _currentPage = "login";
       });
     } catch (err) {
       setState(() {
@@ -112,7 +112,7 @@ class _SushiScoutsState extends State<SushiScouts> {
         child: Navigator(
           pages: [
             if (_currentPage == "login")
-              const MaterialPage(child: Login())
+              MaterialPage(child: Login(changePage: setCurrentPage,))
             else if (_currentPage == "loading") // TODO: FIX LOADING PAGE
               const MaterialPage(child: Loading())
             else if (_currentPage == "error") // TODO: ADD ERROR PAGE
