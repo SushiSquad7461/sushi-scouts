@@ -21,8 +21,8 @@ class Multiselect extends StatefulWidget {
         data.set(defaultValue.get(), setByUser: true);
       }
     }
-  static Multiselect create(String name, Data data, List<String>? values, Data defaultValue, Color color, double width, Color textColor) {
-    return Multiselect(name: name, data: data, width: width, defaultValue: defaultValue, color: color, values: values, textColor: textColor,);
+  static Multiselect create(Key key, String name, Data data, List<String>? values, Data defaultValue, Color color, double width, Color textColor) {
+    return Multiselect(key: key, name: name, data: data, width: width, defaultValue: defaultValue, color: color, values: values, textColor: textColor,);
   }
   @override 
   MultiselectState createState() => MultiselectState();

@@ -13,8 +13,8 @@ class Increment extends StatefulWidget {
   int value = 0;
   Increment({Key? key, required this.name, required this.data, required this.defaultValue, required this.color, required this.width, required this.textColor, this.values})
     : super(key: key);
-  static Increment create(String name, Data data, List<String>? values, Data defaultValue, Color color, double width, Color textColor) {
-    return Increment(name: name, data: data, width: width, defaultValue: defaultValue, color: color, values: values, textColor: textColor,);
+  static Increment create(Key key, String name, Data data, List<String>? values, Data defaultValue, Color color, double width, Color textColor) {
+    return Increment(key: key, name: name, data: data, width: width, defaultValue: defaultValue, color: color, values: values, textColor: textColor,);
   }
   @override 
   IncrementState createState() => IncrementState();

@@ -13,8 +13,8 @@ class CheckboxInput extends StatefulWidget {
   bool checked = false;
   CheckboxInput({Key? key, required this.name, required this.data, required this.defaultValue, required this.color, required this.width, required this.textColor, this.values})
     : super(key: key);
-  static CheckboxInput create(String name, Data data, List<String>? values, Data defaultValue, Color color, double width, Color textColor) {
-    return CheckboxInput(name: name, data: data, width: width, defaultValue: defaultValue, color: color, values: values, textColor: textColor,);
+  static CheckboxInput create(Key key, String name, Data data, List<String>? values, Data defaultValue, Color color, double width, Color textColor) {
+    return CheckboxInput(key: key, name: name, data: data, width: width, defaultValue: defaultValue, color: color, values: values, textColor: textColor,);
   }
   @override 
   CheckboxState createState() => CheckboxState();

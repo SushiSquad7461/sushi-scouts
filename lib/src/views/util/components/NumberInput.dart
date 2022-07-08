@@ -19,14 +19,15 @@ class NumberInput extends StatelessWidget {
       required this.textColor})
       : super(key: key);
 
-  static NumberInput create(String name, Data data, List<String>? values,
+  static NumberInput create(Key key, String name, Data data, List<String>? values,
       Data defaultValue, Color color, double width, Color textColor) {
     return NumberInput(
+      key: key,
       name: name,
       data: data,
       width: width,
       color: color,
-      textColor: textColor,
+      textColor: textColor
     );
   }
 

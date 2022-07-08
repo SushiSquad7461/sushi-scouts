@@ -12,8 +12,8 @@ class Ranking extends StatefulWidget {
   final List<String>? values;
   Ranking({Key? key, required this.name, required this.data, required this.defaultValue, required this.color, required this.width, required this.textColor, this.values})
     : super(key: key);
-  static Ranking create(String name, Data data, List<String>? values, Data defaultValue, Color color, double width, Color textColor) {
-    return Ranking(name: name, data: data, width: width, defaultValue: defaultValue, color: color, values: values, textColor: textColor,);
+  static Ranking create(Key key, String name, Data data, List<String>? values, Data defaultValue, Color color, double width, Color textColor) {
+    return Ranking(key: key, name: name, data: data, width: width, defaultValue: defaultValue, color: color, values: values, textColor: textColor,);
   }
   @override 
   RankingState createState() => RankingState();

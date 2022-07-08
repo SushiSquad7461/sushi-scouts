@@ -51,6 +51,7 @@ class ScoutingState extends State<Scouting> {
 
       builtComponents.add(COMPONENT_MAP.containsKey(currComponent.component)
           ? COMPONENT_MAP[currComponent.component](
+              Key("${widget.data!.name}${currComponent.name}"),
               currComponent.name,
               currData,
               currComponent.values,

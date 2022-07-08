@@ -16,8 +16,8 @@ class Dropdown extends StatefulWidget {
     : super(key: key){
       currentValue = values[0];
     }
-  static Dropdown create(String name, Data data, List<String> values, Data defaultValue, Color color, double width, Color textColor) {
-    return Dropdown(name: name, data: data, width: width, defaultValue: defaultValue, color: color, values: values, textColor: textColor,);
+  static Dropdown create(Key key, String name, Data data, List<String> values, Data defaultValue, Color color, double width, Color textColor) {
+    return Dropdown(key: key, name: name, data: data, width: width, defaultValue: defaultValue, color: color, values: values, textColor: textColor,);
   }
   @override 
   DropdownState createState() => DropdownState();
