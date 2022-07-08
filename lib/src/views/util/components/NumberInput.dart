@@ -1,24 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:sushi_scouts/src/logic/data/Data.dart';
 
 class NumberInput extends StatelessWidget {
   final String name;
   final Data data;
-  final Data defaultValue;
   final Color color;
   final Color textColor;
   final double width;
-  final List<String>? values;
-  NumberInput({Key? key, required this.name, required this.data, required this.defaultValue, required this.color, required this.width, required this.textColor, this.values})
+
+  NumberInput({Key? key, required this.name, required this.data, required this.color, required this.width, required this.textColor})
     : super(key: key);
+
   static NumberInput create(String name, Data data, List<String>? values, Data defaultValue, Color color, double width, Color textColor) {
-    return NumberInput(name: name, data: data, width: width, defaultValue: defaultValue, color: color, values: values, textColor: textColor,);
+    return NumberInput(name: name, data: data, width: width, color: color, textColor: textColor,);
   }
 
   @override
   Widget build(BuildContext context) {
-    data.set(double.parse(defaultValue.get()));
+    data.set(double.parse(data.get()));
     return Padding(
         padding:
             EdgeInsets.only(left: width/60, right: width/60, top: width/30, bottom: width/30),
@@ -29,28 +30,31 @@ class NumberInput extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-              Text(name,
-                style: TextStyle(
-                    fontFamily: "Sushi",
-                    fontSize: width/10,
-                    fontWeight: FontWeight.bold,
-                    color:  textColor
-                  )
-              ),
+              // Text(name.toUpperCase(),
+              //   style: GoogleFonts.mohave(
+              //     textStyle: TextStyle(
+              //       fontSize: width/8,
+              //       fontWeight: FontWeight.w400,
+              //       color:  textColor
+              //     )
+              //   ),
+              // ),
               Expanded(
                 child: TextFormField(
                   decoration: InputDecoration(
                     border: InputBorder.none,
                     constraints: BoxConstraints(maxWidth: width/6.0),
+                    hintText: name.toUpperCase(),
+                    hintStyle: TextStyle(color: Colors.black),
                   ),
-                  style: TextStyle(
-                    fontFamily: "Sushi",
-                    fontSize: width/10,
-                    fontWeight: FontWeight.bold,
-                    color: textColor
-                  ),
-                  textAlign: TextAlign.right,
-                  initialValue: double.parse(defaultValue.get()).floor().toString(),
+                  style: GoogleFonts.mohave(
+                    textStyle: TextStyle(
+                      fontSize: width/8,
+                      fontWeight: FontWeight.w400,
+                      color:  textColor
+                    )
+                  ), 
+                  textAlign: TextAlign.left,
                   keyboardType: TextInputType.number,
                   inputFormatters: <TextInputFormatter>[
                     FilteringTextInputFormatter.digitsOnly
@@ -61,7 +65,7 @@ class NumberInput extends StatelessWidget {
                 )
               )
             ]),
-            Divider(color: textColor, thickness: width/100)
+            Divider(color: textColor, thickness: width/50)
             ]
           )
         )

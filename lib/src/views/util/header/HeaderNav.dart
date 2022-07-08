@@ -19,7 +19,6 @@ class HeaderNav extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final TextStyle pageStyle = TextStyle(
-      fontFamily: "Sushi",
       fontSize: 25 * ScreenSize.swu,
       fontWeight: FontWeight.w700,
     );

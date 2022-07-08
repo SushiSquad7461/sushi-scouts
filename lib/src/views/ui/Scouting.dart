@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:sushi_scouts/src/logic/Constants.dart';
-import 'package:sushi_scouts/src/logic/data/ScoutingData.dart'
-    as ScoutingDataHelpers;
+import 'package:sushi_scouts/src/logic/data/ScoutingData.dart' as ScoutingDataHelpers;
 import 'package:sushi_scouts/src/logic/size/ScreenSize.dart';
 import 'package:sushi_scouts/src/views/util/Footer/ScoutingFooter.dart';
 
-import '../../logic/data/Data.dart';
 import '../../logic/data/Data.dart';
 
 class Scouting extends StatefulWidget {
@@ -17,7 +15,6 @@ class Scouting extends StatefulWidget {
 
 class ScoutingState extends State<Scouting> {
   ScoutingDataHelpers.Page? currPage;
-  double teamNumber = 7461;
 
   void _init() {
     currPage = widget.data?.getCurrentPage();

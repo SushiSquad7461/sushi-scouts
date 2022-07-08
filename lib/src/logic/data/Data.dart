@@ -5,12 +5,14 @@
 class Data<ValueType> {
   // Current value of the component
   ValueType currValue;
+  bool setByUser;
 
-  Data(this.currValue);
+  Data(this.currValue, {this.setByUser = false});
 
   // Set the current value
-  void set(ValueType newVal) {
+  void set(ValueType newVal, {setByUser = false}) {
     currValue = newVal;
+    this.setByUser = setByUser;
   }
 
   // Increments the current value if it is an number and retuns true, otherwise returns false
@@ -33,6 +35,8 @@ class Data<ValueType> {
 
   // Gets the current value as a string
   String get() {
-    return (currValue is double || currValue is double) ? (currValue as double).toString() : (currValue as String);
+    return (currValue is double || currValue is double)
+        ? (currValue as double).toString()
+        : (currValue as String);
   }
 }
