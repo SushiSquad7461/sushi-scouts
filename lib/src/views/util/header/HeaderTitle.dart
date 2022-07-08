@@ -9,29 +9,32 @@ class HeaderTitle extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-        padding: EdgeInsets.only(
+    return Container(
+        height: ScreenSize.height*0.1,
+        child: Padding(
+          padding: EdgeInsets.only(
             left: 20 * ScreenSize.swu,
             right: 20 * ScreenSize.swu,
             top: 0,
             bottom: 0),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text(
-              "sushi scouts",
-              style: TextStyle(
-                fontFamily: "Sushi",
-                fontSize: 75 * ScreenSize.swu,
-                fontWeight: FontWeight.bold,
-                color: Colors.black,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                "sushi scouts",
+                style: TextStyle(
+                  fontFamily: "Sushi",
+                  fontSize: 75 * ScreenSize.swu,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black,
+                ),
               ),
-            ),
-            Image.asset(
-              "./assets/images/toprightlogo.png",
-              scale: 6.5 / ScreenSize.swu,
-            ),
-          ],
+              Image.asset(
+                "./assets/images/toprightlogo.png",
+                scale: 6.5 / ScreenSize.swu,
+              ),
+            ],
+          ),
         ));
   }
 }

@@ -54,7 +54,8 @@ class _ScoutingFooterState extends State<ScoutingFooter> {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
+    return Container(
+        height: ScreenSize.height*0.2,
         padding: const EdgeInsets.all(0),
         child: Column(children: [
           Row(

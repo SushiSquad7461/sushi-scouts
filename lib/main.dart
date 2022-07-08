@@ -86,6 +86,9 @@ class _SushiScoutsState extends State<SushiScouts> {
   Widget build(BuildContext context) {
     ScreenSize.width = MediaQuery.of(context).size.width;
     ScreenSize.height = MediaQuery.of(context).size.height;
+    double pageHeight = _headerNavNeeded.contains(_currentPage) 
+      ? ScreenSize.height*0.8 
+      : ScreenSize.height * 0.9;
 
     return Column(children: [
       const HeaderTitle(),
@@ -95,7 +98,7 @@ class _SushiScoutsState extends State<SushiScouts> {
             changePage: setCurrentPage,
             screens: _headerNavNeeded),
       SizedBox(
-        height: ScreenSize.height * 0.823,
+        height: pageHeight,
         width: ScreenSize.width,
         child: Navigator(
           pages: [

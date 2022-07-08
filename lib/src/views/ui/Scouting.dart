@@ -115,11 +115,10 @@ class ScoutingState extends State<Scouting> {
     return Column(
       children: [
         Padding(
-          padding: EdgeInsets.only(
-              left: 0, right: 0, top: ScreenSize.height / 50, bottom: 0),
+          padding: EdgeInsets.all(0),
           child: SizedBox(
             width: ScreenSize.width,
-            height: ScreenSize.height * 0.635,
+            height: ScreenSize.height * 0.6,
             child: _buildBody(ScreenSize.get()),
           ),
         ),
