@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:sushi_scouts/src/logic/data/Data.dart';
 
 class Dropdown extends StatefulWidget {
@@ -27,7 +28,7 @@ class DropdownState extends State<Dropdown>{
   @override
   Widget build(BuildContext context) {
     double width = widget.width;
-    widget.data.set(widget.currentValue, setByUser: true);
+    widget.data.set(widget.currentValue);
     return Padding(
         padding:
             EdgeInsets.only(left: width/60, right: width/60, top: width/30, bottom: width/30),
@@ -39,12 +40,11 @@ class DropdownState extends State<Dropdown>{
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
               Text(widget.name.toUpperCase(),
-                style: TextStyle(
-                    fontFamily: "Sushi",
-                    fontSize: width/10,
-                    fontWeight: FontWeight.bold,
-                    color: widget.textColor
-                  )
+                style: GoogleFonts.mohave(
+                        fontSize: width/8,
+                        fontWeight: FontWeight.w400,
+                        color: widget.textColor,
+                      ),
               ),
               Expanded(
                 child: Align(
@@ -54,12 +54,10 @@ class DropdownState extends State<Dropdown>{
                       value: widget.currentValue,
                       icon: Icon(Icons.arrow_drop_down_rounded),
                       elevation: (width/100.0*3).floor(),
-                      style: TextStyle(
-                        fontFamily: "Sushi",
-                        fontSize: width/10,
-                        fontWeight: FontWeight.bold,
+                      style: GoogleFonts.mohave(
+                        fontSize: width/8,
+                        fontWeight: FontWeight.w400,
                         color: widget.textColor,
-                        overflow: TextOverflow.ellipsis
                       ),
                       alignment: AlignmentDirectional.center,
                       onChanged: (String? newValue) {
@@ -83,7 +81,7 @@ class DropdownState extends State<Dropdown>{
                 )
               )
             ]),
-            Divider(color: Colors.black, thickness: width/100)
+            Divider(color: Colors.black, thickness: width/50)
             ]
           )
         )

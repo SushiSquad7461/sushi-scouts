@@ -6,6 +6,7 @@ class ScreenSize {
 
   static double swu = width / 600.0; //standardized width unit
   static double shu = height / 900.0; //standard height unit
+
   static Size get() {
     return Size(width, height);
   }

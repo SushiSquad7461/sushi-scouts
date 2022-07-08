@@ -38,6 +38,7 @@ dependencies:
   google_fonts: ^3.0.1
   enum_to_string: ^2.0.1
   qr_flutter: ^4.0.0
+  localstore: ^1.2.3
 
 dev_dependencies:
   flutter_test:

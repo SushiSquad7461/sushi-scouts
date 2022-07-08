@@ -7,32 +7,40 @@ import 'package:sushi_scouts/src/logic/data/ScoutingData.dart';
 import 'ScoutingData.dart';
 
 class ConfigFileReader {
-  int teamNum;
-  Map<String, dynamic> parsedFile;
+  String configFileFolder;
+  int year;
+  int? teamNum;
+  Map<String, dynamic>? parsedFile;
 
-  ConfigFileReader(this.teamNum, this.parsedFile);
+  ConfigFileReader(this.configFileFolder, this.year);
 
-  static Future<ConfigFileReader> create(String configFileFolder, int year) async {
-  int teamNum;
-  Map<String, dynamic> parsedFile;
+  Future<void> readConfig() async {
     try {
       final String stringifiedFile =
           await rootBundle.loadString("$configFileFolder${year}config.json");
       parsedFile = await json.decode(stringifiedFile);
       teamNum = parsedFile!["teamNumber"];
       parsedFile = parsedFile!["scouting"];
-      return ConfigFileReader(teamNum, parsedFile);
+      return;
     } catch (e) {
       rethrow;
     }
   }
 
   List<String> getScoutingMethods() {
-    return parsedFile.keys.toList();
+    return parsedFile != null ? parsedFile!.keys.toList() : [];
   }
 
-  ScoutingData generateScoutingData(String scoutingMethod) {
-    return ScoutingData(parsedFile[scoutingMethod]);
+  ScoutingData? generateScoutingData(String scoutingMethod) {
+    return ScoutingData(parsedFile![scoutingMethod], name: scoutingMethod);
+  }
+
+  List<ScoutingData> getScoutingDataClasses() {
+    List<ScoutingData> ret = [];
+    for (var scoutingMethod in parsedFile!.keys) {
+      ret.add(ScoutingData(parsedFile![scoutingMethod], name: scoutingMethod));
+    }
+    return ret;
   }
 
   bool extraFeatureAccess() {

@@ -2,213 +2,271 @@
     "teamNumber": 7461,
     "scouting": {
         "cardinal":{
-            "pregame" : [
-                {
-                    "properties":{
-                        "color": "0xff76a2",
-                        "rows": 2,
-                        "textColor": "000000",
-                        "footer": "Info"
+            "pregame" : {
+                "footer": "info",
+                "sections" : [
+                    {
+                        "properties":{
+                            "color": "#ff76a2",
+                            "rows": 2,
+                            "textColor": "#000000",
+                            "darkColor": "#ff",
+                            "darkTextColor": "#fffff",
+                            "componentsInRow": [3, 1]
+                        },
+                        "components":[
+                            {
+                                "name" : "match #",
+                                "type" : "number",
+                                "component" : "number input"
+                            },
+                            {
+                                "name" : "station",
+                                "type" : "string",
+                                "component" : "dropdown",
+                                "values" : ["R1", "R2", "R3", "B1", "B2", "B3"]
+                            },
+                            {
+                                "name" : "team #",
+                                "type" : "number",
+                                "component" : "number input"
+                            },
+                            {
+                                "name": "match type",
+                                "type": "string",
+                                "component": "multiselect",
+                                "values" : ["Quals", "Elims", "Prac"]
+                            }
+                        ]
+                    }
+                ]
+            },
+            "auto" : {
+                "footer": "auto",
+                "sections": [
+                    {
+                        "properties":{
+                            "color" : "#63cff9",
+                            "rows" : 2,
+                            "darkColor": "#ff",
+                            "darkTextColor": "#fffff",
+                            "textColor" : "#000000",
+                            "componentsInRow": [1, 1]
+                        },
+                        "components":[
+                            {
+                                "name" : "No Show",
+                                "type" : "string",
+                                "component" : "checkbox"
+                            },
+                            {
+                                "name" : "Tarmac",
+                                "type" : "string",
+                                "component" : "checkbox"
+                            }
+                        ]
                     },
-                    "components":[
-                        {
-                            "name" : "match #",
-                            "type" : "number",
-                            "component" : "number input"
+                    {
+                        "properties":{
+                            "color":"#63cff9",
+                            "rows":2,
+                            "textColor":"#000000",
+                            "darkColor": "#ff",
+                            "darkTextColor": "#fffff",
+                            "componentsInRow": [2, 1]
                         },
-                        {
-                            "name" : "station",
-                            "type" : "string",
-                            "component" : "dropdown",
-                            "values" : ["R1", "R2", "R3", "B1", "B2", "B3"]
+                        "components":[
+                            {
+                                "name" : "Low Hub",
+                                "type" : "number",
+                                "component" : "increment"
+                            },
+                            {
+                                "name" : "High Hub",
+                                "type" : "number",
+                                "component" : "increment"
+                            },
+                            {
+                                "name" : "HP",
+                                "type" : "number",
+                                "component" : "increment"
+                            }
+                        ]
+                    }
+                ]
+            },
+            "teleop" : { 
+                "footer": "teleop",
+                "sections": [
+                    {
+                        "properties":{
+                            "color": "#81f4e1",
+                            "rows": 2,
+                            "textColor":"#000000",
+                            "darkColor": "#ff",
+                            "darkTextColor": "#fffff",
+                            "componentsInRow": [1, 1]
                         },
-                        {
-                            "name" : "team #",
-                            "type" : "number",
-                            "component" : "number input"
+                        "components":[
+                            {
+                                "name" : "Low Hub",
+                                "type" : "number",
+                                "component" : "increment"
+                            },
+                            {
+                                "name" : "High Hub",
+                                "type" : "number",
+                                "component" : "increment"
+                            }       
+                        ]
+                    }
+                ]
+            },
+            "endgame" : {
+                "footer": "endgame",
+                "sections": [
+                    {
+                        "properties":{
+                            "color":"#ff76a2",
+                            "rows":1,
+                            "textColor":"#000000",
+                            "darkColor": "#ff",
+                            "darkTextColor": "#fffff",
+                            "componentsInRow": [1]
                         },
-                        {
-                            "name" : "match type",
-                            "type" : "string",
-                            "component" : "multiselect",
-                            "values" : ["Quals", "Elims", "Practice"]
-                        }
-                    ]
-                }
-            ],
-            "auto" : [
-                {
-                    "properties":{
-                        "color" : "0x63cff9",
-                        "rows" : 2,
-                        "textColor" : "000000",
-                        "footer" : "Info"
-                    },
-                    "components":[
-                        {
-                            "name" : "No Show",
-                            "type" : "string",
-                            "component" : "checkbox"
-                        },
-                        {
-                            "name" : "Tarmac",
-                            "type" : "string",
-                            "component" : "checkbox"
-                        }
-                    ]
-                },
-                {
-                    "properties":{
-                        "color":"0x63cff9",
-                        "rows":2,
-                        "textColor":"000000",
-                        "footer":"Info"
-                    },
-                    "components":[
-                        {
-                            "name" : "Low Hub",
-                            "type" : "number",
-                            "component" : "increment"
-                        },
-                        {
-                            "name" : "High Hub",
-                            "type" : "number",
-                            "component" : "increment"
-                        },
-                        {
-                            "name" : "HP",
-                            "type" : "number",
-                            "component" : "increment"
-                        }
-                    ]
-                }
-            ],
-            "teleop" : [
-                {
-                    "properties":{
-                        "color":"0x81f4e1",
-                        "rows":2,
-                        "textColor":"000000",
-                        "footer":"Info"
-                    },
-                    "components":[
-                        {
-                            "name" : "Low Hub",
-                            "type" : "number",
-                            "component" : "increment"
-                        },
-                        {
-                            "name" : "High Hub",
-                            "type" : "number",
-                            "component" : "increment"
-                        }       
-                    ]
-                }
-            ],
-            "endgame" : [
-                {
-                    "properties":{
-                        "color":"0xff76a2",
-                        "rows":1,
-                        "textColor":"000000",
-                        "footer":"Info"
-                    },
-                    "components":[
-                        {
-                            "name" : "Climb Level",
-                            "type" : "string",
-                            "component" : "multiselect",
-                            "values" : ["No Climb", "Low Climb", "Mid Climb", "High Climb", "Traversal"]
-                        }  
-                    ]
-                }
-            ]
+                        "components":[
+                            {
+                                "name" : "Climb Level",
+                                "type" : "string",
+                                "component" : "multiselect",
+                                "values" : ["No Climb", "Low Climb", "Mid Climb", "High Climb", "Traversal"]
+                            }  
+                        ]
+                    }
+                ]
+            }
         },
-        "ordinal": {
-            "pregame" : [
-                {
-                    "properties":{
-                        "color":"0xff76a2",
-                        "rows":2,
-                        "textColor":"000000",
-                        "footer":"ordinal"
+        "ordinal":{
+            "pregame" : {
+                "footer": "info",
+                "sections" : [
+                    {
+                        "properties":{
+                            "color": "#ff76a2",
+                            "rows": 2,
+                            "textColor": "#000000",
+                            "darkColor": "#ff",
+                            "darkTextColor": "#fffff",
+                            "componentsInRow": [2, 1]
+                        },
+                        "components":[
+                            {
+                                "name" : "match #",
+                                "type" : "number",
+                                "component" : "number input"
+                            },
+                            {
+                                "name" : "robot #1",
+                                "type" : "number",
+                                "component" : "number input"
+                            },
+                            {
+                                "name": "match type",
+                                "type": "string",
+                                "component": "multiselect",
+                                "values" : ["Quals", "Elims", "Prac"]
+                            }
+                        ]
                     },
-                    "components":[
-                        {
-                            "name" : "match #",
-                            "type" : "number",
-                            "component" : "number input"
+                    {
+                        "properties":{
+                            "color": "#63cff9",
+                            "rows": 2,
+                            "textColor": "#000000",
+                            "darkColor": "#ff",
+                            "darkTextColor": "#fffff",
+                            "componentsInRow": [2, 1]
                         },
-                        {
-                            "name" : "robot #1",
-                            "type" : "number",
-                            "component" : "number input"
+                        "components":[
+                            {
+                                "name" : "robot #2",
+                                "type" : "number",
+                                "component" : "number input"
+                            },
+                            {
+                                "name" : "robot #3",
+                                "type" : "number",
+                                "component" : "number input"
+                            },
+                            {
+                                "name": "side",
+                                "type": "string",
+                                "component": "multiselect",
+                                "values" : ["Red", "Blue"]
+                            }
+                        ]
+                    }
+                ]
+            },
+            "ordinal" : {
+                "footer": "ordinal",
+                "sections" : [
+                    {
+                        "properties":{
+                            "color": "#ff76a2",
+                            "rows": 1,
+                            "textColor": "#000000",
+                            "darkColor": "#ff",
+                            "darkTextColor": "#fffff",
+                            "componentsInRow": [1]
                         },
-                        {
-                            "name" : "match type",
-                            "type" : "string",
-                            "component" : "multiselect",
-                            "values" : ["Quals", "Elims", "Practice"]
-                        }
-                    ]
-                },
-                {
-                    "properties":{
-                        "color":"0x63cff9",
-                        "rows":2,
-                        "textColor":"000000",
-                        "footer":"ordinal"
+                        "components":[
+                            {
+                                "name" : "defence",
+                                "type" : "string",
+                                "component" : "ranking",
+                                "values" : ["7461", "2910", "4911"]
+                            }
+                        ]
                     },
-                    "components":[
-                        {
-                            "name" : "robot #2",
-                            "type" : "number",
-                            "component" : "number input"
+                    {
+                        "properties":{
+                            "color": "#81f4e1",
+                            "rows": 1,
+                            "textColor": "#000000",
+                            "darkColor": "#ff",
+                            "darkTextColor": "#fffff",
+                            "componentsInRow": [1]
                         },
-                        {
-                            "name" : "robot #3",
-                            "type" : "number",
-                            "component" : "number input"
-                        },
-                        {
-                            "name" : "Side",
-                            "type" : "string",
-                            "component" : "multiselect",
-                            "values" : ["Red", "Blue"]
-                        }
-                    ]
-                }
-            ],
-            "ordinal" : [
-                {
-                    "properties":{
-                        "color":"0xff76a2",
-                        "rows":1,
-                        "textColor":"000000",
-                        "footer":"ordinal"
+                        "components":[
+                            {
+                                "name" : "driving",
+                                "type" : "string",
+                                "component" : "ranking",
+                                "values" : ["7461", "2910", "4911"]
+                            }
+                        ]
                     },
-                    "components":[
-                        {
-                            "name" : "Defence",
-                            "type" : "string",
-                            "component" : "ranking",
-                            "values" : ["7461", "2910", "4911"]
+                    {
+                        "properties":{
+                            "color": "#63cff9",
+                            "rows": 1,
+                            "textColor": "#000000",
+                            "darkColor": "#ff",
+                            "darkTextColor": "#fffff",
+                            "componentsInRow": [1]
                         },
-                        {
-                            "name" : "Shooting",
-                            "type" : "string",
-                            "component" : "ranking",
-                            "values" : ["7461", "2910", "4911"]
-                        },
-                        {
-                            "name" : "Driving",
-                            "type" : "string",
-                            "component" : "ranking",
-                            "values" : ["7461", "2910", "4911"]
-                        }
-                    ]
-                }
-            ]
+                        "components":[
+                            {
+                                "name" : "offense",
+                                "type" : "string",
+                                "component" : "ranking",
+                                "values" : ["7461", "2910", "4911"]
+                            }
+                        ]
+                    }
+                ]
+            }
         }
     }
 }

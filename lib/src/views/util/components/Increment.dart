@@ -38,7 +38,7 @@ class IncrementState extends State<Increment>{
   @override
   Widget build(BuildContext context) {
     double width = widget.width;
-    widget.data.set(widget.value*1.0, setByUser: true);
+    widget.data.set(widget.value*1.0);
     final TextEditingController _controller = TextEditingController();
     _controller.text = (widget.value).toString();
     return Padding(
