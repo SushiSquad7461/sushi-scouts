@@ -118,14 +118,15 @@ class ScoutingState extends State<Scouting> {
     return Column(
       children: [
         Padding(
-          padding: EdgeInsets.all(0),
+          padding: EdgeInsets.only(top: ScreenSize.height * 0.02),
           child: SizedBox(
             width: ScreenSize.width,
-            height: ScreenSize.height * 0.63,
+            height: ScreenSize.height * 0.61,
             child: _buildBody(ScreenSize.get()),
           ),
         ),
         ScoutingFooter(
+          key: Key(widget.data!.name),
           data: widget.data,
           newPage: renderNewPage,
         ),
