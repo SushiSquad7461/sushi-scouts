@@ -29,12 +29,6 @@
                                 "name" : "team #",
                                 "type" : "number",
                                 "component" : "number input"
-                            },
-                            {
-                                "name" : "match type",
-                                "type" : "string",
-                                "component" : "dropdown",
-                                "values" : ["Quals", "Elims", "Practice"]
                             }
                         ]
                     }
