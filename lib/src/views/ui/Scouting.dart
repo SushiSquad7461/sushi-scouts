@@ -121,7 +121,7 @@ class ScoutingState extends State<Scouting> {
           padding: EdgeInsets.all(0),
           child: SizedBox(
             width: ScreenSize.width,
-            height: ScreenSize.height * 0.6,
+            height: ScreenSize.height * 0.63,
             child: _buildBody(ScreenSize.get()),
           ),
         ),
