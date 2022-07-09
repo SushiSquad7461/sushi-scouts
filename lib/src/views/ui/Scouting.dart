@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:sushi_scouts/src/logic/Constants.dart';
 import 'package:sushi_scouts/src/logic/data/ScoutingData.dart'
     as ScoutingDataHelpers;
@@ -29,10 +30,24 @@ class ScoutingState extends State<Scouting> {
 
   //builds the components in a certain section
   Widget _buildSection(
-      double width, ScoutingDataHelpers.Section section, int currRow) {
+    double width, ScoutingDataHelpers.Section section, int currRow) {
     double scaledWidth = (width > 400 ? 400 : width);
 
     List<Widget> builtComponents = [];
+    
+    if (section.title != ""){
+      builtComponents.add(
+        Align(
+          alignment: AlignmentDirectional.centerStart,
+          child: Text(section.title,
+            style: GoogleFonts.mohave(
+              color: section.textColor,
+              fontSize: width/15,
+              fontWeight: FontWeight.w400
+            ),
+          ),
+        ));
+    }
 
     int startComponent = 0;
     for (var i = 0; i < currRow; ++i) {

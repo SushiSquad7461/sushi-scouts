@@ -19,15 +19,17 @@ class Section {
   late HexColor textColor;
   late HexColor darkColor;
   late HexColor darkTextColor;
+  late String title;
 
   List<Component> components = [];
   List<Data> values = [];
   List<int> componentsPerRow = [];
 
-  Section.cc(this.color, this.rows, this.textColor, this.components,
+  Section.cc(this.title, this.color, this.rows, this.textColor, this.components,
       this.values, this.componentsPerRow);
 
   Section(Map<String, dynamic> config) {
+    title = config["properties"]["title"];
     color = HexColor(config["properties"]["color"]);
     rows = config["properties"]["rows"];
     textColor = HexColor(config["properties"]["textColor"]);

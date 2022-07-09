@@ -7,6 +7,7 @@
                 "sections" : [
                     {
                         "properties":{
+                            "title":"",
                             "color": "#ff76a2",
                             "rows": 2,
                             "textColor": "#000000",
@@ -46,6 +47,7 @@
                 "sections": [
                     {
                         "properties":{
+                            "title":"",
                             "color" : "#FF729F",
                             "rows" : 2,
                             "darkColor": "#ff",
@@ -68,6 +70,7 @@
                     },
                     {
                         "properties":{
+                            "title":"",
                             "color":"#63cff9",
                             "rows":2,
                             "textColor":"#000000",
@@ -100,6 +103,7 @@
                 "sections": [
                     {
                         "properties":{
+                            "title":"",
                             "color": "#81f4e1",
                             "rows": 2,
                             "textColor":"#000000",
@@ -127,6 +131,7 @@
                 "sections": [
                     {
                         "properties":{
+                            "title":"",
                             "color":"#ff76a2",
                             "rows":1,
                             "textColor":"#000000",
@@ -152,6 +157,7 @@
                 "sections" : [
                     {
                         "properties":{
+                            "title":"",
                             "color": "#ff76a2",
                             "rows": 2,
                             "textColor": "#000000",
@@ -180,6 +186,7 @@
                     },
                     {
                         "properties":{
+                            "title":"",
                             "color": "#63cff9",
                             "rows": 2,
                             "textColor": "#000000",
@@ -213,6 +220,7 @@
                 "sections" : [
                     {
                         "properties":{
+                            "title":"Defense",
                             "color": "#ff76a2",
                             "rows": 1,
                             "textColor": "#000000",
@@ -231,6 +239,7 @@
                     },
                     {
                         "properties":{
+                            "title":"Driving",
                             "color": "#81f4e1",
                             "rows": 1,
                             "textColor": "#000000",
@@ -249,6 +258,7 @@
                     },
                     {
                         "properties":{
+                            "title":"Offense",
                             "color": "#63cff9",
                             "rows": 1,
                             "textColor": "#000000",

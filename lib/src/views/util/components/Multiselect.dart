@@ -53,7 +53,7 @@ class MultiselectState extends State<Multiselect>{
         for(String value in widget.values!)
           Padding(
             padding:
-                EdgeInsets.only(left: width/4, right: width/60, top: width/30, bottom: width/30),
+                EdgeInsets.only(left: width/10, right: width/60, top: width/30, bottom: width/30),
             child: SizedBox(
               width: width*0.9,
               child: Column(
