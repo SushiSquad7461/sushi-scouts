@@ -86,7 +86,7 @@ class MultiselectState extends State<Multiselect>{
                   Text(value,
                     style: TextStyle(
                         fontFamily: "Sushi",
-                        fontSize: width/10,
+                        fontSize: width/8,
                         fontWeight: FontWeight.bold,
                         color: widget.textColor
                       )

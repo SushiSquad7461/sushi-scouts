@@ -40,7 +40,7 @@ class NumberInput extends StatelessWidget {
             top: width / 30,
             bottom: width / 30),
         child: SizedBox(
-            width: width * 0.9,
+            width: width * 0.7,
             child: Column(children: [
               Row(mainAxisAlignment: MainAxisAlignment.center, children: [
                 // Text(name.toUpperCase(),
