@@ -99,41 +99,49 @@ class _SushiScoutsState extends State<SushiScouts> {
       ? ScreenSize.height*0.8 
       : ScreenSize.height * 0.9;
 
-    return Column(children: [
-      const HeaderTitle(),
-      if (_headerNavNeeded.contains(_currentPage) && !qrCode)
-        HeaderNav(
-            currentPage: _currentPage,
-            changePage: setCurrentPage,
-            screens: _headerNavNeeded),
-      SizedBox(
-        height: pageHeight,
-        width: ScreenSize.width,
-        child: Navigator(
-          pages: [
-            if (_currentPage == "login")
-              MaterialPage(child: Login(changePage: setCurrentPage,))
-            else if (_currentPage == "loading") // TODO: FIX LOADING PAGE
-              const MaterialPage(child: Loading())
-            else if (_currentPage == "error") // TODO: ADD ERROR PAGE
-              MaterialPage(
-                  child: Center(
-                      child: Text(
-                "Error $currErr",
-                style: const TextStyle(color: Colors.red),
-              )))
-            else if (_currentPage == "settings")
-              const MaterialPage(child: Settings())
-            else if (_currentPage == "qrscreen")
-              MaterialPage(child: QRScreen(changePage: setCurrentPage, previousPage: _previousPage, data: scoutingPages[_previousPage]!))
-            else if (fileReader.getScoutingMethods().contains(_currentPage))
-              MaterialPage(child: Scouting(data: scoutingPages[_currentPage], changeScreen: setCurrentPage))
-          ],
-          onPopPage: (route, result) {
-            return route.didPop(result);
-          },
+    return GestureDetector(
+      onTap: () {
+        FocusScopeNode currentFocus = FocusScope.of(context);
+        if (!currentFocus.hasPrimaryFocus) {
+          currentFocus.unfocus();
+        }
+      },
+      child: Column(children: [
+        const HeaderTitle(),
+        if (_headerNavNeeded.contains(_currentPage) && !qrCode)
+          HeaderNav(
+              currentPage: _currentPage,
+              changePage: setCurrentPage,
+              screens: _headerNavNeeded),
+        SizedBox(
+          height: pageHeight,
+          width: ScreenSize.width,
+          child: Navigator(
+            pages: [
+              if (_currentPage == "login")
+                MaterialPage(child: Login(changePage: setCurrentPage,))
+              else if (_currentPage == "loading") // TODO: FIX LOADING PAGE
+                const MaterialPage(child: Loading())
+              else if (_currentPage == "error") // TODO: ADD ERROR PAGE
+                MaterialPage(
+                    child: Center(
+                        child: Text(
+                  "Error $currErr",
+                  style: const TextStyle(color: Colors.red),
+                )))
+              else if (_currentPage == "settings")
+                const MaterialPage(child: Settings())
+              else if (_currentPage == "qrscreen")
+                MaterialPage(child: QRScreen(changePage: setCurrentPage, previousPage: _previousPage, data: scoutingPages[_previousPage]!))
+              else if (fileReader.getScoutingMethods().contains(_currentPage))
+                MaterialPage(child: Scouting(data: scoutingPages[_currentPage], changeScreen: setCurrentPage))
+            ],
+            onPopPage: (route, result) {
+              return route.didPop(result);
+            },
+          ),
         ),
-      ),
-    ]);
+      ]),
+    );
   }
 }
