@@ -22,7 +22,7 @@ class Increment extends StatefulWidget {
   
   
 class IncrementState extends State<Increment>{
-
+  final TextEditingController _controller = TextEditingController();
   Color getColor(Set<MaterialState> states) {
       const Set<MaterialState> interactiveStates = <MaterialState>{
         MaterialState.pressed,
@@ -34,12 +34,17 @@ class IncrementState extends State<Increment>{
       }
       return Colors.black;
     }
+  
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     double width = widget.width;
     widget.data.set(widget.value*1.0);
-    final TextEditingController _controller = TextEditingController();
     _controller.text = (widget.value).toString();
     return Padding(
         padding:

@@ -277,6 +277,31 @@
                     }
                 ]
             }
+        },
+        "pit":{
+            "pregame" : {
+                "footer": "info",
+                "sections" : [
+                    {
+                        "properties":{
+                            "title":"",
+                            "color": "#ff76a2",
+                            "rows": 1,
+                            "textColor": "#000000",
+                            "darkColor": "#ff",
+                            "darkTextColor": "#fffff",
+                            "componentsInRow": [1]
+                        },
+                        "components":[
+                            {
+                                "name" : "Notes",
+                                "type" : "string",
+                                "component" : "text input"
+                            }
+                        ]
+                    }
+                ]
+            }
         }
     }
 }
