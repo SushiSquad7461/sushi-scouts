@@ -30,23 +30,22 @@ class ScoutingState extends State<Scouting> {
 
   //builds the components in a certain section
   Widget _buildSection(
-    double width, ScoutingDataHelpers.Section section, int currRow) {
+      double width, ScoutingDataHelpers.Section section, int currRow) {
     double scaledWidth = (width > 400 ? 400 : width);
 
     List<Widget> builtComponents = [];
-    
-    if (section.title != ""){
-      builtComponents.add(
-        Align(
-          alignment: AlignmentDirectional.centerStart,
-          child: Text(section.title,
-            style: GoogleFonts.mohave(
+
+    if (section.title != "") {
+      builtComponents.add(Align(
+        alignment: AlignmentDirectional.centerStart,
+        child: Text(
+          section.title,
+          style: GoogleFonts.mohave(
               color: section.textColor,
-              fontSize: width/15,
-              fontWeight: FontWeight.w400
-            ),
-          ),
-        ));
+              fontSize: width / 15,
+              fontWeight: FontWeight.w400),
+        ),
+      ));
     }
 
     int startComponent = 0;
@@ -65,7 +64,7 @@ class ScoutingState extends State<Scouting> {
             "No component exsits called: ${currComponent.component}");
       }
 
-      print(currPage!.getComponentsPerRow(currRow));
+      print("data ${currData.get()}");
 
       builtComponents.add(COMPONENT_MAP.containsKey(currComponent.component)
           ? Padding(
@@ -108,6 +107,7 @@ class ScoutingState extends State<Scouting> {
   //builds the body of the screen
   Widget _buildBody(Size size) {
     List<Row> builtSections = [];
+    print(currPage!.stringfy());
 
     for (var i in currPage!.sections) {
       int rows =

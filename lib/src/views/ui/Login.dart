@@ -64,7 +64,7 @@ class _LoginState extends State<Login> {
               inputFormatters: <TextInputFormatter>[
                 FilteringTextInputFormatter.digitsOnly
               ],
-              onFieldSubmitted: (String? val) => setState(() {
+              onChanged: (String? val) => setState(() {
                 teamNum = (val != null ? int.parse(val) : val) as int?;
               }),
             ),
@@ -98,7 +98,7 @@ class _LoginState extends State<Login> {
                     fontSize: ScreenSize.width * 0.07,
                     color: Colors.black,
                   )),
-                  onFieldSubmitted: (String? val) => setState(() {
+                  onChanged: (String? val) => setState(() {
                         eventCode = val;
                       })),
             ),
@@ -132,7 +132,7 @@ class _LoginState extends State<Login> {
                     fontSize: ScreenSize.width * 0.07,
                     color: Colors.black,
                   )),
-                  onFieldSubmitted: (String? val) => setState(() {
+                  onChanged: (String? val) => setState(() {
                         name = val;
                   })),
             ),

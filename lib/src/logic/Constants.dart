@@ -9,4 +9,14 @@ import '../views/util/components/NumberInput.dart';
 
 const String CONFIG_FILE_PATH = "assets/config/";
 const List<int> AUTHORIZED_TEAMS = [7461];
-const Map COMPONENT_MAP = {"number input": NumberInput.create, "dropdown": Dropdown.create, "checkbox": CheckboxInput.create, "increment": Increment.create, "multiselect": Multiselect.create, "ranking": Ranking.create, "text input": TextInput.create};
+const Map COMPONENT_MAP = {
+  "number input": NumberInput.create,
+  "dropdown": Dropdown.create,
+  "checkbox": CheckboxInput.create,
+  "increment": Increment.create,
+  "multiselect": Multiselect.create,
+  "ranking": Ranking.create,
+  "text input": TextInput.create
+};
+const int MIN_TIMESTAMP_DIFFERENCE = 1000; // In milliseconds
+
