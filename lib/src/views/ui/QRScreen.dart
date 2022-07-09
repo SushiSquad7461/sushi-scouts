@@ -23,6 +23,7 @@ class QRScreen extends StatelessWidget {
 
   void convertData() {
     stringifiedData = data.stringfy();
+    print(stringifiedData);
     print(stringifiedData!.length);
   }
 

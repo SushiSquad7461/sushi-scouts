@@ -10,7 +10,9 @@ class Component {
   List<String>? values;
   String component;
   String type;
-  Component(this.name, this.type, this.component, {this.values});
+  bool timeStamp;
+  Component(this.name, this.type, this.component, this.timeStamp,
+      {this.values});
 }
 
 class Section {
@@ -38,7 +40,8 @@ class Section {
     componentsPerRow = List<int>.from(config["properties"]["componentsInRow"]);
 
     for (var i in config["components"]) {
-      components.add(Component(i["name"], i["type"], i["component"],
+      components.add(Component(
+          i["name"], i["type"], i["component"], i["timestamp"],
           values: i["values"] == null ? null : List<String>.from(i["values"])));
 
       if (i["type"] == "number") {
@@ -56,6 +59,24 @@ class Section {
 
     for (int i = 0; i < values.length; ++i) {
       ret += '"${components[i].name}":"${values[i].get()}"';
+
+      if (components[i].timeStamp) {
+        ret += "T";
+        ret += "{";
+
+        for (var j in values[i].timestamps.keys) {
+          ret += j.toString();
+          ret += ":";
+
+          if (components[i].type != "string") {
+            ret += values[i].timestamps[j].toString();
+          } else {
+            ret += values[i].timestamps[j];
+          }
+          ret += ",";
+        }
+        ret += "}";
+      }
     }
 
     return ret;
@@ -66,8 +87,12 @@ class Section {
   }
 
   void empty() {
-    for (var value in values) {
-      value.empty();
+    for (int i = 0; i < values.length; ++i) {
+      if (components[i].values == null) {
+        values[i].empty();
+      } else {
+        values[i].set(components[i].values![0]);
+      }
     }
   }
 }

@@ -19,24 +19,28 @@
                             {
                                 "name" : "match #",
                                 "type" : "number",
-                                "component" : "number input"
+                                "component" : "number input",
+                                "timestamp": false
                             },
                             {
                                 "name" : "station",
                                 "type" : "string",
                                 "component" : "dropdown",
-                                "values" : ["R1", "R2", "R3", "B1", "B2", "B3"]
+                                "values" : ["R1", "R2", "R3", "B1", "B2", "B3"],
+                                "timestamp": false
                             },
                             {
                                 "name" : "team #",
                                 "type" : "number",
-                                "component" : "number input"
+                                "component" : "number input",
+                                "timestamp": false
                             },
                             {
                                 "name": "match type",
                                 "type": "string",
                                 "component": "multiselect",
-                                "values" : ["Quals", "Elims", "Prac"]
+                                "values" : ["Quals", "Elims", "Prac"],
+                                "timestamp": false
                             }
                         ]
                     }
@@ -59,12 +63,14 @@
                             {
                                 "name" : "No Show",
                                 "type" : "string",
-                                "component" : "checkbox"
+                                "component" : "checkbox",
+                                "timestamp": false
                             },
                             {
                                 "name" : "Tarmac",
                                 "type" : "string",
-                                "component" : "checkbox"
+                                "component" : "checkbox",
+                                "timestamp": false
                             }
                         ]
                     },
@@ -82,17 +88,20 @@
                             {
                                 "name" : "Low Hub",
                                 "type" : "number",
-                                "component" : "increment"
+                                "component" : "increment",
+                                "timestamp": true
                             },
                             {
                                 "name" : "High Hub",
                                 "type" : "number",
-                                "component" : "increment"
+                                "component" : "increment",
+                                "timestamp": true
                             },
                             {
                                 "name" : "HP",
                                 "type" : "number",
-                                "component" : "increment"
+                                "component" : "increment",
+                                "timestamp": false
                             }
                         ]
                     }
@@ -115,12 +124,14 @@
                             {
                                 "name" : "Low Hub",
                                 "type" : "number",
-                                "component" : "increment"
+                                "component" : "increment",
+                                "timestamp": true
                             },
                             {
                                 "name" : "High Hub",
                                 "type" : "number",
-                                "component" : "increment"
+                                "component" : "increment",
+                                "timestamp": true
                             }       
                         ]
                     }
@@ -144,7 +155,8 @@
                                 "name" : "Climb Level",
                                 "type" : "string",
                                 "component" : "multiselect",
-                                "values" : ["No Climb", "Low Climb", "Mid Climb", "High Climb", "Traversal"]
+                                "values" : ["No Climb", "Low Climb", "Mid Climb", "High Climb", "Traversal"],
+                                "timestamp": false
                             }  
                         ]
                     }
@@ -169,18 +181,21 @@
                             {
                                 "name" : "match #",
                                 "type" : "number",
-                                "component" : "number input"
+                                "component" : "number input",
+                                "timestamp": false
                             },
                             {
                                 "name" : "robot #1",
                                 "type" : "number",
-                                "component" : "number input"
+                                "component" : "number input",
+                                "timestamp": false
                             },
                             {
                                 "name": "match type",
                                 "type": "string",
                                 "component": "multiselect",
-                                "values" : ["Quals", "Elims", "Prac"]
+                                "values" : ["Quals", "Elims", "Prac"],
+                                "timestamp": false
                             }
                         ]
                     },
@@ -198,18 +213,21 @@
                             {
                                 "name" : "robot #2",
                                 "type" : "number",
-                                "component" : "number input"
+                                "component" : "number input",
+                                "timestamp": false
                             },
                             {
                                 "name" : "robot #3",
                                 "type" : "number",
-                                "component" : "number input"
+                                "component" : "number input",
+                                "timestamp": false
                             },
                             {
                                 "name": "side",
                                 "type": "string",
                                 "component": "multiselect",
-                                "values" : ["Red", "Blue"]
+                                "values" : ["Red", "Blue"],
+                                "timestamp": false
                             }
                         ]
                     }
@@ -233,7 +251,8 @@
                                 "name" : "defence",
                                 "type" : "string",
                                 "component" : "ranking",
-                                "values" : ["7461", "2910", "4911"]
+                                "values" : ["7461", "2910", "4911"],
+                                "timestamp": false
                             }
                         ]
                     },
@@ -252,7 +271,8 @@
                                 "name" : "driving",
                                 "type" : "string",
                                 "component" : "ranking",
-                                "values" : ["7461", "2910", "4911"]
+                                "values" : ["7461", "2910", "4911"],
+                                "timestamp": false
                             }
                         ]
                     },
@@ -271,7 +291,8 @@
                                 "name" : "offense",
                                 "type" : "string",
                                 "component" : "ranking",
-                                "values" : ["7461", "2910", "4911"]
+                                "values" : ["7461", "2910", "4911"],
+                                "timestamp": false
                             }
                         ]
                     }
@@ -296,7 +317,8 @@
                             {
                                 "name" : "Notes",
                                 "type" : "string",
-                                "component" : "text input"
+                                "component" : "text input",
+                                "timestamp": false
                             }
                         ]
                     }
