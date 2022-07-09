@@ -14,7 +14,7 @@ class Dropdown extends StatefulWidget {
   String currentValue = "";
   Dropdown({Key? key, required this.name, required this.data, required this.defaultValue, required this.color, required this.width, required this.textColor, required this.values})
     : super(key: key){
-      currentValue = values[0];
+      currentValue = data.setByUser ? data.get() : values[0];
     }
   static Dropdown create(Key key, String name, Data data, List<String> values, Data defaultValue, Color color, double width, Color textColor) {
     return Dropdown(key: key, name: name, data: data, width: width, defaultValue: defaultValue, color: color, values: values, textColor: textColor,);
@@ -28,7 +28,6 @@ class DropdownState extends State<Dropdown>{
   @override
   Widget build(BuildContext context) {
     double width = widget.width;
-    widget.data.set(widget.currentValue);
     return Padding(
         padding:
             EdgeInsets.only(left: width/60, right: width/60, top: width/30, bottom: width/30),
