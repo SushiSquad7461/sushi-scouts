@@ -1,4 +1,4 @@
-import 'package:sushi_scouts/src/views/util/components/Multiselect.dart';
+import 'package:sushi_scouts/src/views/util/components/Select.dart';
 import 'package:sushi_scouts/src/views/util/components/Ranking.dart';
 import 'package:sushi_scouts/src/views/util/components/TextInput.dart';
 
@@ -14,7 +14,7 @@ const Map COMPONENT_MAP = {
   "dropdown": Dropdown.create,
   "checkbox": CheckboxInput.create,
   "increment": Increment.create,
-  "multiselect": Select.create,
+  "select": Select.create,
   "ranking": Ranking.create,
   "text input": TextInput.create
 };

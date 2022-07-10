@@ -36,9 +36,10 @@ class RankingState extends State<Ranking>{
 
   @override
   Widget build(BuildContext context) {
-    double width = widget.width/1.3;
+    double width = widget.width/1.6;
     widget.data.set(widget.values!.toString(), setByUser: true);
-    return Center(
+    return Padding(
+      padding: EdgeInsets.only(left: width/6),
       child: Row(
         children: [
           Text( widget.values![0],

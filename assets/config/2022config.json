@@ -38,8 +38,8 @@
                             {
                                 "name": "match type",
                                 "type": "string",
-                                "component": "multiselect",
-                                "values" : ["Quals", "Elims", "Prac"],
+                                "component": "select",
+                                "values" : ["c", "Quals", "Elims", "Prac"],
                                 "timestamp": false
                             }
                         ]
@@ -118,7 +118,7 @@
                             "textColor":"#000000",
                             "darkColor": "#ff",
                             "darkTextColor": "#ffffff",
-                            "componentsInRow": [1, 1]
+                            "componentsInRow": [2, 1]
                         },
                         "components":[
                             {
@@ -132,30 +132,12 @@
                                 "type" : "number",
                                 "component" : "increment",
                                 "timestamp": true
-                            }       
-                        ]
-                    }
-                ]
-            },
-            "endgame" : {
-                "footer": "endgame",
-                "sections": [
-                    {
-                        "properties":{
-                            "title":"",
-                            "color":"#ff76a2",
-                            "rows":1,
-                            "textColor":"#000000",
-                            "darkColor": "#ff",
-                            "darkTextColor": "#ffffff",
-                            "componentsInRow": [1]
-                        },
-                        "components":[
+                            },
                             {
                                 "name" : "Climb Level",
                                 "type" : "string",
-                                "component" : "multiselect",
-                                "values" : ["No Climb", "Low Climb", "Mid Climb", "High Climb", "Traversal"],
+                                "component" : "select",
+                                "values" : ["c", "No Climb", "Low Climb", "Mid Climb", "High Climb", "Traversal"],
                                 "timestamp": false
                             }  
                         ]
@@ -193,8 +175,8 @@
                             {
                                 "name": "match type",
                                 "type": "string",
-                                "component": "multiselect",
-                                "values" : ["Quals", "Elims", "Prac"],
+                                "component": "select",
+                                "values" : ["c", "Quals", "Elims", "Prac"],
                                 "timestamp": false
                             }
                         ]
@@ -225,8 +207,8 @@
                             {
                                 "name": "side",
                                 "type": "string",
-                                "component": "multiselect",
-                                "values" : ["Red", "Blue"],
+                                "component": "select",
+                                "values" : ["c", "Red", "Blue"],
                                 "timestamp": false
                             }
                         ]
@@ -305,15 +287,22 @@
                 "sections" : [
                     {
                         "properties":{
-                            "title":"",
+                            "title":"Preference",
                             "color": "#ff76a2",
                             "rows": 1,
                             "textColor": "#000000",
                             "darkColor": "#ff",
                             "darkTextColor": "#fffff",
-                            "componentsInRow": [1]
+                            "componentsInRow": [2]
                         },
                         "components":[
+                            {
+                                "name" : "preference",
+                                "type" : "string",
+                                "component" : "select",
+                                "values" : ["r", "Offense", "Defense"],
+                                "timestamp": false
+                            },
                             {
                                 "name" : "Notes",
                                 "type" : "string",

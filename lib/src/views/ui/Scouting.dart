@@ -31,7 +31,7 @@ class ScoutingState extends State<Scouting> {
   //builds the components in a certain section
   Widget _buildSection(
       double width, ScoutingDataHelpers.Section section, int currRow) {
-    double scaledWidth = (width > 400 ? 400 : width);
+    double scaledWidth = (width > 500 ? 500 : width);
 
     List<Widget> builtComponents = [];
 
