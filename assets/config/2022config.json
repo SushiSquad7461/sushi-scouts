@@ -282,27 +282,45 @@
             }
         },
         "pit":{
-            "pregame" : {
+            "page 1" : {
                 "footer": "info",
                 "sections" : [
                     {
                         "properties":{
-                            "title":"Preference",
+                            "title":"",
+                            "color": "#ff76a2",
+                            "rows": 2,
+                            "textColor": "#000000",
+                            "darkColor": "#ff",
+                            "darkTextColor": "#fffff",
+                            "componentsInRow": [1,1]
+                        },
+                        "components":[
+                            {
+                                "name" : "team #",
+                                "type" : "number",
+                                "component" : "number input",
+                                "timestamp": false
+                            },
+                            {
+                                "name" : "day #",
+                                "type" : "number",
+                                "component" : "number input",
+                                "timestamp": false
+                            }
+                        ]
+                    },
+                    {
+                        "properties":{
+                            "title":"",
                             "color": "#ff76a2",
                             "rows": 1,
                             "textColor": "#000000",
                             "darkColor": "#ff",
                             "darkTextColor": "#fffff",
-                            "componentsInRow": [2]
-                        },
+                            "componentsInRow": [1]
+                        }, 
                         "components":[
-                            {
-                                "name" : "preference",
-                                "type" : "string",
-                                "component" : "select",
-                                "values" : ["r", "Offense", "Defense"],
-                                "timestamp": false
-                            },
                             {
                                 "name" : "Notes",
                                 "type" : "string",

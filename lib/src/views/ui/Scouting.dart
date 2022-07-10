@@ -35,19 +35,6 @@ class ScoutingState extends State<Scouting> {
 
     List<Widget> builtComponents = [];
 
-    if (section.title != "") {
-      builtComponents.add(Align(
-        alignment: AlignmentDirectional.centerStart,
-        child: Text(
-          section.title,
-          style: GoogleFonts.mohave(
-              color: section.textColor,
-              fontSize: width / 15,
-              fontWeight: FontWeight.w400),
-        ),
-      ));
-    }
-
     int startComponent = 0;
     for (var i = 0; i < currRow; ++i) {
       startComponent += section.componentsPerRow[i];
@@ -108,13 +95,24 @@ class ScoutingState extends State<Scouting> {
 
   //builds the body of the screen
   Widget _buildBody(Size size) {
-    List<Row> builtSections = [];
+    List<Widget> builtSections = [];
     print(currPage!.stringfy());
 
     for (var i in currPage!.sections) {
       int rows =
           size.width / i.rows < 300 ? (size.width / 300).floor() : i.rows;
-
+      if (i.title != "") {
+        builtSections.add(Align(
+          alignment: Alignment(-0.8, 0),
+          child: Text(
+            i.title,
+            style: GoogleFonts.mohave(
+                color: i.textColor,
+                fontSize: size.width / 15,
+                fontWeight: FontWeight.w400),
+          ),
+        ));
+      }
       builtSections.add(Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.center,
