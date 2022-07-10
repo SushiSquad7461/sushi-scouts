@@ -65,13 +65,13 @@ class Section {
         ret += "{";
 
         for (var j in values[i].timestamps.keys) {
-          ret += j.toString();
-          ret += ":";
+          ret += '"${j.toString()}';
+          ret += '":"';
 
           if (components[i].type != "string") {
-            ret += values[i].timestamps[j].toString();
+            ret += '${values[i].timestamps[j].toString()}"';
           } else {
-            ret += values[i].timestamps[j];
+            ret += '${values[i].timestamps[j]}"';
           }
           ret += ",";
         }
