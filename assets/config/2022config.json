@@ -337,7 +337,7 @@
                     {
                         "properties":{
                             "title":"Drivetrain",
-                            "color": "#ff76a2",
+                            "color": "#fcd6f6",
                             "rows": 1,
                             "textColor": "#000000",
                             "darkColor": "#ff",
@@ -357,7 +357,7 @@
                     {
                         "properties":{
                             "title":"Auto",
-                            "color": "#ff76a2",
+                            "color": "#81f4e1",
                             "rows": 1,
                             "textColor": "#000000",
                             "darkColor": "#ff",
@@ -370,6 +370,91 @@
                                 "type" : "string",
                                 "component" : "multiselect",
                                 "values" : ["#o", "6", "l", "2", "2", "2", "c", "1 ball", "4 balls", "2 balls", "5 balls", "3 balls", "6 balls"],
+                                "timestamp": false
+                            }
+                        ]
+                    },
+                    {
+                        "properties":{
+                            "title":"Teleop",
+                            "color": "#56cbf9",
+                            "rows": 1,
+                            "textColor": "#000000",
+                            "darkColor": "#ff",
+                            "darkTextColor": "#fffff",
+                            "componentsInRow": [1]
+                        },
+                        "components":[
+                            {
+                                "name" : "teleop",
+                                "type" : "string",
+                                "component" : "select",
+                                "values" : ["r", "High Hub", "Low Hub"],
+                                "timestamp": false
+                            }
+                        ]
+                    },
+                    {
+                        "properties":{
+                            "title":"Climb",
+                            "color": "#ff76a2",
+                            "rows": 1,
+                            "textColor": "#000000",
+                            "darkColor": "#ff",
+                            "darkTextColor": "#fffff",
+                            "componentsInRow": [1]
+                        },
+                        "components":[
+                            {
+                                "name" : "auto",
+                                "type" : "string",
+                                "component" : "multiselect",
+                                "values" : ["#o", "5", "l", "2", "2", "1", "c", "Traversal", "Low", "High", "No Climb", "Mid"],
+                                "timestamp": false
+                            }
+                        ]
+                    }
+                ]
+            },
+            "page 3" : {
+                "footer": " ",
+                "sections" : [
+                    {
+                        "properties":{
+                            "title":"Prefrence",
+                            "color": "#ff76a2",
+                            "rows": 1,
+                            "textColor": "#000000",
+                            "darkColor": "#ff",
+                            "darkTextColor": "#fffff",
+                            "componentsInRow": [1]
+                        },
+                        "components":[
+                            {
+                                "name" : "prefrence",
+                                "type" : "string",
+                                "component" : "select",
+                                "values" : ["r", "Offense", "Defense"],
+                                "timestamp": false
+                            }
+                        ]
+                    },
+                    {
+                        "properties":{
+                            "title":"Problem",
+                            "color": "#56cbf9",
+                            "rows": 1,
+                            "textColor": "#000000",
+                            "darkColor": "#ff",
+                            "darkTextColor": "#fffff",
+                            "componentsInRow": [1]
+                        }, 
+                        "components":[
+                            {
+                                "name" : "problems",
+                                "type" : "string",
+                                "component" : "multiselect",
+                                "values" : ["#o", "7", "l", "3", "2", "2", "c", "Climb", "Prog", "Shooter", "Intake", "DT", "Hopper", "Electric"],
                                 "timestamp": false
                             }
                         ]

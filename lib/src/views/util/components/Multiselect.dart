@@ -127,8 +127,8 @@ class MultiselectState extends State<Multiselect>{
           ])
         );
       }
-      options.add(Column(crossAxisAlignment: CrossAxisAlignment.start, children: column,));        
+      options.add(Column(crossAxisAlignment: CrossAxisAlignment.start, mainAxisAlignment: MainAxisAlignment.start, children: column,));        
     }
-    return Row(children: options,);
+    return Row(crossAxisAlignment: CrossAxisAlignment.start,children: options,);
   }
 }

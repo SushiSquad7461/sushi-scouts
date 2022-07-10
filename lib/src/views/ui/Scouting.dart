@@ -119,7 +119,7 @@ class ScoutingState extends State<Scouting> {
           children: [
             for (int j = 0; j < rows; j++)
               Padding(
-                  padding: EdgeInsets.only(bottom: ScreenSize.height * 0.03),
+                  padding: EdgeInsets.only(bottom: ScreenSize.height * 0.01),
                   child: _buildSection(size.width / rows, i, j)),
           ]));
     }
