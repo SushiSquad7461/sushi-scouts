@@ -36,7 +36,7 @@ class Multiselect extends StatefulWidget {
         checked[value] = false;
       }
 
-      if(values.contains(defaultValue.get())){
+      if(this.values.contains(defaultValue.get())){
         checked[defaultValue.get()] = true;
         data.set(defaultValue.get(), setByUser: true);
       }
@@ -108,7 +108,7 @@ class MultiselectState extends State<Multiselect>{
                 fillColor: MaterialStateProperty.resolveWith(getColor),
                 value: widget.checked[value],
                 onChanged: (bool? val) {
-                widget.data.set(value, setByUser: true);
+                widget.data.set(getChecked(), setByUser: true);
                 setState(() {
                   if( widget.checked[value]! || getCheckedNum() <= widget.numberOfOptions) {
                     widget.checked[value] = !widget.checked[value]!;

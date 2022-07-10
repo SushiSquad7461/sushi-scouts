@@ -26,7 +26,9 @@ class Select extends StatefulWidget {
         checked[value] = false;
       }
 
-      if(values.contains(defaultValue.get())){
+      print(this.values);
+
+      if(this.values.contains(defaultValue.get())){
         checked[defaultValue.get()] = true;
         data.set(defaultValue.get(), setByUser: true);
       }
