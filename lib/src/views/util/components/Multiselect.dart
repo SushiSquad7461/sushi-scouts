@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:sushi_scouts/src/logic/data/Data.dart';
 
-class Multiselect extends StatefulWidget {
+class Select extends StatefulWidget {
   final String name;
   final Data data;
   final Data defaultValue;
@@ -11,7 +11,7 @@ class Multiselect extends StatefulWidget {
   final double width;
   final List<String>? values;
   Map<String, bool> checked = {};
-  Multiselect({Key? key, required this.name, required this.data, required this.defaultValue, required this.color, required this.width, required this.textColor, this.values})
+  Select({Key? key, required this.name, required this.data, required this.defaultValue, required this.color, required this.width, required this.textColor, this.values})
     : super(key: key){
       for(String value in values!){
         checked[value] = false;
@@ -21,15 +21,15 @@ class Multiselect extends StatefulWidget {
         data.set(defaultValue.get(), setByUser: true);
       }
     }
-  static Multiselect create(Key key, String name, Data data, List<String>? values, Data defaultValue, Color color, double width, Color textColor) {
-    return Multiselect(key: key, name: name, data: data, width: width, defaultValue: defaultValue, color: color, values: values, textColor: textColor,);
+  static Select create(Key key, String name, Data data, List<String>? values, Data defaultValue, Color color, double width, Color textColor) {
+    return Select(key: key, name: name, data: data, width: width, defaultValue: defaultValue, color: color, values: values, textColor: textColor,);
   }
   @override 
-  MultiselectState createState() => MultiselectState();
+  SelectState createState() => SelectState();
 }
   
   
-class MultiselectState extends State<Multiselect>{
+class SelectState extends State<Select>{
 
   Color getColor(Set<MaterialState> states) {
       const Set<MaterialState> interactiveStates = <MaterialState>{

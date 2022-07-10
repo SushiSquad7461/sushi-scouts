@@ -29,50 +29,49 @@ class _LoginState extends State<Login> {
   @override
   Widget build(BuildContext context) {
     var colors = Theme.of(context);
-    return Padding(
-      padding: EdgeInsets.only(top: ScreenSize.height * 0.1),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisSize: MainAxisSize.max,
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    return Stack(
+        fit: StackFit.expand,
         children: [
-          SizedBox(
-            width: ScreenSize.width * 0.75,
-            height: ScreenSize.height * 0.07,
-            child: TextFormField(
-              decoration: InputDecoration(
-                enabledBorder: UnderlineInputBorder(
-                  borderSide: BorderSide(
-                      width: ScreenSize.height * 0.006,
-                      color: colors.primaryColorDark),
+          Align(
+            alignment: Alignment(0, -0.8),
+            child: SizedBox(
+              width: ScreenSize.width * 0.75,
+              height: ScreenSize.height * 0.07,
+              child: TextFormField(
+                decoration: InputDecoration(
+                  enabledBorder: UnderlineInputBorder(
+                    borderSide: BorderSide(
+                        width: ScreenSize.height * 0.006,
+                        color: colors.primaryColorDark),
+                  ),
+                  focusedBorder: UnderlineInputBorder(
+                    borderSide: BorderSide(
+                        width: ScreenSize.height * 0.006, color: colors.primaryColorDark),
+                  ),
+                  hintText: "TEAM #",
+                  hintStyle: TextStyle(color: colors.primaryColorDark),
+                  isDense: true,
+                  contentPadding:
+                      EdgeInsets.symmetric(vertical: ScreenSize.height * 0.005),
                 ),
-                focusedBorder: UnderlineInputBorder(
-                  borderSide: BorderSide(
-                      width: ScreenSize.height * 0.006, color: colors.primaryColorDark),
-                ),
-                hintText: "TEAM #",
-                hintStyle: TextStyle(color: colors.primaryColorDark),
-                isDense: true,
-                contentPadding:
-                    EdgeInsets.symmetric(vertical: ScreenSize.height * 0.005),
+                textAlign: TextAlign.center,
+                style: GoogleFonts.mohave(
+                    textStyle: TextStyle(
+                  fontSize: ScreenSize.width * 0.07,
+                  color: colors.primaryColorDark,
+                )),
+                keyboardType: TextInputType.number,
+                inputFormatters: <TextInputFormatter>[
+                  FilteringTextInputFormatter.digitsOnly
+                ],
+                onChanged: (String? val) => setState(() {
+                  teamNum = (val != null ? int.parse(val) : val) as int?;
+                }),
               ),
-              textAlign: TextAlign.center,
-              style: GoogleFonts.mohave(
-                  textStyle: TextStyle(
-                fontSize: ScreenSize.width * 0.07,
-                color: colors.primaryColorDark,
-              )),
-              keyboardType: TextInputType.number,
-              inputFormatters: <TextInputFormatter>[
-                FilteringTextInputFormatter.digitsOnly
-              ],
-              onChanged: (String? val) => setState(() {
-                teamNum = (val != null ? int.parse(val) : val) as int?;
-              }),
             ),
           ),
-          Padding(
-            padding: EdgeInsets.only(top: ScreenSize.height * 0.12),
+          Align(
+            alignment: Alignment(0,-0.3),
             child: SizedBox(
               width: ScreenSize.width * 0.75,
               height: ScreenSize.height * 0.07,
@@ -105,8 +104,8 @@ class _LoginState extends State<Login> {
                       })),
             ),
           ),
-          Padding(
-            padding: EdgeInsets.only(top: ScreenSize.height * 0.12),
+          Align(
+            alignment: Alignment(0, 0.2),
             child: SizedBox(
               width: ScreenSize.width * 0.75,
               height: ScreenSize.height * 0.07,
@@ -139,36 +138,38 @@ class _LoginState extends State<Login> {
                       })),
             ),
           ),
-          Stack(
-            children: [
-              SvgPicture.asset(
-                "./assets/images/FooterColors.svg",
-                width: ScreenSize.width,
-              ),
-              if (teamNum != null && name != null && eventCode != null)
-                Padding(
-                  padding: EdgeInsets.only(top: ScreenSize.height * 0.2),
-                  child: Container(
-                      width: ScreenSize.width,
-                      decoration: BoxDecoration(
-                        color: colors.primaryColorDark,
-                      ),
-                      child: TextButton(
-                        onPressed: () => widget.changePage("cardinal"),
-                        child: Text(
-                          'GO',
-                          style: TextStyle(
-                              fontSize: 35 * ScreenSize.swu,
-                              fontFamily: "Sushi",
-                              color: colors.primaryColor,
-                              fontWeight: FontWeight.bold),
-                        ),
-                      )),
+          Align(
+            alignment: Alignment(0, 1),
+            child: Stack(
+              children: [
+                SvgPicture.asset(
+                  "./assets/images/FooterColors.svg",
+                  width: ScreenSize.width,
                 ),
-            ],
+                if (teamNum != null && name != null && eventCode != null)
+                  Padding(
+                    padding: EdgeInsets.only(top: ScreenSize.height * 0.2),
+                    child: Container(
+                        width: ScreenSize.width,
+                        decoration: BoxDecoration(
+                          color: colors.primaryColorDark,
+                        ),
+                        child: TextButton(
+                          onPressed: () => widget.changePage("cardinal"),
+                          child: Text(
+                            'GO',
+                            style: TextStyle(
+                                fontSize: 35 * ScreenSize.swu,
+                                fontFamily: "Sushi",
+                                color: colors.primaryColor,
+                                fontWeight: FontWeight.bold),
+                          ),
+                        )),
+                  ),
+              ],
+            ),
           ),
         ],
-      ),
-    );
+      );
   }
 }

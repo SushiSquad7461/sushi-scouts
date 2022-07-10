@@ -14,7 +14,7 @@ const Map COMPONENT_MAP = {
   "dropdown": Dropdown.create,
   "checkbox": CheckboxInput.create,
   "increment": Increment.create,
-  "multiselect": Multiselect.create,
+  "multiselect": Select.create,
   "ranking": Ranking.create,
   "text input": TextInput.create
 };
