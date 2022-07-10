@@ -57,7 +57,7 @@ class TextInputState extends State<TextInput> {
   @override
   void dispose() {
     _controller.dispose();
-    
+
     super.dispose();
   }
 
@@ -86,7 +86,7 @@ class TextInputState extends State<TextInput> {
                 Align(
                   alignment: Alignment(-0.95, -0.95),
                   child: TextFormField(
-                    focusNode: _focusNode,
+                      focusNode: _focusNode,
                       controller: _controller,
                       maxLines: 10,
                       decoration: InputDecoration(
@@ -100,23 +100,22 @@ class TextInputState extends State<TextInput> {
                               fontSize: widget.width / 15,
                               fontWeight: FontWeight.w400,
                               color: widget.textColor)),
-                      keyboardType: TextInputType.multiline,                        
+                      keyboardType: TextInputType.multiline,
                       onFieldSubmitted: (value) {
                         widget.data.set(double.parse(value), setByUser: true);
                       }),
                 ),
                 if (!isClicked && !widget.data.setByUser)
-                Align(
-                  alignment: Alignment(0,0),
-                  child: Text(widget.name,
-                    style: TextStyle(
-                      fontFamily: "Sushi",
-                      fontSize: widget.width/12,
-                      fontWeight: FontWeight.bold,
-                      color: widget.textColor
-                    ),
-                  )
-                )
+                  Align(
+                      alignment: Alignment(0, 0),
+                      child: Text(
+                        widget.name,
+                        style: TextStyle(
+                            fontFamily: "Sushi",
+                            fontSize: widget.width / 12,
+                            fontWeight: FontWeight.bold,
+                            color: widget.textColor),
+                      ))
               ]),
             )));
   }

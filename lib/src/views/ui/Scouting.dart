@@ -65,6 +65,8 @@ class ScoutingState extends State<Scouting> {
       }
 
       print("data ${currData.get()}");
+      
+      var colors = Theme.of(context);
 
       builtComponents.add(COMPONENT_MAP.containsKey(currComponent.component)
           ? Padding(
@@ -79,9 +81,9 @@ class ScoutingState extends State<Scouting> {
                   currData,
                   currComponent.values,
                   currData,
-                  section.color,
+                  section.getColor(colors.scaffoldBackgroundColor == Colors.black),
                   scaledWidth,
-                  section.textColor))
+                  section.getTextColor(colors.scaffoldBackgroundColor == Colors.black)))
           : SizedBox(
               width: scaledWidth,
               child: Text(

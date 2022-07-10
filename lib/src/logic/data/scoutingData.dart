@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/services.dart';
+import 'package:get/get.dart';
 import 'package:sushi_scouts/src/logic/color/HexColor.dart';
 import 'package:sushi_scouts/src/logic/data/Data.dart';
 import 'dart:convert';
@@ -52,6 +53,14 @@ class Section {
         throw ArgumentError("Type: ${i["type"]} is an invalid type2");
       }
     }
+  }
+
+  HexColor getColor(bool darkMode) {
+    return darkMode ? darkColor : color;
+  }
+
+  HexColor getTextColor(bool darkMode) {
+    return darkMode ? darkTextColor : textColor;
   }
 
   String stringfy() {

@@ -49,6 +49,7 @@ class NumberInputState extends State<NumberInput> {
   }
   @override
   Widget build(BuildContext context) {
+    print(widget.textColor);
     return GestureDetector(
       onTap: () {
         _focusNode.requestFocus();
@@ -63,15 +64,6 @@ class NumberInputState extends State<NumberInput> {
               width: widget.width * 0.7,
               child: Column(children: [
                 Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                  // Text(name.toUpperCase(),
-                  //   style: GoogleFonts.mohave(
-                  //     textStyle: TextStyle(
-                  //       fontSize: width/8,
-                  //       fontWeight: FontWeight.w400,
-                  //       color:  textColor
-                  //     )
-                  //   ),
-                  // ),
                   Expanded(
                       child: TextFormField(
                         focusNode: _focusNode,
@@ -80,7 +72,7 @@ class NumberInputState extends State<NumberInput> {
                             border: InputBorder.none,
                             constraints: BoxConstraints(maxWidth: widget.width / 6.0),
                             hintText: widget.name.toUpperCase(),
-                            hintStyle: const TextStyle(color: Colors.black),
+                            hintStyle: TextStyle(color: widget.textColor),
                           ),
                           style: GoogleFonts.mohave(
                               textStyle: TextStyle(

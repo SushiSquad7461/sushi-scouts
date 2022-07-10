@@ -12,7 +12,7 @@
                             "rows": 2,
                             "textColor": "#000000",
                             "darkColor": "#ff",
-                            "darkTextColor": "#fffff",
+                            "darkTextColor": "#ffffff",
                             "componentsInRow": [3, 1]
                         },
                         "components":[
@@ -55,7 +55,7 @@
                             "color" : "#FF729F",
                             "rows" : 2,
                             "darkColor": "#ff",
-                            "darkTextColor": "#fffff",
+                            "darkTextColor": "#ffffff",
                             "textColor" : "#000000",
                             "componentsInRow": [1, 1]
                         },
@@ -81,7 +81,7 @@
                             "rows":2,
                             "textColor":"#000000",
                             "darkColor": "#ff",
-                            "darkTextColor": "#fffff",
+                            "darkTextColor": "#ffffff",
                             "componentsInRow": [2, 1]
                         },
                         "components":[
@@ -117,7 +117,7 @@
                             "rows": 2,
                             "textColor":"#000000",
                             "darkColor": "#ff",
-                            "darkTextColor": "#fffff",
+                            "darkTextColor": "#ffffff",
                             "componentsInRow": [1, 1]
                         },
                         "components":[
@@ -147,7 +147,7 @@
                             "rows":1,
                             "textColor":"#000000",
                             "darkColor": "#ff",
-                            "darkTextColor": "#fffff",
+                            "darkTextColor": "#ffffff",
                             "componentsInRow": [1]
                         },
                         "components":[
@@ -174,7 +174,7 @@
                             "rows": 2,
                             "textColor": "#000000",
                             "darkColor": "#ff",
-                            "darkTextColor": "#fffff",
+                            "darkTextColor": "#ffffff",
                             "componentsInRow": [2, 1]
                         },
                         "components":[
