@@ -283,7 +283,7 @@
         },
         "pit":{
             "page 1" : {
-                "footer": "info",
+                "footer": " ",
                 "sections" : [
                     {
                         "properties":{
@@ -325,6 +325,51 @@
                                 "name" : "Notes",
                                 "type" : "string",
                                 "component" : "text input",
+                                "timestamp": false
+                            }
+                        ]
+                    }
+                ]
+            },
+            "page 2" : {
+                "footer": " ",
+                "sections" : [
+                    {
+                        "properties":{
+                            "title":"Drivetrain",
+                            "color": "#ff76a2",
+                            "rows": 1,
+                            "textColor": "#000000",
+                            "darkColor": "#ff",
+                            "darkTextColor": "#fffff",
+                            "componentsInRow": [1]
+                        },
+                        "components":[
+                            {
+                                "name" : "drivetrain",
+                                "type" : "string",
+                                "component" : "select",
+                                "values" : ["r", "Offense", "Defense"],
+                                "timestamp": false
+                            }
+                        ]
+                    },
+                    {
+                        "properties":{
+                            "title":"Auto",
+                            "color": "#ff76a2",
+                            "rows": 1,
+                            "textColor": "#000000",
+                            "darkColor": "#ff",
+                            "darkTextColor": "#fffff",
+                            "componentsInRow": [1]
+                        },
+                        "components":[
+                            {
+                                "name" : "auto",
+                                "type" : "string",
+                                "component" : "multiselect",
+                                "values" : ["#o", "6", "l", "2", "2", "2", "c", "1 ball", "4 balls", "2 balls", "5 balls", "3 balls", "6 balls"],
                                 "timestamp": false
                             }
                         ]
