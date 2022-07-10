@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:get/get.dart';
 import 'package:sushi_scouts/src/logic/size/ScreenSize.dart';
 
 class HeaderTitle extends StatelessWidget {
@@ -9,6 +10,7 @@ class HeaderTitle extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var colors = Theme.of(context);
     return Container(
         height: ScreenSize.height*0.1,
         child: Padding(
@@ -26,12 +28,12 @@ class HeaderTitle extends StatelessWidget {
                   fontFamily: "Sushi",
                   fontSize: 75 * ScreenSize.swu,
                   fontWeight: FontWeight.bold,
-                  color: Colors.black,
+                  color: colors.primaryColorDark,
                 ),
               ),
               Image.asset(
-                "./assets/images/toprightlogo.png",
-                scale: 6.5 / ScreenSize.swu,
+                colors.scaffoldBackgroundColor == Colors.black ? "./assets/images/toprightlogodark.png" : "./assets/images/toprightlogo.png",
+                scale: 60 / ScreenSize.swu,
               ),
             ],
           ),

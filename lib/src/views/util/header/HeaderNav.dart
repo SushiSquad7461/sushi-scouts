@@ -18,9 +18,11 @@ class HeaderNav extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var colors = Theme.of(context);
     final TextStyle pageStyle = TextStyle(
       fontSize: 25 * ScreenSize.swu,
       fontWeight: FontWeight.w700,
+      color: colors.primaryColorDark,
     );
 
     return Container(
@@ -30,7 +32,7 @@ class HeaderNav extends StatelessWidget {
           child: Column(
             children: [
               Divider(
-                color: Colors.black,
+                color: colors.primaryColorDark,
                 thickness: 4 * ScreenSize.shu,
               ),
               Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
@@ -51,7 +53,7 @@ class HeaderNav extends StatelessWidget {
                                     )
                                   : BoxDecoration(
                                       border: Border.all(
-                                          color: Color(0xfafafa),
+                                          color: colors.scaffoldBackgroundColor,
                                           width: 5 * ScreenSize.swu))),
                               child: Padding(
                                   padding: EdgeInsets.only(
@@ -66,7 +68,7 @@ class HeaderNav extends StatelessWidget {
                                   )))))
               ]),
               Divider(
-                color: Colors.black,
+                color: colors.primaryColorDark,
                 thickness: 4 * ScreenSize.shu,
               ),
             ],

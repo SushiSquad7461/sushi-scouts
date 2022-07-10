@@ -28,6 +28,7 @@ class _LoginState extends State<Login> {
 
   @override
   Widget build(BuildContext context) {
+    var colors = Theme.of(context);
     return Padding(
       padding: EdgeInsets.only(top: ScreenSize.height * 0.1),
       child: Column(
@@ -42,14 +43,15 @@ class _LoginState extends State<Login> {
               decoration: InputDecoration(
                 enabledBorder: UnderlineInputBorder(
                   borderSide: BorderSide(
-                      width: ScreenSize.height * 0.006, color: Colors.black),
+                      width: ScreenSize.height * 0.006,
+                      color: colors.primaryColorDark),
                 ),
                 focusedBorder: UnderlineInputBorder(
                   borderSide: BorderSide(
-                      width: ScreenSize.height * 0.006, color: Colors.black),
+                      width: ScreenSize.height * 0.006, color: colors.primaryColorDark),
                 ),
                 hintText: "TEAM #",
-                hintStyle: const TextStyle(color: Colors.black),
+                hintStyle: TextStyle(color: colors.primaryColorDark),
                 isDense: true,
                 contentPadding:
                     EdgeInsets.symmetric(vertical: ScreenSize.height * 0.005),
@@ -58,7 +60,7 @@ class _LoginState extends State<Login> {
               style: GoogleFonts.mohave(
                   textStyle: TextStyle(
                 fontSize: ScreenSize.width * 0.07,
-                color: Colors.black,
+                color: colors.primaryColorDark,
               )),
               keyboardType: TextInputType.number,
               inputFormatters: <TextInputFormatter>[
@@ -79,15 +81,15 @@ class _LoginState extends State<Login> {
                     enabledBorder: UnderlineInputBorder(
                       borderSide: BorderSide(
                           width: ScreenSize.height * 0.006,
-                          color: Colors.black),
+                          color: colors.primaryColorDark),
                     ),
                     focusedBorder: UnderlineInputBorder(
                       borderSide: BorderSide(
                           width: ScreenSize.height * 0.006,
-                          color: Colors.black),
+                          color: colors.primaryColorDark),
                     ),
                     hintText: "EVENT CODE",
-                    hintStyle: const TextStyle(color: Colors.black),
+                    hintStyle: TextStyle(color: colors.primaryColorDark),
                     isDense: true,
                     contentPadding: EdgeInsets.symmetric(
                         vertical: ScreenSize.height * 0.005),
@@ -96,7 +98,7 @@ class _LoginState extends State<Login> {
                   style: GoogleFonts.mohave(
                       textStyle: TextStyle(
                     fontSize: ScreenSize.width * 0.07,
-                    color: Colors.black,
+                    color: colors.primaryColorDark,
                   )),
                   onChanged: (String? val) => setState(() {
                         eventCode = val;
@@ -113,15 +115,15 @@ class _LoginState extends State<Login> {
                     enabledBorder: UnderlineInputBorder(
                       borderSide: BorderSide(
                           width: ScreenSize.height * 0.006,
-                          color: Colors.black),
+                          color: colors.primaryColorDark),
                     ),
                     focusedBorder: UnderlineInputBorder(
                       borderSide: BorderSide(
                           width: ScreenSize.height * 0.006,
-                          color: Colors.black),
+                          color: colors.primaryColorDark),
                     ),
                     hintText: "NAME",
-                    hintStyle: const TextStyle(color: Colors.black),
+                    hintStyle: TextStyle(color: colors.primaryColorDark),
                     isDense: true,
                     contentPadding: EdgeInsets.symmetric(
                         vertical: ScreenSize.height * 0.005),
@@ -130,11 +132,11 @@ class _LoginState extends State<Login> {
                   style: GoogleFonts.mohave(
                       textStyle: TextStyle(
                     fontSize: ScreenSize.width * 0.07,
-                    color: Colors.black,
+                    color: colors.primaryColorDark,
                   )),
                   onChanged: (String? val) => setState(() {
                         name = val;
-                  })),
+                      })),
             ),
           ),
           Stack(
@@ -148,8 +150,8 @@ class _LoginState extends State<Login> {
                   padding: EdgeInsets.only(top: ScreenSize.height * 0.2),
                   child: Container(
                       width: ScreenSize.width,
-                      decoration: const BoxDecoration(
-                        color: Colors.black,
+                      decoration: BoxDecoration(
+                        color: colors.primaryColorDark,
                       ),
                       child: TextButton(
                         onPressed: () => widget.changePage("cardinal"),
@@ -158,7 +160,7 @@ class _LoginState extends State<Login> {
                           style: TextStyle(
                               fontSize: 35 * ScreenSize.swu,
                               fontFamily: "Sushi",
-                              color: Colors.white,
+                              color: colors.primaryColor,
                               fontWeight: FontWeight.bold),
                         ),
                       )),

@@ -3,9 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:get/get.dart';
 import 'package:localstore/localstore.dart';
 import 'package:sushi_scouts/src/logic/data/ScoutingData.dart';
 import 'package:sushi_scouts/src/logic/size/ScreenSize.dart';
+import '../../../main.dart';
 import '../util/Header/HeaderTitle.dart';
 import '../util/Footer/Footer.dart';
 import '../util/header/HeaderNav.dart';
@@ -18,22 +20,16 @@ class Settings extends StatefulWidget {
 }
 
 class _SettingsState extends State<Settings> {
-  TextStyle textStyle = TextStyle(
-    fontFamily: "Sushi",
-    color: Colors.black,
-    fontSize: ScreenSize.swu * 30,
-  );
-
-  BoxDecoration boxDecoration = BoxDecoration(
-      border: Border.all(color: Colors.black, width: 4 * ScreenSize.shu),
-      borderRadius: BorderRadius.all(Radius.circular(20 * ScreenSize.swu)));
-
   final db = Localstore.instance;
 
   Future<void> toggleMode(String mode) async {
     db.collection("preferences").doc("mode").set({
       "mode": mode,
     });
+
+    mode == "dark"
+          ? Get.changeTheme(Themes.dark)
+          : Get.changeTheme(Themes.light);
   }
 
   void downloadMatchSchedule() {}
@@ -44,6 +40,18 @@ class _SettingsState extends State<Settings> {
 
   @override
   Widget build(BuildContext context) {
+    var colors = Theme.of(context);
+
+    TextStyle textStyle = TextStyle(
+      fontFamily: "Sushi",
+      color: colors.primaryColorDark,
+      fontSize: ScreenSize.swu * 30,
+    );
+
+    BoxDecoration boxDecoration = BoxDecoration(
+        border: Border.all(color: colors.primaryColorDark, width: 4 * ScreenSize.shu),
+        borderRadius: BorderRadius.all(Radius.circular(20 * ScreenSize.swu)));
+
     return Column(
       children: [
         SizedBox(
@@ -62,7 +70,7 @@ class _SettingsState extends State<Settings> {
                           borderRadius: BorderRadius.all(
                               Radius.circular(20 * ScreenSize.swu))),
                       child: Padding(
-                        padding: EdgeInsets.all(ScreenSize.width * 0.01),
+                        padding: EdgeInsets.all(ScreenSize.width * 0.02),
                         child: TextButton(
                             onPressed: () => toggleMode("dark"),
                             child: Text(
@@ -75,12 +83,25 @@ class _SettingsState extends State<Settings> {
                             )),
                       ),
                     ),
-                    TextButton(
-                        onPressed: () => toggleMode("light"),
-                        child: Text(
-                          "light mode",
-                          style: textStyle,
-                        ))
+                    Container(
+                      decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.all(
+                              Radius.circular(20 * ScreenSize.swu))),
+                      child: Padding(
+                        padding: EdgeInsets.all(ScreenSize.width * 0.02),
+                        child: TextButton(
+                            onPressed: () => toggleMode("light"),
+                            child: Text(
+                              "light mode",
+                              style: TextStyle(
+                                fontFamily: "Sushi",
+                                color: Colors.black,
+                                fontSize: ScreenSize.swu * 30,
+                              ),
+                            )),
+                      ),
+                    )
                   ],
                 ),
                 Container(
@@ -118,7 +139,7 @@ class _SettingsState extends State<Settings> {
               width: ScreenSize.width / 10.0, //57
               height: ScreenSize.width / 10.0, //59
               child: SvgPicture.asset(
-                "./assets/images/nori.svg",
+                "./assets/images/${colors.scaffoldBackgroundColor == Colors.black ? "darknori" : "nori"}.svg",
               )),
         ),
         const Footer(pageTitle: ""),

@@ -54,12 +54,14 @@ class _ScoutingFooterState extends State<ScoutingFooter> {
 
   @override
   Widget build(BuildContext context) {
+    var colors = Theme.of(context);
+
     return Container(
-        height: ScreenSize.height*0.165,
+        height: ScreenSize.height * 0.165,
         padding: const EdgeInsets.all(0),
         child: Column(children: [
           Row(
-            mainAxisAlignment: MainAxisAlignment.center, 
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
               IconButton(
                 padding: const EdgeInsets.all(0),
@@ -67,47 +69,49 @@ class _ScoutingFooterState extends State<ScoutingFooter> {
                 iconSize: ScreenSize.width / 6.0,
                 icon: Icon(
                   Icons.arrow_left_rounded,
-                  color: prevPage ? Colors.black : Colors.white,
+                  color: prevPage
+                      ? colors.primaryColorDark
+                      : colors.scaffoldBackgroundColor,
                   semanticLabel: 'Back Arrow',
                 ),
               ),
-              (nextPage ? 
-                SizedBox(
-                  width: ScreenSize.width / 10.0, //57
-                  height: ScreenSize.width / 10.0, //59
-                  child: SvgPicture.asset("./assets/images/nori.svg",)
-                ) 
-                : 
-                Container(
-                  width: 150 * ScreenSize.swu,
-                  height: 55 * ScreenSize.swu,
-                  decoration: BoxDecoration(
-                    border: Border.all(color: Colors.black, width: 3.5),
-                    color: const Color(0xfafafa),
-                    borderRadius: BorderRadius.circular(10 * ScreenSize.swu),
-                  ),
-                  child: TextButton(
-                    onPressed: () => widget.newPage(true),
-                    child: Text(
-                      'SUBMIT',
-                      style: TextStyle(
-                        fontSize: 29 * ScreenSize.swu,
-                        fontFamily: "Sushi",
-                        color: Colors.black,
-                        fontWeight: FontWeight.bold),
+              (nextPage
+                  ? SizedBox(
+                      width: ScreenSize.width / 10.0, //57
+                      height: ScreenSize.width / 10.0, //59
+                      child: SvgPicture.asset(
+                        "./assets/images/${colors.scaffoldBackgroundColor == Colors.black ? "darknori" : "nori"}.svg",
+                      ))
+                  : Container(
+                      width: 150 * ScreenSize.swu,
+                      height: 55 * ScreenSize.swu,
+                      decoration: BoxDecoration(
+                        border: Border.all(color: colors.primaryColorDark, width: 3.5),
+                        color: colors.scaffoldBackgroundColor,
+                        borderRadius:
+                            BorderRadius.circular(10 * ScreenSize.swu),
                       ),
-                    )
-                  )
-                ),
-                IconButton(
-                  padding: const EdgeInsets.all(0),
-                  onPressed: moveToNextPage,
-                  iconSize: ScreenSize.width / 6.0,
-                  icon: Icon(
-                    Icons.arrow_right_rounded,
-                    color: nextPage ? Colors.black : Colors.white,
+                      child: TextButton(
+                        onPressed: () => widget.newPage(true),
+                        child: Text(
+                          'SUBMIT',
+                          style: TextStyle(
+                              fontSize: 29 * ScreenSize.swu,
+                              fontFamily: "Sushi",
+                              color: colors.primaryColorDark,
+                              fontWeight: FontWeight.bold),
+                        ),
+                      ))),
+              IconButton(
+                padding: const EdgeInsets.all(0),
+                onPressed: moveToNextPage,
+                iconSize: ScreenSize.width / 6.0,
+                icon: Icon(Icons.arrow_right_rounded,
+                    color: nextPage
+                        ? colors.primaryColorDark
+                        : colors.scaffoldBackgroundColor,
                     semanticLabel: 'Forward Arrow'),
-                ),
+              ),
             ],
           ),
           Footer(pageTitle: footer)

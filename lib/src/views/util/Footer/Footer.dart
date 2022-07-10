@@ -11,6 +11,8 @@ class Footer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var colors = Theme.of(context);
+
     return Column(children: [
       Image.asset(
         "./assets/images/colorbar.png",
@@ -24,7 +26,7 @@ class Footer extends StatelessWidget {
               fontFamily: "Sushi",
               fontSize: ScreenSize.width/17.0,
               fontWeight: FontWeight.bold,
-              color: Colors.black,
+              color: colors.primaryColorDark,
             ),
           ))
     ]);

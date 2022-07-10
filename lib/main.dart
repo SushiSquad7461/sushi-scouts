@@ -1,4 +1,7 @@
 import "package:flutter/material.dart";
+import 'package:get/get.dart';
+import 'package:get/get_navigation/src/root/get_material_app.dart';
+import 'package:localstore/localstore.dart';
 import 'package:sushi_scouts/src/logic/Constants.dart';
 import 'package:sushi_scouts/src/logic/data/ConfigFileReader.dart';
 import 'package:sushi_scouts/src/logic/data/ScoutingData.dart';
@@ -13,18 +16,37 @@ import 'package:sushi_scouts/src/views/util/header/HeaderTitle.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
-  runApp(const Wraper());
+  runApp(const Wrapper());
 }
 
-class Wraper extends StatelessWidget {
-  const Wraper({Key? key}) : super(key: key);
+class Themes {
+  static ThemeData light = ThemeData(
+    brightness: Brightness.light,
+    primaryColor: Colors.white,
+    primaryColorDark: Colors.black,
+    scaffoldBackgroundColor: Colors.white,
+  );
+
+  static ThemeData dark = ThemeData(
+    primaryColor: Colors.black,
+    primaryColorDark: Colors.white,
+    scaffoldBackgroundColor: Colors.black,
+  );
+}
+
+class Wrapper extends StatelessWidget {
+  const Wrapper({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: Scaffold(
+    return GetMaterialApp(
+      debugShowCheckedModeBanner: false,
+      title: "Sushi Scouts",
+      theme: Themes.light, 
+      darkTheme: Themes.dark,
+      themeMode: ThemeMode.system,
+      home: const Scaffold(
         resizeToAvoidBottomInset: false,
-        backgroundColor: Colors.white,
         body: SushiScouts(),
       ),
     );
@@ -48,6 +70,7 @@ class _SushiScoutsState extends State<SushiScouts> {
   String currErr = "";
   String pageParams = "";
   bool qrCode = false;
+  final db = Localstore.instance;
 
   // Change current page
   void setCurrentPage(newPage) {
@@ -88,16 +111,27 @@ class _SushiScoutsState extends State<SushiScouts> {
   @override
   void initState() {
     super.initState();
+    setMode();
     readConfigFile();
+  }
+
+  Future<void> setMode() async {
+    final data = await db.collection("preferences").doc("mode").get();
+
+    if (data != null) {
+      data["mode"] == "dark"
+          ? Get.changeTheme(Themes.dark)
+          : Get.changeTheme(Themes.light);
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     ScreenSize.width = MediaQuery.of(context).size.width;
     ScreenSize.height = MediaQuery.of(context).size.height;
-    double pageHeight = _headerNavNeeded.contains(_currentPage) 
-      ? ScreenSize.height*0.8 
-      : ScreenSize.height * 0.9;
+    double pageHeight = _headerNavNeeded.contains(_currentPage)
+        ? ScreenSize.height * 0.8
+        : ScreenSize.height * 0.9;
 
     return GestureDetector(
       onTap: () {
@@ -119,7 +153,10 @@ class _SushiScoutsState extends State<SushiScouts> {
           child: Navigator(
             pages: [
               if (_currentPage == "login")
-                MaterialPage(child: Login(changePage: setCurrentPage,))
+                MaterialPage(
+                    child: Login(
+                  changePage: setCurrentPage,
+                ))
               else if (_currentPage == "loading") // TODO: FIX LOADING PAGE
                 const MaterialPage(child: Loading())
               else if (_currentPage == "error") // TODO: ADD ERROR PAGE
@@ -132,9 +169,16 @@ class _SushiScoutsState extends State<SushiScouts> {
               else if (_currentPage == "settings")
                 const MaterialPage(child: Settings())
               else if (_currentPage == "qrscreen")
-                MaterialPage(child: QRScreen(changePage: setCurrentPage, previousPage: _previousPage, data: scoutingPages[_previousPage]!))
+                MaterialPage(
+                    child: QRScreen(
+                        changePage: setCurrentPage,
+                        previousPage: _previousPage,
+                        data: scoutingPages[_previousPage]!))
               else if (fileReader.getScoutingMethods().contains(_currentPage))
-                MaterialPage(child: Scouting(data: scoutingPages[_currentPage], changeScreen: setCurrentPage))
+                MaterialPage(
+                    child: Scouting(
+                        data: scoutingPages[_currentPage],
+                        changeScreen: setCurrentPage))
             ],
             onPopPage: (route, result) {
               return route.didPop(result);
