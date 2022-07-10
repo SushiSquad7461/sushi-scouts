@@ -51,7 +51,7 @@ class QRScreen extends StatelessWidget {
                 Container(
                   width: ScreenSize.width * 0.7,
                   height: ScreenSize.width * 0.7,
-                  color: colors.primaryColorDark,
+                  color: Colors.white,
                 ),
                 SizedBox(
                   height: (0.7 * ScreenSize.width),
