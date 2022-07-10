@@ -67,6 +67,7 @@ flutter:
   assets:
     - assets/images/
     - assets/config/
+    - assets/secrets.json
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg
 

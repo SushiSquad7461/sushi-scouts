@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
@@ -6,11 +8,14 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:localstore/localstore.dart';
 import 'package:sushi_scouts/src/logic/data/ScoutingData.dart';
+import 'package:sushi_scouts/src/logic/secret/SecretLoader.dart';
 import 'package:sushi_scouts/src/logic/size/ScreenSize.dart';
 import '../../../main.dart';
+import '../../logic/secret/Secret.dart';
 import '../util/Header/HeaderTitle.dart';
 import '../util/Footer/Footer.dart';
 import '../util/header/HeaderNav.dart';
+import 'package:http/http.dart' as http;
 
 class Settings extends StatefulWidget {
   const Settings({Key? key}) : super(key: key);
@@ -21,6 +26,7 @@ class Settings extends StatefulWidget {
 
 class _SettingsState extends State<Settings> {
   final db = Localstore.instance;
+  Secret? secrets;
 
   Future<void> toggleMode(String mode) async {
     db.collection("preferences").doc("mode").set({
@@ -28,15 +34,61 @@ class _SettingsState extends State<Settings> {
     });
 
     mode == "dark"
-          ? Get.changeTheme(Themes.dark)
-          : Get.changeTheme(Themes.light);
+        ? Get.changeTheme(Themes.dark)
+        : Get.changeTheme(Themes.light);
   }
 
-  void downloadMatchSchedule() {}
+  Future<void> downloadMatchSchedule() async {
+    if (secrets != null) {
+      final user = await db.collection("preferences").doc("user").get();
+
+      final headers = {
+        'Authorization':
+            'Basic ${base64.encode(utf8.encode("${secrets?.getApiKey("tbaUsername")}:${secrets?.getApiKey("tbaPassword")}"))}',
+        'If-Modified-Since': '',
+      };
+      var params = {
+        'tournamentLevel': 'qual',
+      };
+      var query = params.entries.map((p) => '${p.key}=${p.value}').join('&');
+      var url = Uri.parse(
+          'https://frc-api.firstinspires.org/v3.0/2020/schedule/ARLI?$query');
+      var res = await http.get(url, headers: headers);
+
+      if (res.statusCode == 200) {
+        for (final i in jsonDecode(res.body)["Schedule"]) {
+          db.collection("schedule").doc(i["matchNumber"].toString()).set({
+            "r1": i["teams"][0]["teamNumber"],
+            "r2": i["teams"][1]["teamNumber"],
+            "r3": i["teams"][2]["teamNumber"],
+            "b1": i["teams"][3]["teamNumber"],
+            "b2": i["teams"][4]["teamNumber"],
+            "b3": i["teams"][5]["teamNumber"],
+          });
+        }
+      } else {
+        throw Exception(
+            "Couldn't download TBA Data, Error Code: ${res.statusCode}");
+      }
+    } else {
+      throw Exception("Couldn't read in secrets file");
+    }
+  }
 
   void downloadConfigFile() {}
 
   void downloadNames() {}
+
+  @override
+  void initState() {
+    super.initState();
+    loadSecret();
+  }
+
+  Future<void> loadSecret() async {
+    secrets = await SecretLoader(secretPath: "assets/secrets.json").load();
+    print("loaded");
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -49,7 +101,8 @@ class _SettingsState extends State<Settings> {
     );
 
     BoxDecoration boxDecoration = BoxDecoration(
-        border: Border.all(color: colors.primaryColorDark, width: 4 * ScreenSize.shu),
+        border: Border.all(
+            color: colors.primaryColorDark, width: 4 * ScreenSize.shu),
         borderRadius: BorderRadius.all(Radius.circular(20 * ScreenSize.swu)));
 
     return Column(
