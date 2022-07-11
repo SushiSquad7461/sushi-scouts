@@ -11,8 +11,9 @@ class Component {
   List<String>? values;
   String component;
   String type;
+  bool required;
   bool timeStamp;
-  Component(this.name, this.type, this.component, this.timeStamp,
+  Component(this.name, this.type, this.component, this.timeStamp, this.required,
       {this.values});
 }
 
@@ -42,7 +43,7 @@ class Section {
 
     for (var i in config["components"]) {
       components.add(Component(
-          i["name"], i["type"], i["component"], i["timestamp"],
+          i["name"], i["type"], i["component"], i["timestamp"], i["required"],
           values: i["values"] == null ? null : List<String>.from(i["values"])));
 
       if (i["type"] == "number") {
@@ -61,6 +62,16 @@ class Section {
 
   HexColor getTextColor(bool darkMode) {
     return darkMode ? darkTextColor : textColor;
+  }
+
+  List<String> notFilled () {
+    List<String> ret = [];
+    for (int i = 0; i < components.length; i++) {
+      if (components[i].required && !values[i].setByUser) {
+        ret.add(components[i].name);
+      }
+    }
+    return ret;
   }
 
   String stringfy() {
@@ -143,6 +154,16 @@ class Page {
     }
     return ret;
   }
+
+  List<String> notFilled() {
+    List<String> ret = [];
+    for (Section i in sections) {
+      for( String s in i.notFilled()) {
+        ret.add(s);
+      }
+    }
+    return ret;
+  }
 }
 
 class ScoutingData {
@@ -156,6 +177,10 @@ class ScoutingData {
       pageNames.add(k);
       pages[k] = Page(config[k]);
     }
+  }
+
+  List<String> notFilled() {
+    return pages[pageNames[currPage]]!.notFilled();
   }
 
   bool canGoToNextPage() {

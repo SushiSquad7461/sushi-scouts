@@ -3,17 +3,20 @@ import 'package:flutter_svg/svg.dart';
 import 'package:sushi_scouts/src/logic/data/Data.dart';
 import 'package:sushi_scouts/src/logic/data/ScoutingData.dart';
 import 'package:sushi_scouts/src/logic/size/ScreenSize.dart';
+import 'package:sushi_scouts/src/views/util/popups/RequiredContent.dart';
 import 'Footer.dart';
 import 'package:sushi_scouts/src/views/ui/QRScreen.dart';
 
 class ScoutingFooter extends StatefulWidget {
   final ScoutingData? data;
   final void Function(bool submmit) newPage;
+  final BuildContext popupContext;
 
   const ScoutingFooter({
     Key? key,
     required this.data,
     required this.newPage,
+    required this.popupContext,
   }) : super(key: key);
 
   @override
@@ -92,7 +95,17 @@ class _ScoutingFooterState extends State<ScoutingFooter> {
                             BorderRadius.circular(10 * ScreenSize.swu),
                       ),
                       child: TextButton(
-                        onPressed: () => widget.newPage(true),
+                        onPressed: () {
+                          List<String> notFilled = widget.data!.notFilled();
+                          if(notFilled.isEmpty) {
+                            widget.newPage(true);
+                          } else {
+                            showDialog(
+                              context: context, 
+                              builder: (context) => RequiredContent(notFilled)
+                            );
+                          }
+                        },
                         child: Text(
                           'SUBMIT',
                           style: TextStyle(
@@ -104,7 +117,17 @@ class _ScoutingFooterState extends State<ScoutingFooter> {
                       ))),
               IconButton(
                 padding: const EdgeInsets.all(0),
-                onPressed: moveToNextPage,
+                onPressed: () {
+                  List<String> notFilled = widget.data!.notFilled();
+                  if(notFilled.isEmpty) {
+                    moveToNextPage();
+                  } else {
+                    showDialog(
+                      context: context, 
+                      builder: (context) => RequiredContent(notFilled)
+                    );
+                  }
+                },
                 iconSize: ScreenSize.width / 6.0,
                 icon: Icon(Icons.arrow_right_rounded,
                     color: nextPage

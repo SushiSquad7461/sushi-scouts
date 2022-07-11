@@ -153,6 +153,7 @@ class ScoutingState extends State<Scouting> {
         ScoutingFooter(
           key: Key(widget.data!.name),
           data: widget.data,
+          popupContext: context,
           newPage: renderNewPage,
         ),
       ],
