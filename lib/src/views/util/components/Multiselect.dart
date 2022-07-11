@@ -36,8 +36,13 @@ class Multiselect extends StatefulWidget {
         checked[value] = false;
       }
 
-      if(this.values.contains(defaultValue.get())){
-        checked[defaultValue.get()] = true;
+      if(defaultValue.get() != ""){
+        for(var value in defaultValue.get().split(',')) {
+          print(value);
+          if(this.values.contains(value)) {
+            checked[value] = true;
+          }
+        }
         data.set(defaultValue.get(), setByUser: true);
       }
     }
@@ -76,8 +81,11 @@ class MultiselectState extends State<Multiselect>{
     String result = "";
     for( String key in widget.checked.keys.toList()) {
       if(widget.checked[key]!) {
-        result = "$result$key, ";
+        result = "$result$key,";
       }
+    }
+    if (result != "") {
+      result = result.substring(0, result.length-1);
     }
     return result;
   }
@@ -108,10 +116,10 @@ class MultiselectState extends State<Multiselect>{
                 fillColor: MaterialStateProperty.resolveWith(getColor),
                 value: widget.checked[value],
                 onChanged: (bool? val) {
-                widget.data.set(getChecked(), setByUser: true);
                 setState(() {
-                  if( widget.checked[value]! || getCheckedNum() <= widget.numberOfOptions) {
+                  if( widget.checked[value]! || getCheckedNum() < widget.numberOfOptions) {
                     widget.checked[value] = !widget.checked[value]!;
+                    widget.data.set(getChecked(), setByUser: true);
                   }
                 });}
               )

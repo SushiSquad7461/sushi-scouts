@@ -46,9 +46,9 @@ class Section {
           values: i["values"] == null ? null : List<String>.from(i["values"])));
 
       if (i["type"] == "number") {
-        values.add(Data<double>(i["values"] != null ? i["values"][0] : 0));
+        values.add(Data<double>(0));
       } else if (i["type"] == "string") {
-        values.add(Data<String>(i["values"] != null ? i["values"][0] : ""));
+        values.add(Data<String>(""));
       } else {
         throw ArgumentError("Type: ${i["type"]} is an invalid type2");
       }
