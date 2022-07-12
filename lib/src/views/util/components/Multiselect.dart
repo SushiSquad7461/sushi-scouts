@@ -44,6 +44,8 @@ class Multiselect extends StatefulWidget {
           }
         }
         data.set(defaultValue.get(), setByUser: true);
+      } else {
+        data.set("", setByUser: true);
       }
     }
   static Multiselect create(Key key, String name, Data data, List<String>? values, Data defaultValue, Color color, double width, Color textColor) {

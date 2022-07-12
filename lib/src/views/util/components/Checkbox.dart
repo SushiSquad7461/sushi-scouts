@@ -64,7 +64,7 @@ class CheckboxState extends State<CheckboxInput> {
     double width = widget.width;
 
     if (widget.data.get() == "") {
-      widget.data.set("false");
+      widget.data.set("false", setByUser: true);
     }
     
     return Padding(
