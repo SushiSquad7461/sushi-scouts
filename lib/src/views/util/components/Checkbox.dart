@@ -73,17 +73,17 @@ class CheckboxState extends State<CheckboxInput> {
             right: width / 60,
             top: width / 30,
             bottom: width / 30),
-        child: GestureDetector(
-          onTap: () {
-            widget.data.set((!widget.checked).toString(), setByUser: true);
-            setState(() {
-              widget.checked = !widget.checked;
-            });
-          },
-          child: SizedBox(
-              width: width * 0.9,
-              child: Column(children: [
-                Row(
+        child: SizedBox(
+            width: width * 0.9,
+            child: Column(children: [
+              GestureDetector(
+                onTap: () {
+                  widget.data.set((!widget.checked).toString(), setByUser: true);
+                  setState(() {
+                    widget.checked = !widget.checked;
+                  });
+                },
+                child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
@@ -100,12 +100,12 @@ class CheckboxState extends State<CheckboxInput> {
                                   MaterialStateProperty.resolveWith(getColor),
                               value: widget.data.get() == "true",
                               onChanged: (bool? value) {
-                                widget.data
-                                    .set(value.toString(), setByUser: true);
+                                widget.data.set((!widget.checked).toString(), setByUser: true);
                                 setState(() {
-                                  widget.checked = value!;
+                                  widget.checked = !widget.checked;
                                 });
-                              })),
+                              },
+                              )),
                       Text(widget.name,
                           style: TextStyle(
                               fontFamily: "Sushi",
@@ -113,7 +113,7 @@ class CheckboxState extends State<CheckboxInput> {
                               fontWeight: FontWeight.bold,
                               color: widget.textColor)),
                     ]),
-              ])),
-        ));
+              ),
+            ])));
   }
 }

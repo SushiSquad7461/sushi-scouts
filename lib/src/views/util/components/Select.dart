@@ -93,7 +93,7 @@ class SelectState extends State<Select>{
                   fillColor: MaterialStateProperty.resolveWith(getColor),
                   value: widget.checked[value],
                   onChanged: (bool? val) {
-          
+                    change(value);
                   }
                 )
               ),  
