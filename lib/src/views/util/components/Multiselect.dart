@@ -92,6 +92,15 @@ class MultiselectState extends State<Multiselect>{
     return result;
   }
 
+  void change(String value) {
+    setState(() {
+      if( widget.checked[value]! || getCheckedNum() < widget.numberOfOptions) {
+        widget.checked[value] = !widget.checked[value]!;
+        widget.data.set(getChecked(), setByUser: true);
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     double width = widget.width/2;
@@ -102,39 +111,41 @@ class MultiselectState extends State<Multiselect>{
       int startPostion = index;
       for( index = startPostion; index<startPostion+i; index++) {
         String value = widget.values[index];
-        column.add(Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-            Transform.scale(
-              scale: width/180,
-              child: Checkbox(
-                side: BorderSide(
-                  color: widget.color,
-                  width: width/100,
-                  style: BorderStyle.solid
-                ),
-                splashRadius: width/10,
-                checkColor: Colors.white,
-                fillColor: MaterialStateProperty.resolveWith(getColor),
-                value: widget.checked[value],
-                onChanged: (bool? val) {
-                setState(() {
-                  if( widget.checked[value]! || getCheckedNum() < widget.numberOfOptions) {
-                    widget.checked[value] = !widget.checked[value]!;
-                    widget.data.set(getChecked(), setByUser: true);
+        column.add(
+          GestureDetector(
+            onTap: () {
+              change(value);
+            },
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+              Transform.scale(
+                scale: width/180,
+                child: Checkbox(
+                  side: BorderSide(
+                    color: widget.color,
+                    width: width/100,
+                    style: BorderStyle.solid
+                  ),
+                  splashRadius: width/10,
+                  checkColor: Colors.white,
+                  fillColor: MaterialStateProperty.resolveWith(getColor),
+                  value: widget.checked[value],
+                  onChanged: (bool? val) {
+                    change(value);
                   }
-                });}
-              )
-            ),  
-            Text(value,
-              style: TextStyle(
-                  fontFamily: "Sushi",
-                  fontSize: width/8,
-                  fontWeight: FontWeight.bold,
-                  color: widget.textColor
                 )
-            ),
-          ])
+              ),  
+              Text(value,
+                style: TextStyle(
+                    fontFamily: "Sushi",
+                    fontSize: width/8,
+                    fontWeight: FontWeight.bold,
+                    color: widget.textColor
+                  )
+              ),
+            ]),
+          )
         );
       }
       options.add(Column(crossAxisAlignment: CrossAxisAlignment.start, mainAxisAlignment: MainAxisAlignment.start, children: column,));        

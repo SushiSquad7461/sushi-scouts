@@ -55,6 +55,16 @@ class SelectState extends State<Select>{
       return widget.color;
     }
 
+  void change(String value) {
+    widget.data.set(value, setByUser: true);
+    setState(() {
+      for( String key in widget.checked.keys.toList()) {
+        widget.checked[key] = false;
+      }
+      widget.checked[value] = true;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     double width = widget.isRow ? widget.width/2 : widget.width;
@@ -63,40 +73,40 @@ class SelectState extends State<Select>{
       options.add(
         Container(
           padding: EdgeInsets.only(right: widget.isRow ? width/20 : width/60, bottom: widget.isRow ? width/50 : width/10),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-            Transform.scale(
-              scale: width/180,
-              child: Checkbox(
-                side: BorderSide(
-                  color: widget.color,
-                  width: width/100,
-                  style: BorderStyle.solid
-                ),
-                splashRadius: width/10,
-                checkColor: Colors.white,
-                fillColor: MaterialStateProperty.resolveWith(getColor),
-                value: widget.checked[value],
-                onChanged: (bool? val) {
-                widget.data.set(value, setByUser: true);
-                setState(() {
-                  for( String key in widget.checked.keys.toList()) {
-                    widget.checked[key] = false;
+          child: GestureDetector(
+            onTap: () {
+              change(value);
+            },
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+              Transform.scale(
+                scale: width/180,
+                child: Checkbox(
+                  side: BorderSide(
+                    color: widget.color,
+                    width: width/100,
+                    style: BorderStyle.solid
+                  ),
+                  splashRadius: width/10,
+                  checkColor: Colors.white,
+                  fillColor: MaterialStateProperty.resolveWith(getColor),
+                  value: widget.checked[value],
+                  onChanged: (bool? val) {
+          
                   }
-                  widget.checked[value] = true;
-                });}
-              )
-            ),  
-            Text(value,
-              style: TextStyle(
-                  fontFamily: "Sushi",
-                  fontSize: width/8,
-                  fontWeight: FontWeight.bold,
-                  color: widget.textColor
                 )
-            ),
-          ])
+              ),  
+              Text(value,
+                style: TextStyle(
+                    fontFamily: "Sushi",
+                    fontSize: width/8,
+                    fontWeight: FontWeight.bold,
+                    color: widget.textColor
+                  )
+              ),
+            ]),
+          )
         ),
       );
     }
