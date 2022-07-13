@@ -53,6 +53,7 @@ class DropdownState extends State<Dropdown>{
                   alignment: Alignment.centerRight,
                   child: DropdownButtonHideUnderline(
                     child: DropdownButton<String>(
+                      isExpanded: true,
                       value: widget.currentValue,
                       icon: Icon(Icons.arrow_drop_down_rounded),
                       elevation: (width/100.0*3).floor(),
@@ -64,7 +65,7 @@ class DropdownState extends State<Dropdown>{
                       alignment: AlignmentDirectional.center,
                       onChanged: (String? newValue) {
                         if(newValue!=null){
-                          widget.data.set(newValue, setByUser: true);
+                          widget.data.set(newValue, setByUser: newValue != " ");
                           setState(() {
                             widget.currentValue = newValue;
                           });
@@ -75,7 +76,7 @@ class DropdownState extends State<Dropdown>{
                           .map<DropdownMenuItem<String>>((String value) {
                         return DropdownMenuItem<String>(
                           value: value,
-                          child: Center(child: Text(value)),
+                          child: Center(child: Text(value, overflow: TextOverflow.ellipsis,)),
                         );
                       }).toList(),
                     )
