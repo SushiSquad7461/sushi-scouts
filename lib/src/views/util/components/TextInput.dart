@@ -91,6 +91,7 @@ class TextInputState extends State<TextInput> {
                       maxLines: 10,
                       decoration: InputDecoration(
                         border: InputBorder.none,
+                        contentPadding: EdgeInsets.all(widget.width * 0.03),
                         constraints: BoxConstraints(
                             maxWidth: widget.width * 0.95,
                             maxHeight: widget.width * 0.56),

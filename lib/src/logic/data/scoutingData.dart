@@ -67,7 +67,7 @@ class Section {
   List<String> notFilled () {
     List<String> ret = [];
     for (int i = 0; i < components.length; i++) {
-      if (components[i].required && !values[i].setByUser) {
+      if (components[i].required && !values[i].setByUser && components[i].component != "increment") {
         ret.add(components[i].name);
       }
     }
