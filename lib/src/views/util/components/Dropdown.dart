@@ -10,11 +10,14 @@ class Dropdown extends StatefulWidget {
   final Color color;
   final Color textColor;
   final double width;
-  final List<String> values;
+  List<String> values;
   String currentValue = "";
   Dropdown({Key? key, required this.name, required this.data, required this.defaultValue, required this.color, required this.width, required this.textColor, required this.values})
     : super(key: key){
-      currentValue = data.setByUser ? data.get() : values[0];
+      currentValue = data.setByUser ? data.get() : " ";
+      if (!this.values.contains(" ")){
+        this.values.add(" ");
+      }
     }
   static Dropdown create(Key key, String name, Data data, List<String> values, Data defaultValue, Color color, double width, Color textColor) {
     return Dropdown(key: key, name: name, data: data, width: width, defaultValue: defaultValue, color: color, values: values, textColor: textColor,);
