@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:sushi_scouts/src/logic/color/HexColor.dart';
 import 'package:sushi_scouts/src/logic/data/Data.dart';
 import 'dart:convert';
+import 'package:crypto/crypto.dart';
 
 class Component {
   String name;
@@ -76,7 +77,6 @@ class Section {
 
   String stringfy() {
     String ret = "";
-
     for (int i = 0; i < values.length; ++i) {
       ret += '"${components[i].name}":"${values[i].get()}"';
 
@@ -98,7 +98,6 @@ class Section {
         ret += "}";
       }
     }
-
     return ret;
   }
 
@@ -213,8 +212,8 @@ class ScoutingData {
     for (var i in pages.values) {
       ret += i.stringfy();
     }
-
-    return ret;
+    String checksum = md5.convert(utf8.encode(ret)).toString();
+    return ret + checksum;
   }
 
   Page? getCurrentPage() {
