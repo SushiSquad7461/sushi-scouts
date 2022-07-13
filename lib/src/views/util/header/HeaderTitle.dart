@@ -31,9 +31,12 @@ class HeaderTitle extends StatelessWidget {
                   color: colors.primaryColorDark,
                 ),
               ),
-              Image.asset(
-                colors.scaffoldBackgroundColor == Colors.black ? "./assets/images/toprightlogodark.png" : "./assets/images/toprightlogo.png",
-                scale: 60 / ScreenSize.swu,
+              ConstrainedBox(
+                constraints: BoxConstraints(minWidth: 1, minHeight: 1), // here
+                child: Image.asset(
+                  colors.scaffoldBackgroundColor == Colors.black ? "./assets/images/toprightlogodark.png" : "./assets/images/toprightlogo.png",
+                  scale: 60 / ScreenSize.swu,
+                ),
               ),
             ],
           ),

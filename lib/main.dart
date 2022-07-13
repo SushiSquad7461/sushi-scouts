@@ -98,7 +98,7 @@ class _SushiScoutsState extends State<SushiScouts> {
         _headerNavNeeded = fileReader.getScoutingMethods();
         _headerNavNeeded.add("settings");
 
-        _currentPage = "cardinal";
+        _currentPage = "login";
       });
     } catch (err) {
       setState(() {
