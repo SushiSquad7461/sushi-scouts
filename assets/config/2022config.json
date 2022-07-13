@@ -11,7 +11,7 @@
                             "color": "#ff76a2",
                             "rows": 2,
                             "textColor": "#000000",
-                            "darkColor": "#ff",
+                            "darkColor": "#81F4E1",
                             "darkTextColor": "#ffffff",
                             "componentsInRow": [3, 1]
                         },
@@ -58,7 +58,7 @@
                             "title":"",
                             "color" : "#FF729F",
                             "rows" : 2,
-                            "darkColor": "#ff",
+                            "darkColor": "#81F4E1",
                             "darkTextColor": "#ffffff",
                             "textColor" : "#000000",
                             "componentsInRow": [1, 1]
@@ -86,7 +86,7 @@
                             "color":"#63cff9",
                             "rows":2,
                             "textColor":"#000000",
-                            "darkColor": "#ff",
+                            "darkColor": "#FCD6F6",
                             "darkTextColor": "#ffffff",
                             "componentsInRow": [2, 1]
                         },
@@ -125,7 +125,7 @@
                             "color": "#81f4e1",
                             "rows": 2,
                             "textColor":"#000000",
-                            "darkColor": "#ff",
+                            "darkColor": "#FCD6F6",
                             "darkTextColor": "#ffffff",
                             "componentsInRow": [2, 1]
                         },
@@ -167,7 +167,7 @@
                             "color": "#ff76a2",
                             "rows": 2,
                             "textColor": "#000000",
-                            "darkColor": "#ff",
+                            "darkColor": "#81F4E1",
                             "darkTextColor": "#ffffff",
                             "componentsInRow": [2, 1]
                         },
@@ -202,8 +202,8 @@
                             "color": "#63cff9",
                             "rows": 2,
                             "textColor": "#000000",
-                            "darkColor": "#ff",
-                            "darkTextColor": "#fffff",
+                            "darkColor": "#FF729F",
+                            "darkTextColor": "#ffffff",
                             "componentsInRow": [2, 1]
                         },
                         "components":[
@@ -242,8 +242,8 @@
                             "color": "#ff76a2",
                             "rows": 1,
                             "textColor": "#000000",
-                            "darkColor": "#ff",
-                            "darkTextColor": "#fffff",
+                            "darkColor": "#FF729F",
+                            "darkTextColor": "#ffffff",
                             "componentsInRow": [1]
                         },
                         "components":[
@@ -263,8 +263,8 @@
                             "color": "#81f4e1",
                             "rows": 1,
                             "textColor": "#000000",
-                            "darkColor": "#ff",
-                            "darkTextColor": "#fffff",
+                            "darkColor": "#56CBF9",
+                            "darkTextColor": "#ffffff",
                             "componentsInRow": [1]
                         },
                         "components":[
@@ -284,8 +284,8 @@
                             "color": "#63cff9",
                             "rows": 1,
                             "textColor": "#000000",
-                            "darkColor": "#ff",
-                            "darkTextColor": "#fffff",
+                            "darkColor": "#81F4E1",
+                            "darkTextColor": "#ffffff",
                             "componentsInRow": [1]
                         },
                         "components":[
@@ -313,7 +313,7 @@
                             "rows": 2,
                             "textColor": "#000000",
                             "darkColor": "#ff",
-                            "darkTextColor": "#fffff",
+                            "darkTextColor": "#ffffff",
                             "componentsInRow": [1,1]
                         },
                         "components":[
@@ -340,7 +340,7 @@
                             "rows": 1,
                             "textColor": "#000000",
                             "darkColor": "#ff",
-                            "darkTextColor": "#fffff",
+                            "darkTextColor": "#ffffff",
                             "componentsInRow": [1]
                         }, 
                         "components":[

@@ -31,6 +31,8 @@ class DropdownState extends State<Dropdown>{
   @override
   Widget build(BuildContext context) {
     double width = widget.width;
+    var colors = Theme.of(context);
+
     return Padding(
         padding:
             EdgeInsets.only(left: width/60, right: width/60, top: width/30, bottom: width/30),
@@ -57,6 +59,7 @@ class DropdownState extends State<Dropdown>{
                       value: widget.currentValue,
                       icon: Icon(Icons.arrow_drop_down_rounded),
                       elevation: (width/100.0*3).floor(),
+                      dropdownColor: colors.scaffoldBackgroundColor,
                       style: GoogleFonts.mohave(
                         fontSize: width/8,
                         fontWeight: FontWeight.w400,
@@ -84,7 +87,7 @@ class DropdownState extends State<Dropdown>{
                 )
               )
             ]),
-            Divider(color: Colors.black, thickness: width/50)
+            Divider(color: widget.textColor, thickness: width/50)
             ]
           )
         )
