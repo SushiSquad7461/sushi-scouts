@@ -61,7 +61,7 @@ class NumberInputState extends State<NumberInput> {
               top: widget.width / 30,
               bottom: widget.width / 30),
           child: SizedBox(
-              width: widget.width * 0.7,
+              width: widget.width * 0.8,
               child: Column(children: [
                 Row(mainAxisAlignment: MainAxisAlignment.center, children: [
                   Expanded(
