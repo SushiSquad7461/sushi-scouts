@@ -73,39 +73,47 @@ class CheckboxState extends State<CheckboxInput> {
             right: width / 60,
             top: width / 30,
             bottom: width / 30),
-        child: SizedBox(
-            width: width * 0.9,
-            child: Column(children: [
-              Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Transform.scale(
-                        scale: width / 170,
-                        child: Checkbox(
-                            side: BorderSide(
-                                color: widget.color,
-                                width: width / 100,
-                                style: BorderStyle.solid),
-                            splashRadius: width / 10,
-                            checkColor: Colors.white,
-                            fillColor:
-                                MaterialStateProperty.resolveWith(getColor),
-                            value: widget.data.get() == "true",
-                            onChanged: (bool? value) {
-                              widget.data
-                                  .set(value.toString(), setByUser: true);
-                              setState(() {
-                                widget.checked = value!;
-                              });
-                            })),
-                    Text(widget.name,
-                        style: TextStyle(
-                            fontFamily: "Sushi",
-                            fontSize: width / 8,
-                            fontWeight: FontWeight.bold,
-                            color: widget.textColor)),
-                  ]),
-            ])));
+        child: GestureDetector(
+          onTap: () {
+            widget.data.set((!widget.checked).toString(), setByUser: true);
+            setState(() {
+              widget.checked = !widget.checked;
+            });
+          },
+          child: SizedBox(
+              width: width * 0.9,
+              child: Column(children: [
+                Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Transform.scale(
+                          scale: width / 170,
+                          child: Checkbox(
+                              side: BorderSide(
+                                  color: widget.color,
+                                  width: width / 100,
+                                  style: BorderStyle.solid),
+                              splashRadius: width / 10,
+                              checkColor: Colors.white,
+                              fillColor:
+                                  MaterialStateProperty.resolveWith(getColor),
+                              value: widget.data.get() == "true",
+                              onChanged: (bool? value) {
+                                widget.data
+                                    .set(value.toString(), setByUser: true);
+                                setState(() {
+                                  widget.checked = value!;
+                                });
+                              })),
+                      Text(widget.name,
+                          style: TextStyle(
+                              fontFamily: "Sushi",
+                              fontSize: width / 8,
+                              fontWeight: FontWeight.bold,
+                              color: widget.textColor)),
+                    ]),
+              ])),
+        ));
   }
 }
