@@ -20,5 +20,4 @@ const Map COMPONENT_MAP = {
   "text input": TextInput.create,
   "multiselect": Multiselect.create
 };
-const int MIN_TIMESTAMP_DIFFERENCE = 1000; // In milliseconds
 

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:sushi_scouts/src/logic/data/Data.dart';
+
+import '../../../../ScoutingLib/logic/data/Data.dart';
 
 class Select extends StatefulWidget {
   final String name;

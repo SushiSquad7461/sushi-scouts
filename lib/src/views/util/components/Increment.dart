@@ -1,7 +1,8 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:sushi_scouts/src/logic/data/Data.dart';
+
+import '../../../../ScoutingLib/logic/data/Data.dart';
 
 class Increment extends StatefulWidget {
   final String name;

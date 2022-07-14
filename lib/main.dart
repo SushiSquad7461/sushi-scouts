@@ -3,9 +3,6 @@ import 'package:get/get.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:localstore/localstore.dart';
 import 'package:sushi_scouts/src/logic/Constants.dart';
-import 'package:sushi_scouts/src/logic/data/ConfigFileReader.dart';
-import 'package:sushi_scouts/src/logic/data/ScoutingData.dart';
-import 'package:sushi_scouts/src/logic/size/ScreenSize.dart';
 import 'package:sushi_scouts/src/views/ui/Loading.dart';
 import 'package:sushi_scouts/src/views/ui/Login.dart';
 import 'package:sushi_scouts/src/views/ui/QRScreen.dart';
@@ -13,6 +10,10 @@ import 'package:sushi_scouts/src/views/ui/Scouting.dart';
 import 'package:sushi_scouts/src/views/ui/Settings.dart';
 import 'package:sushi_scouts/src/views/util/header/HeaderNav.dart';
 import 'package:sushi_scouts/src/views/util/header/HeaderTitle.dart';
+
+import 'ScoutingLib/logic/data/ConfigFileReader.dart';
+import 'ScoutingLib/logic/data/ScoutingData.dart';
+import 'ScoutingLib/logic/size/ScreenSize.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -93,7 +94,7 @@ class _SushiScoutsState extends State<SushiScouts> {
 
       setState(() {
         for (var i in fileReader.getScoutingDataClasses()) {
-          scoutingPages[i.name] = i;
+          scoutingPages[i.name] = i as ScoutingData;
         }
         _headerNavNeeded = fileReader.getScoutingMethods();
         _headerNavNeeded.add("settings");

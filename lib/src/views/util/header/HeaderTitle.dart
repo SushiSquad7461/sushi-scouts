@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
-import 'package:sushi_scouts/src/logic/size/ScreenSize.dart';
+import '../../../../ScoutingLib/logic/size/ScreenSize.dart';
 
 class HeaderTitle extends StatelessWidget {
   const HeaderTitle({Key? key}) : super(key: key);

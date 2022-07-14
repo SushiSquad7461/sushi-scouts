@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:sushi_scouts/src/logic/data/Data.dart';
+
+import '../../../../ScoutingLib/logic/data/Data.dart';
 
 class Dropdown extends StatefulWidget {
   final String name;

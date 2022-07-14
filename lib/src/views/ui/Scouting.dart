@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:sushi_scouts/src/logic/Constants.dart';
-import 'package:sushi_scouts/src/logic/data/ScoutingData.dart'
-    as ScoutingDataHelpers;
-import 'package:sushi_scouts/src/logic/size/ScreenSize.dart';
 import 'package:sushi_scouts/src/views/util/Footer/ScoutingFooter.dart';
 
-import '../../logic/data/Data.dart';
+import '../../../ScoutingLib/logic/data/Data.dart';
+import '../../../ScoutingLib/logic/data/ScoutingData.dart' as ScoutingDataHelpers;
+import '../../../ScoutingLib/logic/size/ScreenSize.dart';
 
 class Scouting extends StatefulWidget {
   final ScoutingDataHelpers.ScoutingData? data;

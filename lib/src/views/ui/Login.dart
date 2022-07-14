@@ -6,10 +6,8 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:localstore/localstore.dart';
-import 'package:sushi_scouts/src/logic/size/ScreenSize.dart';
 import 'package:sushi_scouts/src/views/util/components/TextInput.dart';
-
-import '../../logic/data/Data.dart';
+import '../../../ScoutingLib/logic/size/ScreenSize.dart';
 import '../util/Header/HeaderTitle.dart';
 import '../util/Footer/Footer.dart';
 import '../util/header/HeaderNav.dart';

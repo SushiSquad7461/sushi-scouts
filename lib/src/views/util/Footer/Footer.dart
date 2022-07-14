@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:sushi_scouts/src/logic/size/ScreenSize.dart';
+
+import '../../../../ScoutingLib/logic/size/ScreenSize.dart';
 
 class Footer extends StatelessWidget {
   final String pageTitle;
