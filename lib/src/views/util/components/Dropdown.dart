@@ -14,7 +14,7 @@ class Dropdown extends StatefulWidget {
   String currentValue = "";
   Dropdown({Key? key, required this.name, required this.data, required this.defaultValue, required this.color, required this.width, required this.textColor, required this.values})
     : super(key: key){
-      currentValue = data.setByUser ? data.get() : " ";
+      currentValue = data.setByUser ? values[double.parse(data.get()).floor()] : " ";
       if (!this.values.contains(" ")){
         this.values.add(" ");
       }
@@ -68,7 +68,7 @@ class DropdownState extends State<Dropdown>{
                       alignment: AlignmentDirectional.center,
                       onChanged: (String? newValue) {
                         if(newValue!=null){
-                          widget.data.set(newValue, setByUser: newValue != " ");
+                          widget.data.set(widget.values.indexOf(newValue)*1.0, setByUser: newValue != " ");
                           setState(() {
                             widget.currentValue = newValue;
                           });

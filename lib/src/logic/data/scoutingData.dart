@@ -48,7 +48,7 @@ class Section {
           values: i["values"] == null ? null : List<String>.from(i["values"])));
 
       if (i["type"] == "number") {
-        values.add(Data<double>(0));
+        values.add(Data<double>(-1));
       } else if (i["type"] == "string") {
         values.add(Data<String>(""));
       } else {
@@ -109,9 +109,7 @@ class Section {
     for (int i = 0; i < values.length; ++i) {
       if (components[i].values == null) {
         values[i].empty();
-      } else {
-        values[i].set(components[i].values![0]);
-      }
+      } 
     }
   }
 }

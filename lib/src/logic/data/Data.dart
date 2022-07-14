@@ -48,7 +48,7 @@ class Data<ValueType> {
 
   // Gets the current value as a string
   String get() {
-    return (currValue is double || currValue is double)
+    return (currValue is double)
         ? (currValue as double).toString()
         : (currValue as String);
   }
@@ -57,7 +57,7 @@ class Data<ValueType> {
     setByUser = false;
     timestamps = {};
     (currValue is double)
-        ? (currValue = 0.0 as ValueType)
+        ? (currValue = -1.0 as ValueType)
         : (currValue = '' as ValueType);
   }
 

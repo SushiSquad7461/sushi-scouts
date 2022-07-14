@@ -36,21 +36,40 @@ class Multiselect extends StatefulWidget {
         checked[value] = false;
       }
 
-      if(defaultValue.get() != ""){
-        for(var value in defaultValue.get().split(',')) {
-          print(value);
-          if(this.values.contains(value)) {
-            checked[value] = true;
-          }
-        }
-        data.set(defaultValue.get(), setByUser: true);
+      if(double.parse(defaultValue.get()) != -1){
+        decode(double.parse(defaultValue.get()).floor());
+        data.set(double.parse(defaultValue.get()), setByUser: true);
       } else {
-        data.set("", setByUser: true);
+        data.set(0.0, setByUser: true);
       }
     }
   static Multiselect create(Key key, String name, Data data, List<String>? values, Data defaultValue, Color color, double width, Color textColor) {
     return Multiselect(key: key, name: name, data: data, width: width, defaultValue: defaultValue, color: color, values: values, textColor: textColor,);
   }
+
+    int encode() {
+    int res = 0;
+    int index = 1;
+
+    for( int i = 0; i<values.length; i++) {
+      if(checked[values[i]]! ) {
+        res = index | res;
+      }
+      index *=2;
+    }
+    return res;
+  }
+
+  void decode(int res) {
+    int index = 1;
+    for( int i = 0; i<values.length; i++) {
+      if( index & res == 1) {
+        checked[values[i]] == true;
+      }
+      index *=2;
+    }
+  }
+
   @override 
   MultiselectState createState() => MultiselectState();
 }
@@ -79,24 +98,12 @@ class MultiselectState extends State<Multiselect>{
     return counter;
   }
 
-  String getChecked() {
-    String result = "";
-    for( String key in widget.checked.keys.toList()) {
-      if(widget.checked[key]!) {
-        result = "$result$key,";
-      }
-    }
-    if (result != "") {
-      result = result.substring(0, result.length-1);
-    }
-    return result;
-  }
 
   void change(String value) {
     setState(() {
       if( widget.checked[value]! || getCheckedNum() < widget.numberOfOptions) {
         widget.checked[value] = !widget.checked[value]!;
-        widget.data.set(getChecked(), setByUser: true);
+        widget.data.set(widget.encode() * 1.0, setByUser: true);
       }
     });
   }
