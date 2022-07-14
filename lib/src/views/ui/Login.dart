@@ -7,7 +7,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:localstore/localstore.dart';
 import 'package:sushi_scouts/src/views/util/components/TextInput.dart';
-import '../../../ScoutingLib/logic/size/ScreenSize.dart';
+import '../../../SushiScoutingLib/logic/size/ScreenSize.dart';
 import '../util/Header/HeaderTitle.dart';
 import '../util/Footer/Footer.dart';
 import '../util/header/HeaderNav.dart';

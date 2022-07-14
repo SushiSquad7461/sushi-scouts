@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import '../../../../ScoutingLib/logic/data/Data.dart';
+import '../../../../SushiScoutingLib/logic/data/Data.dart';
 
 class CheckboxInput extends StatefulWidget {
   final String name;
@@ -67,7 +67,7 @@ class CheckboxState extends State<CheckboxInput> {
     if (widget.data.get() == "") {
       widget.data.set("false", setByUser: true);
     }
-    
+
     return Padding(
         padding: EdgeInsets.only(
             left: width / 60,
@@ -79,7 +79,8 @@ class CheckboxState extends State<CheckboxInput> {
             child: Column(children: [
               GestureDetector(
                 onTap: () {
-                  widget.data.set((!widget.checked).toString(), setByUser: true);
+                  widget.data
+                      .set((!widget.checked).toString(), setByUser: true);
                   setState(() {
                     widget.checked = !widget.checked;
                   });
@@ -91,22 +92,23 @@ class CheckboxState extends State<CheckboxInput> {
                       Transform.scale(
                           scale: width / 170,
                           child: Checkbox(
-                              side: BorderSide(
-                                  color: widget.color,
-                                  width: width / 100,
-                                  style: BorderStyle.solid),
-                              splashRadius: width / 10,
-                              checkColor: Colors.white,
-                              fillColor:
-                                  MaterialStateProperty.resolveWith(getColor),
-                              value: widget.data.get() == "true",
-                              onChanged: (bool? value) {
-                                widget.data.set((!widget.checked).toString(), setByUser: true);
-                                setState(() {
-                                  widget.checked = !widget.checked;
-                                });
-                              },
-                              )),
+                            side: BorderSide(
+                                color: widget.color,
+                                width: width / 100,
+                                style: BorderStyle.solid),
+                            splashRadius: width / 10,
+                            checkColor: Colors.white,
+                            fillColor:
+                                MaterialStateProperty.resolveWith(getColor),
+                            value: widget.data.get() == "true",
+                            onChanged: (bool? value) {
+                              widget.data.set((!widget.checked).toString(),
+                                  setByUser: true);
+                              setState(() {
+                                widget.checked = !widget.checked;
+                              });
+                            },
+                          )),
                       Text(widget.name,
                           style: TextStyle(
                               fontFamily: "Sushi",

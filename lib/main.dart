@@ -11,9 +11,9 @@ import 'package:sushi_scouts/src/views/ui/Settings.dart';
 import 'package:sushi_scouts/src/views/util/header/HeaderNav.dart';
 import 'package:sushi_scouts/src/views/util/header/HeaderTitle.dart';
 
-import 'ScoutingLib/logic/data/ConfigFileReader.dart';
-import 'ScoutingLib/logic/data/ScoutingData.dart';
-import 'ScoutingLib/logic/size/ScreenSize.dart';
+import 'SushiScoutingLib/logic/data/ConfigFileReader.dart';
+import 'SushiScoutingLib/logic/data/ScoutingData.dart';
+import 'SushiScoutingLib/logic/size/ScreenSize.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();

@@ -2,7 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import '../../../../ScoutingLib/logic/data/Data.dart';
+import '../../../../SushiScoutingLib/logic/data/Data.dart';
 
 class Increment extends StatefulWidget {
   final String name;
@@ -22,9 +22,9 @@ class Increment extends StatefulWidget {
       required this.width,
       required this.textColor,
       this.values})
-      : super(key: key){
-        data.set(double.parse(defaultValue.get()), setByUser: true);
-      }
+      : super(key: key) {
+    data.set(double.parse(defaultValue.get()), setByUser: true);
+  }
 
   static Increment create(Key key, String name, Data data, List<String>? values,
       Data defaultValue, Color color, double width, Color textColor) {
