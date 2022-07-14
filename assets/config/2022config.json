@@ -66,14 +66,14 @@
                         "components":[
                             {
                                 "name" : "No Show",
-                                "type" : "string",
+                                "type" : "bool",
                                 "component" : "checkbox",
                                 "required" : true,
                                 "timestamp": false
                             },
                             {
                                 "name" : "Tarmac",
-                                "type" : "string",
+                                "type" : "bool",
                                 "component" : "checkbox",
                                 "required" : true,
                                 "timestamp": false

@@ -78,7 +78,7 @@ class CheckboxState extends State<CheckboxInput> {
             child: Column(children: [
               GestureDetector(
                 onTap: () {
-                  widget.data.set((!widget.checked).toString(), setByUser: true);
+                  widget.data.set(!widget.checked, setByUser: true);
                   setState(() {
                     widget.checked = !widget.checked;
                   });
@@ -100,7 +100,7 @@ class CheckboxState extends State<CheckboxInput> {
                                   MaterialStateProperty.resolveWith(getColor),
                               value: widget.data.get() == "true",
                               onChanged: (bool? value) {
-                                widget.data.set((!widget.checked).toString(), setByUser: true);
+                                widget.data.set(!widget.checked, setByUser: true);
                                 setState(() {
                                   widget.checked = !widget.checked;
                                 });

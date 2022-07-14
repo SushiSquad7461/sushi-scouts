@@ -49,6 +49,8 @@ class Section {
 
       if (i["type"] == "number") {
         values.add(Data<double>(-1));
+      } else if (i['type'] == 'bool') {
+        values.add(Data<bool>(false));  
       } else if (i["type"] == "string") {
         values.add(Data<String>(""));
       } else {

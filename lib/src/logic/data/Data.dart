@@ -50,6 +50,8 @@ class Data<ValueType> {
   String get() {
     return (currValue is double)
         ? (currValue as double).toString()
+        : (currValue is bool) 
+        ? (currValue as bool).toString()
         : (currValue as String);
   }
 
@@ -58,6 +60,8 @@ class Data<ValueType> {
     timestamps = {};
     (currValue is double)
         ? (currValue = -1.0 as ValueType)
+        : (currValue is bool)
+        ? (currValue = false as ValueType) 
         : (currValue = '' as ValueType);
   }
 
