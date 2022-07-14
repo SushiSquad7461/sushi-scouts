@@ -173,7 +173,8 @@ class _SushiScoutsState extends State<SushiScouts> {
                     child: QRScreen(
                         changePage: setCurrentPage,
                         previousPage: _previousPage,
-                        data: scoutingPages[_previousPage]!))
+                        data: scoutingPages[_previousPage]!,
+                        pageIndex: _headerNavNeeded.indexOf(_previousPage),))
               else if (fileReader.getScoutingMethods().contains(_currentPage))
                 MaterialPage(
                     child: Scouting(

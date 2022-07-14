@@ -32,22 +32,22 @@ class Multiselect extends StatefulWidget {
       
       this.values.remove(this.values[0]);
 
-      for(String value in this.values){
-        checked[value] = false;
-      }
-
-      if(double.parse(defaultValue.get()) != -1){
+      if(double.parse(defaultValue.get()) >= 0.0){
+        print('input' + double.parse(defaultValue.get()).toString());
         decode(double.parse(defaultValue.get()).floor());
         data.set(double.parse(defaultValue.get()), setByUser: true);
       } else {
         data.set(0.0, setByUser: true);
+        for(String value in this.values){
+          checked[value] = false;
+        }
       }
     }
   static Multiselect create(Key key, String name, Data data, List<String>? values, Data defaultValue, Color color, double width, Color textColor) {
     return Multiselect(key: key, name: name, data: data, width: width, defaultValue: defaultValue, color: color, values: values, textColor: textColor,);
   }
 
-    int encode() {
+  int encode() {
     int res = 0;
     int index = 1;
 
@@ -57,17 +57,19 @@ class Multiselect extends StatefulWidget {
       }
       index *=2;
     }
+
+    print(res);
     return res;
   }
 
   void decode(int res) {
     int index = 1;
     for( int i = 0; i<values.length; i++) {
-      if( index & res == 1) {
-        checked[values[i]] == true;
-      }
+      print(index & res);
+      checked[values[i]] = (index & res) != 0;
       index *=2;
     }
+    print(checked);
   }
 
   @override 
