@@ -49,7 +49,6 @@ class NumberInputState extends State<NumberInput> {
   }
   @override
   Widget build(BuildContext context) {
-    print(widget.textColor);
     return GestureDetector(
       onTap: () {
         _focusNode.requestFocus();

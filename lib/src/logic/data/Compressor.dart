@@ -12,17 +12,19 @@ class Compressor{
 
   String compress() {
     addInt(screen, 4);
+    List<String> datum = [];
 
     for( Data d in data) {
-      if(d.get() == 'true' || d.get() == 'false') {
-        addNum(d.get()=='true' ? 1 : 0);
-      } else if(double.tryParse(d.get()) != null) {
-        addNum(double.parse(d.get()).floor());
+      datum.add(d.get());
+      if(d.currValue is bool) {
+        addNum(d.currValue as bool ? 1 : 0);
+      } else if(d.currValue is double) {
+        addNum((d.currValue as double).floor());
       } else {
         addString(d.get());
       }
     }
-    print(partial.length);
+    
     List<int> compressed = List.filled((partial.length/16).floor()+1, 0);
     for(int i = 0; i<partial.length; i++) {
       compressed[(i/16).floor()] = compressed[(i/16).floor()] | (partial[i] ? 1 : 0)<<(i%16);
@@ -31,15 +33,15 @@ class Compressor{
   }
 
   void addNum(int i) {
-    if(i<(1<<3)) {
+    if(i < 8) {
       partial.add(false);
       partial.add(false);
       addInt(i, 3);
-    } else if (i<(1<<7)) {
+    } else if (i < 128 ) {
       partial.add(false);
       partial.add(true);
       addInt(i, 7);
-    } else if(i<(1<<14)) {
+    } else if(i< 16384 ) {
       partial.add(true);
       partial.add(false);
       addInt(i, 14);
@@ -49,7 +51,6 @@ class Compressor{
   }
 
   void addString(String s) {
-    print("added string");
     partial.add(true);
     partial.add(true);
     addInt(s.length, 16);
@@ -59,11 +60,9 @@ class Compressor{
     }
   }
 
-  void addInt(int i, int len) {
-    int index = 1;
+  void addInt(int num, int len) {
     for(int i = 0; i<len; i++) {
-      partial.add(i&len != 0);
-      index*=2;
+      partial.add(num&(1<<i) != 0);
     }
   }
 }

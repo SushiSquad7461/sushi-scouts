@@ -79,7 +79,6 @@ class Data<ValueType> {
       if (diffBetweenLast!.abs() > MIN_TIMESTAMP_DIFFERENCE) {
         timestamps[diffBetweenInitial!] = currValue;
         lastTime = DateTime.now();
-        print("CHANGE");
       }
     }
   }

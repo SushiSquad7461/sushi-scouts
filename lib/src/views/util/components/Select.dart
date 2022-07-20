@@ -26,8 +26,6 @@ class Select extends StatefulWidget {
         checked[value] = false;
       }
 
-      print("dropdown: " + defaultValue.get());
-
       if(defaultValue.setByUser){
         double val = double.parse(defaultValue.get());
         checked[this.values[(val).floor()]] = true;

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:sushi_scouts/src/logic/data/Compressor.dart';
+import 'package:sushi_scouts/src/logic/data/Decompressor.dart';
 import 'package:sushi_scouts/src/logic/data/ScoutingData.dart';
 import 'package:sushi_scouts/src/logic/size/ScreenSize.dart';
 import '../util/Header/HeaderTitle.dart';
@@ -27,6 +28,11 @@ class QRScreen extends StatelessWidget {
   void convertData() {
     Compressor compressor = Compressor(data.getData(), pageIndex);
     stringifiedData = compressor.compress();
+    data.empty();
+    Decompressor decompressor = Decompressor(stringifiedData!, ["a", "b", "c", "d"]);
+    print(decompressor.getScreen());
+    decompressor.decompress(data.getData());
+    print(data.stringfy());
     print(stringifiedData);
     print(stringifiedData!.length);
   }
@@ -40,7 +46,7 @@ class QRScreen extends StatelessWidget {
       fit: StackFit.expand,
       children: [
         Align(
-            alignment: Alignment(0, -0.5),
+            alignment: const Alignment(0, -0.5),
             child: Stack(
               alignment: AlignmentDirectional.center,
               children: [

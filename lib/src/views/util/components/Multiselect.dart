@@ -33,7 +33,6 @@ class Multiselect extends StatefulWidget {
       this.values.remove(this.values[0]);
 
       if(double.parse(defaultValue.get()) >= 0.0){
-        print('input' + double.parse(defaultValue.get()).toString());
         decode(double.parse(defaultValue.get()).floor());
         data.set(double.parse(defaultValue.get()), setByUser: true);
       } else {
@@ -58,18 +57,15 @@ class Multiselect extends StatefulWidget {
       index *=2;
     }
 
-    print(res);
     return res;
   }
 
   void decode(int res) {
     int index = 1;
     for( int i = 0; i<values.length; i++) {
-      print(index & res);
       checked[values[i]] = (index & res) != 0;
       index *=2;
     }
-    print(checked);
   }
 
   @override 

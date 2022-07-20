@@ -29,7 +29,6 @@ class _ScoutingFooterState extends State<ScoutingFooter> {
   bool prevPage = false;
 
   void moveToNextPage() {
-    print("Next page");
     widget.data!.nextPage();
     widget.newPage(false);
     updateState();
