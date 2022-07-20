@@ -47,7 +47,6 @@ class TextInputState extends State<TextInput> {
     _focusNode = FocusNode();
     _controller.addListener(() {
       isClicked = true;
-      print(_controller.text);
       String text = _controller.text;
       if (text != "") {
         widget.data.set(text, setByUser: true);

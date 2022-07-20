@@ -79,8 +79,7 @@ class CheckboxState extends State<CheckboxInput> {
             child: Column(children: [
               GestureDetector(
                 onTap: () {
-                  widget.data
-                      .set((!widget.checked).toString(), setByUser: true);
+                  widget.data.set(!widget.checked, setByUser: true);
                   setState(() {
                     widget.checked = !widget.checked;
                   });
@@ -92,23 +91,22 @@ class CheckboxState extends State<CheckboxInput> {
                       Transform.scale(
                           scale: width / 170,
                           child: Checkbox(
-                            side: BorderSide(
-                                color: widget.color,
-                                width: width / 100,
-                                style: BorderStyle.solid),
-                            splashRadius: width / 10,
-                            checkColor: Colors.white,
-                            fillColor:
-                                MaterialStateProperty.resolveWith(getColor),
-                            value: widget.data.get() == "true",
-                            onChanged: (bool? value) {
-                              widget.data.set((!widget.checked).toString(),
-                                  setByUser: true);
-                              setState(() {
-                                widget.checked = !widget.checked;
-                              });
-                            },
-                          )),
+                              side: BorderSide(
+                                  color: widget.color,
+                                  width: width / 100,
+                                  style: BorderStyle.solid),
+                              splashRadius: width / 10,
+                              checkColor: Colors.white,
+                              fillColor:
+                                  MaterialStateProperty.resolveWith(getColor),
+                              value: widget.data.get() == "true",
+                              onChanged: (bool? value) {
+                                widget.data.set(!widget.checked, setByUser: true);
+                                setState(() {
+                                  widget.checked = !widget.checked;
+                                });
+                              },
+                              )),
                       Text(widget.name,
                           style: TextStyle(
                               fontFamily: "Sushi",

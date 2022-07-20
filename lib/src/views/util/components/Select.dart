@@ -35,13 +35,12 @@ class Select extends StatefulWidget {
       checked[value] = false;
     }
 
-    print(this.values);
-
-    if (this.values.contains(defaultValue.get())) {
-      checked[defaultValue.get()] = true;
-      data.set(defaultValue.get(), setByUser: true);
+      if(defaultValue.setByUser){
+        double val = double.parse(defaultValue.get());
+        checked[this.values[(val).floor()]] = true;
+        data.set(val, setByUser: true);
+      }
     }
-  }
   static Select create(Key key, String name, Data data, List<String>? values,
       Data defaultValue, Color color, double width, Color textColor) {
     return Select(
@@ -74,10 +73,10 @@ class SelectState extends State<Select> {
   }
 
   void change(String value) {
-    widget.data.set(value, setByUser: true);
+    widget.data.set(widget.values.indexOf(value)*1.0, setByUser: true);
     setState(() {
-      for (String key in widget.checked.keys.toList()) {
-        widget.checked[key] = false;
+      for( String val in widget.values) {
+        widget.checked[val] = false;
       }
       widget.checked[value] = true;
     });

@@ -99,7 +99,7 @@ class _SushiScoutsState extends State<SushiScouts> {
         _headerNavNeeded = fileReader.getScoutingMethods();
         _headerNavNeeded.add("settings");
 
-        _currentPage = "login";
+        _currentPage = "pit";
       });
     } catch (err) {
       setState(() {
@@ -174,7 +174,8 @@ class _SushiScoutsState extends State<SushiScouts> {
                     child: QRScreen(
                         changePage: setCurrentPage,
                         previousPage: _previousPage,
-                        data: scoutingPages[_previousPage]!))
+                        data: scoutingPages[_previousPage]!,
+                        pageIndex: _headerNavNeeded.indexOf(_previousPage),))
               else if (fileReader.getScoutingMethods().contains(_currentPage))
                 MaterialPage(
                     child: Scouting(

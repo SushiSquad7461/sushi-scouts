@@ -50,9 +50,7 @@ class ScoutingState extends State<Scouting> {
         throw ErrorDescription(
             "No component exsits called: ${currComponent.component}");
       }
-
-      print("data ${currData.get()}");
-
+      
       var colors = Theme.of(context);
 
       builtComponents.add(COMPONENT_MAP.containsKey(currComponent.component)
@@ -98,8 +96,6 @@ class ScoutingState extends State<Scouting> {
   //builds the body of the screen
   Widget _buildBody(Size size) {
     List<Widget> builtSections = [];
-    print(currPage!.stringfy());
-
     for (var i in currPage!.sections) {
       int rows =
           size.width / i.rows < 300 ? (size.width / 300).floor() : i.rows;

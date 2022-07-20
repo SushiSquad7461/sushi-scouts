@@ -86,7 +86,6 @@ class _SettingsState extends State<Settings> {
 
   Future<void> loadSecret() async {
     secrets = await SecretLoader(secretPath: "assets/secrets.json").load();
-    print("loaded");
   }
 
   @override

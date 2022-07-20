@@ -2,6 +2,8 @@ import 'package:enum_to_string/enum_to_string.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:qr_flutter/qr_flutter.dart';
+import 'package:sushi_scouts/SushiScoutingLib/logic/data/Compressor.dart';
+import 'package:sushi_scouts/SushiScoutingLib/logic/data/Decompressor.dart';
 import '../../../SushiScoutingLib/logic/data/ScoutingData.dart';
 import '../../../SushiScoutingLib/logic/size/ScreenSize.dart';
 import '../util/Header/HeaderTitle.dart';
@@ -12,19 +14,20 @@ class QRScreen extends StatelessWidget {
   final Function(String) changePage;
   final String previousPage;
   final ScoutingData data;
+  final int pageIndex;
   String? stringifiedData;
 
   QRScreen(
       {Key? key,
       required this.changePage,
       required this.previousPage,
-      required this.data})
+      required this.data,
+      required this.pageIndex})
       : super(key: key);
 
   void convertData() {
-    stringifiedData = data.stringfy();
-    print(stringifiedData);
-    print(stringifiedData!.length);
+    Compressor compressor = Compressor(data.getData(), pageIndex);
+    stringifiedData = compressor.compress();
   }
 
   @override
@@ -36,7 +39,7 @@ class QRScreen extends StatelessWidget {
       fit: StackFit.expand,
       children: [
         Align(
-            alignment: Alignment(0, -0.5),
+            alignment: const Alignment(0, -0.5),
             child: Stack(
               alignment: AlignmentDirectional.center,
               children: [

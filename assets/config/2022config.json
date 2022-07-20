@@ -25,7 +25,7 @@
                             },
                             {
                                 "name" : "station",
-                                "type" : "string",
+                                "type" : "number",
                                 "component" : "dropdown",
                                 "values" : ["R1", "R2", "R3", "B1", "B2", "B3"],
                                 "required" : true,
@@ -40,7 +40,7 @@
                             },
                             {
                                 "name": "match type",
-                                "type": "string",
+                                "type": "number",
                                 "component": "select",
                                 "values" : ["c", "Quals", "Elims", "Prac"],
                                 "required" : true,
@@ -66,14 +66,14 @@
                         "components":[
                             {
                                 "name" : "No Show",
-                                "type" : "string",
+                                "type" : "bool",
                                 "component" : "checkbox",
                                 "required" : true,
                                 "timestamp": false
                             },
                             {
                                 "name" : "Tarmac",
-                                "type" : "string",
+                                "type" : "bool",
                                 "component" : "checkbox",
                                 "required" : true,
                                 "timestamp": false
@@ -146,7 +146,7 @@
                             },
                             {
                                 "name" : "Climb Level",
-                                "type" : "string",
+                                "type" : "number",
                                 "component" : "select",
                                 "values" : ["c", "No Climb", "Low Climb", "Mid Climb", "High Climb", "Traversal"],
                                 "required" : true,
@@ -188,7 +188,7 @@
                             },
                             {
                                 "name": "match type",
-                                "type": "string",
+                                "type": "number",
                                 "component": "select",
                                 "values" : ["c", "Quals", "Elims", "Prac"],
                                 "required" : true,
@@ -223,7 +223,7 @@
                             },
                             {
                                 "name": "side",
-                                "type": "string",
+                                "type": "number",
                                 "component": "select",
                                 "values" : ["c", "Red", "Blue"],
                                 "required" : true,
@@ -371,7 +371,7 @@
                         "components":[
                             {
                                 "name" : "drivetrain",
-                                "type" : "string",
+                                "type" : "number",
                                 "component" : "select",
                                 "values" : ["r", "Offense", "Defense"],
                                 "required" : true,
@@ -392,7 +392,7 @@
                         "components":[
                             {
                                 "name" : "auto",
-                                "type" : "string",
+                                "type" : "number",
                                 "component" : "multiselect",
                                 "values" : ["#o", "6", "l", "2", "2", "2", "c", "1 ball", "4 balls", "2 balls", "5 balls", "3 balls", "6 balls"],
                                 "required" : true,
@@ -413,7 +413,7 @@
                         "components":[
                             {
                                 "name" : "teleop",
-                                "type" : "string",
+                                "type" : "number",
                                 "component" : "select",
                                 "values" : ["r", "High Hub", "Low Hub"],
                                 "required" : true,
@@ -434,7 +434,7 @@
                         "components":[
                             {
                                 "name" : "auto",
-                                "type" : "string",
+                                "type" : "number",
                                 "component" : "multiselect",
                                 "values" : ["#o", "5", "l", "2", "2", "1", "c", "Traversal", "Low", "High", "No Climb", "Mid"],
                                 "required" : true,
@@ -460,7 +460,7 @@
                         "components":[
                             {
                                 "name" : "prefrence",
-                                "type" : "string",
+                                "type" : "number",
                                 "component" : "select",
                                 "values" : ["r", "Offense", "Defense"],
                                 "required" : true,
@@ -481,7 +481,7 @@
                         "components":[
                             {
                                 "name" : "problems",
-                                "type" : "string",
+                                "type" : "number",
                                 "component" : "multiselect",
                                 "values" : ["#o", "7", "l", "3", "2", "2", "c", "Climb", "Prog", "Shooter", "Intake", "DT", "Hopper", "Electric"],
                                 "required" : true,
