@@ -28,13 +28,6 @@ class QRScreen extends StatelessWidget {
   void convertData() {
     Compressor compressor = Compressor(data.getData(), pageIndex);
     stringifiedData = compressor.compress();
-    data.empty();
-    Decompressor decompressor = Decompressor(stringifiedData!, ["a", "b", "c", "d"]);
-    print(decompressor.getScreen());
-    decompressor.decompress(data.getData());
-    print(data.stringfy());
-    print(stringifiedData);
-    print(stringifiedData!.length);
   }
 
   @override
