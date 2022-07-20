@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:sushi_scouts/src/logic/data/Data.dart';
+
+import '../../../../SushiScoutingLib/logic/data/Data.dart';
 
 class CheckboxInput extends StatefulWidget {
   final String name;
@@ -66,7 +67,7 @@ class CheckboxState extends State<CheckboxInput> {
     if (widget.data.get() == "") {
       widget.data.set("false", setByUser: true);
     }
-    
+
     return Padding(
         padding: EdgeInsets.only(
             left: width / 60,

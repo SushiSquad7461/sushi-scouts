@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:sushi_scouts/src/logic/Constants.dart';
-import 'package:sushi_scouts/src/logic/data/ScoutingData.dart'
-    as ScoutingDataHelpers;
-import 'package:sushi_scouts/src/logic/size/ScreenSize.dart';
 import 'package:sushi_scouts/src/views/util/Footer/ScoutingFooter.dart';
 
-import '../../logic/data/Data.dart';
+import '../../../SushiScoutingLib/logic/data/Data.dart';
+import '../../../SushiScoutingLib/logic/data/ScoutingData.dart'
+    as ScoutingDataHelpers;
+import '../../../SushiScoutingLib/logic/size/ScreenSize.dart';
 
 class Scouting extends StatefulWidget {
   final ScoutingDataHelpers.ScoutingData? data;
@@ -30,7 +30,7 @@ class ScoutingState extends State<Scouting> {
 
   //builds the components in a certain section
   Widget _buildSection(
-    double width, ScoutingDataHelpers.Section section, int currRow) {
+      double width, ScoutingDataHelpers.Section section, int currRow) {
     double scaledWidth = (width > 500 ? 500 : width);
 
     List<Widget> builtComponents = [];
@@ -66,9 +66,11 @@ class ScoutingState extends State<Scouting> {
                   currData,
                   currComponent.values,
                   currData,
-                  section.getColor(colors.scaffoldBackgroundColor == Colors.black),
+                  section
+                      .getColor(colors.scaffoldBackgroundColor == Colors.black),
                   scaledWidth,
-                  section.getTextColor(colors.scaffoldBackgroundColor == Colors.black)))
+                  section.getTextColor(
+                      colors.scaffoldBackgroundColor == Colors.black)))
           : SizedBox(
               width: scaledWidth,
               child: Text(

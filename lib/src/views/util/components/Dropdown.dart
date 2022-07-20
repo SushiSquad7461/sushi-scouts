@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:sushi_scouts/src/logic/data/Data.dart';
+
+import '../../../../SushiScoutingLib/logic/data/Data.dart';
 
 class Dropdown extends StatefulWidget {
   final String name;
@@ -19,23 +20,36 @@ class Dropdown extends StatefulWidget {
         this.values.add(" ");
       }
     }
-  static Dropdown create(Key key, String name, Data data, List<String> values, Data defaultValue, Color color, double width, Color textColor) {
-    return Dropdown(key: key, name: name, data: data, width: width, defaultValue: defaultValue, color: color, values: values, textColor: textColor,);
+  static Dropdown create(Key key, String name, Data data, List<String> values,
+      Data defaultValue, Color color, double width, Color textColor) {
+    return Dropdown(
+      key: key,
+      name: name,
+      data: data,
+      width: width,
+      defaultValue: defaultValue,
+      color: color,
+      values: values,
+      textColor: textColor,
+    );
   }
-  @override 
+
+  @override
   DropdownState createState() => DropdownState();
 }
-  
-  
-class DropdownState extends State<Dropdown>{
+
+class DropdownState extends State<Dropdown> {
   @override
   Widget build(BuildContext context) {
     double width = widget.width;
     var colors = Theme.of(context);
 
     return Padding(
-        padding:
-            EdgeInsets.only(left: width/60, right: width/60, top: width/30, bottom: width/30),
+        padding: EdgeInsets.only(
+            left: width / 60,
+            right: width / 60,
+            top: width / 30,
+            bottom: width / 30),
         child: SizedBox(
           width: width*0.8,
           child: Column(

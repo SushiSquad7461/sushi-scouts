@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:sushi_scouts/src/logic/data/Data.dart';
+
+import '../../../../SushiScoutingLib/logic/data/Data.dart';
 
 class NumberInput extends StatefulWidget {
   final String name;
@@ -19,34 +20,45 @@ class NumberInput extends StatefulWidget {
       required this.textColor})
       : super(key: key);
 
-  static NumberInput create(Key key, String name, Data data, List<String>? values,
-      Data defaultValue, Color color, double width, Color textColor) {
+  static NumberInput create(
+      Key key,
+      String name,
+      Data data,
+      List<String>? values,
+      Data defaultValue,
+      Color color,
+      double width,
+      Color textColor) {
     return NumberInput(
-      key: key,
-      name: name,
-      data: data,
-      width: width,
-      color: color,
-      textColor: textColor
-    );
+        key: key,
+        name: name,
+        data: data,
+        width: width,
+        color: color,
+        textColor: textColor);
   }
+
   @override
   NumberInputState createState() => NumberInputState();
 }
+
 class NumberInputState extends State<NumberInput> {
   late final TextEditingController _controller;
   late FocusNode _focusNode;
 
   @override
   void initState() {
-    _controller = TextEditingController(text: widget.data.setByUser ? widget.data.get().toString() : null);
+    _controller = TextEditingController(
+        text: widget.data.setByUser ? widget.data.get().toString() : null);
     _focusNode = FocusNode();
     _controller.addListener(() {
-      if(_controller.text != "") {
+      if (_controller.text != "") {
         widget.data.set(double.parse(_controller.text), setByUser: true);
-      }});
+      }
+    });
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -65,11 +77,12 @@ class NumberInputState extends State<NumberInput> {
                 Row(mainAxisAlignment: MainAxisAlignment.center, children: [
                   Expanded(
                       child: TextFormField(
-                        focusNode: _focusNode,
+                          focusNode: _focusNode,
                           controller: _controller,
                           decoration: InputDecoration(
                             border: InputBorder.none,
-                            constraints: BoxConstraints(maxWidth: widget.width / 6.0),
+                            constraints:
+                                BoxConstraints(maxWidth: widget.width / 6.0),
                             hintText: widget.name.toUpperCase(),
                             hintStyle: TextStyle(color: widget.textColor),
                           ),
@@ -84,7 +97,8 @@ class NumberInputState extends State<NumberInput> {
                             FilteringTextInputFormatter.digitsOnly
                           ],
                           onFieldSubmitted: (value) {
-                            widget.data.set(double.parse(value), setByUser: true);
+                            widget.data
+                                .set(double.parse(value), setByUser: true);
                           }))
                 ]),
                 Divider(color: widget.textColor, thickness: widget.width / 50)

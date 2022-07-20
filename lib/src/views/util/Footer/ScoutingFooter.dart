@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:sushi_scouts/src/logic/data/Data.dart';
-import 'package:sushi_scouts/src/logic/data/ScoutingData.dart';
-import 'package:sushi_scouts/src/logic/size/ScreenSize.dart';
 import 'package:sushi_scouts/src/views/util/popups/RequiredContent.dart';
+import '../../../../SushiScoutingLib/logic/data/ScoutingData.dart';
+import '../../../../SushiScoutingLib/logic/size/ScreenSize.dart';
 import 'Footer.dart';
 import 'package:sushi_scouts/src/views/ui/QRScreen.dart';
 

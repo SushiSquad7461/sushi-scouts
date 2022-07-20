@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:sushi_scouts/src/logic/color/HexColor.dart';
-import 'package:sushi_scouts/src/logic/size/ScreenSize.dart';
-import '../../../logic/data/ScoutingData.dart';
+import '../../../../SushiScoutingLib/logic/color/HexColor.dart';
+import '../../../../SushiScoutingLib/logic/size/ScreenSize.dart';
 
 class HeaderNav extends StatelessWidget {
   final String currentPage;
@@ -26,9 +25,10 @@ class HeaderNav extends StatelessWidget {
     );
 
     return Container(
-        height: ScreenSize.height*0.1,
+        height: ScreenSize.height * 0.1,
         child: Padding(
-          padding: EdgeInsets.only(left: 0, right: 0, top: 7 * ScreenSize.shu, bottom: 0),
+          padding: EdgeInsets.only(
+              left: 0, right: 0, top: 7 * ScreenSize.shu, bottom: 0),
           child: Column(
             children: [
               Divider(
@@ -39,7 +39,10 @@ class HeaderNav extends StatelessWidget {
                 for (final String screen in screens)
                   Padding(
                       padding: EdgeInsets.only(
-                          left: 0, right: 0, top: 0 * ScreenSize.shu, bottom: 0 * ScreenSize.shu),
+                          left: 0,
+                          right: 0,
+                          top: 0 * ScreenSize.shu,
+                          bottom: 0 * ScreenSize.shu),
                       child: GestureDetector(
                           onTap: () => changePage(screen),
                           child: Container(
@@ -63,8 +66,8 @@ class HeaderNav extends StatelessWidget {
                                       bottom: 2 * ScreenSize.swu),
                                   child: Text(
                                     screen.toUpperCase(),
-                                    style:
-                                        GoogleFonts.mohave(textStyle: pageStyle),
+                                    style: GoogleFonts.mohave(
+                                        textStyle: pageStyle),
                                   )))))
               ]),
               Divider(
@@ -73,7 +76,6 @@ class HeaderNav extends StatelessWidget {
               ),
             ],
           ),
-        )
-      );
+        ));
   }
 }
