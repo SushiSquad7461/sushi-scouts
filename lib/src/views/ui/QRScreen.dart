@@ -1,8 +1,10 @@
 import 'package:enum_to_string/enum_to_string.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:localstore/localstore.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:sushi_scouts/SushiScoutingLib/logic/data/Compressor.dart';
+import 'package:sushi_scouts/SushiScoutingLib/logic/data/ConfigFileReader.dart';
 import 'package:sushi_scouts/SushiScoutingLib/logic/data/Decompressor.dart';
 import '../../../SushiScoutingLib/logic/data/ScoutingData.dart';
 import '../../../SushiScoutingLib/logic/size/ScreenSize.dart';
@@ -10,12 +12,13 @@ import '../util/Header/HeaderTitle.dart';
 import '../util/header/HeaderNav.dart';
 import 'Scouting.dart';
 
-class QRScreen extends StatelessWidget {
+class QRScreen extends StatefulWidget {
   final Function(String) changePage;
   final String previousPage;
   final ScoutingData data;
   final int pageIndex;
-  String? stringifiedData;
+  final db = Localstore.instance;
+  final fileReader = ConfigFileReader.instance;
 
   QRScreen(
       {Key? key,
@@ -25,20 +28,76 @@ class QRScreen extends StatelessWidget {
       required this.pageIndex})
       : super(key: key);
 
-  void convertData() {
-    Compressor compressor = Compressor(data.getData(), pageIndex);
-    stringifiedData = compressor.compress();
+  @override
+  State<QRScreen> createState() => _QRScreenState();
+}
+
+class _QRScreenState extends State<QRScreen> {
+  String? stringifiedData;
+  bool isBackup = false;
+  bool generateCode = false;
+
+  void convertData() async{
+    final compressedData = await widget.db.collection("data").doc("current${widget.previousPage}").get();
+    Compressor compressor = Compressor(widget.data.getData(), widget.pageIndex);
+    String newData;
+    int length;
+
+    if( compressedData == null) {
+      newData = compressor.firstCompress();
+      length = compressor.getLength();
+    } else {
+      newData = compressor.addTo(compressedData["compressedData"]! as String, compressedData["length"]! as int);
+      length = compressor.getLength();
+    }
+    widget.db.collection("data").doc("current${widget.previousPage}").set({
+      "compressedData" : newData,
+      "length" : length
+      }
+    );
+    widget.data.empty();
+  }
+
+  void getData() async {
+    print('a');
+    convertData();
+    final compressedData = await widget.db.collection("data").doc("${isBackup?"backup":"current"}${widget.previousPage}").get();
+    if( compressedData != null) {
+      if( isBackup ) {
+        stringifiedData = compressedData["compressedData"] as String;
+      } else {
+        stringifiedData = compressedData["compressedData"] as String;
+        final backup = await widget.db.collection("data").doc("backup${widget.previousPage}").get();
+        if (backup != null) {
+          widget.db.collection("data").doc("backup${widget.previousPage}").set({
+            "compressedData" : Compressor.update(backup["compressedData"], backup["length"], compressedData["compressedData"]),
+            "length": backup["length"] + compressedData["length"]
+          });
+        } else {
+          int length = compressedData["length"] as int;
+          String compressedString = Compressor.setBackUp(compressedData["compressedData"] as String);
+          widget.db.collection("data").doc("backup${widget.previousPage}").set({
+            "compressedData" : compressedString,
+            "length" : length
+          });
+        }
+        widget.db.collection("data").doc("current${widget.previousPage}").delete();
+      }
+      setState(() {
+        generateCode = true;
+        build(context);
+      });
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    convertData();
-    data.empty();
     var colors = Theme.of(context);
     return Stack(
       fit: StackFit.expand,
       children: [
-        Align(
+        generateCode ?
+          Align(
             alignment: const Alignment(0, -0.5),
             child: Stack(
               alignment: AlignmentDirectional.center,
@@ -61,7 +120,63 @@ class QRScreen extends StatelessWidget {
                   child: QrImage(data: stringifiedData!),
                 ),
               ],
-            )),
+            )
+          ) :
+          Align(
+            alignment: const Alignment(0, -0.5),
+            child: Column(
+              children: [
+                Container(
+                  width: 150 * ScreenSize.swu,
+                  height: 55 * ScreenSize.swu,
+                  decoration: BoxDecoration(
+                    border: Border.all(color: colors.primaryColorDark, width: 3.5),
+                    color: colors.scaffoldBackgroundColor,
+                    borderRadius:
+                        BorderRadius.circular(10 * ScreenSize.swu),
+                  ),
+                  child: TextButton(
+                    onPressed: () {
+                      isBackup = false;
+                      getData();
+                    },
+                    child: Text(
+                      'GENERATE CODE',
+                      style: TextStyle(
+                          fontSize: 29 * ScreenSize.swu,
+                          fontFamily: "Sushi",
+                          color: colors.primaryColorDark,
+                          fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                ),
+                Container(
+                  width: 150 * ScreenSize.swu,
+                  height: 55 * ScreenSize.swu,
+                  decoration: BoxDecoration(
+                    border: Border.all(color: colors.primaryColorDark, width: 3.5),
+                    color: colors.scaffoldBackgroundColor,
+                    borderRadius:
+                        BorderRadius.circular(10 * ScreenSize.swu),
+                  ),
+                  child: TextButton(
+                    onPressed: () {
+                      isBackup = true;
+                      getData();
+                    },
+                    child: Text(
+                      'RESTORE BACKUP',
+                      style: TextStyle(
+                          fontSize: 29 * ScreenSize.swu,
+                          fontFamily: "Sushi",
+                          color: colors.primaryColorDark,
+                          fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                ),
+              ]
+            )
+          ), 
         Align(
             alignment: Alignment(0, 1),
             child: SvgPicture.asset(
@@ -76,7 +191,10 @@ class QRScreen extends StatelessWidget {
                 color: colors.primaryColorDark,
               ),
               child: TextButton(
-                onPressed: () => changePage(previousPage),
+                onPressed: () {
+                  convertData();
+                  widget.changePage(widget.previousPage);
+                },
                 child: Text(
                   'CONTINUE',
                   style: TextStyle(

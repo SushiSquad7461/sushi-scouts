@@ -63,7 +63,7 @@ class SushiScouts extends StatefulWidget {
 
 class _SushiScoutsState extends State<SushiScouts> {
   // CHANGE HOW YEAR WORKS
-  ConfigFileReader fileReader = ConfigFileReader(CONFIG_FILE_PATH, 2022);
+  final fileReader = ConfigFileReader.instance;
   String _previousPage = "loading";
   String _currentPage = "loading";
   Map<String, ScoutingData> scoutingPages = {};
