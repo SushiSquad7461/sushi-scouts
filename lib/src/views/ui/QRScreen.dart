@@ -37,7 +37,7 @@ class _QRScreenState extends State<QRScreen> {
   bool isBackup = false;
   bool generateCode = false;
 
-  void convertData() async{
+  Future<void> convertData() async{
     final compressedData = await widget.db.collection("data").doc("current${widget.previousPage}").get();
     Compressor compressor = Compressor(widget.data.getData(), widget.pageIndex);
     String newData;
@@ -58,11 +58,23 @@ class _QRScreenState extends State<QRScreen> {
     widget.data.empty();
   }
 
-  void getData() async {
-    print('a');
-    convertData();
+  void deleteBackup() {
+    widget.db.collection("data").doc("backup${widget.previousPage}").delete();
+  }
+
+  Future<void> getData() async {
+    await convertData();
     final compressedData = await widget.db.collection("data").doc("${isBackup?"backup":"current"}${widget.previousPage}").get();
     if( compressedData != null) {
+      final decompressor = Decompressor(compressedData["compressedData"], widget.fileReader.getScoutingMethods());
+      print(decompressor.isBackup());
+      ScoutingData data = widget.fileReader.generateScoutingData(widget.previousPage)!;
+      bool moreData = false;
+      do {
+        print(decompressor.getScreen());
+        moreData = decompressor.decompress(data.getData());
+        print(data.stringfy());
+      } while( moreData );
       if( isBackup ) {
         stringifiedData = compressedData["compressedData"] as String;
       } else {
@@ -127,7 +139,7 @@ class _QRScreenState extends State<QRScreen> {
             child: Column(
               children: [
                 Container(
-                  width: 150 * ScreenSize.swu,
+                  width: 350 * ScreenSize.swu,
                   height: 55 * ScreenSize.swu,
                   decoration: BoxDecoration(
                     border: Border.all(color: colors.primaryColorDark, width: 3.5),
@@ -151,7 +163,7 @@ class _QRScreenState extends State<QRScreen> {
                   ),
                 ),
                 Container(
-                  width: 150 * ScreenSize.swu,
+                  width: 350 * ScreenSize.swu,
                   height: 55 * ScreenSize.swu,
                   decoration: BoxDecoration(
                     border: Border.all(color: colors.primaryColorDark, width: 3.5),
@@ -166,6 +178,30 @@ class _QRScreenState extends State<QRScreen> {
                     },
                     child: Text(
                       'RESTORE BACKUP',
+                      style: TextStyle(
+                          fontSize: 29 * ScreenSize.swu,
+                          fontFamily: "Sushi",
+                          color: colors.primaryColorDark,
+                          fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                ),
+                Container(
+                  width: 350 * ScreenSize.swu,
+                  height: 55 * ScreenSize.swu,
+                  decoration: BoxDecoration(
+                    border: Border.all(color: colors.primaryColorDark, width: 3.5),
+                    color: colors.scaffoldBackgroundColor,
+                    borderRadius:
+                        BorderRadius.circular(10 * ScreenSize.swu),
+                  ),
+                  child: TextButton(
+                    onPressed: () {
+                      isBackup = true;
+                      deleteBackup();
+                    },
+                    child: Text(
+                      'DELETE BACKUP',
                       style: TextStyle(
                           fontSize: 29 * ScreenSize.swu,
                           fontFamily: "Sushi",
@@ -192,7 +228,9 @@ class _QRScreenState extends State<QRScreen> {
               ),
               child: TextButton(
                 onPressed: () {
-                  convertData();
+                  if(!generateCode) {
+                    convertData();
+                  }
                   widget.changePage(widget.previousPage);
                 },
                 child: Text(
