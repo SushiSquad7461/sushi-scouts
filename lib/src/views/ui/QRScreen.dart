@@ -35,31 +35,36 @@ class QRScreen extends StatefulWidget {
 class _QRScreenState extends State<QRScreen> {
   String? stringifiedData;
   bool isBackup = false;
+  bool dataConverted = false;
   bool generateCode = false;
 
   Future<void> convertData() async{
-    final compressedData = await widget.db.collection("data").doc("current${widget.previousPage}").get();
-    Compressor compressor = Compressor(widget.data.getData(), widget.pageIndex);
-    String newData;
-    int length;
-
-    if( compressedData == null) {
-      newData = compressor.firstCompress();
-      length = compressor.getLength();
-    } else {
-      newData = compressor.addTo(compressedData["compressedData"]! as String, compressedData["length"]! as int);
-      length = compressor.getLength();
-    }
-    widget.db.collection("data").doc("current${widget.previousPage}").set({
-      "compressedData" : newData,
-      "length" : length
+    if (!dataConverted) {
+      final compressedData = await widget.db.collection("data").doc("current${widget.previousPage}").get();
+      Compressor compressor = Compressor(widget.data.getData(), widget.pageIndex);
+      String newData;
+      int length;
+      
+      if( compressedData == null) {
+        newData = compressor.firstCompress();
+        length = compressor.getLength();
+      } else {
+        newData = compressor.addTo(compressedData["compressedData"]! as String, compressedData["length"]! as int);
+        length = compressor.getLength();
       }
-    );
-    widget.data.empty();
+      widget.db.collection("data").doc("current${widget.previousPage}").set({
+        "compressedData" : newData,
+        "length" : length
+        }
+      );
+    }
+    dataConverted = true;
   }
 
   void deleteBackup() {
     widget.db.collection("data").doc("backup${widget.previousPage}").delete();
+    widget.db.collection("data").doc("current${widget.previousPage}").delete();
+    dataConverted = true;
   }
 
   Future<void> getData() async {
@@ -83,7 +88,7 @@ class _QRScreenState extends State<QRScreen> {
         if (backup != null) {
           widget.db.collection("data").doc("backup${widget.previousPage}").set({
             "compressedData" : Compressor.update(backup["compressedData"], backup["length"], compressedData["compressedData"]),
-            "length": backup["length"] + compressedData["length"]
+            "length": backup["length"] + compressedData["length"]-1
           });
         } else {
           int length = compressedData["length"] as int;
@@ -213,6 +218,22 @@ class _QRScreenState extends State<QRScreen> {
               ]
             )
           ), 
+        
+        if(generateCode)
+          Align(
+            alignment: const Alignment(-1, -1),
+            child: IconButton(
+              onPressed: () {
+                setState(() {
+                  generateCode = false;
+                });
+              },
+              iconSize: ScreenSize.swu * 100,
+              icon: const Icon(
+                Icons.arrow_back_ios
+              ),
+            )
+          ),
         Align(
             alignment: Alignment(0, 1),
             child: SvgPicture.asset(
@@ -228,9 +249,8 @@ class _QRScreenState extends State<QRScreen> {
               ),
               child: TextButton(
                 onPressed: () {
-                  if(!generateCode) {
-                    convertData();
-                  }
+                  convertData();
+                  widget.data.empty();
                   widget.changePage(widget.previousPage);
                 },
                 child: Text(
