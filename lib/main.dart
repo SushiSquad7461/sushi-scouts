@@ -1,8 +1,7 @@
 import "package:flutter/material.dart";
 import 'package:get/get.dart';
-import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:localstore/localstore.dart';
-import 'package:sushi_scouts/src/logic/constants.dart';
+import 'package:sushi_scouts/SushiScoutingLib/logic/models/scouting_data_models/scouting_data.dart';
 import 'package:sushi_scouts/src/views/ui/loading.dart';
 import 'package:sushi_scouts/src/views/ui/login.dart';
 import 'package:sushi_scouts/src/views/ui/qr_screen.dart';
@@ -12,7 +11,6 @@ import 'package:sushi_scouts/src/views/util/header/header_nav.dart';
 import 'package:sushi_scouts/src/views/util/header/header_title.dart';
 
 import 'SushiScoutingLib/logic/data/config_file_reader.dart';
-import 'SushiScoutingLib/logic/data/scouting_data.dart';
 import 'SushiScoutingLib/logic/size/ScreenSize.dart';
 
 void main() {

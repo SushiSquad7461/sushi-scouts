@@ -1,15 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:sushi_scouts/SushiScoutingLib/logic/models/scouting_data_models/component.dart';
+import 'package:sushi_scouts/SushiScoutingLib/logic/models/scouting_data_models/page.dart';
+import 'package:sushi_scouts/SushiScoutingLib/logic/models/scouting_data_models/scouting_data.dart';
+import 'package:sushi_scouts/SushiScoutingLib/logic/models/scouting_data_models/section.dart';
 import 'package:sushi_scouts/src/logic/constants.dart';
 import 'package:sushi_scouts/src/views/util/Footer/scouting_footer.dart';
 
 import '../../../SushiScoutingLib/logic/data/data.dart';
-import '../../../SushiScoutingLib/logic/data/scouting_data.dart'
-    as ScoutingDataHelpers;
 import '../../../SushiScoutingLib/logic/size/ScreenSize.dart';
 
 class Scouting extends StatefulWidget {
-  final ScoutingDataHelpers.ScoutingData? data;
+  final ScoutingData? data;
   final Function(String) changeScreen;
   const Scouting({Key? key, required this.data, required this.changeScreen})
       : super(key: key);
@@ -18,7 +20,7 @@ class Scouting extends StatefulWidget {
 }
 
 class ScoutingState extends State<Scouting> {
-  ScoutingDataHelpers.Page? currPage;
+  Screen? currPage;
 
   void _init() {
     currPage = widget.data?.getCurrentPage();
@@ -30,7 +32,7 @@ class ScoutingState extends State<Scouting> {
 
   //builds the components in a certain section
   Widget _buildSection(
-      double width, ScoutingDataHelpers.Section section, int currRow) {
+      double width, Section section, int currRow) {
     double scaledWidth = (width > 500 ? 500 : width);
 
     List<Widget> builtComponents = [];
@@ -43,7 +45,7 @@ class ScoutingState extends State<Scouting> {
     for (var i = startComponent;
         i < startComponent + section.componentsPerRow[currRow];
         ++i) {
-      ScoutingDataHelpers.Component currComponent = section.components[i];
+      Component currComponent = section.components[i];
       Data currData = section.values[i];
 
       if (!COMPONENT_MAP.containsKey(currComponent.component)) {

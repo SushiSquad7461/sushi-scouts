@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:localstore/localstore.dart';
 import 'package:qr_flutter/qr_flutter.dart';
-import 'package:sushi_scouts/SushiScoutingLib/logic/data/compressor.dart';
+import 'package:sushi_scouts/SushiScoutingLib/logic/data/Compressor.dart';
 import 'package:sushi_scouts/SushiScoutingLib/logic/data/config_file_reader.dart';
-import 'package:sushi_scouts/SushiScoutingLib/logic/data/decompressor.dart';
-import '../../../SushiScoutingLib/logic/data/scouting_data.dart';
+import 'package:sushi_scouts/SushiScoutingLib/logic/data/Decompressor.dart';
+import 'package:sushi_scouts/SushiScoutingLib/logic/models/scouting_data_models/scouting_data.dart';
 import '../../../SushiScoutingLib/logic/size/ScreenSize.dart';
 
 
