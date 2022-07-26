@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import '../../../../SushiScoutingLib/logic/data/Data.dart';
+import '../../../../SushiScoutingLib/logic/data/data.dart';
 
 class CheckboxInput extends StatefulWidget {
   final String name;

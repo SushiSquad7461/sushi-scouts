@@ -11,9 +11,7 @@ import '../../../SushiScoutingLib/logic/secret/Secret.dart';
 import '../../../SushiScoutingLib/logic/secret/SecretLoader.dart';
 import '../../../SushiScoutingLib/logic/size/ScreenSize.dart';
 import '../../../main.dart';
-import '../util/Header/HeaderTitle.dart';
 import '../util/Footer/Footer.dart';
-import '../util/header/HeaderNav.dart';
 import 'package:http/http.dart' as http;
 
 class Settings extends StatefulWidget {

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import '../../../../SushiScoutingLib/logic/color/HexColor.dart';
+import '../../../../SushiScoutingLib/logic/color/hex_color.dart';
 import '../../../../SushiScoutingLib/logic/size/ScreenSize.dart';
 
 class HeaderNav extends StatelessWidget {

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:sushi_scouts/src/views/util/popups/RequiredContent.dart';
-import '../../../../SushiScoutingLib/logic/data/ScoutingData.dart';
+import 'package:sushi_scouts/src/views/util/popups/required_content.dart';
+import'../../../../SushiScoutingLib/logic/data/scouting_data.dart';
 import '../../../../SushiScoutingLib/logic/size/ScreenSize.dart';
-import 'Footer.dart';
-import 'package:sushi_scouts/src/views/ui/QRScreen.dart';
+import 'footer.dart';
+import 'package:sushi_scouts/src/views/ui/qr_screen.dart';
 
 class ScoutingFooter extends StatefulWidget {
   final ScoutingData? data;

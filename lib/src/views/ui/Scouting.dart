@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:sushi_scouts/src/logic/Constants.dart';
-import 'package:sushi_scouts/src/views/util/Footer/ScoutingFooter.dart';
+import 'package:sushi_scouts/src/logic/constants.dart';
+import 'package:sushi_scouts/src/views/util/Footer/scouting_footer.dart';
 
-import '../../../SushiScoutingLib/logic/data/Data.dart';
-import '../../../SushiScoutingLib/logic/data/ScoutingData.dart'
+import '../../../SushiScoutingLib/logic/data/data.dart';
+import '../../../SushiScoutingLib/logic/data/scouting_data.dart'
     as ScoutingDataHelpers;
 import '../../../SushiScoutingLib/logic/size/ScreenSize.dart';
 

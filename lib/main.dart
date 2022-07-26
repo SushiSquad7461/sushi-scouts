@@ -2,17 +2,17 @@ import "package:flutter/material.dart";
 import 'package:get/get.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:localstore/localstore.dart';
-import 'package:sushi_scouts/src/logic/Constants.dart';
-import 'package:sushi_scouts/src/views/ui/Loading.dart';
-import 'package:sushi_scouts/src/views/ui/Login.dart';
-import 'package:sushi_scouts/src/views/ui/QRScreen.dart';
-import 'package:sushi_scouts/src/views/ui/Scouting.dart';
-import 'package:sushi_scouts/src/views/ui/Settings.dart';
-import 'package:sushi_scouts/src/views/util/header/HeaderNav.dart';
-import 'package:sushi_scouts/src/views/util/header/HeaderTitle.dart';
+import 'package:sushi_scouts/src/logic/constants.dart';
+import 'package:sushi_scouts/src/views/ui/loading.dart';
+import 'package:sushi_scouts/src/views/ui/login.dart';
+import 'package:sushi_scouts/src/views/ui/qr_screen.dart';
+import 'package:sushi_scouts/src/views/ui/scouting.dart';
+import 'package:sushi_scouts/src/views/ui/settings.dart';
+import 'package:sushi_scouts/src/views/util/header/header_nav.dart';
+import 'package:sushi_scouts/src/views/util/header/header_title.dart';
 
-import 'SushiScoutingLib/logic/data/ConfigFileReader.dart';
-import 'SushiScoutingLib/logic/data/ScoutingData.dart';
+import 'SushiScoutingLib/logic/data/config_file_reader.dart';
+import 'SushiScoutingLib/logic/data/scouting_data.dart';
 import 'SushiScoutingLib/logic/size/ScreenSize.dart';
 
 void main() {
