@@ -1,18 +1,20 @@
 import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:localstore/localstore.dart';
-import '../../../SushiScoutingLib/logic/secret/secret.dart';
-import '../../../SushiScoutingLib/logic/secret/secret_loader.dart';
-import '../../../SushiScoutingLib/logic/size/ScreenSize.dart';
+import 'package:sushi_scouts/SushiScoutingLib/logic/helpers/secret/secret.dart';
+import 'package:sushi_scouts/SushiScoutingLib/logic/helpers/secret/secret_loader.dart';
+import 'package:sushi_scouts/SushiScoutingLib/logic/models/match_schedule.dart';
+import 'package:sushi_scouts/SushiScoutingLib/logic/helpers/size/ScreenSize.dart';
 import '../../../main.dart';
 import '../util/Footer/Footer.dart';
-import 'package:http/http.dart' as http;
+import 'package:sushi_scouts/SushiScoutingLib/logic/network/api_repository.dart';
 
 class Settings extends StatefulWidget {
   const Settings({Key? key}) : super(key: key);
@@ -36,39 +38,9 @@ class _SettingsState extends State<Settings> {
   }
 
   Future<void> downloadMatchSchedule() async {
-    if (secrets != null) {
-      final user = await db.collection("preferences").doc("user").get();
-
-      final headers = {
-        'Authorization':
-            'Basic ${base64.encode(utf8.encode("${secrets?.getApiKey("tbaUsername")}:${secrets?.getApiKey("tbaPassword")}"))}',
-        'If-Modified-Since': '',
-      };
-      var params = {
-        'tournamentLevel': 'qual',
-      };
-      var query = params.entries.map((p) => '${p.key}=${p.value}').join('&');
-      var url = Uri.parse(
-          'https://frc-api.firstinspires.org/v3.0/2020/schedule/ARLI?$query');
-      var res = await http.get(url, headers: headers);
-
-      if (res.statusCode == 200) {
-        for (final i in jsonDecode(res.body)["Schedule"]) {
-          db.collection("schedule").doc(i["matchNumber"].toString()).set({
-            "r1": i["teams"][0]["teamNumber"],
-            "r2": i["teams"][1]["teamNumber"],
-            "r3": i["teams"][2]["teamNumber"],
-            "b1": i["teams"][3]["teamNumber"],
-            "b2": i["teams"][4]["teamNumber"],
-            "b3": i["teams"][5]["teamNumber"],
-          });
-        }
-      } else {
-        throw Exception(
-            "Couldn't download TBA Data, Error Code: ${res.statusCode}");
-      }
-    } else {
-      throw Exception("Couldn't read in secrets file");
+    MatchSchedule? schedule = await ApiRepository().getMatchSchedule('WASNO', 'qual');
+    if(schedule != null) {
+      db.collection("data").doc("schedule").set(schedule.toJson());
     }
   }
 

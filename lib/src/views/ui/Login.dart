@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/src/foundation/key.dart';
@@ -6,7 +5,7 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:localstore/localstore.dart';
-import '../../../SushiScoutingLib/logic/size/ScreenSize.dart';
+import 'package:sushi_scouts/SushiScoutingLib/logic/helpers/size/ScreenSize.dart';
 
 class Login extends StatefulWidget {
   final Function(String newPage) changePage;

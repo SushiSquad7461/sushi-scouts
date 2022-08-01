@@ -1,9 +1,7 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
-import 'package:get/get.dart';
-import '../../../../SushiScoutingLib/logic/size/ScreenSize.dart';
+import 'package:sushi_scouts/SushiScoutingLib/logic/helpers/size/ScreenSize.dart';
 
 class HeaderTitle extends StatelessWidget {
   const HeaderTitle({Key? key}) : super(key: key);

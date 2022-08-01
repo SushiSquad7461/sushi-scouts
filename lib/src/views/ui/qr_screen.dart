@@ -5,8 +5,8 @@ import 'package:qr_flutter/qr_flutter.dart';
 import 'package:sushi_scouts/SushiScoutingLib/logic/data/Compressor.dart';
 import 'package:sushi_scouts/SushiScoutingLib/logic/data/config_file_reader.dart';
 import 'package:sushi_scouts/SushiScoutingLib/logic/data/Decompressor.dart';
+import 'package:sushi_scouts/SushiScoutingLib/logic/helpers/size/ScreenSize.dart';
 import 'package:sushi_scouts/SushiScoutingLib/logic/models/scouting_data_models/scouting_data.dart';
-import '../../../SushiScoutingLib/logic/size/ScreenSize.dart';
 
 
 class QRScreen extends StatefulWidget {
