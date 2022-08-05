@@ -70,7 +70,7 @@ class _QRScreenState extends State<QRScreen> {
     if( compressedData != null) {
       final decompressor = Decompressor(compressedData["compressedData"], widget.fileReader.getScoutingMethods());
       print(decompressor.isBackup());
-      ScoutingData data = widget.fileReader.generateScoutingData(widget.previousPage)!;
+      ScoutingData data = widget.fileReader.getScoutingData(widget.previousPage);
       bool moreData = false;
       do {
         print(decompressor.getScreen());

@@ -1,7 +1,10 @@
 import "package:flutter/material.dart";
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
 import 'package:localstore/localstore.dart';
 import 'package:sushi_scouts/SushiScoutingLib/logic/models/scouting_data_models/scouting_data.dart';
+import 'package:sushi_scouts/provider.dart';
+import 'package:sushi_scouts/src/logic/blocs/theme_bloc/theme_cubit.dart';
 import 'package:sushi_scouts/src/views/ui/loading.dart';
 import 'package:sushi_scouts/src/views/ui/login.dart';
 import 'package:sushi_scouts/src/views/ui/qr_screen.dart';
@@ -12,6 +15,7 @@ import 'package:sushi_scouts/src/views/util/header/header_title.dart';
 
 import 'SushiScoutingLib/logic/data/config_file_reader.dart';
 import 'SushiScoutingLib/logic/helpers/size/ScreenSize.dart';
+import 'SushiScoutingLib/ui/themes.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -54,138 +58,41 @@ class Wrapper extends StatelessWidget {
 
 class SushiScouts extends StatefulWidget {
   const SushiScouts({Key? key}) : super(key: key);
+  static GlobalKey<NavigatorState>? navigatorKey;
 
   @override
   State<SushiScouts> createState() => _SushiScoutsState();
 }
 
 class _SushiScoutsState extends State<SushiScouts> {
-  // CHANGE HOW YEAR WORKS
-  final fileReader = ConfigFileReader.instance;
-  String _previousPage = "loading";
-  String _currentPage = "loading";
-  Map<String, ScoutingData> scoutingPages = {};
-  List<String> _headerNavNeeded = [];
-  String currErr = "";
-  String pageParams = "";
-  bool qrCode = false;
-  final db = Localstore.instance;
-
-  // Change current page
-  void setCurrentPage(newPage) {
-    setState(() {
-      _previousPage = _currentPage;
-      _currentPage = newPage;
-    });
-  }
-
-  void goToQrCode(String qrCodeString) {
-    setState(() {
-      qrCode = true;
-      pageParams = qrCodeString;
-    });
-  }
-
-  Future<void> readConfigFile() async {
-    try {
-      await fileReader.readConfig();
-
-      setState(() {
-        for (var i in fileReader.getScoutingDataClasses()) {
-          scoutingPages[i.name] = i as ScoutingData;
-        }
-        _headerNavNeeded = fileReader.getScoutingMethods();
-        _headerNavNeeded.add("settings");
-
-        _currentPage = "pit";
-      });
-    } catch (err) {
-      setState(() {
-        _currentPage = "error";
-        currErr = err.toString();
-      });
-    }
-  }
 
   @override
   void initState() {
     super.initState();
-    setMode();
-    readConfigFile();
-  }
-
-  Future<void> setMode() async {
-    final data = await db.collection("preferences").doc("mode").get();
-
-    if (data != null) {
-      data["mode"] == "dark"
-          ? Get.changeTheme(Themes.dark)
-          : Get.changeTheme(Themes.light);
-    }
+    SushiScouts.navigatorKey = GlobalKey<NavigatorState>();
   }
 
   @override
   Widget build(BuildContext context) {
-    ScreenSize.width = MediaQuery.of(context).size.width;
-    ScreenSize.height = MediaQuery.of(context).size.height;
-    double pageHeight = _headerNavNeeded.contains(_currentPage)
-        ? ScreenSize.height * 0.8
-        : ScreenSize.height * 0.9;
-
-    return GestureDetector(
-      onTap: () {
-        FocusScopeNode currentFocus = FocusScope.of(context);
-        if (!currentFocus.hasPrimaryFocus) {
-          currentFocus.unfocus();
-        }
-      },
-      child: Column(children: [
-        const HeaderTitle(),
-        if (_headerNavNeeded.contains(_currentPage) && !qrCode)
-          HeaderNav(
-              currentPage: _currentPage,
-              changePage: setCurrentPage,
-              screens: _headerNavNeeded),
-        SizedBox(
-          height: pageHeight,
-          width: ScreenSize.width,
-          child: Navigator(
-            pages: [
-              if (_currentPage == "login")
-                MaterialPage(
-                    child: Login(
-                  changePage: setCurrentPage,
-                ))
-              else if (_currentPage == "loading") // TODO: FIX LOADING PAGE
-                const MaterialPage(child: Loading())
-              else if (_currentPage == "error") // TODO: ADD ERROR PAGE
-                MaterialPage(
-                    child: Center(
-                        child: Text(
-                  "Error $currErr",
-                  style: const TextStyle(color: Colors.red),
-                )))
-              else if (_currentPage == "settings")
-                const MaterialPage(child: Settings())
-              else if (_currentPage == "qrscreen")
-                MaterialPage(
-                    child: QRScreen(
-                        changePage: setCurrentPage,
-                        previousPage: _previousPage,
-                        data: scoutingPages[_previousPage]!,
-                        pageIndex: _headerNavNeeded.indexOf(_previousPage),))
-              else if (fileReader.getScoutingMethods().contains(_currentPage))
-                MaterialPage(
-                    child: Scouting(
-                        data: scoutingPages[_currentPage],
-                        changeScreen: setCurrentPage))
-            ],
-            onPopPage: (route, result) {
-              return route.didPop(result);
-            },
-          ),
-        ),
-      ]),
+    return MultiBlocProvider(
+      providers: providers,
+      child: GestureDetector(
+        onTap: () {
+          FocusScopeNode currentFocus = FocusScope.of(context);
+          if (!currentFocus.hasPrimaryFocus) {
+            currentFocus.unfocus();
+          }
+        },
+        child: BlocBuilder<ThemeCubit, ThemeStates>(
+          builder: (context, state) {
+            return MaterialApp(
+              theme: state is DarkMode ? darkTheme : lightTheme,
+              home: const Loading(),
+              navigatorKey: SushiScouts.navigatorKey,
+            );
+          }
+        )
+      ),
     );
   }
 }

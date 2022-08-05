@@ -41,6 +41,7 @@ dependencies:
   localstore: ^1.2.3
   get: ^4.6.5
   json_annotation: ^4.6.0
+  flutter_bloc: ^8.0.1
 
 dev_dependencies:
   flutter_test:

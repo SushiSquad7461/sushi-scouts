@@ -5,11 +5,11 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:localstore/localstore.dart';
+import 'package:sushi_scouts/SushiScoutingLib/logic/data/config_file_reader.dart';
 import 'package:sushi_scouts/SushiScoutingLib/logic/helpers/size/ScreenSize.dart';
 
 class Login extends StatefulWidget {
-  final Function(String newPage) changePage;
-  const Login({Key? key, required this.changePage}) : super(key: key);
+  const Login({Key? key}) : super(key: key);
 
   @override
   State<Login> createState() => _LoginState();
@@ -28,11 +28,12 @@ class _LoginState extends State<Login> {
       "eventCode": eventCode,
     });
 
-    widget.changePage("cardinal");
+    //widget.changePage("cardinal");
   }
 
   @override
   Widget build(BuildContext context) {
+    print(ConfigFileReader.instance.getScoutingData('cardinal'));
     var colors = Theme.of(context);
     return Stack(
       fit: StackFit.expand,
