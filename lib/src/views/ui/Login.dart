@@ -31,7 +31,7 @@ class _LoginState extends State<Login> {
       "eventCode": eventCode,
     });
 
-    RouteHelper.pushAndRemoveUntilToScreen(ctx: context, screen: Scouting("cardinal"));
+    RouteHelper.pushAndRemoveUntilToScreen(ctx: context, screen: const Scouting());
   }
 
   @override

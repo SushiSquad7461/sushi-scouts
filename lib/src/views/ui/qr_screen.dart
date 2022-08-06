@@ -1,28 +1,24 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:localstore/localstore.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:sushi_scouts/SushiScoutingLib/logic/data/Compressor.dart';
 import 'package:sushi_scouts/SushiScoutingLib/logic/data/config_file_reader.dart';
 import 'package:sushi_scouts/SushiScoutingLib/logic/data/Decompressor.dart';
+import 'package:sushi_scouts/SushiScoutingLib/logic/helpers/routing_helper.dart';
 import 'package:sushi_scouts/SushiScoutingLib/logic/helpers/size/ScreenSize.dart';
 import 'package:sushi_scouts/SushiScoutingLib/logic/models/scouting_data_models/scouting_data.dart';
+import 'package:sushi_scouts/src/logic/blocs/scouting_method_bloc/scouting_method_cubit.dart';
+import 'package:sushi_scouts/src/views/ui/scouting.dart';
 
 
 class QRScreen extends StatefulWidget {
-  final Function(String) changePage;
-  final String previousPage;
-  final ScoutingData data;
-  final int pageIndex;
   final db = Localstore.instance;
   final fileReader = ConfigFileReader.instance;
 
   QRScreen(
-      {Key? key,
-      required this.changePage,
-      required this.previousPage,
-      required this.data,
-      required this.pageIndex})
+      {Key? key})
       : super(key: key);
 
   @override
@@ -34,11 +30,14 @@ class _QRScreenState extends State<QRScreen> {
   bool isBackup = false;
   bool dataConverted = false;
   bool generateCode = false;
+  ScoutingData? currentScoutingData;
+  int pageIndex = 0;
+  String currPage = '';
 
   Future<void> convertData() async{
     if (!dataConverted) {
-      final compressedData = await widget.db.collection("data").doc("current${widget.previousPage}").get();
-      Compressor compressor = Compressor(widget.data.getData(), widget.pageIndex);
+      final compressedData = await widget.db.collection("data").doc("current${currPage}").get();
+      Compressor compressor = Compressor(currentScoutingData!.getData(), pageIndex);
       String newData;
       int length;
       
@@ -49,7 +48,7 @@ class _QRScreenState extends State<QRScreen> {
         newData = compressor.addTo(compressedData["compressedData"]! as String, compressedData["length"]! as int);
         length = compressor.getLength();
       }
-      widget.db.collection("data").doc("current${widget.previousPage}").set({
+      widget.db.collection("data").doc("current${currPage}").set({
         "compressedData" : newData,
         "length" : length
         }
@@ -59,18 +58,18 @@ class _QRScreenState extends State<QRScreen> {
   }
 
   void deleteBackup() {
-    widget.db.collection("data").doc("backup${widget.previousPage}").delete();
-    widget.db.collection("data").doc("current${widget.previousPage}").delete();
+    widget.db.collection("data").doc("backup${currPage}").delete();
+    widget.db.collection("data").doc("current${currPage}").delete();
     dataConverted = true;
   }
 
   Future<void> getData() async {
     await convertData();
-    final compressedData = await widget.db.collection("data").doc("${isBackup?"backup":"current"}${widget.previousPage}").get();
+    final compressedData = await widget.db.collection("data").doc("${isBackup?"backup":"current"}${currPage}").get();
     if( compressedData != null) {
       final decompressor = Decompressor(compressedData["compressedData"], widget.fileReader.getScoutingMethods());
       print(decompressor.isBackup());
-      ScoutingData data = widget.fileReader.getScoutingData(widget.previousPage);
+      ScoutingData data = widget.fileReader.getScoutingData(currPage);
       bool moreData = false;
       do {
         print(decompressor.getScreen());
@@ -81,21 +80,21 @@ class _QRScreenState extends State<QRScreen> {
         stringifiedData = compressedData["compressedData"] as String;
       } else {
         stringifiedData = compressedData["compressedData"] as String;
-        final backup = await widget.db.collection("data").doc("backup${widget.previousPage}").get();
+        final backup = await widget.db.collection("data").doc("backup${currPage}").get();
         if (backup != null) {
-          widget.db.collection("data").doc("backup${widget.previousPage}").set({
+          widget.db.collection("data").doc("backup${currPage}").set({
             "compressedData" : Compressor.update(backup["compressedData"], backup["length"], compressedData["compressedData"]),
             "length": backup["length"] + compressedData["length"]-1
           });
         } else {
           int length = compressedData["length"] as int;
           String compressedString = Compressor.setBackUp(compressedData["compressedData"] as String);
-          widget.db.collection("data").doc("backup${widget.previousPage}").set({
+          widget.db.collection("data").doc("backup${currPage}").set({
             "compressedData" : compressedString,
             "length" : length
           });
         }
-        widget.db.collection("data").doc("current${widget.previousPage}").delete();
+        widget.db.collection("data").doc("current${currPage}").delete();
       }
       setState(() {
         generateCode = true;
@@ -104,8 +103,13 @@ class _QRScreenState extends State<QRScreen> {
     }
   }
 
-  @override
-  Widget build(BuildContext context) {
+  Future<void> back() async{
+    convertData();
+    currentScoutingData!.empty();
+    RouteHelper.pushAndRemoveUntilToScreen(ctx: context, screen: const Scouting());
+  }
+
+  Widget buildQRCode() {
     var colors = Theme.of(context);
     return Stack(
       fit: StackFit.expand,
@@ -246,9 +250,7 @@ class _QRScreenState extends State<QRScreen> {
               ),
               child: TextButton(
                 onPressed: () {
-                  convertData();
-                  widget.data.empty();
-                  widget.changePage(widget.previousPage);
+                  back();
                 },
                 child: Text(
                   'CONTINUE',
@@ -261,6 +263,19 @@ class _QRScreenState extends State<QRScreen> {
               )),
         ),
       ],
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<ScoutingMethodCubit, ScoutingMethodStates>(
+      builder:(context, state) {
+        currPage = (state as ScoutingMethodsInitialized).method;        
+        var methods = widget.fileReader.getScoutingMethods();
+        pageIndex = methods.indexOf(currPage);
+        currentScoutingData = widget.fileReader.getScoutingData(currPage);
+        return buildQRCode();
+      },
     );
   }
 }

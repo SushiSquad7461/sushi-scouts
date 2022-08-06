@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_bloc/src/bloc_provider.dart';
-import 'package:localstore/localstore.dart';
 import 'package:sushi_scouts/SushiScoutingLib/logic/helpers/routing_helper.dart';
 import 'package:sushi_scouts/src/logic/blocs/file_reader_bloc/file_reader_cubit.dart';
 import 'package:sushi_scouts/src/logic/blocs/theme_bloc/theme_cubit.dart';
