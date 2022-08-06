@@ -74,6 +74,8 @@ class _SushiScoutsState extends State<SushiScouts> {
 
   @override
   Widget build(BuildContext context) {
+    ScreenSize.setHeight(MediaQuery.of(context).size.height);
+    ScreenSize.setWidth(MediaQuery.of(context).size.width);
     return MultiBlocProvider(
       providers: providers,
       child: GestureDetector(

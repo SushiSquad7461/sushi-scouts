@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_bloc/src/bloc_provider.dart';
 import 'package:localstore/localstore.dart';
+import 'package:sushi_scouts/SushiScoutingLib/logic/helpers/routing_helper.dart';
 import 'package:sushi_scouts/src/logic/blocs/file_reader_bloc/file_reader_cubit.dart';
 import 'package:sushi_scouts/src/logic/blocs/theme_bloc/theme_cubit.dart';
 import 'package:sushi_scouts/src/views/ui/login.dart';
@@ -14,27 +15,16 @@ class Loading extends StatefulWidget {
 }
 
 class LoadingState extends State<Loading> {
-  
-  @override
-  void initState() {
-    super.initState();
-    BlocProvider.of<FileReaderCubit>(context).readConfig();
-    BlocProvider.of<ThemeCubit>(context).setMode(); 
-  }
 
+  Future<void> loadConfig() async{
+    await BlocProvider.of<ThemeCubit>(context).setMode();
+    await BlocProvider.of<FileReaderCubit>(context).readConfig();
+    RouteHelper.pushAndRemoveUntilToScreen(ctx: context, screen: const Login());
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: BlocBuilder<FileReaderCubit, FileReaderStates>(
-        builder: (context, state) {
-          if (state is FileReaderLoaded) {
-            return const Login();
-          } else {
-            return const Center(child: Text("im loading"),);
-          }
-        },
-      )
-    );
+    loadConfig();
+    return const Scaffold(body: Center(child: Text("im loading")));
   }
 }

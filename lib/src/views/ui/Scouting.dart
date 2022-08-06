@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:sushi_scouts/SushiScoutingLib/logic/data/config_file_reader.dart';
 import 'package:sushi_scouts/SushiScoutingLib/logic/helpers/size/ScreenSize.dart';
 import 'package:sushi_scouts/SushiScoutingLib/logic/models/scouting_data_models/component.dart';
 import 'package:sushi_scouts/SushiScoutingLib/logic/models/scouting_data_models/page.dart';
@@ -11,10 +12,12 @@ import 'package:sushi_scouts/src/views/util/Footer/scouting_footer.dart';
 import '../../../SushiScoutingLib/logic/data/data.dart';
 
 class Scouting extends StatefulWidget {
-  final ScoutingData? data;
-  final Function(String) changeScreen;
-  const Scouting({Key? key, required this.data, required this.changeScreen})
-      : super(key: key);
+  late final ScoutingData? data;
+  Scouting(String method, {Key? key})
+    : super(key: key) {
+    var reader = ConfigFileReader.instance;
+    data = reader.getScoutingData(method);
+  }
   @override
   ScoutingState createState() => ScoutingState();
 }
@@ -133,30 +136,37 @@ class ScoutingState extends State<Scouting> {
         build(context);
       });
     } else {
-      widget.changeScreen('qrscreen');
+      //widget.changeScreen('qrscreen');
     }
   }
 
   @override
   Widget build(BuildContext context) {
     _init();
-    return Column(
-      children: [
-        Padding(
-          padding: EdgeInsets.only(top: ScreenSize.height * 0.02),
-          child: SizedBox(
-            width: ScreenSize.width,
-            height: ScreenSize.height * 0.61,
-            child: _buildBody(ScreenSize.get()),
-          ),
+    return Scaffold(
+      resizeToAvoidBottomInset: false,
+      body: SizedBox(
+        width:ScreenSize.width,
+        height: ScreenSize.height,
+        child: Column(
+          children: [
+            Padding(
+              padding: EdgeInsets.only(top: ScreenSize.height * 0.02),
+              child: SizedBox(
+                width: ScreenSize.width,
+                height: ScreenSize.height * 0.61,
+                child: _buildBody(ScreenSize.get()),
+              ),
+            ),
+            ScoutingFooter(
+              key: Key(widget.data!.name),
+              data: widget.data,
+              popupContext: context,
+              newPage: renderNewPage,
+            ),
+          ],
         ),
-        ScoutingFooter(
-          key: Key(widget.data!.name),
-          data: widget.data,
-          popupContext: context,
-          newPage: renderNewPage,
-        ),
-      ],
+      ),
     );
   }
 }

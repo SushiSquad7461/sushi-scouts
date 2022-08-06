@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sushi_scouts/SushiScoutingLib/logic/data/config_file_reader.dart';
 import 'package:sushi_scouts/src/logic/blocs/theme_bloc/theme_cubit.dart';
@@ -8,6 +10,7 @@ class FileReaderCubit extends Cubit<FileReaderStates>{
   FileReaderCubit() : super(FileReaderLoading());
   Future<void> readConfig() async{
     emit(FileReaderLoading());
+    sleep(const Duration(seconds: 0));
     var reader = ConfigFileReader.instance;
     await reader.readConfig();
     emit(FileReaderLoaded());
