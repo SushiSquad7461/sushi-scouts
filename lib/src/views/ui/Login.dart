@@ -24,13 +24,12 @@ class _LoginState extends State<Login> {
   String? eventCode;
   final db = Localstore.instance;
 
-  void nextPage() {
-    db.collection("preferences").doc("user").set({
+  void nextPage() async{
+    await db.collection("preferences").doc("user").set({
       "teamNum": teamNum,
       "name": name,
       "eventCode": eventCode,
     });
-
     RouteHelper.pushAndRemoveUntilToScreen(ctx: context, screen: const Scouting());
   }
 

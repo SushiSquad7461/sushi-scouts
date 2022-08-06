@@ -11,6 +11,8 @@ import 'package:sushi_scouts/SushiScoutingLib/logic/helpers/size/ScreenSize.dart
 import 'package:sushi_scouts/SushiScoutingLib/logic/models/scouting_data_models/scouting_data.dart';
 import 'package:sushi_scouts/src/logic/blocs/scouting_method_bloc/scouting_method_cubit.dart';
 import 'package:sushi_scouts/src/views/ui/scouting.dart';
+import 'package:sushi_scouts/src/views/util/header/header_nav.dart';
+import 'package:sushi_scouts/src/views/util/header/header_title.dart';
 
 
 class QRScreen extends StatefulWidget {
@@ -274,7 +276,18 @@ class _QRScreenState extends State<QRScreen> {
         var methods = widget.fileReader.getScoutingMethods();
         pageIndex = methods.indexOf(currPage);
         currentScoutingData = widget.fileReader.getScoutingData(currPage);
-        return buildQRCode();
+        return Scaffold(
+          body: Column(
+            children: [
+              const HeaderTitle(),
+              SizedBox(
+                width: ScreenSize.width,
+                height: ScreenSize.height*0.9,
+                child: buildQRCode()
+              ),
+            ],
+          ),
+        );
       },
     );
   }

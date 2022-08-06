@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:sushi_scouts/SushiScoutingLib/logic/data/data.dart';
 import 'package:sushi_scouts/SushiScoutingLib/logic/data/config_file_reader.dart';
 import 'package:sushi_scouts/SushiScoutingLib/logic/helpers/size/ScreenSize.dart';
 import 'package:sushi_scouts/SushiScoutingLib/logic/models/scouting_data_models/component.dart';
@@ -9,14 +10,12 @@ import 'package:sushi_scouts/SushiScoutingLib/logic/models/scouting_data_models/
 import 'package:sushi_scouts/SushiScoutingLib/logic/models/scouting_data_models/section.dart';
 import 'package:sushi_scouts/src/logic/blocs/scouting_method_bloc/scouting_method_cubit.dart';
 import 'package:sushi_scouts/src/logic/constants.dart';
-import 'package:sushi_scouts/src/views/util/Footer/Footer.dart';
 import 'package:sushi_scouts/src/views/util/footer/scouting_footer.dart';
-
-import '../../../SushiScoutingLib/logic/data/data.dart';
+import 'package:sushi_scouts/src/views/util/header/header_nav.dart';
+import 'package:sushi_scouts/src/views/util/header/header_title.dart';
 
 class Scouting extends StatefulWidget {
-  const Scouting({Key? key})
-    : super(key: key);
+  const Scouting({Key? key}) : super(key: key);
   @override
   ScoutingState createState() => ScoutingState();
 }
@@ -34,8 +33,7 @@ class ScoutingState extends State<Scouting> {
   }
 
   //builds the components in a certain section
-  Widget _buildSection(
-      double width, Section section, int currRow) {
+  Widget _buildSection(double width, Section section, int currRow) {
     double scaledWidth = (width > 500 ? 500 : width);
 
     List<Widget> builtComponents = [];
@@ -55,7 +53,7 @@ class ScoutingState extends State<Scouting> {
         throw ErrorDescription(
             "No component exsits called: ${currComponent.component}");
       }
-      
+
       var colors = Theme.of(context);
 
       builtComponents.add(COMPONENT_MAP.containsKey(currComponent.component)
@@ -134,21 +132,24 @@ class ScoutingState extends State<Scouting> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: BlocBuilder<ScoutingMethodCubit, ScoutingMethodStates>(
-        builder:(context, state) {
+        builder: (context, state) {
           var reader = ConfigFileReader.instance;
-          if(state is ScoutingMethodsUninitialized) {
-            BlocProvider.of<ScoutingMethodCubit>(context).changeMethod(
-              reader.getScoutingMethods()[0], 0
-            );
+          if (state is ScoutingMethodsUninitialized) {
+            BlocProvider.of<ScoutingMethodCubit>(context)
+                .changeMethod(reader.getScoutingMethods()[0], 0);
             return Text("Loading");
           }
-          currentScoutingData = reader.getScoutingData((state as ScoutingMethodsInitialized).method);
+          currentScoutingData = reader
+              .getScoutingData((state as ScoutingMethodsInitialized).method);
           _init();
+          print(state.method);
           return SizedBox(
-            width:ScreenSize.width,
+            width: ScreenSize.width,
             height: ScreenSize.height,
             child: Column(
               children: [
+                const HeaderTitle(),
+                HeaderNav(currentPage: state.method),
                 Padding(
                   padding: EdgeInsets.only(top: ScreenSize.height * 0.02),
                   child: SizedBox(

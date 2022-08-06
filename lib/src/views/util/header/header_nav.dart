@@ -1,20 +1,36 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:sushi_scouts/SushiScoutingLib/logic/data/config_file_reader.dart';
 import 'package:sushi_scouts/SushiScoutingLib/logic/helpers/color/hex_color.dart';
+import 'package:sushi_scouts/SushiScoutingLib/logic/helpers/routing_helper.dart';
 import 'package:sushi_scouts/SushiScoutingLib/logic/helpers/size/ScreenSize.dart';
-
+import 'package:sushi_scouts/src/logic/blocs/scouting_method_bloc/scouting_method_cubit.dart';
+import 'package:sushi_scouts/src/views/ui/Scouting.dart';
+import 'package:sushi_scouts/src/views/ui/Settings.dart';
 
 class HeaderNav extends StatelessWidget {
   final String currentPage;
-  final Function(String newPage) changePage;
-  List<String> screens;
+  late List<String> screens;
 
-  HeaderNav(
-      {Key? key,
-      required this.currentPage,
-      required this.changePage,
-      required this.screens})
-      : super(key: key);
+  HeaderNav({Key? key, required this.currentPage}) : super(key: key) {
+    var reader = ConfigFileReader.instance;
+    screens = reader.getScoutingMethods();
+    screens.add("settings");
+  }
+
+  void changeScreen(String screen, context) {
+    if (screen != "settings") {
+      BlocProvider.of<ScoutingMethodCubit>(context).changeMethod(screen, 0);
+    } else {
+      RouteHelper.pushAndRemoveUntilToScreen(
+          ctx: context, screen: const Settings());
+    }
+    if (currentPage == "settings") {
+      RouteHelper.pushAndRemoveUntilToScreen(
+          ctx: context, screen: const Scouting());
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +40,6 @@ class HeaderNav extends StatelessWidget {
       fontWeight: FontWeight.w700,
       color: colors.primaryColorDark,
     );
-
     return Container(
         height: ScreenSize.height * 0.1,
         child: Padding(
@@ -45,7 +60,7 @@ class HeaderNav extends StatelessWidget {
                           top: 0 * ScreenSize.shu,
                           bottom: 0 * ScreenSize.shu),
                       child: GestureDetector(
-                          onTap: () => changePage(screen),
+                          onTap: () => changeScreen(screen, context),
                           child: Container(
                               decoration: ((currentPage == screen)
                                   ? BoxDecoration(

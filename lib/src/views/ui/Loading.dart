@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:sushi_scouts/SushiScoutingLib/logic/data/config_file_reader.dart';
 import 'package:sushi_scouts/SushiScoutingLib/logic/helpers/routing_helper.dart';
 import 'package:sushi_scouts/src/logic/blocs/file_reader_bloc/file_reader_cubit.dart';
+import 'package:sushi_scouts/src/logic/blocs/scouting_method_bloc/scouting_method_cubit.dart';
 import 'package:sushi_scouts/src/logic/blocs/theme_bloc/theme_cubit.dart';
 import 'package:sushi_scouts/src/views/ui/login.dart';
 
@@ -13,10 +15,11 @@ class Loading extends StatefulWidget {
 }
 
 class LoadingState extends State<Loading> {
-
-  Future<void> loadConfig() async{
+  Future<void> loadConfig() async {
     await BlocProvider.of<ThemeCubit>(context).setMode();
     await BlocProvider.of<FileReaderCubit>(context).readConfig();
+    var reader = ConfigFileReader.instance;
+    BlocProvider.of<ScoutingMethodCubit>(context).changeMethod(reader.getScoutingMethods()[0], 0);
     RouteHelper.pushAndRemoveUntilToScreen(ctx: context, screen: const Login());
   }
 
