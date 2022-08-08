@@ -73,8 +73,13 @@ class _QRScreenState extends State<QRScreen> {
       print(decompressor.isBackup());
       ScoutingData data = widget.fileReader.getScoutingData(currPage);
       bool moreData = false;
+      String temp;
       do {
-        print(decompressor.getScreen());
+        temp = decompressor.getScreen();
+        print(temp);
+        if (temp == "") {
+          break;
+        }
         moreData = decompressor.decompress(data.getData());
         print(data.stringfy());
       } while( moreData );
@@ -146,103 +151,97 @@ class _QRScreenState extends State<QRScreen> {
             alignment: const Alignment(0, -0.5),
             child: Column(
               children: [
-                Container(
-                  width: 350 * ScreenSize.swu,
-                  height: 55 * ScreenSize.swu,
-                  decoration: BoxDecoration(
-                    border: Border.all(color: colors.primaryColorDark, width: 3.5),
-                    color: colors.scaffoldBackgroundColor,
-                    borderRadius:
-                        BorderRadius.circular(10 * ScreenSize.swu),
-                  ),
-                  child: TextButton(
-                    onPressed: () {
-                      isBackup = false;
-                      getData();
-                    },
-                    child: Text(
-                      'GENERATE CODE',
-                      style: TextStyle(
-                          fontSize: 29 * ScreenSize.swu,
-                          fontFamily: "Sushi",
-                          color: colors.primaryColorDark,
-                          fontWeight: FontWeight.bold),
+                Padding(
+                  padding: EdgeInsets.only(top: 35*ScreenSize.swu),
+                  child: Container(
+                    width: 350 * ScreenSize.swu,
+                    height: 55 * ScreenSize.swu,
+                    decoration: BoxDecoration(
+                      border: Border.all(color: colors.primaryColorDark, width: 3.5),
+                      color: colors.scaffoldBackgroundColor,
+                      borderRadius:
+                          BorderRadius.circular(10 * ScreenSize.swu),
+                    ),
+                    child: TextButton(
+                      onPressed: () {
+                        isBackup = false;
+                        getData();
+                      },
+                      child: Text(
+                        'GENERATE CODE',
+                        style: TextStyle(
+                            fontSize: 29 * ScreenSize.swu,
+                            fontFamily: "Sushi",
+                            color: colors.primaryColorDark,
+                            fontWeight: FontWeight.bold),
+                      ),
                     ),
                   ),
                 ),
-                Container(
-                  width: 350 * ScreenSize.swu,
-                  height: 55 * ScreenSize.swu,
-                  decoration: BoxDecoration(
-                    border: Border.all(color: colors.primaryColorDark, width: 3.5),
-                    color: colors.scaffoldBackgroundColor,
-                    borderRadius:
-                        BorderRadius.circular(10 * ScreenSize.swu),
-                  ),
-                  child: TextButton(
-                    onPressed: () {
-                      isBackup = true;
-                      getData();
-                    },
-                    child: Text(
-                      'RESTORE BACKUP',
-                      style: TextStyle(
-                          fontSize: 29 * ScreenSize.swu,
-                          fontFamily: "Sushi",
-                          color: colors.primaryColorDark,
-                          fontWeight: FontWeight.bold),
+                Padding(
+                  padding: EdgeInsets.only(top: 35*ScreenSize.swu),
+                  child: Container(
+                    width: 350 * ScreenSize.swu,
+                    height: 55 * ScreenSize.swu,
+                    decoration: BoxDecoration(
+                      border: Border.all(color: colors.primaryColorDark, width: 3.5),
+                      color: colors.scaffoldBackgroundColor,
+                      borderRadius:
+                          BorderRadius.circular(10 * ScreenSize.swu),
+                    ),
+                    child: TextButton(
+                      onPressed: () {
+                        isBackup = true;
+                        getData();
+                      },
+                      child: Text(
+                        'RESTORE BACKUP',
+                        style: TextStyle(
+                            fontSize: 29 * ScreenSize.swu,
+                            fontFamily: "Sushi",
+                            color: colors.primaryColorDark,
+                            fontWeight: FontWeight.bold),
+                      ),
                     ),
                   ),
                 ),
-                Container(
-                  width: 350 * ScreenSize.swu,
-                  height: 55 * ScreenSize.swu,
-                  decoration: BoxDecoration(
-                    border: Border.all(color: colors.primaryColorDark, width: 3.5),
-                    color: colors.scaffoldBackgroundColor,
-                    borderRadius:
-                        BorderRadius.circular(10 * ScreenSize.swu),
-                  ),
-                  child: TextButton(
-                    onPressed: () {
-                      isBackup = true;
-                      deleteBackup();
-                    },
-                    child: Text(
-                      'DELETE BACKUP',
-                      style: TextStyle(
-                          fontSize: 29 * ScreenSize.swu,
-                          fontFamily: "Sushi",
-                          color: colors.primaryColorDark,
-                          fontWeight: FontWeight.bold),
+                Padding(
+                  padding: EdgeInsets.only(top: 35*ScreenSize.swu),
+                  child: Container(
+                    width: 350 * ScreenSize.swu,
+                    height: 55 * ScreenSize.swu,
+                    decoration: BoxDecoration(
+                      border: Border.all(color: colors.primaryColorDark, width: 3.5),
+                      color: colors.scaffoldBackgroundColor,
+                      borderRadius:
+                          BorderRadius.circular(10 * ScreenSize.swu),
+                    ),
+                    child: TextButton(
+                      onPressed: () {
+                        isBackup = true;
+                        deleteBackup();
+                      },
+                      child: Text(
+                        'DELETE BACKUP',
+                        style: TextStyle(
+                            fontSize: 29 * ScreenSize.swu,
+                            fontFamily: "Sushi",
+                            color: colors.primaryColorDark,
+                            fontWeight: FontWeight.bold),
+                      ),
                     ),
                   ),
                 ),
               ]
             )
           ), 
-        
-        if(generateCode)
-          Align(
-            alignment: const Alignment(-1, -1),
-            child: IconButton(
-              onPressed: () {
-                setState(() {
-                  generateCode = false;
-                });
-              },
-              iconSize: ScreenSize.swu * 100,
-              icon: const Icon(
-                Icons.arrow_back_ios
-              ),
-            )
-          ),
         Align(
             alignment: Alignment(0, 1),
             child: SvgPicture.asset(
               "./assets/images/FooterColors.svg",
               width: ScreenSize.width,
             )),
+        (!generateCode) ?
         Align(
           alignment: Alignment(0, 0.83),
           child: Container(
@@ -263,7 +262,52 @@ class _QRScreenState extends State<QRScreen> {
                       fontWeight: FontWeight.bold),
                 ),
               )),
-        ),
+        ) :
+        Align(
+          alignment: const Alignment(0, 0.83),
+          child: Container(
+            width: ScreenSize.width,
+            decoration: BoxDecoration(
+              color: colors.primaryColorDark,
+            ),
+            child: Row(
+              children: [
+                Expanded(
+                  flex: 1,
+                  child: TextButton(
+                    onPressed: () => setState(() {
+                      generateCode = false;
+                    }),
+                    child: Text(
+                      'BACK',
+                      style: TextStyle(
+                        fontSize: 35 * ScreenSize.swu,
+                        fontFamily: "Sushi",
+                        color: colors.primaryColor,
+                        fontWeight: FontWeight.bold
+                      ),
+                    )
+                  ),
+                ),
+                Expanded(
+                  flex: 1,
+                  child: TextButton(
+                    onPressed: () => back(),
+                    child: Text(
+                      'CONTINUE',
+                      style: TextStyle(
+                        fontSize: 35 * ScreenSize.swu,
+                        fontFamily: "Sushi",
+                        color: colors.primaryColor,
+                        fontWeight: FontWeight.bold
+                      ),
+                    )
+                  ),
+                ),
+              ]
+            ),
+          ),
+        )
       ],
     );
   }
