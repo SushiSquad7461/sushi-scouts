@@ -5,6 +5,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:localstore/localstore.dart';
@@ -12,6 +13,7 @@ import 'package:sushi_scouts/SushiScoutingLib/logic/helpers/secret/secret.dart';
 import 'package:sushi_scouts/SushiScoutingLib/logic/helpers/secret/secret_loader.dart';
 import 'package:sushi_scouts/SushiScoutingLib/logic/models/match_schedule.dart';
 import 'package:sushi_scouts/SushiScoutingLib/logic/helpers/size/ScreenSize.dart';
+import 'package:sushi_scouts/src/logic/blocs/theme_bloc/theme_cubit.dart';
 import 'package:sushi_scouts/src/views/util/header/header_nav.dart';
 import 'package:sushi_scouts/src/views/util/header/header_title.dart';
 import '../../../main.dart';
@@ -30,6 +32,7 @@ class _SettingsState extends State<Settings> {
   Secret? secrets;
 
   Future<void> toggleMode(String mode) async {
+    BlocProvider.of<ThemeCubit>(context).switchTheme(isDarkMode: mode == "dark" ? true : false);
     db.collection("preferences").doc("mode").set({
       "mode": mode,
     });

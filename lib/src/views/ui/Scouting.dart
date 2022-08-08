@@ -104,11 +104,11 @@ class ScoutingState extends State<Scouting> {
           size.width / i.rows < 300 ? (size.width / 300).floor() : i.rows;
       if (i.title != "") {
         builtSections.add(Align(
-          alignment: Alignment(-0.8, 0),
+          alignment: const Alignment(-0.8, 0),
           child: Text(
             i.title,
             style: GoogleFonts.mohave(
-                color: i.textColor,
+                color: i.getTextColor(Theme.of(context).scaffoldBackgroundColor == Colors.black),
                 fontSize: size.width / 15,
                 fontWeight: FontWeight.w400),
           ),
@@ -142,7 +142,6 @@ class ScoutingState extends State<Scouting> {
           currentScoutingData = reader
               .getScoutingData((state as ScoutingMethodsInitialized).method);
           _init();
-          print(state.method);
           return SizedBox(
             width: ScreenSize.width,
             height: ScreenSize.height,

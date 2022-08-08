@@ -10,7 +10,6 @@ class FileReaderCubit extends Cubit<FileReaderStates>{
   FileReaderCubit() : super(FileReaderLoading());
   Future<void> readConfig() async{
     emit(FileReaderLoading());
-    //sleep(const Duration(seconds: 2));
     var reader = ConfigFileReader.instance;
     await reader.readConfig();
     emit(FileReaderLoaded());
