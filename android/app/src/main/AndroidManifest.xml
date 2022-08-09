@@ -6,7 +6,7 @@
    <application
         android:label="sushi_scouts"
         android:name="${applicationName}"
-        android:icon="@mipmap/nori">
+        android:icon="@mipmap/app_icon">
         <activity
             android:name=".MainActivity"
             android:exported="true"
