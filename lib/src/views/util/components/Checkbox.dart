@@ -11,6 +11,7 @@ class CheckboxInput extends StatefulWidget {
   final Color textColor;
   final double width;
   final List<String>? values;
+  final bool setCommonValue;
   bool checked = false;
   CheckboxInput(
       {Key? key,
@@ -20,6 +21,7 @@ class CheckboxInput extends StatefulWidget {
       required this.color,
       required this.width,
       required this.textColor,
+      required this.setCommonValue,
       this.values})
       : super(key: key);
   static CheckboxInput create(
@@ -30,7 +32,8 @@ class CheckboxInput extends StatefulWidget {
       Data defaultValue,
       Color color,
       double width,
-      Color textColor) {
+      Color textColor,
+      bool setCommonValue,) {
     return CheckboxInput(
       key: key,
       name: name,
@@ -40,6 +43,7 @@ class CheckboxInput extends StatefulWidget {
       color: color,
       values: values,
       textColor: textColor,
+      setCommonValue: setCommonValue,
     );
   }
 

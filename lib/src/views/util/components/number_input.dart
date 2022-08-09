@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:sushi_scouts/SushiScoutingLib/logic/data/config_file_reader.dart';
 
 import '../../../../SushiScoutingLib/logic/data/data.dart';
 
@@ -10,6 +11,7 @@ class NumberInput extends StatefulWidget {
   final Color color;
   final Color textColor;
   final double width;
+  final bool setCommonValue;
 
   NumberInput(
       {Key? key,
@@ -17,7 +19,8 @@ class NumberInput extends StatefulWidget {
       required this.data,
       required this.color,
       required this.width,
-      required this.textColor})
+      required this.textColor,
+      required this.setCommonValue})
       : super(key: key);
 
   static NumberInput create(
@@ -28,13 +31,15 @@ class NumberInput extends StatefulWidget {
       Data defaultValue,
       Color color,
       double width,
-      Color textColor) {
+      Color textColor,
+      bool setCommonValue) {
     return NumberInput(
         key: key,
         name: name,
         data: data,
         width: width,
         color: color,
+        setCommonValue: setCommonValue,
         textColor: textColor);
   }
 
@@ -45,15 +50,18 @@ class NumberInput extends StatefulWidget {
 class NumberInputState extends State<NumberInput> {
   late final TextEditingController _controller;
   late FocusNode _focusNode;
+  late final ConfigFileReader reader;
 
   @override
   void initState() {
+    reader = ConfigFileReader.instance;
     _controller = TextEditingController(
         text: widget.data.setByUser ? widget.data.get().toString() : null);
     _focusNode = FocusNode();
     _controller.addListener(() {
       if (_controller.text != "") {
         widget.data.set(double.parse(_controller.text), setByUser: true);
+        reader.setCommonValue(widget.name, int.parse(_controller.text));
       }
     });
     super.initState();
@@ -99,6 +107,8 @@ class NumberInputState extends State<NumberInput> {
                           onFieldSubmitted: (value) {
                             widget.data
                                 .set(double.parse(value), setByUser: true);
+                            var reader = ConfigFileReader.instance;
+                            reader.setCommonValue(widget.name, int.parse(value));
                           }))
                 ]),
                 Divider(color: widget.textColor, thickness: widget.width / 50)

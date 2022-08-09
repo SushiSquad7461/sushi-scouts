@@ -12,6 +12,7 @@ class Increment extends StatefulWidget {
   final Color textColor;
   final double width;
   final List<String>? values;
+  final bool setCommonValue;
   int value = 0;
   Increment(
       {Key? key,
@@ -21,6 +22,7 @@ class Increment extends StatefulWidget {
       required this.color,
       required this.width,
       required this.textColor,
+      required this.setCommonValue,
       this.values})
       : super(key: key){
         double val = double.parse(defaultValue.get());
@@ -28,7 +30,7 @@ class Increment extends StatefulWidget {
       }
 
   static Increment create(Key key, String name, Data data, List<String>? values,
-      Data defaultValue, Color color, double width, Color textColor) {
+      Data defaultValue, Color color, double width, Color textColor, bool setCommonValue) {
     return Increment(
       key: key,
       name: name,
@@ -37,6 +39,7 @@ class Increment extends StatefulWidget {
       defaultValue: defaultValue,
       color: color,
       values: values,
+      setCommonValue: setCommonValue,
       textColor: textColor,
     );
   }

@@ -11,6 +11,7 @@ class TextInput extends StatefulWidget {
   final Color color;
   final Color textColor;
   final double width;
+  final bool setCommonValue;
 
   TextInput(
       {Key? key,
@@ -18,18 +19,20 @@ class TextInput extends StatefulWidget {
       required this.data,
       required this.color,
       required this.width,
-      required this.textColor})
+      required this.textColor,
+      required this.setCommonValue})
       : super(key: key);
 
   static TextInput create(Key key, String name, Data data, List<String>? values,
-      Data defaultValue, Color color, double width, Color textColor) {
+      Data defaultValue, Color color, double width, Color textColor, bool setCommonValue) {
     return TextInput(
         key: key,
         name: name,
         data: data,
         width: width,
         color: color,
-        textColor: textColor);
+        textColor: textColor,
+        setCommonValue: setCommonValue,);
   }
 
   @override

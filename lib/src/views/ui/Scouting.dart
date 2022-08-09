@@ -35,7 +35,7 @@ class ScoutingState extends State<Scouting> {
   //builds the components in a certain section
   Widget _buildSection(double width, Section section, int currColumn) {
     double scaledWidth = (width > 500 ? 500 : width);
-
+    var reader = ConfigFileReader.instance;
     List<Widget> builtComponents = [];
 
     int startComponent = 0;
@@ -47,6 +47,16 @@ class ScoutingState extends State<Scouting> {
         i < startComponent + section.componentsPerColumn[currColumn];
         ++i) {
       Component currComponent = section.components[i];
+      List<String>? valueNames = currComponent.values;
+      List<String>? values;
+      if(valueNames != null && currComponent.isCommonValue) {
+        values = [];
+        for( String val in valueNames) {
+          values.add((reader.getCommonValue(val)??0).toString());
+        }
+      } else {
+        values = valueNames;
+      }
       Data currData = section.values[i];
 
       if (!COMPONENT_MAP.containsKey(currComponent.component)) {
@@ -67,13 +77,14 @@ class ScoutingState extends State<Scouting> {
                   Key("${currentScoutingData!.name}${currComponent.name}"),
                   currComponent.name,
                   currData,
-                  currComponent.values,
+                  values,
                   currData,
                   section
                       .getColor(colors.scaffoldBackgroundColor == Colors.black),
                   scaledWidth,
                   section.getTextColor(
-                      colors.scaffoldBackgroundColor == Colors.black)))
+                      colors.scaffoldBackgroundColor == Colors.black),
+                  currComponent.setCommonValue))
           : SizedBox(
               width: scaledWidth,
               child: Text(

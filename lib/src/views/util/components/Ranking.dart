@@ -10,6 +10,7 @@ class Ranking extends StatefulWidget {
   final Color color;
   final Color textColor;
   final double width;
+  final bool setCommonValue;
   final List<String>? values;
   Ranking(
       {Key? key,
@@ -19,10 +20,11 @@ class Ranking extends StatefulWidget {
       required this.color,
       required this.width,
       required this.textColor,
+      required this.setCommonValue,
       this.values})
       : super(key: key);
   static Ranking create(Key key, String name, Data data, List<String>? values,
-      Data defaultValue, Color color, double width, Color textColor) {
+      Data defaultValue, Color color, double width, Color textColor, bool setCommonValue) {
     return Ranking(
       key: key,
       name: name,
@@ -31,6 +33,7 @@ class Ranking extends StatefulWidget {
       defaultValue: defaultValue,
       color: color,
       values: values,
+      setCommonValue: setCommonValue,
       textColor: textColor,
     );
   }

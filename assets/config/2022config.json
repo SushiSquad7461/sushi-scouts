@@ -21,7 +21,9 @@
                                 "type" : "number",
                                 "component" : "number input",
                                 "required" : true,
-                                "timestamp": false
+                                "timestamp": false,
+                                "isCommonValue" : false,
+                                "setCommonValue" : false
                             },
                             {
                                 "name" : "station",
@@ -29,14 +31,18 @@
                                 "component" : "dropdown",
                                 "values" : ["R1", "R2", "R3", "B1", "B2", "B3"],
                                 "required" : true,
-                                "timestamp": false
+                                "timestamp": false,
+                                "isCommonValue" : false,
+                                "setCommonValue" : false
                             },
                             {
                                 "name" : "team #",
                                 "type" : "number",
                                 "component" : "number input",
                                 "required" : true,
-                                "timestamp": false
+                                "timestamp": false,
+                                "isCommonValue" : false,
+                                "setCommonValue" : false
                             },
                             {
                                 "name": "match type",
@@ -44,7 +50,9 @@
                                 "component": "select",
                                 "values" : ["c", "Quals", "Elims", "Prac"],
                                 "required" : true,
-                                "timestamp": false
+                                "timestamp": false,
+                                "isCommonValue" : false,
+                                "setCommonValue" : false
                             }
                         ]
                     }
@@ -69,14 +77,18 @@
                                 "type" : "bool",
                                 "component" : "checkbox",
                                 "required" : true,
-                                "timestamp": false
+                                "timestamp": false,
+                                "isCommonValue" : false,
+                                "setCommonValue" : false
                             },
                             {
                                 "name" : "Tarmac",
                                 "type" : "bool",
                                 "component" : "checkbox",
                                 "required" : true,
-                                "timestamp": false
+                                "timestamp": false,
+                                "isCommonValue" : false,
+                                "setCommonValue" : false
                             }
                         ]
                     },
@@ -96,21 +108,27 @@
                                 "type" : "number",
                                 "component" : "increment",
                                 "required" : true,
-                                "timestamp": true
+                                "timestamp": true,
+                                "isCommonValue" : false,
+                                "setCommonValue" : false
                             },
                             {
                                 "name" : "High Hub",
                                 "type" : "number",
                                 "component" : "increment",
                                 "required" : true,
-                                "timestamp": true
+                                "timestamp": true,
+                                "isCommonValue" : false,
+                                "setCommonValue" : false
                             },
                             {
                                 "name" : "HP",
                                 "type" : "number",
                                 "component" : "increment",
                                 "required" : true,
-                                "timestamp": false
+                                "timestamp": false,
+                                "isCommonValue" : false,
+                                "setCommonValue" : false
                             }
                         ]
                     }
@@ -135,14 +153,18 @@
                                 "type" : "number",
                                 "component" : "increment",
                                 "required" : true,
-                                "timestamp": true
+                                "timestamp": true,
+                                "isCommonValue" : false,
+                                "setCommonValue" : false
                             },
                             {
                                 "name" : "High Hub",
                                 "type" : "number",
                                 "component" : "increment",
                                 "required" : true,
-                                "timestamp": true
+                                "timestamp": true,
+                                "isCommonValue" : false,
+                                "setCommonValue" : false
                             },
                             {
                                 "name" : "Climb Level",
@@ -150,7 +172,9 @@
                                 "component" : "select",
                                 "values" : ["c", "No Climb", "Low Climb", "Mid Climb", "High Climb", "Traversal"],
                                 "required" : true,
-                                "timestamp": false
+                                "timestamp": false,
+                                "isCommonValue" : false,
+                                "setCommonValue" : false
                             }  
                         ]
                     }
@@ -177,14 +201,18 @@
                                 "type" : "number",
                                 "component" : "number input",
                                 "required" : true,
-                                "timestamp": false
+                                "timestamp": false,
+                                "isCommonValue" : false,
+                                "setCommonValue" : false
                             },
                             {
                                 "name" : "robot #1",
                                 "type" : "number",
                                 "component" : "number input",
                                 "required" : true,
-                                "timestamp": false
+                                "timestamp": false,
+                                "isCommonValue" : false,
+                                "setCommonValue" : true
                             },
                             {
                                 "name": "match type",
@@ -192,7 +220,9 @@
                                 "component": "select",
                                 "values" : ["c", "Quals", "Elims", "Prac"],
                                 "required" : true,
-                                "timestamp": false
+                                "timestamp": false,
+                                "isCommonValue" : false,
+                                "setCommonValue" : false
                             }
                         ]
                     },
@@ -212,14 +242,18 @@
                                 "type" : "number",
                                 "component" : "number input",
                                 "required" : true,
-                                "timestamp": false
+                                "timestamp": false,
+                                "isCommonValue" : false,
+                                "setCommonValue" : true
                             },
                             {
                                 "name" : "robot #3",
                                 "type" : "number",
                                 "component" : "number input",
                                 "required" : true,
-                                "timestamp": false
+                                "timestamp": false,
+                                "isCommonValue" : false,
+                                "setCommonValue" : true
                             },
                             {
                                 "name": "side",
@@ -227,7 +261,9 @@
                                 "component": "select",
                                 "values" : ["c", "Red", "Blue"],
                                 "required" : true,
-                                "timestamp": false
+                                "timestamp": false,
+                                "isCommonValue" : false,
+                                "setCommonValue" : false
                             }
                         ]
                     }
@@ -251,9 +287,11 @@
                                 "name" : "defence",
                                 "type" : "string",
                                 "component" : "ranking",
-                                "values" : ["7461", "2910", "4911"],
+                                "values" : ["robot #1", "robot #2", "robot #3"],
                                 "required" : true,
-                                "timestamp": false
+                                "timestamp": false,
+                                "isCommonValue" : true,
+                                "setCommonValue" : false
                             }
                         ]
                     },
@@ -272,9 +310,11 @@
                                 "name" : "driving",
                                 "type" : "string",
                                 "component" : "ranking",
-                                "values" : ["7461", "2910", "4911"],
+                                "values" : ["robot #1", "robot #2", "robot #3"],
                                 "required" : true,
-                                "timestamp": false
+                                "timestamp": false,
+                                "isCommonValue" : true,
+                                "setCommonValue" : false
                             }
                         ]
                     },
@@ -293,9 +333,11 @@
                                 "name" : "offense",
                                 "type" : "string",
                                 "component" : "ranking",
-                                "values" : ["7461", "2910", "4911"],
+                                "values" : ["robot #1", "robot #2", "robot #3"],
                                 "required" : true,
-                                "timestamp": false
+                                "timestamp": false,
+                                "isCommonValue" : true,
+                                "setCommonValue" : false
                             }
                         ]
                     }
@@ -322,14 +364,18 @@
                                 "type" : "number",
                                 "component" : "number input",
                                 "required" : true,
-                                "timestamp": false
+                                "timestamp": false,
+                                "isCommonValue" : false,
+                                "setCommonValue" : false
                             },
                             {
                                 "name" : "day #",
                                 "type" : "number",
                                 "component" : "number input",
                                 "required" : true,
-                                "timestamp": false
+                                "timestamp": false,
+                                "isCommonValue" : false,
+                                "setCommonValue" : false
                             }
                         ]
                     },
@@ -349,7 +395,9 @@
                                 "type" : "string",
                                 "component" : "text input",
                                 "required" : true,
-                                "timestamp": false
+                                "timestamp": false,
+                                "isCommonValue" : false,
+                                "setCommonValue" : false
                             }
                         ]
                     }
@@ -375,7 +423,9 @@
                                 "component" : "select",
                                 "values" : ["r", "Offense", "Defense"],
                                 "required" : true,
-                                "timestamp": false
+                                "timestamp": false,
+                                "isCommonValue" : false,
+                                "setCommonValue" : false
                             }
                         ]
                     },
@@ -396,7 +446,9 @@
                                 "component" : "multiselect",
                                 "values" : ["#o", "6", "l", "2", "2", "2", "c", "1 ball", "4 balls", "2 balls", "5 balls", "3 balls", "6 balls"],
                                 "required" : true,
-                                "timestamp": false
+                                "timestamp": false,
+                                "isCommonValue" : false,
+                                "setCommonValue" : false
                             }
                         ]
                     },
@@ -417,7 +469,9 @@
                                 "component" : "select",
                                 "values" : ["r", "High Hub", "Low Hub"],
                                 "required" : true,
-                                "timestamp": false
+                                "timestamp": false,
+                                "isCommonValue" : false,
+                                "setCommonValue" : false
                             }
                         ]
                     },
@@ -438,7 +492,9 @@
                                 "component" : "multiselect",
                                 "values" : ["#o", "5", "l", "2", "2", "1", "c", "Traversal", "Low", "High", "No Climb", "Mid"],
                                 "required" : true,
-                                "timestamp": false
+                                "timestamp": false,
+                                "isCommonValue" : false,
+                                "setCommonValue" : false
                             }
                         ]
                     }
@@ -464,7 +520,9 @@
                                 "component" : "select",
                                 "values" : ["r", "Offense", "Defense"],
                                 "required" : true,
-                                "timestamp": false
+                                "timestamp": false,
+                                "isCommonValue" : false,
+                                "setCommonValue" : false
                             }
                         ]
                     },
@@ -485,7 +543,9 @@
                                 "component" : "multiselect",
                                 "values" : ["#o", "7", "l", "3", "2", "2", "c", "Climb", "Prog", "Shooter", "Intake", "DT", "Hopper", "Electric"],
                                 "required" : true,
-                                "timestamp": false
+                                "timestamp": false,
+                                "isCommonValue" : false,
+                                "setCommonValue" : false
                             }
                         ]
                     }

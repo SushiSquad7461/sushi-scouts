@@ -9,11 +9,12 @@ class Multiselect extends StatefulWidget {
   final Color color;
   final Color textColor;
   final double width;
+  bool setCommonValue;
   late List<String> values;
   late final int numberOfOptions;
   List<int> layout = [];
   Map<String, bool> checked = {};
-  Multiselect({Key? key, required this.name, required this.data, required this.defaultValue, required this.color, required this.width, required this.textColor, List<String>? values})
+  Multiselect({Key? key, required this.name, required this.data, required this.defaultValue, required this.color, required this.width, required this.textColor, required this.setCommonValue, List<String>? values})
     : super(key: key){
       this.values = List.from(values!);
       if (values[0] == '#o')
@@ -43,8 +44,8 @@ class Multiselect extends StatefulWidget {
         }
       }
     }
-  static Multiselect create(Key key, String name, Data data, List<String>? values, Data defaultValue, Color color, double width, Color textColor) {
-    return Multiselect(key: key, name: name, data: data, width: width, defaultValue: defaultValue, color: color, values: values, textColor: textColor,);
+  static Multiselect create(Key key, String name, Data data, List<String>? values, Data defaultValue, Color color, double width, Color textColor, bool setCommonValue) {
+    return Multiselect(key: key, name: name, data: data, width: width, defaultValue: defaultValue, color: color, values: values, textColor: textColor, setCommonValue: setCommonValue,);
   }
 
   int encode() {

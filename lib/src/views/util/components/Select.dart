@@ -9,6 +9,7 @@ class Select extends StatefulWidget {
   final Color color;
   final Color textColor;
   final double width;
+  final bool setCommonValue;
   late List<String> values;
   late final isRow;
   Map<String, bool> checked = {};
@@ -20,6 +21,7 @@ class Select extends StatefulWidget {
       required this.color,
       required this.width,
       required this.textColor,
+      required this.setCommonValue,
       List<String>? values})
       : super(key: key) {
     this.values = List.from(values!);
@@ -42,7 +44,7 @@ class Select extends StatefulWidget {
       }
     }
   static Select create(Key key, String name, Data data, List<String>? values,
-      Data defaultValue, Color color, double width, Color textColor) {
+      Data defaultValue, Color color, double width, Color textColor, bool setCommonValue) {
     return Select(
       key: key,
       name: name,
@@ -51,6 +53,7 @@ class Select extends StatefulWidget {
       defaultValue: defaultValue,
       color: color,
       values: values,
+      setCommonValue: setCommonValue,
       textColor: textColor,
     );
   }
