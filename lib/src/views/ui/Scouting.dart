@@ -33,18 +33,18 @@ class ScoutingState extends State<Scouting> {
   }
 
   //builds the components in a certain section
-  Widget _buildSection(double width, Section section, int currRow) {
+  Widget _buildSection(double width, Section section, int currColumn) {
     double scaledWidth = (width > 500 ? 500 : width);
 
     List<Widget> builtComponents = [];
 
     int startComponent = 0;
-    for (var i = 0; i < currRow; ++i) {
-      startComponent += section.componentsPerRow[i];
+    for (var i = 0; i < currColumn; ++i) {
+      startComponent += section.componentsPerColumn[i];
     }
 
     for (var i = startComponent;
-        i < startComponent + section.componentsPerRow[currRow];
+        i < startComponent + section.componentsPerColumn[currColumn];
         ++i) {
       Component currComponent = section.components[i];
       Data currData = section.values[i];
@@ -61,7 +61,7 @@ class ScoutingState extends State<Scouting> {
               padding: EdgeInsets.only(
                   top: ScreenSize.height *
                       (i != startComponent
-                          ? 0.15 / currPage!.getComponentsPerRow(currRow)
+                          ? 0.15 / currPage!.getComponentsPerRow(currColumn)
                           : 0)),
               child: COMPONENT_MAP[currComponent.component](
                   Key("${currentScoutingData!.name}${currComponent.name}"),
@@ -101,7 +101,7 @@ class ScoutingState extends State<Scouting> {
     List<Widget> builtSections = [];
     for (var i in currPage!.sections) {
       int rows =
-          size.width / i.rows < 300 ? (size.width / 300).floor() : i.rows;
+          size.width / i.columns < 300 ? (size.width / 300).floor() : i.columns;
       if (i.title != "") {
         builtSections.add(Align(
           alignment: const Alignment(-0.8, 0),
