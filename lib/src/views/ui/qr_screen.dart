@@ -113,7 +113,7 @@ class _QRScreenState extends State<QRScreen> {
   Future<void> back() async{
     convertData();
     currentScoutingData!.empty();
-    RouteHelper.pushAndRemoveUntilToScreen(ctx: context, screen: const Scouting());
+    RouteHelper.pushAndRemoveUntilToScreen(-1,0,ctx: context, screen: const Scouting());
   }
 
   Widget buildQRCode() {

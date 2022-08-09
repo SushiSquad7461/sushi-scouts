@@ -101,7 +101,7 @@ class _ScoutingFooterState extends State<ScoutingFooter> {
                               currentScoutingData!.notFilled();
                           if (notFilled.isEmpty) {
                             RouteHelper.pushAndRemoveUntilToScreen(
-                                ctx: context, screen: QRScreen());
+                                1,0,ctx: context, screen: QRScreen());
                           } else {
                             showDialog(
                                 context: context,

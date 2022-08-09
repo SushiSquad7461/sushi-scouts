@@ -22,13 +22,12 @@ class HeaderNav extends StatelessWidget {
   void changeScreen(String screen, context) {
     if (screen != "settings") {
       BlocProvider.of<ScoutingMethodCubit>(context).changeMethod(screen, 0);
-    } else {
+      if (currentPage == "settings") {
+        RouteHelper.pushAndRemoveUntilToScreen(0,0,ctx: context, screen: const Scouting());
+      }
+    } else if(currentPage != "settings") {
       RouteHelper.pushAndRemoveUntilToScreen(
-          ctx: context, screen: const Settings());
-    }
-    if (currentPage == "settings") {
-      RouteHelper.pushAndRemoveUntilToScreen(
-          ctx: context, screen: const Scouting());
+          0,0,ctx: context, screen: const Settings());
     }
   }
 
