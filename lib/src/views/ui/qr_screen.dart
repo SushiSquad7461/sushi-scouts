@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -8,6 +10,7 @@ import 'package:sushi_scouts/SushiScoutingLib/logic/data/config_file_reader.dart
 import 'package:sushi_scouts/SushiScoutingLib/logic/data/Decompressor.dart';
 import 'package:sushi_scouts/SushiScoutingLib/logic/helpers/routing_helper.dart';
 import 'package:sushi_scouts/SushiScoutingLib/logic/helpers/size/ScreenSize.dart';
+import 'package:sushi_scouts/SushiScoutingLib/logic/models/compressed_data_model.dart';
 import 'package:sushi_scouts/SushiScoutingLib/logic/models/scouting_data_models/scouting_data.dart';
 import 'package:sushi_scouts/src/logic/blocs/scouting_method_bloc/scouting_method_cubit.dart';
 import 'package:sushi_scouts/src/views/ui/scouting.dart';
@@ -38,30 +41,26 @@ class _QRScreenState extends State<QRScreen> {
 
   Future<void> convertData() async{
     if (!dataConverted) {
-      final compressedData = await widget.db.collection("data").doc("current${currPage}").get();
+      var unprocessedData = await widget.db.collection("data").doc("current${currPage}").get();
       Compressor compressor = Compressor(currentScoutingData!.getData(), pageIndex);
       String newData;
-      int length;
       
-      if( compressedData == null) {
+      if( unprocessedData == null) {
         newData = compressor.firstCompress();
-        length = compressor.getLength();
+        widget.db.collection("data").doc("current$currPage").set({"data": [newData]});
       } else {
-        newData = compressor.addTo(compressedData["compressedData"]! as String, compressedData["length"]! as int);
-        length = compressor.getLength();
+        final compressedData = CompressedDataModel.fromJson(unprocessedData);
+        newData = compressor.firstCompress();
+        compressedData.addString(newData);
+        widget.db.collection("data").doc("current$currPage").set(compressedData.toJson());
       }
-      widget.db.collection("data").doc("current${currPage}").set({
-        "compressedData" : newData,
-        "length" : length
-        }
-      );
     }
     dataConverted = true;
   }
 
   void deleteBackup() {
-    widget.db.collection("data").doc("backup${currPage}").delete();
-    widget.db.collection("data").doc("current${currPage}").delete();
+    widget.db.collection("data").doc("backup$currPage").delete();
+    widget.db.collection("data").doc("current$currPage").delete();
     dataConverted = true;
   }
 
@@ -69,39 +68,21 @@ class _QRScreenState extends State<QRScreen> {
     await convertData();
     final compressedData = await widget.db.collection("data").doc("${isBackup?"backup":"current"}${currPage}").get();
     if( compressedData != null) {
-      final decompressor = Decompressor(compressedData["compressedData"], widget.fileReader.getScoutingMethods());
-      print(decompressor.isBackup());
       ScoutingData data = widget.fileReader.getScoutingData(currPage);
-      bool moreData = false;
-      String temp;
-      do {
-        temp = decompressor.getScreen();
-        print(temp);
-        if (temp == "") {
-          break;
-        }
-        moreData = decompressor.decompress(data.getData());
-        print(data.stringfy());
-      } while( moreData );
+      
       if( isBackup ) {
-        stringifiedData = compressedData["compressedData"] as String;
+        stringifiedData = compressedData.toString();
       } else {
-        stringifiedData = compressedData["compressedData"] as String;
+        stringifiedData = compressedData.toString();
         final backup = await widget.db.collection("data").doc("backup${currPage}").get();
         if (backup != null) {
-          widget.db.collection("data").doc("backup${currPage}").set({
-            "compressedData" : Compressor.update(backup["compressedData"], backup["length"], compressedData["compressedData"]),
-            "length": backup["length"] + compressedData["length"]-1
-          });
+          var newData = CompressedDataModel.fromJson(backup);
+          newData.add(CompressedDataModel.fromJson(compressedData));
+          widget.db.collection("data").doc("backup$currPage").set(newData.toJson());
         } else {
-          int length = compressedData["length"] as int;
-          String compressedString = Compressor.setBackUp(compressedData["compressedData"] as String);
-          widget.db.collection("data").doc("backup${currPage}").set({
-            "compressedData" : compressedString,
-            "length" : length
-          });
+          widget.db.collection("data").doc("backup$currPage").set(compressedData);
         }
-        widget.db.collection("data").doc("current${currPage}").delete();
+        widget.db.collection("data").doc("current$currPage").delete();
       }
       setState(() {
         generateCode = true;
