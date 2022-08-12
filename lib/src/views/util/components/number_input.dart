@@ -61,7 +61,9 @@ class NumberInputState extends State<NumberInput> {
     _controller.addListener(() {
       if (_controller.text != "") {
         widget.data.set(double.parse(_controller.text), setByUser: true);
-        reader.setCommonValue(widget.name, int.parse(_controller.text));
+        if (widget.setCommonValue) {
+          reader.setCommonValue(widget.name, int.parse(_controller.text));
+        }
       }
     });
     super.initState();
@@ -108,7 +110,9 @@ class NumberInputState extends State<NumberInput> {
                             widget.data
                                 .set(double.parse(value), setByUser: true);
                             var reader = ConfigFileReader.instance;
-                            reader.setCommonValue(widget.name, int.parse(value));
+                            if (widget.setCommonValue) {
+                              reader.setCommonValue(widget.name, int.parse(value));
+                            }
                           }))
                 ]),
                 Divider(color: widget.textColor, thickness: widget.width / 50)

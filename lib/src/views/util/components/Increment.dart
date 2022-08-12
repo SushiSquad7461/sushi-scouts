@@ -71,7 +71,8 @@ class IncrementState extends State<Increment> {
   @override
   Widget build(BuildContext context) {
     double width = widget.width;
-    _controller.text = (double.parse(widget.data.get()).round()).toString();
+    widget.value = double.parse(widget.data.get()).round();
+    _controller.text = (widget.value).toString();
     return Padding(
         padding: EdgeInsets.only(
             left: width / 60,
@@ -96,6 +97,7 @@ class IncrementState extends State<Increment> {
                     padding: const EdgeInsets.all(0),
                     onPressed: () {
                       if (widget.value > 0) {
+                        print(widget.value);
                         _controller.text = (widget.value - 1).toString();
                         widget.data.decrement();
                         setState(() {
