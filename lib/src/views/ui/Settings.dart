@@ -1,13 +1,16 @@
 import 'dart:convert';
+import 'dart:ffi';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:localstore/localstore.dart';
 import 'package:sushi_scouts/SushiScoutingLib/logic/helpers/secret/secret.dart';
 import 'package:sushi_scouts/SushiScoutingLib/logic/helpers/secret/secret_loader.dart';
@@ -33,6 +36,7 @@ class Settings extends StatefulWidget {
 class _SettingsState extends State<Settings> {
   final db = Localstore.instance;
   Secret? secrets;
+  int? year;
 
   Future<void> toggleMode(String mode) async {
     BlocProvider.of<ThemeCubit>(context)
@@ -56,7 +60,10 @@ class _SettingsState extends State<Settings> {
     }
   }
 
-  void downloadConfigFile() {}
+  void downloadConfigFile() {
+    int configYear = year ?? DateTime.now().year;
+    int teamNum = BlocProvider.of<LoginCubit>(context).state.teamNum;
+  }
 
   void downloadNames() {}
 
@@ -88,7 +95,7 @@ class _SettingsState extends State<Settings> {
     BoxDecoration boxDecoration = BoxDecoration(
         border: Border.all(
             color: colors.primaryColorDark, width: 4 * ScreenSize.shu),
-        borderRadius: BorderRadius.all(Radius.circular(20 * ScreenSize.swu)));
+        borderRadius: BorderRadius.all(Radius.circular(25 * ScreenSize.swu)));
 
     return Scaffold(
       resizeToAvoidBottomInset: false,
@@ -157,12 +164,56 @@ class _SettingsState extends State<Settings> {
                   ),
                   Container(
                     decoration: boxDecoration,
+                    width: ScreenSize.width * 0.47,
                     child: TextButton(
                         onPressed: downloadConfigFile,
-                        child: Text(
-                          "download config file",
-                          style: textStyle,
-                        )),
+                        child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              SizedBox(
+                                width: ScreenSize.width * 0.15,
+                                height: ScreenSize.height * 0.04,
+                                child: TextFormField(
+                                  decoration: InputDecoration(
+                                    enabledBorder: UnderlineInputBorder(
+                                      borderSide: BorderSide(
+                                          width: ScreenSize.height * 0.003,
+                                          color: colors.primaryColorDark),
+                                    ),
+                                    focusedBorder: UnderlineInputBorder(
+                                      borderSide: BorderSide(
+                                          width: ScreenSize.height * 0.003,
+                                          color: colors.primaryColorDark),
+                                    ),
+                                    hintText: "YEAR",
+                                    hintStyle: TextStyle(
+                                        color: colors.primaryColorDark),
+                                    isDense: true,
+                                    contentPadding: EdgeInsets.symmetric(
+                                        vertical: ScreenSize.height * 0.005),
+                                  ),
+                                  textAlign: TextAlign.center,
+                                  style: GoogleFonts.mohave(
+                                      textStyle: TextStyle(
+                                    fontSize: ScreenSize.width * 0.05,
+                                    color: colors.primaryColorDark,
+                                    fontWeight: FontWeight.w500,
+                                  )),
+                                  keyboardType: TextInputType.number,
+                                  inputFormatters: <TextInputFormatter>[
+                                    FilteringTextInputFormatter.digitsOnly
+                                  ],
+                                  onChanged: (String? val) => setState(() {
+                                    year = (val != null ? int.parse(val) : val)
+                                        as int?;
+                                  }),
+                                ),
+                              ),
+                              Text(
+                                "config file",
+                                style: textStyle,
+                              ),
+                            ])),
                   ),
                   Container(
                     decoration: boxDecoration,
