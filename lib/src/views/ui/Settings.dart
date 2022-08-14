@@ -13,9 +13,12 @@ import 'package:sushi_scouts/SushiScoutingLib/logic/helpers/secret/secret.dart';
 import 'package:sushi_scouts/SushiScoutingLib/logic/helpers/secret/secret_loader.dart';
 import 'package:sushi_scouts/SushiScoutingLib/logic/models/match_schedule.dart';
 import 'package:sushi_scouts/SushiScoutingLib/logic/helpers/size/ScreenSize.dart';
+import 'package:sushi_scouts/src/logic/blocs/login_bloc/login_cubit.dart';
 import 'package:sushi_scouts/src/logic/blocs/theme_bloc/theme_cubit.dart';
+import 'package:sushi_scouts/src/views/ui/Login.dart' as LoginPage;
 import 'package:sushi_scouts/src/views/util/header/header_nav.dart';
 import 'package:sushi_scouts/src/views/util/header/header_title.dart';
+import '../../../SushiScoutingLib/logic/helpers/routing_helper.dart';
 import '../../../main.dart';
 import '../util/Footer/Footer.dart';
 import 'package:sushi_scouts/SushiScoutingLib/logic/network/api_repository.dart';
@@ -32,7 +35,8 @@ class _SettingsState extends State<Settings> {
   Secret? secrets;
 
   Future<void> toggleMode(String mode) async {
-    BlocProvider.of<ThemeCubit>(context).switchTheme(isDarkMode: mode == "dark" ? true : false);
+    BlocProvider.of<ThemeCubit>(context)
+        .switchTheme(isDarkMode: mode == "dark" ? true : false);
     db.collection("preferences").doc("mode").set({
       "mode": mode,
     });
@@ -43,15 +47,23 @@ class _SettingsState extends State<Settings> {
   }
 
   Future<void> downloadMatchSchedule() async {
-    MatchSchedule? schedule = await ApiRepository().getMatchSchedule('WASNO', 'qual');
-    if(schedule != null) {
+    print(BlocProvider.of<LoginCubit>(context).state.eventCode);
+    MatchSchedule? schedule = await ApiRepository().getMatchSchedule(
+        BlocProvider.of<LoginCubit>(context).state.eventCode, 'qual');
+    if (schedule != null) {
       db.collection("data").doc("schedule").set(schedule.toJson());
+      print(schedule.toJson());
     }
   }
 
   void downloadConfigFile() {}
 
   void downloadNames() {}
+
+  void logOut() {
+    BlocProvider.of<LoginCubit>(context).logOut();
+    RouteHelper.pushReplacement(ctx: context, screen: const LoginPage.Login());
+  }
 
   @override
   void initState() {
@@ -158,6 +170,15 @@ class _SettingsState extends State<Settings> {
                         onPressed: downloadNames,
                         child: Text(
                           "download names",
+                          style: textStyle,
+                        )),
+                  ),
+                  Container(
+                    decoration: boxDecoration,
+                    child: TextButton(
+                        onPressed: logOut,
+                        child: Text(
+                          "log out",
                           style: textStyle,
                         )),
                   ),

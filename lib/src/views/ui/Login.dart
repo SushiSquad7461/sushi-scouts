@@ -2,12 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:localstore/localstore.dart';
 import 'package:sushi_scouts/SushiScoutingLib/logic/data/config_file_reader.dart';
 import 'package:sushi_scouts/SushiScoutingLib/logic/helpers/routing_helper.dart';
 import 'package:sushi_scouts/SushiScoutingLib/logic/helpers/size/ScreenSize.dart';
+import 'package:sushi_scouts/src/logic/blocs/login_bloc/login_cubit.dart';
 import 'package:sushi_scouts/src/views/ui/scouting.dart';
 import 'package:sushi_scouts/src/views/util/header/header_title.dart';
 
@@ -24,13 +26,13 @@ class _LoginState extends State<Login> {
   String? eventCode;
   final db = Localstore.instance;
 
-  void nextPage() async{
-    await db.collection("preferences").doc("user").set({
-      "teamNum": teamNum,
-      "name": name,
-      "eventCode": eventCode,
-    });
-    RouteHelper.pushAndRemoveUntilToScreen(0,0,ctx: context, screen: const Scouting());
+  void nextPage(BuildContext context) async {
+    if (teamNum != null && name != null && eventCode != null) {
+      BlocProvider.of<LoginCubit>(context)
+          .loginSushiSquad(name!, teamNum!, eventCode!);
+      RouteHelper.pushAndRemoveUntilToScreen(0, 0,
+          ctx: context, screen: const Scouting()); 
+    }
   }
 
   @override
@@ -67,8 +69,8 @@ class _LoginState extends State<Login> {
                         hintText: "TEAM #",
                         hintStyle: TextStyle(color: colors.primaryColorDark),
                         isDense: true,
-                        contentPadding:
-                            EdgeInsets.symmetric(vertical: ScreenSize.height * 0.005),
+                        contentPadding: EdgeInsets.symmetric(
+                            vertical: ScreenSize.height * 0.005),
                       ),
                       textAlign: TextAlign.center,
                       style: GoogleFonts.mohave(
@@ -106,8 +108,8 @@ class _LoginState extends State<Login> {
                           hintText: "EVENT CODE",
                           hintStyle: TextStyle(color: colors.primaryColorDark),
                           isDense: true,
-                          contentPadding:
-                              EdgeInsets.symmetric(vertical: ScreenSize.height * 0.005),
+                          contentPadding: EdgeInsets.symmetric(
+                              vertical: ScreenSize.height * 0.005),
                         ),
                         textAlign: TextAlign.center,
                         style: GoogleFonts.mohave(
@@ -140,8 +142,8 @@ class _LoginState extends State<Login> {
                           hintText: "NAME",
                           hintStyle: TextStyle(color: colors.primaryColorDark),
                           isDense: true,
-                          contentPadding:
-                              EdgeInsets.symmetric(vertical: ScreenSize.height * 0.005),
+                          contentPadding: EdgeInsets.symmetric(
+                              vertical: ScreenSize.height * 0.005),
                         ),
                         textAlign: TextAlign.center,
                         style: GoogleFonts.mohave(
@@ -164,14 +166,15 @@ class _LoginState extends State<Login> {
                       ),
                       if (teamNum != null && name != null && eventCode != null)
                         Padding(
-                          padding: EdgeInsets.only(top: ScreenSize.height * 0.2),
+                          padding:
+                              EdgeInsets.only(top: ScreenSize.height * 0.2),
                           child: Container(
                               width: ScreenSize.width,
                               decoration: BoxDecoration(
                                 color: colors.primaryColorDark,
                               ),
                               child: TextButton(
-                                onPressed: nextPage,
+                                onPressed: () => {nextPage(context)},
                                 child: Text(
                                   'GO',
                                   style: TextStyle(
