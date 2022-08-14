@@ -24,14 +24,39 @@ class _LoginState extends State<Login> {
   int? teamNum;
   String? name;
   String? eventCode;
+  TextEditingController _eventCodeController = new TextEditingController();
+  TextEditingController _nameController = new TextEditingController();
+  TextEditingController _teamNumController = new TextEditingController();
+
   final db = Localstore.instance;
 
   void nextPage(BuildContext context) async {
     if (teamNum != null && name != null && eventCode != null) {
       BlocProvider.of<LoginCubit>(context)
-          .loginSushiSquad(name!, teamNum!, eventCode!);
+          .loginSushiScouts(name!, teamNum!, eventCode!);
       RouteHelper.pushAndRemoveUntilToScreen(0, 0,
-          ctx: context, screen: const Scouting()); 
+          ctx: context, screen: const Scouting());
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    getSavedInfo();
+  }
+
+  Future<void> getSavedInfo() async {
+    var userInfo = await db.collection("preferences").doc("user").get();
+
+    if (userInfo != null) {
+      setState(() {
+        _eventCodeController.text = userInfo["eventCode"];
+        eventCode = userInfo["eventCode"];
+        _nameController.text = userInfo["name"];
+        name = userInfo["name"];
+        _teamNumController.text = userInfo["teamNum"].toString();
+        teamNum = userInfo["teamNum"];    
+      });
     }
   }
 
@@ -55,6 +80,7 @@ class _LoginState extends State<Login> {
                     width: ScreenSize.width * 0.75,
                     height: ScreenSize.height * 0.07,
                     child: TextFormField(
+                      controller: _teamNumController,
                       decoration: InputDecoration(
                         enabledBorder: UnderlineInputBorder(
                           borderSide: BorderSide(
@@ -94,6 +120,7 @@ class _LoginState extends State<Login> {
                     width: ScreenSize.width * 0.75,
                     height: ScreenSize.height * 0.07,
                     child: TextFormField(
+                        controller: _eventCodeController,
                         decoration: InputDecoration(
                           enabledBorder: UnderlineInputBorder(
                             borderSide: BorderSide(
@@ -128,6 +155,7 @@ class _LoginState extends State<Login> {
                     width: ScreenSize.width * 0.75,
                     height: ScreenSize.height * 0.07,
                     child: TextFormField(
+                        controller: _nameController,
                         decoration: InputDecoration(
                           enabledBorder: UnderlineInputBorder(
                             borderSide: BorderSide(
