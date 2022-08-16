@@ -1,6 +1,7 @@
 {
     "teamNumber": 7461,
     "version" : 1.0,
+    "password" : "7461",
     "scouting": {
         "cardinal":{
             "pregame" : {

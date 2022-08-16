@@ -1,6 +1,6 @@
 part of "login_cubit.dart";
 
-abstract class Login {
+abstract class LoginStates {
   String get eventCode {
     return "";
   }
@@ -10,9 +10,11 @@ abstract class Login {
   }
 }
 
-class LoggedOut extends Login {}
+class LoggedOutScouts extends LoginStates {}
 
-class SushiScoutsLogin extends Login {
+class LoggedOutSupervise extends LoginStates {}
+
+class SushiScoutsLogin extends LoginStates {
   final String name;
   final int _teamNum;
   final String _eventCode;
@@ -29,7 +31,7 @@ class SushiScoutsLogin extends Login {
   }
 }
 
-class SushiSuperviseLogin extends Login {
+class SushiSuperviseLogin extends LoginStates {
   final String _eventCode;
   final int _teamNum;
   SushiSuperviseLogin(this._eventCode, this._teamNum);

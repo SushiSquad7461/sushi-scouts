@@ -67,7 +67,7 @@ class _SettingsState extends State<Settings> {
   void downloadNames() {}
 
   void logOut() {
-    BlocProvider.of<LoginCubit>(context).logOut();
+    BlocProvider.of<LoginCubit>(context).logOut(false);
     RouteHelper.pushReplacement(ctx: context, screen: const LoginScreen.Login());
   }
 
