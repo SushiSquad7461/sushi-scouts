@@ -5,7 +5,7 @@ import 'package:sushi_scouts/SushiScoutingLib/logic/data/config_file_reader.dart
 import 'package:sushi_scouts/SushiScoutingLib/logic/helpers/routing_helper.dart';
 import 'package:sushi_scouts/SushiScoutingLib/logic/models/scouting_data_models/scouting_data.dart';
 import 'package:sushi_scouts/src/logic/blocs/scouting_method_bloc/scouting_method_cubit.dart';
-import 'package:sushi_scouts/src/views/ui/qr_screen.dart';
+import 'package:sushi_scouts/src/views/ui/sushi_scouts/qr_screen.dart';
 import 'package:sushi_scouts/src/views/util/popups/required_content.dart';
 import 'package:sushi_scouts/SushiScoutingLib/logic/helpers/size/ScreenSize.dart';
 import 'footer.dart';

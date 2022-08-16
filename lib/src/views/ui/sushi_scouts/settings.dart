@@ -16,14 +16,15 @@ import 'package:sushi_scouts/SushiScoutingLib/logic/helpers/secret/secret.dart';
 import 'package:sushi_scouts/SushiScoutingLib/logic/helpers/secret/secret_loader.dart';
 import 'package:sushi_scouts/SushiScoutingLib/logic/models/match_schedule.dart';
 import 'package:sushi_scouts/SushiScoutingLib/logic/helpers/size/ScreenSize.dart';
+import 'package:sushi_scouts/src/views/ui/sushi_scouts/login.dart' as LoginScreen;
+
 import 'package:sushi_scouts/src/logic/blocs/login_bloc/login_cubit.dart';
 import 'package:sushi_scouts/src/logic/blocs/theme_bloc/theme_cubit.dart';
-import 'package:sushi_scouts/src/views/ui/Login.dart' as LoginPage;
 import 'package:sushi_scouts/src/views/util/header/header_nav.dart';
 import 'package:sushi_scouts/src/views/util/header/header_title.dart';
-import '../../../SushiScoutingLib/logic/helpers/routing_helper.dart';
-import '../../../main.dart';
-import '../util/Footer/Footer.dart';
+import '../../../../SushiScoutingLib/logic/helpers/routing_helper.dart';
+import '../../../../main.dart';
+import '../../util/Footer/Footer.dart';
 import 'package:sushi_scouts/SushiScoutingLib/logic/network/api_repository.dart';
 
 class Settings extends StatefulWidget {
@@ -51,12 +52,10 @@ class _SettingsState extends State<Settings> {
   }
 
   Future<void> downloadMatchSchedule() async {
-    print(BlocProvider.of<LoginCubit>(context).state.eventCode);
     MatchSchedule? schedule = await ApiRepository().getMatchSchedule(
         BlocProvider.of<LoginCubit>(context).state.eventCode, 'qual');
     if (schedule != null) {
       db.collection("data").doc("schedule").set(schedule.toJson());
-      print(schedule.toJson());
     }
   }
 
@@ -68,8 +67,8 @@ class _SettingsState extends State<Settings> {
   void downloadNames() {}
 
   void logOut() {
-    BlocProvider.of<LoginCubit>(context).logOut();
-    RouteHelper.pushReplacement(ctx: context, screen: const LoginPage.Login());
+    BlocProvider.of<LoginCubit>(context).logOut(false);
+    RouteHelper.pushReplacement(ctx: context, screen: const LoginScreen.Login());
   }
 
   @override

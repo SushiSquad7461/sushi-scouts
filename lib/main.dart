@@ -1,19 +1,9 @@
 import "package:flutter/material.dart";
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
-import 'package:localstore/localstore.dart';
-import 'package:sushi_scouts/SushiScoutingLib/logic/models/scouting_data_models/scouting_data.dart';
 import 'package:sushi_scouts/provider.dart';
 import 'package:sushi_scouts/src/logic/blocs/theme_bloc/theme_cubit.dart';
-import 'package:sushi_scouts/src/views/ui/loading.dart';
-import 'package:sushi_scouts/src/views/ui/login.dart';
-import 'package:sushi_scouts/src/views/ui/qr_screen.dart';
-import 'package:sushi_scouts/src/views/ui/scouting.dart';
-import 'package:sushi_scouts/src/views/ui/settings.dart';
-import 'package:sushi_scouts/src/views/util/header/header_nav.dart';
-import 'package:sushi_scouts/src/views/util/header/header_title.dart';
-
-import 'SushiScoutingLib/logic/data/config_file_reader.dart';
+import 'package:sushi_scouts/src/views/ui/sushi_scouts/loading.dart';
 import 'SushiScoutingLib/logic/helpers/size/ScreenSize.dart';
 import 'SushiScoutingLib/ui/themes.dart';
 
