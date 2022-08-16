@@ -6,8 +6,8 @@ import 'package:sushi_scouts/SushiScoutingLib/logic/helpers/color/hex_color.dart
 import 'package:sushi_scouts/SushiScoutingLib/logic/helpers/routing_helper.dart';
 import 'package:sushi_scouts/SushiScoutingLib/logic/helpers/size/ScreenSize.dart';
 import 'package:sushi_scouts/src/logic/blocs/scouting_method_bloc/scouting_method_cubit.dart';
-import 'package:sushi_scouts/src/views/ui/Scouting.dart';
-import 'package:sushi_scouts/src/views/ui/Settings.dart';
+import 'package:sushi_scouts/src/views/ui/sushi_scouts/scouting.dart';
+import 'package:sushi_scouts/src/views/ui/sushi_scouts/settings.dart';
 
 class HeaderNav extends StatelessWidget {
   final String currentPage;

@@ -13,7 +13,7 @@ import 'package:sushi_scouts/SushiScoutingLib/logic/helpers/size/ScreenSize.dart
 import 'package:sushi_scouts/SushiScoutingLib/logic/models/compressed_data_model.dart';
 import 'package:sushi_scouts/SushiScoutingLib/logic/models/scouting_data_models/scouting_data.dart';
 import 'package:sushi_scouts/src/logic/blocs/scouting_method_bloc/scouting_method_cubit.dart';
-import 'package:sushi_scouts/src/views/ui/scouting.dart';
+import 'package:sushi_scouts/src/views/ui/sushi_scouts/scouting.dart';
 import 'package:sushi_scouts/src/views/util/header/header_title.dart';
 
 

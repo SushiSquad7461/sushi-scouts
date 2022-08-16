@@ -9,7 +9,7 @@ import 'package:sushi_scouts/SushiScoutingLib/logic/helpers/size/ScreenSize.dart
 import 'package:sushi_scouts/src/logic/blocs/file_reader_bloc/file_reader_cubit.dart';
 import 'package:sushi_scouts/src/logic/blocs/scouting_method_bloc/scouting_method_cubit.dart';
 import 'package:sushi_scouts/src/logic/blocs/theme_bloc/theme_cubit.dart';
-import 'package:sushi_scouts/src/views/ui/login.dart';
+import 'package:sushi_scouts/src/views/ui/sushi_scouts/login.dart';
 
 class Loading extends StatefulWidget {
   const Loading({Key? key}) : super(key: key);
