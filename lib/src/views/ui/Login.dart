@@ -30,9 +30,9 @@ class _LoginState extends State<Login> {
 
   final db = Localstore.instance;
 
-  void nextPage(BuildContext context) async {
+  Future<void> nextPage(BuildContext context) async {
     if (teamNum != null && name != null && eventCode != null) {
-      BlocProvider.of<LoginCubit>(context)
+      await BlocProvider.of<LoginCubit>(context)
           .loginSushiScouts(name!, teamNum!, eventCode!);
       RouteHelper.pushAndRemoveUntilToScreen(0, 0,
           ctx: context, screen: const Scouting());
@@ -58,6 +58,7 @@ class _LoginState extends State<Login> {
         teamNum = userInfo["teamNum"];    
       });
     }
+
   }
 
   @override

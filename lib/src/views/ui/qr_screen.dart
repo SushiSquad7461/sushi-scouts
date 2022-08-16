@@ -14,7 +14,6 @@ import 'package:sushi_scouts/SushiScoutingLib/logic/models/compressed_data_model
 import 'package:sushi_scouts/SushiScoutingLib/logic/models/scouting_data_models/scouting_data.dart';
 import 'package:sushi_scouts/src/logic/blocs/scouting_method_bloc/scouting_method_cubit.dart';
 import 'package:sushi_scouts/src/views/ui/scouting.dart';
-import 'package:sushi_scouts/src/views/util/header/header_nav.dart';
 import 'package:sushi_scouts/src/views/util/header/header_title.dart';
 
 
@@ -41,13 +40,13 @@ class _QRScreenState extends State<QRScreen> {
 
   Future<void> convertData() async{
     if (!dataConverted) {
-      var unprocessedData = await widget.db.collection("data").doc("current${currPage}").get();
+      var unprocessedData = await widget.db.collection("data").doc("current$currPage").get();
       Compressor compressor = Compressor(currentScoutingData!.getData(), pageIndex);
       String newData;
       
       if( unprocessedData == null) {
         newData = compressor.firstCompress();
-        widget.db.collection("data").doc("current$currPage").set({"data": [newData]});
+        widget.db.collection("data").doc("current$currPage").set({"data": [newData], "lengths" : [newData.length]});
       } else {
         final compressedData = CompressedDataModel.fromJson(unprocessedData);
         newData = compressor.firstCompress();
@@ -66,7 +65,7 @@ class _QRScreenState extends State<QRScreen> {
 
   Future<void> getData() async {
     await convertData();
-    final compressedData = await widget.db.collection("data").doc("${isBackup?"backup":"current"}${currPage}").get();
+    final compressedData = await widget.db.collection("data").doc("${isBackup?"backup":"current"}$currPage").get();
     if( compressedData != null) {
       ScoutingData data = widget.fileReader.getScoutingData(currPage);
       
@@ -74,7 +73,7 @@ class _QRScreenState extends State<QRScreen> {
         stringifiedData = compressedData.toString();
       } else {
         stringifiedData = compressedData.toString();
-        final backup = await widget.db.collection("data").doc("backup${currPage}").get();
+        final backup = await widget.db.collection("data").doc("backup$currPage").get();
         if (backup != null) {
           var newData = CompressedDataModel.fromJson(backup);
           newData.add(CompressedDataModel.fromJson(compressedData));
@@ -84,6 +83,15 @@ class _QRScreenState extends State<QRScreen> {
         }
         widget.db.collection("data").doc("current$currPage").delete();
       }
+
+      var compressed = CompressedDataModel.fromJson(compressedData);
+      for( var s in compressed.data) {
+        Decompressor decompressor = Decompressor(s, widget.fileReader.getScoutingMethods());
+        decompressor.isBackup();
+        print(decompressor.getScreen());
+        decompressor.decompress(data.getData());
+        print(data.stringfy());
+      } 
       setState(() {
         generateCode = true;
         build(context);
@@ -92,7 +100,7 @@ class _QRScreenState extends State<QRScreen> {
   }
 
   Future<void> back() async{
-    convertData();
+    await convertData();
     currentScoutingData!.empty();
     RouteHelper.pushAndRemoveUntilToScreen(-1,0,ctx: context, screen: const Scouting());
   }
