@@ -4,6 +4,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
+import 'package:sushi_scouts/src/logic/data/Decompressor.dart';
 import 'package:sushi_scouts/src/logic/helpers/size/ScreenSize.dart';
 import 'package:sushi_scouts/src/views/util/footer/supervisefooter.dart';
 import 'package:sushi_scouts/src/views/util/header/header_nav.dart';
@@ -69,17 +70,33 @@ class _UploadState extends State<Upload> {
                   if (result != null)
                     Center(
                       child: Container(
-                        color: Colors.white,
-                        child: Column(
-                          children: [
-                            Text(result!.code!),
-                            TextButton(
-                                onPressed: () {
-                                      controller!.resumeCamera();
-                                      setState(() => {result = null});
-                                    },
-                                child: Text("Reset"))
-                          ],
+                        height: ScreenSize.height * 0.4,
+                        width: ScreenSize.width * 0.6,
+                        decoration: BoxDecoration(
+                                      border: Border.all(
+                                          color: Colors.white,
+                                          width: 0.02 * ScreenSize.width),
+                                      borderRadius: BorderRadius.all(
+                                          Radius.circular(10 * ScreenSize.swu)),
+                                    ) ,
+                        child: Container(
+                          width: ScreenSize.width * 0.58,
+                          height: ScreenSize.height * 0.4 - ScreenSize.width * 0.02,
+                          color: Colors.white,
+                          child: Padding(
+                            padding: EdgeInsets.only(top: ScreenSize.height *0.03, bottom: ScreenSize.height * 0.03, right: ScreenSize.width * 0.02, left: ScreenSize.width * 0.02),
+                            child: Column(
+                              children: [
+                                Text(result!.code!),
+                                TextButton(
+                                    onPressed: () {
+                                          controller!.resumeCamera();
+                                          setState(() => {result = null});
+                                        },
+                                    child: Text("Reset"))
+                              ],
+                            ),
+                          ),
                         ),
                       ),
                     )
