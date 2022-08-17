@@ -1,10 +1,12 @@
 import 'dart:convert';
 import 'dart:typed_data';
 
+import 'package:sushi_scouts/src/logic/data/Data.dart' as Data;
+
 import 'data.dart';
 
 class Compressor{
-  final List<Data> data;
+  final List<Data.Data> data;
   final List<bool> partial = [];
   int screen;
   int length = 0;
@@ -18,7 +20,7 @@ class Compressor{
   void encode() {
     addInt(screen+1, 4);
 
-    for( Data d in data) {
+    for( Data.Data d in data) {
       if(d.currValue is bool) {
         addNum(d.currValue as bool ? 1 : 0);
       } else if(d.currValue is double) {
