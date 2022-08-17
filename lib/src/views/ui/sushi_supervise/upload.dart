@@ -5,7 +5,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
 import 'package:sushi_scouts/src/logic/helpers/size/ScreenSize.dart';
-import '../../util/header/supervise_header_title.dart';
+import 'package:sushi_scouts/src/views/util/footer/supervisefooter.dart';
+import 'package:sushi_scouts/src/views/util/header/header_nav.dart';
+
+import '../../util/header/header_title/header_title.dart';
 
 class Upload extends StatefulWidget {
   const Upload({Key? key}) : super(key: key);
@@ -33,51 +36,58 @@ class _UploadState extends State<Upload> {
 
   @override
   Widget build(BuildContext context) {
+    var colors = Theme.of(context);
     return Scaffold(
       body: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          const HeaderTitle(),
-          Padding(
-            padding: EdgeInsets.only(top: ScreenSize.height * 0.02),
-            child: Stack(
-              children: <Widget>[
-                Center(
-                  child: Container(
-                    width: ScreenSize.width * 0.8,
-                    height: ScreenSize.height * 0.58,
-                    decoration: BoxDecoration(
-                        borderRadius:
-                            BorderRadius.all(Radius.circular(8 * ScreenSize.swu)),
-                        border: Border.all(
-                          color: Colors.black,
-                          width: 5 * ScreenSize.swu,
-                        )),
-                    child: QRView(
-                      key: qrKey,
-                      onQRViewCreated: _onQRViewCreated,
-                    ),
-                  ),
-                ),
-                if (result != null)
+          const HeaderTitle(isSupervise: true,),
+          HeaderNav(currentPage: "upload", isSupervise: true,),
+          SizedBox(
+            height: ScreenSize.height * 0.6,
+            child: Padding(
+              padding: EdgeInsets.only(top: ScreenSize.height * 0.02),
+              child: Stack(
+                children: <Widget>[
                   Center(
                     child: Container(
-                      color: Colors.white,
-                      child: Column(
-                        children: [
-                          Text(result!.code!),
-                          TextButton(
-                              onPressed: () {
-                                    controller!.resumeCamera();
-                                    setState(() => {result = null});
-                                  },
-                              child: Text("Reset"))
-                        ],
+                      width: ScreenSize.width * 0.8,
+                      height: ScreenSize.height * 0.58,
+                      decoration: BoxDecoration(
+                          borderRadius:
+                              BorderRadius.all(Radius.circular(8 * ScreenSize.swu)),
+                          border: Border.all(
+                            color: colors.primaryColorDark,
+                            width: 5 * ScreenSize.swu,
+                          )),
+                      child: QRView(
+                        key: qrKey,
+                        onQRViewCreated: _onQRViewCreated,
                       ),
                     ),
-                  )
-              ],
+                  ),
+                  if (result != null)
+                    Center(
+                      child: Container(
+                        color: Colors.white,
+                        child: Column(
+                          children: [
+                            Text(result!.code!),
+                            TextButton(
+                                onPressed: () {
+                                      controller!.resumeCamera();
+                                      setState(() => {result = null});
+                                    },
+                                child: Text("Reset"))
+                          ],
+                        ),
+                      ),
+                    )
+                ],
+              ),
             ),
           ),
+          const SuperviseFooter(),
         ],
       ),
     );

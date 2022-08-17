@@ -11,7 +11,7 @@ import 'package:sushi_scouts/src/logic/helpers/routing_helper.dart';
 import 'package:sushi_scouts/src/logic/helpers/size/ScreenSize.dart';
 import 'package:sushi_scouts/src/views/ui/sushi_scouts/scouting.dart';
 import 'package:sushi_scouts/src/views/ui/sushi_supervise/upload.dart';
-import 'package:sushi_scouts/src/views/util/header/header_title.dart';
+import 'package:sushi_scouts/src/views/util/header/header_title/header_title.dart';
 import 'package:sushi_scouts/src/views/util/popups/incorrect_password.dart';
 
 import '../../../logic/data/config_file_reader.dart';
@@ -89,7 +89,7 @@ class _LoginState extends State<Login> {
       resizeToAvoidBottomInset: false,
       body: Column(
         children: [
-          const HeaderTitle(),
+          HeaderTitle(isSupervise : !widget.sushi_scouts),
           SizedBox(
             width: ScreenSize.width,
             height: ScreenSize.height * 0.9,
@@ -103,7 +103,8 @@ class _LoginState extends State<Login> {
                       SvgPicture.asset(
                         isPhoneScreen
                             ? "./assets/images/mobile_footer.svg"
-                            : "./assets/images/FooterColors.svg",
+                            : (widget.sushi_scouts ? "./assets/images/FooterColors.svg" : (colors.scaffoldBackgroundColor 
+                              == Colors.black ? "./assets/images/loginsupervisefooterdark.svg" : "./assets/images/loginfootersupervise.svg")),
                         width: ScreenSize.width,
                       ),
                       if (teamNum != null &&

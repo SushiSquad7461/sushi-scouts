@@ -10,7 +10,7 @@ import 'package:sushi_scouts/src/logic/models/scouting_data_models/scouting_data
 import 'package:sushi_scouts/src/logic/models/scouting_data_models/section.dart';
 import 'package:sushi_scouts/src/views/util/footer/scouting_footer.dart';
 import 'package:sushi_scouts/src/views/util/header/header_nav.dart';
-import 'package:sushi_scouts/src/views/util/header/header_title.dart';
+import 'package:sushi_scouts/src/views/util/header/header_title/header_title.dart';
 
 import '../../../logic/data/Data.dart';
 import '../../../logic/data/config_file_reader.dart';

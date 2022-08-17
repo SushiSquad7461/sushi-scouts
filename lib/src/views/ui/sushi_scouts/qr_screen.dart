@@ -14,7 +14,7 @@ import 'package:sushi_scouts/src/logic/helpers/size/ScreenSize.dart';
 import 'package:sushi_scouts/src/logic/models/compressed_data_model.dart';
 import 'package:sushi_scouts/src/logic/models/scouting_data_models/scouting_data.dart';
 import 'package:sushi_scouts/src/views/ui/sushi_scouts/scouting.dart';
-import 'package:sushi_scouts/src/views/util/header/header_title.dart';
+import 'package:sushi_scouts/src/views/util/header/header_title/header_title.dart';
 
 
 class QRScreen extends StatefulWidget {

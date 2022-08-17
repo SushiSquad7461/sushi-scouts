@@ -22,13 +22,15 @@ import 'package:sushi_scouts/src/logic/helpers/size/ScreenSize.dart';
 import 'package:sushi_scouts/src/logic/models/match_schedule.dart';
 import 'package:sushi_scouts/src/logic/network/api_repository.dart';
 import 'package:sushi_scouts/src/views/ui/app_choser.dart';
+import 'package:sushi_scouts/src/views/util/footer/supervisefooter.dart';
 import 'package:sushi_scouts/src/views/util/header/header_nav.dart';
-import 'package:sushi_scouts/src/views/util/header/header_title.dart';
-import '../../../../main.dart';
-import '../../util/Footer/Footer.dart';
+import 'package:sushi_scouts/src/views/util/header/header_title/header_title.dart';
+import '../../../main.dart';
+import '../util/Footer/Footer.dart';
 
 class Settings extends StatefulWidget {
-  const Settings({Key? key}) : super(key: key);
+  final bool isSupervise;
+  const Settings({Key? key, this.isSupervise = false}) : super(key: key);
 
   @override
   State<Settings> createState() => _SettingsState();
@@ -100,11 +102,11 @@ class _SettingsState extends State<Settings> {
       resizeToAvoidBottomInset: false,
       body: Column(
         children: [
-          const HeaderTitle(),
-          HeaderNav(currentPage: "settings"),
+          HeaderTitle(isSupervise: widget.isSupervise,),
+          HeaderNav(currentPage: "settings", isSupervise: widget.isSupervise,),
           SizedBox(
               width: ScreenSize.width,
-              height: ScreenSize.height * 0.64,
+              height: ScreenSize.height * (widget.isSupervise ? 0.6 : 0.64),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -234,7 +236,9 @@ class _SettingsState extends State<Settings> {
                   ),
                 ],
               )),
-          Padding(
+          widget.isSupervise ? 
+            const SuperviseFooter()
+          : Padding(
             padding: EdgeInsets.all(ScreenSize.height * 0.01),
             child: SizedBox(
                 width: ScreenSize.width / 10.0, //57
@@ -243,7 +247,7 @@ class _SettingsState extends State<Settings> {
                   "./assets/images/${colors.scaffoldBackgroundColor == Colors.black ? "darknori" : "nori"}.svg",
                 )),
           ),
-          const Footer(pageTitle: ""),
+          if(!widget.isSupervise) Footer(pageTitle: ""),
         ],
       ),
     );
