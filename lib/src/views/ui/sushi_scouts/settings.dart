@@ -12,20 +12,20 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:localstore/localstore.dart';
-import 'package:sushi_scouts/SushiScoutingLib/logic/helpers/secret/secret.dart';
-import 'package:sushi_scouts/SushiScoutingLib/logic/helpers/secret/secret_loader.dart';
-import 'package:sushi_scouts/SushiScoutingLib/logic/models/match_schedule.dart';
-import 'package:sushi_scouts/SushiScoutingLib/logic/helpers/size/ScreenSize.dart';
 
 import 'package:sushi_scouts/src/logic/blocs/login_bloc/login_cubit.dart';
 import 'package:sushi_scouts/src/logic/blocs/theme_bloc/theme_cubit.dart';
+import 'package:sushi_scouts/src/logic/helpers/routing_helper.dart';
+import 'package:sushi_scouts/src/logic/helpers/secret/secret.dart';
+import 'package:sushi_scouts/src/logic/helpers/secret/secret_loader.dart';
+import 'package:sushi_scouts/src/logic/helpers/size/ScreenSize.dart';
+import 'package:sushi_scouts/src/logic/models/match_schedule.dart';
+import 'package:sushi_scouts/src/logic/network/api_repository.dart';
 import 'package:sushi_scouts/src/views/ui/app_choser.dart';
 import 'package:sushi_scouts/src/views/util/header/header_nav.dart';
 import 'package:sushi_scouts/src/views/util/header/header_title.dart';
-import '../../../../SushiScoutingLib/logic/helpers/routing_helper.dart';
 import '../../../../main.dart';
 import '../../util/Footer/Footer.dart';
-import 'package:sushi_scouts/SushiScoutingLib/logic/network/api_repository.dart';
 
 class Settings extends StatefulWidget {
   const Settings({Key? key}) : super(key: key);

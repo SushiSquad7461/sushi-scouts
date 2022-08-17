@@ -3,9 +3,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
 import 'package:sushi_scouts/provider.dart';
 import 'package:sushi_scouts/src/logic/blocs/theme_bloc/theme_cubit.dart';
+import 'package:sushi_scouts/src/logic/helpers/size/ScreenSize.dart';
 import 'package:sushi_scouts/src/views/ui/sushi_scouts/loading.dart';
-import 'SushiScoutingLib/logic/helpers/size/ScreenSize.dart';
-import 'SushiScoutingLib/ui/themes.dart';
+import 'package:sushi_scouts/src/views/util/themes.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();

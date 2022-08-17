@@ -4,12 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:sushi_scouts/SushiScoutingLib/logic/helpers/size/ScreenSize.dart';
-import 'package:sushi_scouts/SushiScoutingLib/logic/models/scouting_data_models/page.dart';
+import 'package:sushi_scouts/src/logic/helpers/routing_helper.dart';
+import 'package:sushi_scouts/src/logic/helpers/size/ScreenSize.dart';
 import 'package:sushi_scouts/src/views/ui/sushi_scouts/login.dart';
 import 'dart:math' as math;
-
-import '../../../SushiScoutingLib/logic/helpers/routing_helper.dart';
 
 class AppChooser extends StatelessWidget {
   const AppChooser({Key? key}) : super(key: key);

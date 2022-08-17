@@ -4,8 +4,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
-import 'package:sushi_scouts/SushiScoutingLib/logic/helpers/size/ScreenSize.dart';
-
+import 'package:sushi_scouts/src/logic/helpers/size/ScreenSize.dart';
 import '../../util/header/supervise_header_title.dart';
 
 class Upload extends StatefulWidget {
