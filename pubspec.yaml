@@ -43,6 +43,7 @@ dependencies:
   json_annotation: ^4.6.0
   flutter_bloc: ^8.0.1
   qr_code_scanner: ^1.0.0
+  flutter_device_type: ^0.4.0
 
 dev_dependencies:
   flutter_test:

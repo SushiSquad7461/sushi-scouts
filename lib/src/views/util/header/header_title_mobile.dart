@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter_device_type/flutter_device_type.dart';
 import 'package:sushi_scouts/SushiScoutingLib/logic/helpers/size/ScreenSize.dart';
+
+import '../../../logic/deviceType.dart';
 
 class HeaderTitleMobile extends StatelessWidget {
   const HeaderTitleMobile({Key? key}) : super(key: key);
@@ -19,22 +22,29 @@ class HeaderTitleMobile extends StatelessWidget {
               bottom: 0),
           child: Stack(
             children: [
-              Text(
-                "sushi scouts",
-                style: TextStyle(
-                  fontFamily: "Sushi",
-                  fontSize: 75 * ScreenSize.swu,
-                  fontWeight: FontWeight.bold,
-                  color: colors.primaryColorDark,
-                ),
-              ),
               ConstrainedBox(
                 constraints: BoxConstraints(minWidth: 1, minHeight: 1), // here
                 child: Image.asset(
                   colors.scaffoldBackgroundColor == Colors.black
                       ? "./assets/images/header_title_mobile.png"
                       : "./assets/images/header_title_mobile.png",
-                  scale: ScreenSize.width,
+                  scale: ScreenSize.width / 12,
+                ),
+              ),
+              Center(
+                child: Padding(
+                  padding: EdgeInsets.only(
+                      top: ScreenSize.height *
+                          (Device.get().hasNotch ? 0.03 : 0.01)),
+                  child: Text(
+                    "sushi scouts",
+                    style: TextStyle(
+                      fontFamily: "Sushi",
+                      fontSize: 90 * ScreenSize.swu,
+                      fontWeight: FontWeight.bold,
+                      color: colors.primaryColorDark,
+                    ),
+                  ),
                 ),
               ),
             ],

@@ -16,10 +16,10 @@ import 'package:sushi_scouts/SushiScoutingLib/logic/helpers/secret/secret.dart';
 import 'package:sushi_scouts/SushiScoutingLib/logic/helpers/secret/secret_loader.dart';
 import 'package:sushi_scouts/SushiScoutingLib/logic/models/match_schedule.dart';
 import 'package:sushi_scouts/SushiScoutingLib/logic/helpers/size/ScreenSize.dart';
-import 'package:sushi_scouts/src/views/ui/sushi_scouts/login.dart' as LoginScreen;
 
 import 'package:sushi_scouts/src/logic/blocs/login_bloc/login_cubit.dart';
 import 'package:sushi_scouts/src/logic/blocs/theme_bloc/theme_cubit.dart';
+import 'package:sushi_scouts/src/views/ui/app_choser.dart';
 import 'package:sushi_scouts/src/views/util/header/header_nav.dart';
 import 'package:sushi_scouts/src/views/util/header/header_title.dart';
 import '../../../../SushiScoutingLib/logic/helpers/routing_helper.dart';
@@ -67,8 +67,8 @@ class _SettingsState extends State<Settings> {
   void downloadNames() {}
 
   void logOut() {
-    BlocProvider.of<LoginCubit>(context).logOut(false);
-    RouteHelper.pushReplacement(ctx: context, screen: const LoginScreen.Login());
+    BlocProvider.of<LoginCubit>(context).logOut();
+    RouteHelper.pushReplacement(ctx: context, screen: const AppChooser());
   }
 
   @override

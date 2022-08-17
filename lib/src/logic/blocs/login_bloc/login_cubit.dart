@@ -4,12 +4,11 @@ import 'package:localstore/localstore.dart';
 part 'login_states.dart';
 
 class LoginCubit extends Cubit<LoginStates> {
-  LoginCubit() : super(LoggedOutScouts());
+  LoginCubit() : super(LoggedOut());
 
   Future<void> loginSushiScouts(String name, int teamNum, String eventCode) async {
     var db = Localstore.instance;
     await db.collection("preferences").doc("user").set({
-      "sushiscouts": true,
       "name": name,
       "teamNum": teamNum,
       "eventCode": eventCode,
@@ -18,20 +17,20 @@ class LoginCubit extends Cubit<LoginStates> {
     emit(SushiScoutsLogin(name, teamNum, eventCode));
   }
 
-    Future<void> loginSushiSupervise(String name, int teamNum) async {
-    var db = Localstore.instance;
-    await db.collection("preferences").doc("user").set({
-      "sushiscouts": true,
-      "name": name,
-      "teamNum": teamNum,
-    });
+    Future<void> loginSushiSupervise(String eventCode, int teamNum) async {
+      var db = Localstore.instance;
+      await db.collection("preferences").doc("user").set({
+        "eventCode": eventCode,
+        "teamNum": teamNum,
+        "name": "name"
+      });
 
-    emit(SushiSuperviseLogin(name, teamNum));
+    emit(SushiSuperviseLogin(eventCode, teamNum));
   }
 
-  void logOut(bool supervise) {
+  void logOut() {
     var db = Localstore.instance;
     db.collection("preferences").doc("user").delete();
-    emit(supervise ? LoggedOutSupervise() : LoggedOutScouts());
+    emit(LoggedOut());
   }
 }

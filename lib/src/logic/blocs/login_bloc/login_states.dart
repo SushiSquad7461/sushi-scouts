@@ -10,9 +10,7 @@ abstract class LoginStates {
   }
 }
 
-class LoggedOutScouts extends LoginStates {}
-
-class LoggedOutSupervise extends LoginStates {}
+class LoggedOut extends LoginStates {}
 
 class SushiScoutsLogin extends LoginStates {
   final String name;

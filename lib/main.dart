@@ -78,6 +78,7 @@ class _SushiScoutsState extends State<SushiScouts> {
         child: BlocBuilder<ThemeCubit, ThemeStates>(
           builder: (context, state) {
             return MaterialApp(
+              debugShowCheckedModeBanner: false,
               theme: state is DarkMode ? darkTheme : lightTheme,
               home: const Loading(),
               navigatorKey: SushiScouts.navigatorKey,
