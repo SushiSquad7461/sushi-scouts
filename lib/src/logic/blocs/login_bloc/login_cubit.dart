@@ -22,7 +22,7 @@ class LoginCubit extends Cubit<LoginStates> {
       await db.collection("preferences").doc("user").set({
         "eventCode": eventCode,
         "teamNum": teamNum,
-        "name": "name"
+        "name": ""
       });
 
     emit(SushiSuperviseLogin(eventCode, teamNum));
