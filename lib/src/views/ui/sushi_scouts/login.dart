@@ -159,12 +159,14 @@ class _LoginState extends State<Login> {
                       decoration: InputDecoration(
                         enabledBorder: UnderlineInputBorder(
                           borderSide: BorderSide(
-                              width: ScreenSize.height * 0.006,
+                              width: ScreenSize.height *
+                                  (isPhoneScreen ? 0.004 : 0.006),
                               color: colors.primaryColorDark),
                         ),
                         focusedBorder: UnderlineInputBorder(
                           borderSide: BorderSide(
-                              width: ScreenSize.height * 0.006,
+                              width: ScreenSize.height *
+                                  (isPhoneScreen ? 0.004 : 0.006),
                               color: colors.primaryColorDark),
                         ),
                         hintText: "TEAM #",
@@ -199,12 +201,14 @@ class _LoginState extends State<Login> {
                         decoration: InputDecoration(
                           enabledBorder: UnderlineInputBorder(
                             borderSide: BorderSide(
-                                width: ScreenSize.height * 0.006,
+                                width: ScreenSize.height *
+                                    (isPhoneScreen ? 0.004 : 0.006),
                                 color: colors.primaryColorDark),
                           ),
                           focusedBorder: UnderlineInputBorder(
                             borderSide: BorderSide(
-                                width: ScreenSize.height * 0.006,
+                                width: ScreenSize.height *
+                                    (isPhoneScreen ? 0.004 : 0.006),
                                 color: colors.primaryColorDark),
                           ),
                           hintText: "EVENT CODE",
@@ -235,12 +239,14 @@ class _LoginState extends State<Login> {
                               decoration: InputDecoration(
                                 enabledBorder: UnderlineInputBorder(
                                   borderSide: BorderSide(
-                                      width: ScreenSize.height * 0.006,
+                                      width: ScreenSize.height *
+                                          (isPhoneScreen ? 0.004 : 0.006),
                                       color: colors.primaryColorDark),
                                 ),
                                 focusedBorder: UnderlineInputBorder(
                                   borderSide: BorderSide(
-                                      width: ScreenSize.height * 0.006,
+                                      width: ScreenSize.height *
+                                          (isPhoneScreen ? 0.004 : 0.006),
                                       color: colors.primaryColorDark),
                                 ),
                                 hintText: "NAME",
@@ -270,12 +276,14 @@ class _LoginState extends State<Login> {
                               decoration: InputDecoration(
                                 enabledBorder: UnderlineInputBorder(
                                   borderSide: BorderSide(
-                                      width: ScreenSize.height * 0.006,
+                                      width: ScreenSize.height *
+                                          (isPhoneScreen ? 0.004 : 0.006),
                                       color: colors.primaryColorDark),
                                 ),
                                 focusedBorder: UnderlineInputBorder(
                                   borderSide: BorderSide(
-                                      width: ScreenSize.height * 0.006,
+                                      width: ScreenSize.height *
+                                          (isPhoneScreen ? 0.004 : 0.006),
                                       color: colors.primaryColorDark),
                                 ),
                                 hintText: "PASSWORD",
