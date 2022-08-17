@@ -12,6 +12,8 @@ import 'package:sushi_scouts/src/logic/blocs/theme_bloc/theme_cubit.dart';
 import 'package:sushi_scouts/src/views/ui/app_choser.dart';
 import 'package:sushi_scouts/src/views/ui/sushi_scouts/login.dart';
 
+import '../../../../SushiScoutingLib/logic/data/config_file_reader.dart';
+
 class Loading extends StatefulWidget {
   const Loading({Key? key}) : super(key: key);
 
