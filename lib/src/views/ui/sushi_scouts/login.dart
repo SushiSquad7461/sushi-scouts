@@ -6,7 +6,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:localstore/localstore.dart';
-import 'package:sushi_scouts/SushiScoutingLib/logic/data/config_file_reader.dart';
 import 'package:sushi_scouts/src/logic/blocs/login_bloc/login_cubit.dart';
 import 'package:sushi_scouts/src/logic/helpers/routing_helper.dart';
 import 'package:sushi_scouts/src/logic/helpers/size/ScreenSize.dart';
@@ -15,6 +14,7 @@ import 'package:sushi_scouts/src/views/ui/sushi_supervise/upload.dart';
 import 'package:sushi_scouts/src/views/util/header/header_title.dart';
 import 'package:sushi_scouts/src/views/util/popups/incorrect_password.dart';
 
+import '../../../logic/data/config_file_reader.dart';
 import '../../../logic/deviceType.dart';
 
 class Login extends StatefulWidget {

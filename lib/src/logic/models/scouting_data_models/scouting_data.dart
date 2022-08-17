@@ -1,4 +1,5 @@
-import '../../data/data.dart';
+
+import '../../data/Data.dart';
 import 'component.dart';
 import 'page.dart';
 

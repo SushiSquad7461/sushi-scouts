@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../../SushiScoutingLib/logic/data/data.dart';
+import '../../../logic/data/Data.dart';
 
 class Multiselect extends StatefulWidget {
   final String name;

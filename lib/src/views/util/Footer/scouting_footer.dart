@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:sushi_scouts/SushiScoutingLib/logic/data/config_file_reader.dart';
 import 'package:sushi_scouts/src/logic/blocs/scouting_method_bloc/scouting_method_cubit.dart';
 import 'package:sushi_scouts/src/logic/helpers/routing_helper.dart';
 import 'package:sushi_scouts/src/logic/helpers/size/ScreenSize.dart';
 import 'package:sushi_scouts/src/logic/models/scouting_data_models/scouting_data.dart';
 import 'package:sushi_scouts/src/views/ui/sushi_scouts/qr_screen.dart';
 import 'package:sushi_scouts/src/views/util/popups/required_content.dart';
+import '../../../logic/data/config_file_reader.dart';
 import 'footer.dart';
 
 class ScoutingFooter extends StatefulWidget {

@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:sushi_scouts/src/logic/blocs/scouting_method_bloc/scouting_method_cubit.dart';
 import 'package:sushi_scouts/src/logic/constants.dart';
-import 'package:sushi_scouts/src/logic/data/data.dart';
 import 'package:sushi_scouts/src/logic/helpers/size/ScreenSize.dart';
 import 'package:sushi_scouts/src/logic/models/scouting_data_models/component.dart';
 import 'package:sushi_scouts/src/logic/models/scouting_data_models/page.dart';
@@ -13,6 +12,7 @@ import 'package:sushi_scouts/src/views/util/footer/scouting_footer.dart';
 import 'package:sushi_scouts/src/views/util/header/header_nav.dart';
 import 'package:sushi_scouts/src/views/util/header/header_title.dart';
 
+import '../../../logic/data/Data.dart';
 import '../../../logic/data/config_file_reader.dart';
 
 class Scouting extends StatefulWidget {
@@ -50,10 +50,10 @@ class ScoutingState extends State<Scouting> {
       Component currComponent = section.components[i];
       List<String>? valueNames = currComponent.values;
       List<String>? values;
-      if(valueNames != null && currComponent.isCommonValue) {
+      if (valueNames != null && currComponent.isCommonValue) {
         values = [];
-        for( String val in valueNames) {
-          values.add((reader.getCommonValue(val)??0).toString());
+        for (String val in valueNames) {
+          values.add((reader.getCommonValue(val) ?? 0).toString());
         }
       } else {
         values = valueNames;
@@ -66,6 +66,8 @@ class ScoutingState extends State<Scouting> {
       }
 
       var colors = Theme.of(context);
+
+      print(currComponent.component);
 
       builtComponents.add(COMPONENT_MAP.containsKey(currComponent.component)
           ? Padding(
@@ -120,7 +122,8 @@ class ScoutingState extends State<Scouting> {
           child: Text(
             i.title,
             style: GoogleFonts.mohave(
-                color: i.getTextColor(Theme.of(context).scaffoldBackgroundColor == Colors.black),
+                color: i.getTextColor(
+                    Theme.of(context).scaffoldBackgroundColor == Colors.black),
                 fontSize: size.width / 15,
                 fontWeight: FontWeight.w400),
           ),

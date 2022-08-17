@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:sushi_scouts/SushiScoutingLib/logic/data/config_file_reader.dart';
-
-import '../../../../SushiScoutingLib/logic/data/data.dart';
+import '../../../logic/data/Data.dart';
+import '../../../logic/data/config_file_reader.dart';
 
 class NumberInput extends StatefulWidget {
   final String name;

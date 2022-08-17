@@ -1,6 +1,6 @@
 import 'package:json_annotation/json_annotation.dart';
+import 'package:sushi_scouts/src/logic/data/Data.dart';
 
-import '../../data/data.dart';
 import 'component.dart';
 import 'section.dart';
 
