@@ -22,6 +22,7 @@ import 'package:sushi_scouts/src/logic/helpers/size/ScreenSize.dart';
 import 'package:sushi_scouts/src/logic/models/match_schedule.dart';
 import 'package:sushi_scouts/src/logic/network/api_repository.dart';
 import 'package:sushi_scouts/src/views/ui/app_choser.dart';
+import 'package:sushi_scouts/src/views/ui/loading.dart';
 import 'package:sushi_scouts/src/views/util/footer/supervisefooter.dart';
 import 'package:sushi_scouts/src/views/util/header/header_nav.dart';
 import 'package:sushi_scouts/src/views/util/header/header_title/header_title.dart';
@@ -68,11 +69,12 @@ class _SettingsState extends State<Settings> {
     String? configFile =
         await ApiRepository().getConfigFile(configYear, teamNum);
     if (configFile != null) {
-      var parsedFile = await json.decode(configFile);
+      var parsedFile = await json.decode((await json.decode(configFile))["config"]);
       await db
           .collection("config_files")
-          .doc(parsedFile!["teamNumber"].toString())
+          .doc(parsedFile["teamNumber"].toString())
           .set(parsedFile);
+      RouteHelper.pushReplacement(ctx: context, screen: const Loading());
     }
   }
 
@@ -80,7 +82,8 @@ class _SettingsState extends State<Settings> {
 
   void logOut() {
     BlocProvider.of<LoginCubit>(context).logOut();
-    RouteHelper.pushAndRemoveUntilToScreen(-1,0,ctx: context, screen: const AppChooser());
+    RouteHelper.pushAndRemoveUntilToScreen(-1, 0,
+        ctx: context, screen: const AppChooser());
   }
 
   @override
