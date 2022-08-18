@@ -52,6 +52,7 @@ class ConfigFileReader {
 
     //   if (found != null) {
     //     await readConfigFromDatabase(user["teamNum"]);
+    //     return;
     //   } else {
     //     await readConfig();
     //   }

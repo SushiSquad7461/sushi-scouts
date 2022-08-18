@@ -48,7 +48,7 @@ class LoadingState extends State<Loading> with TickerProviderStateMixin{
     await BlocProvider.of<ThemeCubit>(context).setMode();
     await BlocProvider.of<FileReaderCubit>(context).readConfig();
     var reader = ConfigFileReader.instance;
-    BlocProvider.of<ScoutingMethodCubit>(context).changeMethod(reader.getScoutingMethods()[0], 0);
+    BlocProvider.of<ScoutingMethodCubit>(context).changeMethod(reader.getScoutingMethods().length > 0 ? reader.getScoutingMethods()[0] : "", 0);
   }
 
   @override
