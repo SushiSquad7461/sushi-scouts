@@ -9,9 +9,9 @@ import 'package:sushi_scouts/src/logic/blocs/theme_bloc/theme_cubit.dart';
 import 'package:sushi_scouts/src/logic/helpers/routing_helper.dart';
 import 'package:sushi_scouts/src/logic/helpers/size/ScreenSize.dart';
 import 'package:sushi_scouts/src/views/ui/app_choser.dart';
-import 'package:sushi_scouts/src/views/ui/sushi_scouts/login.dart';
+import 'package:sushi_scouts/src/views/ui/login.dart';
 
-import '../../../logic/data/config_file_reader.dart';
+import '../../logic/data/config_file_reader.dart';
 
 class Loading extends StatefulWidget {
   const Loading({Key? key}) : super(key: key);
@@ -48,7 +48,7 @@ class LoadingState extends State<Loading> with TickerProviderStateMixin{
     await BlocProvider.of<ThemeCubit>(context).setMode();
     await BlocProvider.of<FileReaderCubit>(context).readConfig();
     var reader = ConfigFileReader.instance;
-    BlocProvider.of<ScoutingMethodCubit>(context).changeMethod(reader.getScoutingMethods()[0], 0);
+    BlocProvider.of<ScoutingMethodCubit>(context).changeMethod(reader.getScoutingMethods().length > 0 ? reader.getScoutingMethods()[0] : "", 0);
   }
 
   @override

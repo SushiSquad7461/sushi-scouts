@@ -29,8 +29,6 @@ class LoginCubit extends Cubit<LoginStates> {
   }
 
   void logOut() {
-    var db = Localstore.instance;
-    db.collection("preferences").doc("user").delete();
     emit(LoggedOut());
   }
 }

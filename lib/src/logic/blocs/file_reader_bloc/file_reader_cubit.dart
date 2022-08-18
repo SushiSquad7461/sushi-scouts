@@ -12,7 +12,7 @@ class FileReaderCubit extends Cubit<FileReaderStates>{
   Future<void> readConfig() async{
     emit(FileReaderLoading());
     var reader = ConfigFileReader.instance;
-    await reader.readConfig();
+    await reader.readInitalConfig();
     emit(FileReaderLoaded());
   }
 }

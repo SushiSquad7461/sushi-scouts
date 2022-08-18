@@ -24,6 +24,7 @@ class Scouting extends StatefulWidget {
 class ScoutingState extends State<Scouting> {
   Screen? currPage;
   ScoutingData? currentScoutingData;
+  bool error = false;
 
   void _init() {
     currPage = currentScoutingData?.getCurrentPage();
@@ -35,111 +36,123 @@ class ScoutingState extends State<Scouting> {
 
   //builds the components in a certain section
   Widget _buildSection(double width, Section section, int currColumn) {
-    double scaledWidth = (width > 500 ? 500 : width);
-    var reader = ConfigFileReader.instance;
-    List<Widget> builtComponents = [];
+    try {
+      double scaledWidth = (width > 500 ? 500 : width);
+      var reader = ConfigFileReader.instance;
+      List<Widget> builtComponents = [];
 
-    int startComponent = 0;
-    for (var i = 0; i < currColumn; ++i) {
-      startComponent += section.componentsPerColumn[i];
-    }
+      int startComponent = 0;
+      for (var i = 0; i < currColumn; ++i) {
+        startComponent += section.componentsPerColumn[i];
+      }
 
-    for (var i = startComponent;
-        i < startComponent + section.componentsPerColumn[currColumn];
-        ++i) {
-      Component currComponent = section.components[i];
-      List<String>? valueNames = currComponent.values;
-      List<String>? values;
-      if (valueNames != null && currComponent.isCommonValue) {
-        values = [];
-        for (String val in valueNames) {
-          values.add((reader.getCommonValue(val) ?? 0).toString());
+      for (var i = startComponent;
+          i < startComponent + section.componentsPerColumn[currColumn];
+          ++i) {
+        Component currComponent = section.components[i];
+        List<String>? valueNames = currComponent.values;
+        List<String>? values;
+        if (valueNames != null && currComponent.isCommonValue) {
+          values = [];
+          for (String val in valueNames) {
+            values.add((reader.getCommonValue(val) ?? 0).toString());
+          }
+        } else {
+          values = valueNames;
         }
-      } else {
-        values = valueNames;
+        Data currData = section.values[i];
+
+        if (!COMPONENT_MAP.containsKey(currComponent.component)) {
+          throw ErrorDescription(
+              "No component exsits called: ${currComponent.component}");
+        }
+
+        var colors = Theme.of(context);
+
+        print(currComponent.component);
+
+        builtComponents.add(COMPONENT_MAP.containsKey(currComponent.component)
+            ? Padding(
+                padding: EdgeInsets.only(
+                    top: ScreenSize.height *
+                        (i != startComponent
+                            ? 0.15 / currPage!.getComponentsPerRow(currColumn)
+                            : 0)),
+                child: COMPONENT_MAP[currComponent.component](
+                    Key("${currentScoutingData!.name}${currComponent.name}"),
+                    currComponent.name,
+                    currData,
+                    values,
+                    currData,
+                    section.getColor(
+                        colors.scaffoldBackgroundColor == Colors.black),
+                    scaledWidth,
+                    section.getTextColor(
+                        colors.scaffoldBackgroundColor == Colors.black),
+                    currComponent.setCommonValue))
+            : SizedBox(
+                width: scaledWidth,
+                child: Text(
+                    "The widget type ${currComponent.component} is not defined",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                        fontFamily: "Sushi",
+                        fontSize: scaledWidth / 40.0,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black,
+                        overflow: TextOverflow.visible)),
+              ));
       }
-      Data currData = section.values[i];
-
-      if (!COMPONENT_MAP.containsKey(currComponent.component)) {
-        throw ErrorDescription(
-            "No component exsits called: ${currComponent.component}");
-      }
-
-      var colors = Theme.of(context);
-
-      print(currComponent.component);
-
-      builtComponents.add(COMPONENT_MAP.containsKey(currComponent.component)
-          ? Padding(
-              padding: EdgeInsets.only(
-                  top: ScreenSize.height *
-                      (i != startComponent
-                          ? 0.15 / currPage!.getComponentsPerRow(currColumn)
-                          : 0)),
-              child: COMPONENT_MAP[currComponent.component](
-                  Key("${currentScoutingData!.name}${currComponent.name}"),
-                  currComponent.name,
-                  currData,
-                  values,
-                  currData,
-                  section
-                      .getColor(colors.scaffoldBackgroundColor == Colors.black),
-                  scaledWidth,
-                  section.getTextColor(
-                      colors.scaffoldBackgroundColor == Colors.black),
-                  currComponent.setCommonValue))
-          : SizedBox(
-              width: scaledWidth,
-              child: Text(
-                  "The widget type ${currComponent.component} is not defined",
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                      fontFamily: "Sushi",
-                      fontSize: scaledWidth / 40.0,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black,
-                      overflow: TextOverflow.visible)),
-            ));
+      return SizedBox(
+        width: scaledWidth,
+        child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: builtComponents),
+      );
+    } catch (e) {
+      rethrow;
     }
-    return SizedBox(
-      width: scaledWidth,
-      child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: builtComponents),
-    );
   }
 
   //builds the body of the screen
   Widget _buildBody(Size size) {
-    List<Widget> builtSections = [];
-    for (var i in currPage!.sections) {
-      int rows =
-          size.width / i.columns < 300 ? (size.width / 300).floor() : i.columns;
-      if (i.title != "") {
-        builtSections.add(Align(
-          alignment: const Alignment(-0.8, 0),
-          child: Text(
-            i.title,
-            style: GoogleFonts.mohave(
-                color: i.getTextColor(
-                    Theme.of(context).scaffoldBackgroundColor == Colors.black),
-                fontSize: size.width / 15,
-                fontWeight: FontWeight.w400),
-          ),
-        ));
+    try {
+      List<Widget> builtSections = [];
+      for (var i in currPage!.sections) {
+        int rows = size.width / i.columns < 300
+            ? (size.width / 300).floor()
+            : i.columns;
+        if (i.title != "") {
+          builtSections.add(Align(
+            alignment: const Alignment(-0.8, 0),
+            child: Text(
+              i.title,
+              style: GoogleFonts.mohave(
+                  color: i.getTextColor(
+                      Theme.of(context).scaffoldBackgroundColor ==
+                          Colors.black),
+                  fontSize: size.width / 15,
+                  fontWeight: FontWeight.w400),
+            ),
+          ));
+        }
+        builtSections.add(Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              for (int j = 0; j < rows; j++)
+                Padding(
+                    padding: EdgeInsets.only(bottom: ScreenSize.height * 0.01),
+                    child: _buildSection(size.width / rows, i, j)),
+            ]));
       }
-      builtSections.add(Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            for (int j = 0; j < rows; j++)
-              Padding(
-                  padding: EdgeInsets.only(bottom: ScreenSize.height * 0.01),
-                  child: _buildSection(size.width / rows, i, j)),
-          ]));
+      return Column(children: builtSections);
+    } catch (e) {
+      print(e);
+      error = true;
+      return const Center(child: Text("Error in Config File "));
     }
-    return Column(children: builtSections);
   }
 
   @override
@@ -172,7 +185,8 @@ class ScoutingState extends State<Scouting> {
                     child: _buildBody(ScreenSize.get()),
                   ),
                 ),
-                ScoutingFooter(method: state.method, popupContext: context)
+                if (!error)
+                  ScoutingFooter(method: state.method, popupContext: context)
               ],
             ),
           );
