@@ -70,8 +70,6 @@ class _QRScreenState extends State<QRScreen> {
     await convertData();
     final compressedData = await widget.db.collection("data").doc("${isBackup?"backup":"current"}$currPage").get();
     if( compressedData != null) {
-      ScoutingData data = widget.fileReader.getScoutingData(currPage);
-      
       if( isBackup ) {
         stringifiedData = compressedData.toString();
       } else {
@@ -82,19 +80,12 @@ class _QRScreenState extends State<QRScreen> {
           newData.add(CompressedDataModel.fromJson(compressedData));
           widget.db.collection("data").doc("backup$currPage").set(newData.toJson());
         } else {
-          widget.db.collection("data").doc("backup$currPage").set(compressedData);
+          var dataModel = CompressedDataModel.fromJson(compressedData);
+          dataModel.setBackUp(true);
+          widget.db.collection("data").doc("backup$currPage").set(dataModel.toJson());
         }
         widget.db.collection("data").doc("current$currPage").delete();
       }
-
-      var compressed = CompressedDataModel.fromJson(compressedData);
-      for( var s in compressed.data) {
-        Decompressor decompressor = Decompressor(s, widget.fileReader.getScoutingMethods());
-        decompressor.isBackup();
-        print(decompressor.getScreen());
-        decompressor.decompress(data.getData());
-        print(data.stringfy());
-      } 
       setState(() {
         generateCode = true;
         build(context);

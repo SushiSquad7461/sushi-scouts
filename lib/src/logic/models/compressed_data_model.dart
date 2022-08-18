@@ -2,7 +2,7 @@ import 'package:json_annotation/json_annotation.dart';
 
 part 'compressed_data_model.g.dart';
 
-@JsonSerializable()
+@JsonSerializable(explicitToJson: true)
 class CompressedDataModel {
   CompressedDataModel(this.data, this.lengths, this.metadata);
 
@@ -23,6 +23,10 @@ class CompressedDataModel {
   void addString(String other) {
     data.add(other);
     lengths.add(other.length);
+  }
+
+  void setBackUp(bool isBackup) {
+    metadata.isBackup = isBackup;
   }
 }
 

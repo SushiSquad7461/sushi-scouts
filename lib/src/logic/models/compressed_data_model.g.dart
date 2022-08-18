@@ -16,9 +16,9 @@ CompressedDataModel _$CompressedDataModelFromJson(Map<String, dynamic> json) =>
 Map<String, dynamic> _$CompressedDataModelToJson(
         CompressedDataModel instance) =>
     <String, dynamic>{
-      'data': instance.data,
+      'metadata': instance.metadata.toJson(),
       'lengths': instance.lengths,
-      'metadata': instance.metadata,
+      'data': instance.data,
     };
 
 MetadataModel _$MetadataModelFromJson(Map<String, dynamic> json) =>

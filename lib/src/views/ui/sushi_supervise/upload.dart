@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/foundation.dart';
@@ -5,7 +6,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
 import 'package:sushi_scouts/src/logic/data/Decompressor.dart';
+import 'package:sushi_scouts/src/logic/data/config_file_reader.dart';
 import 'package:sushi_scouts/src/logic/helpers/size/ScreenSize.dart';
+import 'package:sushi_scouts/src/logic/models/compressed_data_model.dart';
+import 'package:sushi_scouts/src/logic/models/scouting_data_models/scouting_data.dart';
 import 'package:sushi_scouts/src/views/util/footer/supervisefooter.dart';
 import 'package:sushi_scouts/src/views/util/header/header_nav.dart';
 
@@ -118,6 +122,14 @@ class _UploadState extends State<Upload> {
         result = scanData;
 
         if (result != null) {
+          var reader = ConfigFileReader.instance;
+          ScoutingData? data;
+          for( var s in CompressedDataModel.fromJson(json.decode(result!.code!)).data) {
+            Decompressor decompressor = Decompressor(s, reader.getScoutingMethods());
+            decompressor.isBackup();
+            data ??= reader.getScoutingData(decompressor.getScreen());
+            decompressor.decompress(data.getData());
+          } 
           controller.pauseCamera();
         } else {
         }
