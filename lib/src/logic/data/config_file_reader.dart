@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/services.dart';
+import 'package:localstore/localstore.dart';
 
 import '../helpers/Constants.dart';
 import '../models/scouting_data_models/scouting_data.dart';
@@ -14,6 +15,7 @@ class ConfigFileReader {
   Map<String, int> commonValues = {};
   String? password;
   double? _version;
+  final db = Localstore.instance;
 
   static final ConfigFileReader _reader = ConfigFileReader._(CONFIG_FILE_PATH, 2022);
 
@@ -26,6 +28,19 @@ class ConfigFileReader {
       final String stringifiedFile =
           await rootBundle.loadString("$configFileFolder${year}config.json");
       parsedFile = await json.decode(stringifiedFile);
+      teamNum = parsedFile!["teamNumber"];
+      password = parsedFile!["password"];
+      _version = parsedFile!["version"];
+      parsedFile = parsedFile!["scouting"];
+      return;
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  Future<void> readConfigFromDatabase(int teamNum) async {
+    try {
+      parsedFile = await db.collection("config_files").doc(teamNum.toString()).get();
       teamNum = parsedFile!["teamNumber"];
       password = parsedFile!["password"];
       _version = parsedFile!["version"];

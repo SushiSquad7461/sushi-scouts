@@ -61,9 +61,20 @@ class _SettingsState extends State<Settings> {
     }
   }
 
-  void downloadConfigFile() {
+  Future<void> downloadConfigFile() async {
     int configYear = year ?? DateTime.now().year;
     int teamNum = BlocProvider.of<LoginCubit>(context).state.teamNum;
+
+    String? configFile =
+        await ApiRepository().getConfigFile(configYear, teamNum);
+
+    if (configFile != null) {
+      var parsedFile = await json.decode(configFile);
+      db
+          .collection("config_files")
+          .doc(parsedFile[parsedFile!["teamNumber"]].toString())
+          .set(parsedFile);
+    }
   }
 
   void downloadNames() {}
@@ -102,8 +113,13 @@ class _SettingsState extends State<Settings> {
       resizeToAvoidBottomInset: false,
       body: Column(
         children: [
-          HeaderTitle(isSupervise: widget.isSupervise,),
-          HeaderNav(currentPage: "settings", isSupervise: widget.isSupervise,),
+          HeaderTitle(
+            isSupervise: widget.isSupervise,
+          ),
+          HeaderNav(
+            currentPage: "settings",
+            isSupervise: widget.isSupervise,
+          ),
           SizedBox(
               width: ScreenSize.width,
               height: ScreenSize.height * (widget.isSupervise ? 0.6 : 0.64),
@@ -236,18 +252,18 @@ class _SettingsState extends State<Settings> {
                   ),
                 ],
               )),
-          widget.isSupervise ? 
-            const SuperviseFooter()
-          : Padding(
-            padding: EdgeInsets.all(ScreenSize.height * 0.01),
-            child: SizedBox(
-                width: ScreenSize.width / 10.0, //57
-                height: ScreenSize.width / 10.0, //59
-                child: SvgPicture.asset(
-                  "./assets/images/${colors.scaffoldBackgroundColor == Colors.black ? "darknori" : "nori"}.svg",
-                )),
-          ),
-          if(!widget.isSupervise) Footer(pageTitle: ""),
+          widget.isSupervise
+              ? const SuperviseFooter()
+              : Padding(
+                  padding: EdgeInsets.all(ScreenSize.height * 0.01),
+                  child: SizedBox(
+                      width: ScreenSize.width / 10.0, //57
+                      height: ScreenSize.width / 10.0, //59
+                      child: SvgPicture.asset(
+                        "./assets/images/${colors.scaffoldBackgroundColor == Colors.black ? "darknori" : "nori"}.svg",
+                      )),
+                ),
+          if (!widget.isSupervise) Footer(pageTitle: ""),
         ],
       ),
     );

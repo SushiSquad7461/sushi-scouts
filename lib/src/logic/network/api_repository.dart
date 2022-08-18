@@ -22,4 +22,14 @@ class ApiRepository {
       print(ErrorHelper.handleError(error as Exception));
     }
   }
+
+  Future<String?> getConfigFile(int year, int teamNum) async {
+    final dio = Dio();
+    _restClient = RestClient(dio, baseUrl: '');
+    try{
+      return await _restClient!.getConfigFile(year, teamNum);
+    } catch(error) {
+      print(ErrorHelper.handleError(error as Exception));
+    }
+  }
 }

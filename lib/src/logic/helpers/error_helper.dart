@@ -3,7 +3,7 @@ import 'package:dio/dio.dart';
 class ErrorHelper {
   static String handleError(Exception error) {
     String errorDescription = "";
-    if( error is DioError) {
+    if (error is DioError) {
       switch (error.type) {
         case DioErrorType.cancel:
           errorDescription = "Request cancelled";
@@ -23,7 +23,11 @@ class ErrorHelper {
         case DioErrorType.response:
           switch (error.response?.statusCode ?? 0) {
             case 400:
-              errorDescription = error.response!.data;
+              if (error.response!.data is String) {
+                errorDescription = error.response!.data;
+              } else {
+                errorDescription = error.response!.data["error"];
+              }
               break;
             case 401:
               errorDescription = 'Unauthorised request';
@@ -46,7 +50,7 @@ class ErrorHelper {
             default:
               errorDescription =
                   "Received invalid status code: ${error.response?.statusCode ?? ''}";
-            }
+          }
       }
     }
     return errorDescription;
