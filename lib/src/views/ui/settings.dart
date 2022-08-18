@@ -80,7 +80,7 @@ class _SettingsState extends State<Settings> {
 
   void logOut() {
     BlocProvider.of<LoginCubit>(context).logOut();
-    RouteHelper.pushReplacement(ctx: context, screen: const AppChooser());
+    RouteHelper.pushAndRemoveUntilToScreen(-1,0,ctx: context, screen: const AppChooser());
   }
 
   @override
