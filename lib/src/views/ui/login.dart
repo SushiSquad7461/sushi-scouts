@@ -14,8 +14,8 @@ import 'package:sushi_scouts/src/views/ui/sushi_supervise/upload.dart';
 import 'package:sushi_scouts/src/views/util/header/header_title/header_title.dart';
 import 'package:sushi_scouts/src/views/util/popups/incorrect_password.dart';
 
-import '../../../logic/data/config_file_reader.dart';
-import '../../../logic/deviceType.dart';
+import '../../logic/data/config_file_reader.dart';
+import '../../logic/deviceType.dart';
 
 class Login extends StatefulWidget {
   final bool sushi_scouts;

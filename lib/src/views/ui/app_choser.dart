@@ -7,7 +7,7 @@ import 'package:flutter_device_type/flutter_device_type.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:sushi_scouts/src/logic/helpers/routing_helper.dart';
 import 'package:sushi_scouts/src/logic/helpers/size/ScreenSize.dart';
-import 'package:sushi_scouts/src/views/ui/sushi_scouts/login.dart';
+import 'package:sushi_scouts/src/views/ui/login.dart';
 import 'dart:math' as math;
 
 class AppChooser extends StatelessWidget {

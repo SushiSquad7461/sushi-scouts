@@ -14,10 +14,12 @@ class ConfigFileReader {
   Map<String, ScoutingData> data = {};
   Map<String, int> commonValues = {};
   String? password;
-  double? _version;
+  int? _version;
   final db = Localstore.instance;
+  bool defaultConfig = true;
 
-  static final ConfigFileReader _reader = ConfigFileReader._(CONFIG_FILE_PATH, 2022);
+  static final ConfigFileReader _reader =
+      ConfigFileReader._(CONFIG_FILE_PATH, 2022);
 
   ConfigFileReader._(this.configFileFolder, this.year);
 
@@ -32,19 +34,43 @@ class ConfigFileReader {
       password = parsedFile!["password"];
       _version = parsedFile!["version"];
       parsedFile = parsedFile!["scouting"];
+      defaultConfig = true;
       return;
     } catch (e) {
       rethrow;
     }
   }
 
+  Future<void> readInitalConfig() async {
+    var user = await db.collection("preferences").doc("user").get();
+
+    // if (user != null && user["teamNum"] != null) {
+    //   var found = await db
+    //       .collection("config_files")
+    //       .doc(user["teamNum"].toString())
+    //       .get();
+
+    //   if (found != null) {
+    //     await readConfigFromDatabase(user["teamNum"]);
+    //   } else {
+    //     await readConfig();
+    //   }
+    // } else {
+    //   await readConfig();
+    // }
+    await readConfig();
+  }
+
   Future<void> readConfigFromDatabase(int teamNum) async {
     try {
-      parsedFile = await db.collection("config_files").doc(teamNum.toString()).get();
+      parsedFile =
+          await db.collection("config_files").doc(teamNum.toString()).get();
+      print(parsedFile);
       teamNum = parsedFile!["teamNumber"];
       password = parsedFile!["password"];
       _version = parsedFile!["version"];
       parsedFile = parsedFile!["scouting"];
+      defaultConfig = false;
       return;
     } catch (e) {
       rethrow;
@@ -56,7 +82,8 @@ class ConfigFileReader {
   }
 
   ScoutingData getScoutingData(String scoutingMethod) {
-    data[scoutingMethod] ??= ScoutingData(parsedFile![scoutingMethod], name: scoutingMethod);
+    data[scoutingMethod] ??=
+        ScoutingData(parsedFile![scoutingMethod], name: scoutingMethod);
     return data[scoutingMethod]!;
   }
 
@@ -81,13 +108,13 @@ class ConfigFileReader {
   }
 
   int? getCommonValue(String key) {
-    if( !commonValues.containsKey(key)) {
+    if (!commonValues.containsKey(key)) {
       return null;
     }
     return commonValues[key]!;
   }
 
-  bool checkPassword(String s) => s == (password??"");
+  bool checkPassword(String s) => s == (password ?? "");
 
-  double get version => _version??0; 
+  int get version => _version ?? 0;
 }
