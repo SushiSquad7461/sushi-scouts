@@ -67,7 +67,6 @@ class _SettingsState extends State<Settings> {
 
     String? configFile =
         await ApiRepository().getConfigFile(configYear, teamNum);
-
     if (configFile != null) {
       var parsedFile = await json.decode(configFile);
       db

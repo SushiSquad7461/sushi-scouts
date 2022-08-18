@@ -6,11 +6,11 @@ part 'compressed_data_model.g.dart';
 class CompressedDataModel {
   CompressedDataModel(this.data, this.lengths, this.metadata);
 
-  List<String> data;
+  MetadataModel metadata;
 
   List<int> lengths;
 
-  MetadataModel metadata;
+  List<String> data;
 
   factory CompressedDataModel.fromJson(Map<String, dynamic> json) => _$CompressedDataModelFromJson(json);
   Map<String, dynamic> toJson() => _$CompressedDataModelToJson(this);
@@ -28,9 +28,10 @@ class CompressedDataModel {
 
 @JsonSerializable(explicitToJson: true)
 class MetadataModel {
-  MetadataModel(this.name, this.version);
+  MetadataModel(this.name, this.version, this.isBackup);
   String name;
-  String version;
+  double version;
+  bool isBackup;
   factory MetadataModel.fromJson(Map<String, dynamic> json) => _$MetadataModelFromJson(json);
   Map<String, dynamic> toJson() => _$MetadataModelToJson(this);
 }

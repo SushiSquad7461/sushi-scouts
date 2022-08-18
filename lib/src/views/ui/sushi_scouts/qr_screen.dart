@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:localstore/localstore.dart';
 import 'package:qr_flutter/qr_flutter.dart';
+import 'package:sushi_scouts/src/logic/blocs/login_bloc/login_cubit.dart';
 import 'package:sushi_scouts/src/logic/blocs/scouting_method_bloc/scouting_method_cubit.dart';
 import 'package:sushi_scouts/src/logic/data/Compressor.dart';
 import 'package:sushi_scouts/src/logic/data/Decompressor.dart';
@@ -46,7 +47,9 @@ class _QRScreenState extends State<QRScreen> {
       
       if( unprocessedData == null) {
         newData = compressor.firstCompress();
-        widget.db.collection("data").doc("current$currPage").set({"data": [newData], "lengths" : [newData.length]});
+        SushiScoutsLogin state = BlocProvider.of<LoginCubit>(context).state as SushiScoutsLogin;
+        var reader = ConfigFileReader.instance;
+        widget.db.collection("data").doc("current$currPage").set({"data": [newData], "lengths" : [newData.length], "metadata" : {"name": state.name, "version" : reader.version, "isBackup" : isBackup}});
       } else {
         final compressedData = CompressedDataModel.fromJson(unprocessedData);
         newData = compressor.firstCompress();
@@ -110,6 +113,13 @@ class _QRScreenState extends State<QRScreen> {
     return Stack(
       fit: StackFit.expand,
       children: [
+        Align(
+            alignment: Alignment(0, 1),
+            child: SvgPicture.asset(
+              "./assets/images/FooterColors.svg",
+              width: ScreenSize.width,
+            )
+          ),
         generateCode ?
           Align(
             alignment: const Alignment(0, -0.5),
@@ -184,6 +194,7 @@ class _QRScreenState extends State<QRScreen> {
                       child: TextButton(
                         onPressed: () {
                           isBackup = true;
+                          print(0);
                           getData();
                         },
                         child: Text(
@@ -228,12 +239,6 @@ class _QRScreenState extends State<QRScreen> {
               ),
             )
           ), 
-        Align(
-            alignment: Alignment(0, 1),
-            child: SvgPicture.asset(
-              "./assets/images/FooterColors.svg",
-              width: ScreenSize.width,
-            )),
         (!generateCode) ?
         Align(
           alignment: Alignment(0, 0.83),

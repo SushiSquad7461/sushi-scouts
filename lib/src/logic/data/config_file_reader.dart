@@ -15,6 +15,7 @@ class ConfigFileReader {
   Map<String, int> commonValues = {};
   String? password;
   double? _version;
+  String? _name;
   final db = Localstore.instance;
 
   static final ConfigFileReader _reader = ConfigFileReader._(CONFIG_FILE_PATH, 2022);
@@ -89,5 +90,8 @@ class ConfigFileReader {
 
   bool checkPassword(String s) => s == (password??"");
 
-  double get version => _version??0; 
+  double get version => _version??0;
+  String get name => _name??"";
+
+  set setName(String name) => _name = name;
 }
