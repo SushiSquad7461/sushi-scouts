@@ -120,9 +120,12 @@ class ScoutingState extends State<Scouting> {
     try {
       List<Widget> builtSections = [];
       for (var i in currPage!.sections) {
-        int rows = size.width / i.columns < 300
-            ? (size.width / 300).floor()
-            : i.columns;
+
+        // idk why da hell this was here but its gone now.  check with sidarth before perment deletaion
+        // int rows = size.width / i.columns < 300
+        //     ? (size.width / 300).floor()
+        //     : i.columns;
+        int rows = i.columns;
         if (i.title != "") {
           builtSections.add(Align(
             alignment: const Alignment(-0.8, 0),

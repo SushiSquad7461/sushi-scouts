@@ -118,8 +118,8 @@ class ConfigFileReader {
 
   bool checkPassword(String s) => s == (password ?? "");
 
-  int get version => _version??0;
-  String get name => _name??"";
+  int get version => _version ?? 0;
+  String get name => _name ?? "";
 
   set setName(String name) => _name = name;
 }
