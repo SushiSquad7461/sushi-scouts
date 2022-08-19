@@ -14,6 +14,7 @@ import 'package:sushi_scouts/src/views/util/header/header_title/header_title.dar
 
 import '../../../logic/data/Data.dart';
 import '../../../logic/data/config_file_reader.dart';
+import '../../../logic/deviceType.dart';
 
 class Scouting extends StatefulWidget {
   const Scouting({Key? key}) : super(key: key);
@@ -160,6 +161,7 @@ class ScoutingState extends State<Scouting> {
 
   @override
   Widget build(BuildContext context) {
+    var isPhoneScreen = isPhone(context);
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: BlocBuilder<ScoutingMethodCubit, ScoutingMethodStates>(
@@ -181,7 +183,7 @@ class ScoutingState extends State<Scouting> {
                 const HeaderTitle(),
                 HeaderNav(currentPage: state.method),
                 Padding(
-                  padding: EdgeInsets.only(top: ScreenSize.height * 0.02),
+                  padding: EdgeInsets.only(top: ScreenSize.height * (isPhoneScreen? 0 : 0.02)),
                   child: SizedBox(
                     width: ScreenSize.width,
                     height: ScreenSize.height * 0.61,

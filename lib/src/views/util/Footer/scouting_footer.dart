@@ -8,6 +8,7 @@ import 'package:sushi_scouts/src/logic/models/scouting_data_models/scouting_data
 import 'package:sushi_scouts/src/views/ui/sushi_scouts/qr_screen.dart';
 import 'package:sushi_scouts/src/views/util/popups/required_content.dart';
 import '../../../logic/data/config_file_reader.dart';
+import '../../../logic/deviceType.dart';
 import 'footer.dart';
 
 class ScoutingFooter extends StatefulWidget {
@@ -59,10 +60,99 @@ class _ScoutingFooterState extends State<ScoutingFooter> {
 
   Widget buildFooter() {
     var colors = Theme.of(context);
+    var isPhoneScreen = isPhone(context);
     return Container(
-        height: ScreenSize.height * 0.165,
+        height: ScreenSize.height * (isPhoneScreen ? 0.19 : 0.165),
+        width: ScreenSize.width,
         padding: const EdgeInsets.all(0),
-        child: Column(children: [
+        child: isPhoneScreen ?
+          Stack(
+            children: [
+              
+              SizedBox(
+                width: ScreenSize.width,
+                child: SvgPicture.asset(
+                  "./assets/images/mobilefooter.svg",
+                  width: ScreenSize.width,
+                  fit: BoxFit.fitWidth,
+                ),
+              ),
+              Padding(
+                padding: EdgeInsets.only(top: ScreenSize.height * 0.1, left: ScreenSize.width * 0.15),
+                child: SizedBox(
+                  width: ScreenSize.width * 0.7,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      IconButton(
+                        padding: const EdgeInsets.all(0),
+                        onPressed: moveToPreviousPage,
+                        iconSize: ScreenSize.width / 6.0,
+                        icon: Icon(
+                          Icons.arrow_left_rounded,
+                          color: prevPage
+                              ? colors.scaffoldBackgroundColor
+                              : colors.primaryColorDark,
+                          semanticLabel: 'Back Arrow',
+                        ),
+                      ),
+                      if(nextPage) Text(
+                        footer.toUpperCase(),
+                        style: TextStyle(
+                            fontSize: 45 * ScreenSize.swu,
+                            fontFamily: "Sushi",
+                            color: colors.primaryColor,
+                            fontWeight: FontWeight.bold),
+                      ),
+                      if(!nextPage) TextButton(
+                        onPressed: () {
+                          List<String> notFilled =
+                              currentScoutingData!.notFilled();
+                          if (notFilled.isEmpty) {
+                            RouteHelper.pushAndRemoveUntilToScreen(1, 0,
+                                ctx: context, screen: QRScreen());
+                          } else {
+                            showDialog(
+                                context: context,
+                                builder: (context) =>
+                                    RequiredContent(notFilled));
+                          }
+                        },
+                        child: Text(
+                          'SUBMIT',
+                          style: TextStyle(
+                              fontSize: 45 * ScreenSize.swu,
+                              fontFamily: "Sushi",
+                              color: colors.primaryColor,
+                              fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                      IconButton(
+                        padding: const EdgeInsets.all(0),
+                        onPressed: () {
+                            List<String> notFilled = currentScoutingData!.notFilled();
+                            if (notFilled.isEmpty) {
+                              moveToNextPage();
+                            } else {
+                              showDialog(
+                                  context: context,
+                                  builder: (context) => RequiredContent(notFilled));
+                            }
+                        },
+                        iconSize: ScreenSize.width / 6.0,
+                        icon: Icon(Icons.arrow_right_rounded,
+                              color: nextPage
+                                  ? colors.scaffoldBackgroundColor
+                                  : colors.primaryColorDark,
+                              semanticLabel: 'Forward Arrow'),
+                      ),
+                    ],
+                  ),
+                ),
+              ),  
+            ],
+          )
+        : Column(children: [
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -100,8 +190,8 @@ class _ScoutingFooterState extends State<ScoutingFooter> {
                           List<String> notFilled =
                               currentScoutingData!.notFilled();
                           if (notFilled.isEmpty) {
-                            RouteHelper.pushAndRemoveUntilToScreen(
-                                1,0,ctx: context, screen: QRScreen());
+                            RouteHelper.pushAndRemoveUntilToScreen(1, 0,
+                                ctx: context, screen: QRScreen());
                           } else {
                             showDialog(
                                 context: context,
