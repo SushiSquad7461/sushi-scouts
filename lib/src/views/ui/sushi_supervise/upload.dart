@@ -26,14 +26,16 @@ class _UploadState extends State<Upload> {
   final GlobalKey qrKey = GlobalKey(debugLabel: 'QR');
   Barcode? result;
   QRViewController? controller;
+  List<ScoutingData> toAdd = [];
 
   // In order to get hot reload to work we need to pause the camera if the platform
   // is android, or resume the camera if the platform is iOS.
   @override
   void reassemble() {
     super.reassemble();
+    setState(() {});
     if (Platform.isAndroid) {
-      controller!.resumeCamera();
+      controller!.pauseCamera();
     } else if (Platform.isIOS) {
       controller!.resumeCamera();
     }
@@ -46,8 +48,13 @@ class _UploadState extends State<Upload> {
       body: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          const HeaderTitle(isSupervise: true,),
-          HeaderNav(currentPage: "upload", isSupervise: true,),
+          const HeaderTitle(
+            isSupervise: true,
+          ),
+          HeaderNav(
+            currentPage: "upload",
+            isSupervise: true,
+          ),
           SizedBox(
             height: ScreenSize.height * 0.6,
             child: Padding(
@@ -59,8 +66,8 @@ class _UploadState extends State<Upload> {
                       width: ScreenSize.width * 0.8,
                       height: ScreenSize.height * 0.58,
                       decoration: BoxDecoration(
-                          borderRadius:
-                              BorderRadius.all(Radius.circular(8 * ScreenSize.swu)),
+                          borderRadius: BorderRadius.all(
+                              Radius.circular(8 * ScreenSize.swu)),
                           border: Border.all(
                             color: colors.primaryColorDark,
                             width: 5 * ScreenSize.swu,
@@ -71,32 +78,38 @@ class _UploadState extends State<Upload> {
                       ),
                     ),
                   ),
-                  if (result != null)
+                  if (toAdd.length != 0)
                     Center(
                       child: Container(
                         height: ScreenSize.height * 0.4,
                         width: ScreenSize.width * 0.6,
                         decoration: BoxDecoration(
-                                      border: Border.all(
-                                          color: Colors.white,
-                                          width: 0.02 * ScreenSize.width),
-                                      borderRadius: BorderRadius.all(
-                                          Radius.circular(10 * ScreenSize.swu)),
-                                    ) ,
+                          border: Border.all(
+                              color: Colors.white,
+                              width: 0.02 * ScreenSize.width),
+                          borderRadius: BorderRadius.all(
+                              Radius.circular(10 * ScreenSize.swu)),
+                        ),
                         child: Container(
                           width: ScreenSize.width * 0.58,
-                          height: ScreenSize.height * 0.4 - ScreenSize.width * 0.02,
+                          height:
+                              ScreenSize.height * 0.4 - ScreenSize.width * 0.02,
                           color: Colors.white,
                           child: Padding(
-                            padding: EdgeInsets.only(top: ScreenSize.height *0.03, bottom: ScreenSize.height * 0.03, right: ScreenSize.width * 0.02, left: ScreenSize.width * 0.02),
-                            child: Column(
+                            padding: EdgeInsets.only(
+                                top: ScreenSize.height * 0.03,
+                                bottom: ScreenSize.height * 0.03,
+                                right: ScreenSize.width * 0.02,
+                                left: ScreenSize.width * 0.02),
+                            child: ListView(
                               children: [
-                                Text(result!.code!),
+                                for (var i in toAdd) Text(i.stringfy()),
                                 TextButton(
                                     onPressed: () {
-                                          controller!.resumeCamera();
-                                          setState(() => {result = null});
-                                        },
+                                      controller!.resumeCamera();
+                                      setState(
+                                          () => {toAdd = [], result = null});
+                                    },
                                     child: Text("Reset"))
                               ],
                             ),
@@ -115,25 +128,34 @@ class _UploadState extends State<Upload> {
   }
 
   void _onQRViewCreated(QRViewController controller) {
+    print("hello yo");
     this.controller = controller;
     controller.resumeCamera();
-    controller.scannedDataStream.listen((scanData) {
-      setState(() {
-        result = scanData;
+    controller.scannedDataStream.listen(handleNewData);
+  }
 
-        if (result != null) {
-          var reader = ConfigFileReader.instance;
+  void handleNewData(scanData) {
+    setState(() {
+      result = scanData;
+
+      if (result != null && toAdd.length == 0) {
+        var reader = ConfigFileReader.instance;
+        print("helo 23");
+        print(result!.code!);
+        Map<String, dynamic> decodedData = json.decode(result!.code!);
+        for (var s in CompressedDataModel.fromJson(decodedData).data) {
           ScoutingData? data;
-          for( var s in CompressedDataModel.fromJson(json.decode(result!.code!)).data) {
-            Decompressor decompressor = Decompressor(s, reader.getScoutingMethods());
-            decompressor.isBackup();
-            data ??= reader.getScoutingData(decompressor.getScreen());
-            decompressor.decompress(data.getData());
-          } 
-          controller.pauseCamera();
-        } else {
+          Decompressor decompressor =
+              Decompressor(s, reader.getScoutingMethods());
+          decompressor.isBackup();
+          String screen = decompressor.getScreen();
+          data ??= reader.getScoutingData(screen);
+          decompressor.decompress(data.getData());
+          print("ADD");
+          toAdd.add(data);
         }
-      });
+        // controller.pauseCamera();
+      }
     });
   }
 

@@ -67,16 +67,22 @@ class _LoginState extends State<Login> {
 
     if (userInfo != null) {
       setState(() {
-        _eventCodeController.text = userInfo["eventCode"];
-        eventCode = userInfo["eventCode"];
-
-        if (widget.sushi_scouts) {
-          _nameController.text = userInfo["name"];
-          name = userInfo["name"];
+        if (userInfo["eventCode"] != null && userInfo["eventCode"] != "") {
+          _eventCodeController.text = userInfo["eventCode"];
+          eventCode = userInfo["eventCode"];
         }
 
-        _teamNumController.text = userInfo["teamNum"].toString();
-        teamNum = userInfo["teamNum"];
+        if (widget.sushi_scouts) {
+          if (userInfo["name"] != null && userInfo["name"] != "") {
+            _nameController.text = userInfo["name"];
+            name = userInfo["name"];
+          }
+        }
+
+        if (userInfo["teamNum"] != null && userInfo["teamNum"] != "") {
+          _teamNumController.text = userInfo["teamNum"].toString();
+          teamNum = userInfo["teamNum"];
+        }
       });
     }
   }
@@ -89,7 +95,7 @@ class _LoginState extends State<Login> {
       resizeToAvoidBottomInset: false,
       body: Column(
         children: [
-          HeaderTitle(isSupervise : !widget.sushi_scouts),
+          HeaderTitle(isSupervise: !widget.sushi_scouts),
           SizedBox(
             width: ScreenSize.width,
             height: ScreenSize.height * 0.9,
@@ -103,8 +109,12 @@ class _LoginState extends State<Login> {
                       SvgPicture.asset(
                         isPhoneScreen
                             ? "./assets/images/mobile_footer.svg"
-                            : (widget.sushi_scouts ? "./assets/images/FooterColors.svg" : (colors.scaffoldBackgroundColor 
-                              == Colors.black ? "./assets/images/loginsupervisefooterdark.svg" : "./assets/images/loginfootersupervise.svg")),
+                            : (widget.sushi_scouts
+                                ? "./assets/images/FooterColors.svg"
+                                : (colors.scaffoldBackgroundColor ==
+                                        Colors.black
+                                    ? "./assets/images/loginsupervisefooterdark.svg"
+                                    : "./assets/images/loginfootersupervise.svg")),
                         width: ScreenSize.width,
                       ),
                       if (teamNum != null &&

@@ -145,7 +145,7 @@ class _SettingsState extends State<Settings> {
             ),
             SizedBox(
                 width: ScreenSize.width,
-                height: ScreenSize.height * (isSupervise ? 0.6 : 0.64),
+                height: ScreenSize.height * (isSupervise ? 0.60 : 0.64),
                 child: Stack(
                   fit: StackFit.expand,
                   children: [
@@ -311,7 +311,7 @@ class _SettingsState extends State<Settings> {
                           "./assets/images/${colors.scaffoldBackgroundColor == Colors.black ? "darknori" : "nori"}.svg",
                         )),
                   ),
-            if (isSupervise) Footer(pageTitle: ""),
+            if (!isSupervise) Footer(pageTitle: ""),
           ],
         );
         })
