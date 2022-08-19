@@ -25,6 +25,7 @@ import 'package:sushi_scouts/src/views/ui/app_choser.dart';
 import 'package:sushi_scouts/src/views/util/footer/supervisefooter.dart';
 import 'package:sushi_scouts/src/views/util/header/header_nav.dart';
 import 'package:sushi_scouts/src/views/util/header/header_title/header_title.dart';
+import 'package:sushi_scouts/src/views/util/popups/logout.dart';
 import '../../../main.dart';
 import '../util/Footer/Footer.dart';
 
@@ -243,7 +244,16 @@ class _SettingsState extends State<Settings> {
                   Container(
                     decoration: boxDecoration,
                     child: TextButton(
-                        onPressed: logOut,
+                        onPressed: () {
+                          if(!widget.isSupervise) {
+                            showDialog(
+                              context: context,
+                              builder: ((context) => const Logout())
+                            );
+                          } else {
+                            logOut();
+                          }
+                        },
                         child: Text(
                           "log out",
                           style: textStyle,
