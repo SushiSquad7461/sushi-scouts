@@ -15,6 +15,7 @@ import 'package:localstore/localstore.dart';
 
 import 'package:sushi_scouts/src/logic/blocs/login_bloc/login_cubit.dart';
 import 'package:sushi_scouts/src/logic/blocs/theme_bloc/theme_cubit.dart';
+import 'package:sushi_scouts/src/logic/data/config_file_reader.dart';
 import 'package:sushi_scouts/src/logic/helpers/routing_helper.dart';
 import 'package:sushi_scouts/src/logic/helpers/secret/secret.dart';
 import 'package:sushi_scouts/src/logic/helpers/secret/secret_loader.dart';
@@ -23,16 +24,15 @@ import 'package:sushi_scouts/src/logic/models/match_schedule.dart';
 import 'package:sushi_scouts/src/logic/network/api_repository.dart';
 import 'package:sushi_scouts/src/views/ui/app_choser.dart';
 import 'package:sushi_scouts/src/views/ui/loading.dart';
+import 'package:sushi_scouts/src/views/ui/sushi_scouts/qr_screen.dart';
 import 'package:sushi_scouts/src/views/util/footer/supervisefooter.dart';
 import 'package:sushi_scouts/src/views/util/header/header_nav.dart';
 import 'package:sushi_scouts/src/views/util/header/header_title/header_title.dart';
-import 'package:sushi_scouts/src/views/util/popups/logout.dart';
 import '../../../main.dart';
 import '../util/Footer/Footer.dart';
 
 class Settings extends StatefulWidget {
-  final bool isSupervise;
-  const Settings({Key? key, this.isSupervise = false}) : super(key: key);
+  const Settings({Key? key}) : super(key: key);
 
   @override
   State<Settings> createState() => _SettingsState();
@@ -42,6 +42,7 @@ class _SettingsState extends State<Settings> {
   final db = Localstore.instance;
   Secret? secrets;
   int? year;
+  bool isLoggingOut = false;
 
   Future<void> toggleMode(String mode) async {
     BlocProvider.of<ThemeCubit>(context)
@@ -82,15 +83,31 @@ class _SettingsState extends State<Settings> {
   void downloadNames() {}
 
   void logOut() {
+    deleteData();
     BlocProvider.of<LoginCubit>(context).logOut();
     RouteHelper.pushAndRemoveUntilToScreen(-1, 0,
         ctx: context, screen: const AppChooser());
+  }
+
+  void deleteData() {
+    var db = Localstore.instance;
+    var reader = ConfigFileReader.instance;
+    for (var screen in reader.getScoutingMethods()) {
+      db.collection("data").doc("backup$screen").delete();
+      db.collection("data").doc("current$screen").delete();
+    }
   }
 
   @override
   void initState() {
     super.initState();
     loadSecret();
+  }
+
+  void setLogout() {
+    setState(() {
+      isLoggingOut = true;
+    });
   }
 
   Future<void> loadSecret() async {
@@ -114,170 +131,190 @@ class _SettingsState extends State<Settings> {
 
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      body: Column(
-        children: [
-          HeaderTitle(
-            isSupervise: widget.isSupervise,
-          ),
-          HeaderNav(
-            currentPage: "settings",
-            isSupervise: widget.isSupervise,
-          ),
-          SizedBox(
-              width: ScreenSize.width,
-              height: ScreenSize.height * (widget.isSupervise ? 0.6 : 0.64),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      Container(
-                        decoration: BoxDecoration(
-                            color: Colors.black,
-                            borderRadius: BorderRadius.all(
-                                Radius.circular(20 * ScreenSize.swu))),
-                        child: Padding(
-                          padding: EdgeInsets.all(ScreenSize.width * 0.02),
-                          child: TextButton(
-                              onPressed: () => toggleMode("dark"),
-                              child: Text(
-                                "DARK MODE",
-                                style: TextStyle(
-                                  fontFamily: "Sushi",
-                                  color: Colors.white,
-                                  fontSize: ScreenSize.swu * 30,
-                                ),
-                              )),
-                        ),
-                      ),
-                      Container(
-                        decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.all(
-                                Radius.circular(20 * ScreenSize.swu))),
-                        child: Padding(
-                          padding: EdgeInsets.all(ScreenSize.width * 0.02),
-                          child: TextButton(
-                              onPressed: () => toggleMode("light"),
-                              child: Text(
-                                "light mode",
-                                style: TextStyle(
-                                  fontFamily: "Sushi",
-                                  color: Colors.black,
-                                  fontSize: ScreenSize.swu * 30,
-                                ),
-                              )),
-                        ),
-                      )
-                    ],
-                  ),
-                  Container(
-                    decoration: boxDecoration,
-                    child: TextButton(
-                        onPressed: downloadMatchSchedule,
-                        child: Text(
-                          "download match schedule",
-                          style: textStyle,
-                        )),
-                  ),
-                  Container(
-                    decoration: boxDecoration,
-                    width: ScreenSize.width * 0.47,
-                    child: TextButton(
-                        onPressed: downloadConfigFile,
-                        child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: [
-                              SizedBox(
-                                width: ScreenSize.width * 0.15,
-                                height: ScreenSize.height * 0.04,
-                                child: TextFormField(
-                                  decoration: InputDecoration(
-                                    enabledBorder: UnderlineInputBorder(
-                                      borderSide: BorderSide(
-                                          width: ScreenSize.height * 0.003,
-                                          color: colors.primaryColorDark),
+      body: BlocBuilder<LoginCubit, LoginStates>(
+        builder: (context, state) {
+          bool isSupervise = state is SushiSuperviseLogin;
+          return Column(
+          children: [
+            HeaderTitle(
+              isSupervise: isSupervise,
+            ),
+            HeaderNav(
+              currentPage: "settings",
+              isSupervise: isSupervise,
+            ),
+            SizedBox(
+                width: ScreenSize.width,
+                height: ScreenSize.height * (isSupervise ? 0.6 : 0.64),
+                child: Stack(
+                  fit: StackFit.expand,
+                  children: [
+                    Align(
+                      alignment: const Alignment(0, -0.8),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          Container(
+                            decoration: BoxDecoration(
+                                color: Colors.black,
+                                borderRadius: BorderRadius.all(
+                                    Radius.circular(20 * ScreenSize.swu))),
+                            child: Padding(
+                              padding: EdgeInsets.all(ScreenSize.width * 0.02),
+                              child: TextButton(
+                                  onPressed: () => toggleMode("dark"),
+                                  child: Text(
+                                    "DARK MODE",
+                                    style: TextStyle(
+                                      fontFamily: "Sushi",
+                                      color: Colors.white,
+                                      fontSize: ScreenSize.swu * 30,
                                     ),
-                                    focusedBorder: UnderlineInputBorder(
-                                      borderSide: BorderSide(
-                                          width: ScreenSize.height * 0.003,
-                                          color: colors.primaryColorDark),
-                                    ),
-                                    hintText: "YEAR",
-                                    hintStyle: TextStyle(
-                                        color: colors.primaryColorDark),
-                                    isDense: true,
-                                    contentPadding: EdgeInsets.symmetric(
-                                        vertical: ScreenSize.height * 0.005),
-                                  ),
-                                  textAlign: TextAlign.center,
-                                  style: GoogleFonts.mohave(
-                                      textStyle: TextStyle(
-                                    fontSize: ScreenSize.width * 0.05,
-                                    color: colors.primaryColorDark,
-                                    fontWeight: FontWeight.w500,
                                   )),
-                                  keyboardType: TextInputType.number,
-                                  inputFormatters: <TextInputFormatter>[
-                                    FilteringTextInputFormatter.digitsOnly
-                                  ],
-                                  onChanged: (String? val) => setState(() {
-                                    year = (val != null ? int.parse(val) : val)
-                                        as int?;
-                                  }),
-                                ),
-                              ),
-                              Text(
-                                "config file",
-                                style: textStyle,
-                              ),
-                            ])),
-                  ),
-                  Container(
-                    decoration: boxDecoration,
-                    child: TextButton(
-                        onPressed: downloadNames,
-                        child: Text(
-                          "download names",
-                          style: textStyle,
+                            ),
+                          ),
+                          Container(
+                            decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.all(
+                                    Radius.circular(20 * ScreenSize.swu))),
+                            child: Padding(
+                              padding: EdgeInsets.all(ScreenSize.width * 0.02),
+                              child: TextButton(
+                                  onPressed: () => toggleMode("light"),
+                                  child: Text(
+                                    "light mode",
+                                    style: TextStyle(
+                                      fontFamily: "Sushi",
+                                      color: Colors.black,
+                                      fontSize: ScreenSize.swu * 30,
+                                    ),
+                                  )),
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                    Align(
+                      alignment: const Alignment(0, -0.5),
+                      child: Container(
+                        decoration: boxDecoration,
+                        child: TextButton(
+                            onPressed: downloadMatchSchedule,
+                            child: Text(
+                              "download match schedule",
+                              style: textStyle,
+                            )),
+                      ),
+                    ),
+                    Align(
+                      alignment: const Alignment(0, -0.2),
+                      child: Container(
+                        decoration: boxDecoration,
+                        width: ScreenSize.width * 0.47,
+                        child: TextButton(
+                            onPressed: downloadConfigFile,
+                            child: Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                children: [
+                                  SizedBox(
+                                    width: ScreenSize.width * 0.15,
+                                    height: ScreenSize.height * 0.04,
+                                    child: TextFormField(
+                                      decoration: InputDecoration(
+                                        enabledBorder: UnderlineInputBorder(
+                                          borderSide: BorderSide(
+                                              width: ScreenSize.height * 0.003,
+                                              color: colors.primaryColorDark),
+                                        ),
+                                        focusedBorder: UnderlineInputBorder(
+                                          borderSide: BorderSide(
+                                              width: ScreenSize.height * 0.003,
+                                              color: colors.primaryColorDark),
+                                        ),
+                                        hintText: "YEAR",
+                                        hintStyle: TextStyle(
+                                            color: colors.primaryColorDark),
+                                        isDense: true,
+                                        contentPadding: EdgeInsets.symmetric(
+                                            vertical: ScreenSize.height * 0.005),
+                                      ),
+                                      textAlign: TextAlign.center,
+                                      style: GoogleFonts.mohave(
+                                          textStyle: TextStyle(
+                                        fontSize: ScreenSize.width * 0.05,
+                                        color: colors.primaryColorDark,
+                                        fontWeight: FontWeight.w500,
+                                      )),
+                                      keyboardType: TextInputType.number,
+                                      inputFormatters: <TextInputFormatter>[
+                                        FilteringTextInputFormatter.digitsOnly
+                                      ],
+                                      onChanged: (String? val) => setState(() {
+                                        year = (val != null ? int.parse(val) : val)
+                                            as int?;
+                                      }),
+                                    ),
+                                  ),
+                                  Text(
+                                    "config file",
+                                    style: textStyle,
+                                  ),
+                                ])),
+                      ),
+                    ),
+                    Align(
+                      alignment: const Alignment(0, 0.1),
+                      child: Container(
+                        decoration: boxDecoration,
+                        child: TextButton(
+                            onPressed: downloadNames,
+                            child: Text(
+                              "download names",
+                              style: textStyle,
+                            )),
+                      ),
+                    ),
+                    Align(
+                      alignment: const Alignment(0, 0.4),
+                      child: Container(
+                        decoration: boxDecoration,
+                        child: TextButton(
+                            onPressed: () {
+                              setLogout();
+                            },
+                            child: Text(
+                              "log out",
+                              style: textStyle,
+                            )),
+                      ),
+                    ),
+                    if(isLoggingOut)
+                    AlertDialog(
+                      title: const Text("Unsent data will be deleted"),
+                      content: const Text("Please go to the QR code screen to send data to your scouting admin."),
+                      actions: [
+                        TextButton(onPressed: logOut, child: const Text("OK")),
+                        TextButton(onPressed: () => setState((){isLoggingOut = false;}), child: const Text("CANCEL"))
+                      ],
+                    )  
+                  ],
+                )),
+            isSupervise
+                ? const SuperviseFooter()
+                : Padding(
+                    padding: EdgeInsets.all(ScreenSize.height * 0.01),
+                    child: SizedBox(
+                        width: ScreenSize.width / 10.0, //57
+                        height: ScreenSize.width / 10.0, //59
+                        child: SvgPicture.asset(
+                          "./assets/images/${colors.scaffoldBackgroundColor == Colors.black ? "darknori" : "nori"}.svg",
                         )),
                   ),
-                  Container(
-                    decoration: boxDecoration,
-                    child: TextButton(
-                        onPressed: () {
-                          if(!widget.isSupervise) {
-                            showDialog(
-                              context: context,
-                              builder: ((context) => const Logout())
-                            );
-                          } else {
-                            logOut();
-                          }
-                        },
-                        child: Text(
-                          "log out",
-                          style: textStyle,
-                        )),
-                  ),
-                ],
-              )),
-          widget.isSupervise
-              ? const SuperviseFooter()
-              : Padding(
-                  padding: EdgeInsets.all(ScreenSize.height * 0.01),
-                  child: SizedBox(
-                      width: ScreenSize.width / 10.0, //57
-                      height: ScreenSize.width / 10.0, //59
-                      child: SvgPicture.asset(
-                        "./assets/images/${colors.scaffoldBackgroundColor == Colors.black ? "darknori" : "nori"}.svg",
-                      )),
-                ),
-          if (!widget.isSupervise) Footer(pageTitle: ""),
-        ],
-      ),
+            if (isSupervise) Footer(pageTitle: ""),
+          ],
+        );
+        })
     );
   }
 }

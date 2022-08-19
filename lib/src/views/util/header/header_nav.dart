@@ -49,9 +49,7 @@ class HeaderNav extends StatelessWidget {
             toAdd = const Upload();
             break;
           case "settings":
-            toAdd = const Settings(
-              isSupervise: true,
-            );
+            toAdd = const Settings();
             break;
           default:
             toAdd = const Upload();
