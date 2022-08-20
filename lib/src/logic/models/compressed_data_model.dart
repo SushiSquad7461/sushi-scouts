@@ -12,7 +12,8 @@ class CompressedDataModel {
 
   List<String> data;
 
-  factory CompressedDataModel.fromJson(Map<String, dynamic> json) => _$CompressedDataModelFromJson(json);
+  factory CompressedDataModel.fromJson(Map<String, dynamic> json) =>
+      _$CompressedDataModelFromJson(json);
   Map<String, dynamic> toJson() => _$CompressedDataModelToJson(this);
 
   void add(CompressedDataModel other) {
@@ -32,10 +33,13 @@ class CompressedDataModel {
 
 @JsonSerializable(explicitToJson: true)
 class MetadataModel {
-  MetadataModel(this.name, this.version, this.isBackup);
+  MetadataModel(this.name, this.configId, this.isBackup, this.teamNum, this.eventCode);
   String name;
-  double version;
+  String configId;
   bool isBackup;
-  factory MetadataModel.fromJson(Map<String, dynamic> json) => _$MetadataModelFromJson(json);
+  int teamNum;
+  String eventCode;
+  factory MetadataModel.fromJson(Map<String, dynamic> json) =>
+      _$MetadataModelFromJson(json);
   Map<String, dynamic> toJson() => _$MetadataModelToJson(this);
 }

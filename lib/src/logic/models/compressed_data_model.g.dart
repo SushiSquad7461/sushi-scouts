@@ -24,13 +24,17 @@ Map<String, dynamic> _$CompressedDataModelToJson(
 MetadataModel _$MetadataModelFromJson(Map<String, dynamic> json) =>
     MetadataModel(
       json['name'] as String,
-      (json['version'] as num).toDouble(),
+      json['configId'] as String,
       json['isBackup'] as bool,
+      json['teamNum'] as int,
+      json['eventCode'] as String,
     );
 
 Map<String, dynamic> _$MetadataModelToJson(MetadataModel instance) =>
     <String, dynamic>{
       'name': instance.name,
-      'version': instance.version,
+      'configId': instance.configId,
       'isBackup': instance.isBackup,
+      'teamNum': instance.teamNum,
+      'eventCode': instance.eventCode,
     };

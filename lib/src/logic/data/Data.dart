@@ -14,7 +14,7 @@ class Data<ValueType> {
   bool setByUser;
 
   static Data fromComponent(Component component) {
-    if( component.type == "bool") {
+    if (component.type == "bool") {
       return Data<bool>(false);
     } else if (component.type == "number") {
       return Data<double>(-1.0);
@@ -60,9 +60,17 @@ class Data<ValueType> {
   String get() {
     return (currValue is double)
         ? (currValue as double).toString()
-        : (currValue is bool) 
-        ? (currValue as bool).toString()
-        : (currValue as String);
+        : (currValue is bool)
+            ? (currValue as bool).toString()
+            : (currValue as String);
+  }
+
+  String getSimplified() {
+   return (currValue is double)
+        ? (currValue as double).floor().toString()
+        : (currValue is bool)
+            ? (currValue as bool).toString()
+            : (currValue as String); 
   }
 
   void empty() {
@@ -71,8 +79,8 @@ class Data<ValueType> {
     (currValue is double)
         ? (currValue = -1.0 as ValueType)
         : (currValue is bool)
-        ? (currValue = false as ValueType) 
-        : (currValue = '' as ValueType);
+            ? (currValue = false as ValueType)
+            : (currValue = '' as ValueType);
   }
 
   void logeTimeStamp() {

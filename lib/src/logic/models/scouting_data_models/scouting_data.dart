@@ -1,4 +1,3 @@
-
 import '../../data/Data.dart';
 import 'component.dart';
 import 'page.dart';
@@ -68,7 +67,7 @@ class ScoutingData {
   List<Data> getData() {
     List<Data> data = [];
     for (Screen p in pages.values) {
-      for( Data d in p.getValues()) {
+      for (Data d in p.getValues()) {
         data.add(d);
       }
     }
@@ -77,11 +76,28 @@ class ScoutingData {
 
   List<Component> getComponents() {
     List<Component> components = [];
-    for ( Screen p in pages.values) {
-      for (  Component c in p.getComponents()) {
+    for (Screen p in pages.values) {
+      for (Component c in p.getComponents()) {
         components.add(c);
       }
     }
     return components;
+  }
+
+  String getCertainData(String pageName, String componentName) {
+    if (!pageNames.contains(pageName)) {
+      return "INVALID PAGE NAME";
+    }
+
+    int componentCount = 0;
+    for (var i in pages[pageName]!.getComponents()) {
+      if (i.name == componentName) {
+        print("val");
+        print( pages[pageName]!.getValues()[componentCount].getSimplified());
+        return pages[pageName]!.getValues()[componentCount].getSimplified();
+      }
+      componentCount += 1;
+    }
+    return "INVALID COMPOMENT NAME";
   }
 }

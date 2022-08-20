@@ -58,7 +58,7 @@ class _QRScreenState extends State<QRScreen> {
             "name": state.name,
             "teamNum": state.teamNum,
             "eventCode": state.eventCode,
-            "version": reader.teamNum! + reader.year + reader.version,
+            "configId": "${reader.teamNum!}+${reader.year}+${reader.version}",
             "isBackup": isBackup
           }
         });

@@ -4,6 +4,9 @@ import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
+import 'package:flutter_svg/parser.dart';
+import 'package:flutter_svg/svg.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
 import 'package:sushi_scouts/src/logic/data/Decompressor.dart';
 import 'package:sushi_scouts/src/logic/data/config_file_reader.dart';
@@ -27,6 +30,9 @@ class _UploadState extends State<Upload> {
   Barcode? result;
   QRViewController? controller;
   List<ScoutingData> toAdd = [];
+  bool configFile = false;
+  String login = "";
+  String eventCode = "";
 
   // In order to get hot reload to work we need to pause the camera if the platform
   // is android, or resume the camera if the platform is iOS.
@@ -44,6 +50,14 @@ class _UploadState extends State<Upload> {
   @override
   Widget build(BuildContext context) {
     var colors = Theme.of(context);
+
+    final fontStyle = GoogleFonts.mohave(
+        textStyle: TextStyle(
+      fontSize: 50 * ScreenSize.swu,
+      fontWeight: FontWeight.w700,
+      color: colors.primaryColorDark,
+    ));
+
     return Scaffold(
       body: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -78,7 +92,7 @@ class _UploadState extends State<Upload> {
                       ),
                     ),
                   ),
-                  if (toAdd.length != 0)
+                  if (toAdd.isNotEmpty)
                     Center(
                       child: Container(
                         height: ScreenSize.height * 0.4,
@@ -97,20 +111,106 @@ class _UploadState extends State<Upload> {
                           color: Colors.white,
                           child: Padding(
                             padding: EdgeInsets.only(
-                                top: ScreenSize.height * 0.03,
-                                bottom: ScreenSize.height * 0.03,
+                                top: ScreenSize.height * 0,
+                                bottom: ScreenSize.height * 0,
                                 right: ScreenSize.width * 0.02,
                                 left: ScreenSize.width * 0.02),
-                            child: ListView(
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              crossAxisAlignment: CrossAxisAlignment.end,
                               children: [
-                                for (var i in toAdd) Text(i.stringfy()),
-                                TextButton(
-                                    onPressed: () {
-                                      controller!.resumeCamera();
-                                      setState(
-                                          () => {toAdd = [], result = null});
-                                    },
-                                    child: Text("Reset"))
+                                GestureDetector(
+                                  onTap: () {
+                                    controller!.resumeCamera();
+                                    setState(() => {toAdd = [], result = null});
+                                  },
+                                  child: SvgPicture.asset(
+                                      "./assets/images/remove.svg"),
+                                ),
+                                SizedBox(
+                                  height: ScreenSize.height * 0.25,
+                                  width: ScreenSize.width * 0.58,
+                                  child: ListView(
+                                    children: [
+                                      for (int i = 0; i < toAdd.length; ++i)
+                                        Padding(
+                                          padding: EdgeInsets.only(
+                                              bottom:
+                                                  ScreenSize.height * 0.005),
+                                          child: SizedBox(
+                                              width: ScreenSize.width * 0.58,
+                                              child: Center(
+                                                  child: Text(
+                                                      "${toAdd[i].stringfy()[0]} - ${toAdd[i].getCertainData("pregame", "match #")} - ${toAdd[i].getCertainData("pregame", "team #")}",
+                                                      style: fontStyle))),
+                                        ),
+                                      Padding(
+                                          padding: EdgeInsets.only(
+                                              bottom:
+                                                  ScreenSize.height * 0.005),
+                                          child: SizedBox(
+                                              width: ScreenSize.width * 0.58,
+                                              child: Center(
+                                                  child: Text(
+                                                      "CONFIG - ${configFile ? "Y" : "N"}",
+                                                      style: fontStyle)))),
+                                      Padding(
+                                          padding: EdgeInsets.only(
+                                              bottom:
+                                                  ScreenSize.height * 0.005),
+                                          child: SizedBox(
+                                              width: ScreenSize.width * 0.58,
+                                              child: Center(
+                                                  child: Text(
+                                                "CODE - ${eventCode.toUpperCase()}",
+                                                style: fontStyle,
+                                              )))),
+                                      Padding(
+                                          padding: EdgeInsets.only(
+                                              bottom:
+                                                  ScreenSize.height * 0.005),
+                                          child: SizedBox(
+                                              width: ScreenSize.width * 0.58,
+                                              child: Center(
+                                                  child: Text(login,
+                                                      style: fontStyle)))),
+                                    ],
+                                  ),
+                                ),
+                                SizedBox(
+                                  width: ScreenSize.width * 0.58,
+                                  child: Center(
+                                    child: TextButton(
+                                        onPressed: () {},
+                                        child: Container(
+                                          decoration: BoxDecoration(
+                                            border: Border.all(
+                                              color: Colors.black,
+                                              width: ScreenSize.width * 0.01,
+                                            ),
+                                            borderRadius: BorderRadius.circular(
+                                                ScreenSize.width * 0.035),
+                                          ),
+                                          child: Padding(
+                                            padding: EdgeInsets.only(
+                                                top: ScreenSize.height * 0.001,
+                                                bottom:
+                                                    ScreenSize.height * 0.001,
+                                                left: ScreenSize.width * 0.03,
+                                                right: ScreenSize.width * 0.03),
+                                            child: Text(
+                                              "UPLOAD",
+                                              style: TextStyle(
+                                                fontFamily: "Sushi",
+                                                fontSize: 30 * ScreenSize.swu,
+                                                fontWeight: FontWeight.bold,
+                                                color: colors.primaryColorDark,
+                                              ),
+                                            ),
+                                          ),
+                                        )),
+                                  ),
+                                )
                               ],
                             ),
                           ),
@@ -128,7 +228,6 @@ class _UploadState extends State<Upload> {
   }
 
   void _onQRViewCreated(QRViewController controller) {
-    print("hello yo");
     this.controller = controller;
     controller.resumeCamera();
     controller.scannedDataStream.listen(handleNewData);
@@ -138,23 +237,28 @@ class _UploadState extends State<Upload> {
     setState(() {
       result = scanData;
 
-      if (result != null && toAdd.length == 0) {
+      if (result != null && toAdd.isEmpty) {
         var reader = ConfigFileReader.instance;
-        print("helo 23");
-        print(result!.code!);
-        Map<String, dynamic> decodedData = json.decode(result!.code!);
-        for (var s in CompressedDataModel.fromJson(decodedData).data) {
-          ScoutingData? data;
+        CompressedDataModel decodedData =
+            CompressedDataModel.fromJson(json.decode(result!.code!));
+
+        configFile = decodedData.metadata.configId ==
+            "${reader.teamNum!}+${reader.year}+${reader.version}";
+        login =
+            "${decodedData.metadata.name.toUpperCase()} ${decodedData.metadata.teamNum}";
+        eventCode = decodedData.metadata.eventCode;
+
+        List<String> newArray = [];
+        for (var s in decodedData.data) {
           Decompressor decompressor =
               Decompressor(s, reader.getScoutingMethods());
           decompressor.isBackup();
           String screen = decompressor.getScreen();
-          data ??= reader.getScoutingData(screen);
-          decompressor.decompress(data.getData());
-          print("ADD");
-          toAdd.add(data);
+          toAdd.add(reader.getScoutingData(screen));
+          decompressor.decompress(toAdd[toAdd.length-1].getData());
+          print(toAdd[toAdd.length-1].stringfy());
         }
-        // controller.pauseCamera();
+        controller?.pauseCamera();
       }
     });
   }
