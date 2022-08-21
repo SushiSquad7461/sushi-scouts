@@ -1,3 +1,5 @@
+import 'package:get/get_state_manager/get_state_manager.dart';
+
 import '../../data/Data.dart';
 import 'component.dart';
 import 'page.dart';
@@ -90,11 +92,11 @@ class ScoutingData {
     }
 
     int componentCount = 0;
-    for (var i in pages[pageName]!.getComponents()) {
+    List<Component> components = pages[pageName]!.getComponents();
+    List<Data> values = pages[pageName]!.getValues();
+    for (var i in components) {
       if (i.name == componentName) {
-        print("val");
-        print( pages[pageName]!.getValues()[componentCount].getSimplified());
-        return pages[pageName]!.getValues()[componentCount].getSimplified();
+        return i.values == null || i.values!.isEmpty ? values[componentCount].getSimplified() : i.values![int.parse(values[componentCount].getSimplified())];
       }
       componentCount += 1;
     }

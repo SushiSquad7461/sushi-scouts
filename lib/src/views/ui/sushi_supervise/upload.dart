@@ -129,7 +129,7 @@ class _UploadState extends State<Upload> {
                                       "./assets/images/remove.svg"),
                                 ),
                                 SizedBox(
-                                  height: ScreenSize.height * 0.25,
+                                  height: ScreenSize.height * 0.28,
                                   width: ScreenSize.width * 0.58,
                                   child: ListView(
                                     children: [
@@ -142,7 +142,7 @@ class _UploadState extends State<Upload> {
                                               width: ScreenSize.width * 0.58,
                                               child: Center(
                                                   child: Text(
-                                                      "${toAdd[i].stringfy()[0]} - ${toAdd[i].getCertainData("pregame", "match #")} - ${toAdd[i].getCertainData("pregame", "team #")}",
+                                                      "${toAdd[i].stringfy()[0]} - ${ConfigFileReader.instance.getSuperviseDisplayString(toAdd[i], 1)} - ${ConfigFileReader.instance.getSuperviseDisplayString(toAdd[i], 2)}",
                                                       style: fontStyle))),
                                         ),
                                       Padding(

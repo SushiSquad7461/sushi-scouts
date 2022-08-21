@@ -2,6 +2,38 @@
     "teamNumber": 7461,
     "version" : 1,
     "password" : "7461",
+    "supervise": {
+        "cardinal": {
+            "first" : {
+                "page": "pregame",
+                "name": "match #"
+            },
+            "second" : {
+                "page": "pregame",
+                "name": "station"
+            }
+        },
+        "ordinal": {
+            "first" : {
+                "page": "pregame",
+                "name": "match #"
+            },
+            "second" : {
+                "page": "pregame",
+                "name": "side"
+            }
+        },
+        "pit": {
+            "first" : {
+                "page": "page 1",
+                "name": "team #"
+            },
+            "second" : {
+                "page": "page 1",
+                "name": "day #"
+            }
+        }
+    },
     "scouting": {
         "cardinal":{
             "pregame" : {

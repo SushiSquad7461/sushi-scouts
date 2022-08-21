@@ -11,6 +11,7 @@ class ConfigFileReader {
   int year;
   int? teamNum;
   Map<String, dynamic>? parsedFile;
+  Map<String, dynamic>? supervise;
   Map<String, ScoutingData> data = {};
   Map<String, int> commonValues = {};
   String? password;
@@ -34,12 +35,23 @@ class ConfigFileReader {
       teamNum = parsedFile!["teamNumber"];
       password = parsedFile!["password"];
       _version = parsedFile!["version"];
+      supervise = parsedFile!["supervise"];
+      print("FILE : " + parsedFile!.toString());
+      print("SUPERVISE : " + parsedFile!["supervise"].toString());
       parsedFile = parsedFile!["scouting"];
       defaultConfig = true;
       return;
     } catch (e) {
       rethrow;
     }
+  }
+
+  String getSuperviseDisplayString(ScoutingData data, int number) {
+    if (supervise == null ||
+        supervise![data.name] == null) {
+      return "ERR";
+    }
+    return data.getCertainData(supervise![data.name][number == 1 ? "first" : "second"]["page"], supervise![data.name][number == 1 ? "first" : "second"]["name"]);
   }
 
   Future<void> readInitalConfig() async {
