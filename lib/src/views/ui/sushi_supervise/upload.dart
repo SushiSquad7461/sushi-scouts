@@ -13,6 +13,7 @@ import 'package:sushi_scouts/src/logic/data/config_file_reader.dart';
 import 'package:sushi_scouts/src/logic/helpers/size/ScreenSize.dart';
 import 'package:sushi_scouts/src/logic/models/compressed_data_model.dart';
 import 'package:sushi_scouts/src/logic/models/scouting_data_models/scouting_data.dart';
+import 'package:sushi_scouts/src/views/ui/sushi_scouts/scouting.dart';
 import 'package:sushi_scouts/src/views/util/footer/supervisefooter.dart';
 import 'package:sushi_scouts/src/views/util/header/header_nav.dart';
 
@@ -248,15 +249,17 @@ class _UploadState extends State<Upload> {
             "${decodedData.metadata.name.toUpperCase()} ${decodedData.metadata.teamNum}";
         eventCode = decodedData.metadata.eventCode;
 
-        List<String> newArray = [];
         for (var s in decodedData.data) {
+          ScoutingData newData;
+
           Decompressor decompressor =
               Decompressor(s, reader.getScoutingMethods());
           decompressor.isBackup();
           String screen = decompressor.getScreen();
-          toAdd.add(reader.getScoutingData(screen));
-          decompressor.decompress(toAdd[toAdd.length-1].getData());
-          print(toAdd[toAdd.length-1].stringfy());
+          newData = reader.generateNewScoutingData(screen);
+
+          decompressor.decompress(newData.getData());
+          toAdd.add(newData);
         }
         controller?.pauseCamera();
       }

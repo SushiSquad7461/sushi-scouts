@@ -89,6 +89,10 @@ class ConfigFileReader {
     return data[scoutingMethod]!;
   }
 
+  ScoutingData generateNewScoutingData(String scoutingMethod) {
+    return ScoutingData(parsedFile![scoutingMethod], name: scoutingMethod);
+  }
+
   // List<ScoutingData> getScoutingDataClasses() {
   //   List<ScoutingData> ret = [];
   //   for (var scoutingMethod in parsedFile!.keys) {
