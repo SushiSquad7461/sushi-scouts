@@ -11,6 +11,7 @@ import 'package:sushi_scouts/src/views/ui/sushi_supervise/upload.dart';
 
 import '../../../logic/data/config_file_reader.dart';
 import '../../../logic/deviceType.dart';
+import '../../ui/sushi_supervise/edit.dart';
 
 class HeaderNav extends StatelessWidget {
   final String currentPage;
@@ -51,6 +52,9 @@ class HeaderNav extends StatelessWidget {
           case "settings":
             toAdd = const Settings();
             break;
+          case "edit":
+            toAdd = const Edit();
+            break;
           default:
             toAdd = const Upload();
             break;
@@ -75,64 +79,78 @@ class HeaderNav extends StatelessWidget {
         height: ScreenSize.height * 0.1,
         child: Padding(
           padding: EdgeInsets.only(
-              left: 0, right: 0, top: (isPhoneScreen ? 17.5 : 7) * ScreenSize.shu, bottom: (isPhoneScreen ? 6 : 0) * ScreenSize.shu),
+              left: 0,
+              right: 0,
+              top: (isPhoneScreen ? 17.5 : 7) * ScreenSize.shu,
+              bottom: (isPhoneScreen ? 6 : 0) * ScreenSize.shu),
           child: Container(
-            color: isPhoneScreen ? colors.primaryColorDark : colors.scaffoldBackgroundColor,
+            color: isPhoneScreen
+                ? colors.primaryColorDark
+                : colors.scaffoldBackgroundColor,
             child: Column(
               children: [
                 Divider(
                   color: colors.primaryColorDark,
-                  thickness: (isPhoneScreen ? 0 : 4)* ScreenSize.shu,
+                  thickness: (isPhoneScreen ? 0 : 4) * ScreenSize.shu,
                 ),
-                Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                  for (final String screen in screens)
-                    Padding(
-                        padding: EdgeInsets.only(
-                            left: 0,
-                            right: 0,
-                            top: 0 * ScreenSize.shu,
-                            bottom: 0 * ScreenSize.shu),
-                        child: GestureDetector(
-                            onTap: () => changeScreen(screen, context),
-                            child: isPhoneScreen ?
-                            Text(
-                                      screen.toUpperCase(),
-                                      style: GoogleFonts.mohave(
-                                        fontSize: ScreenSize.width * 0.05,
-                                        color: (currentPage == screen) ? Colors.white : HexColor("#4F4F4F")),
-                            )
-                            : Container(
-                                decoration: ((currentPage == screen)
-                                    ? BoxDecoration(
-                                        border: Border.all(
-                                            color: HexColor(isSupervise
-                                                ? (colors.scaffoldBackgroundColor == Colors.white ? "#FF729F" : "#81F4E1")
-                                                : "#56CBF9"),
-                                            width: 5 * ScreenSize.shu),
-                                        borderRadius: BorderRadius.all(
-                                            Radius.circular(5 * ScreenSize.swu)),
+                Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      for (final String screen in screens)
+                        Padding(
+                            padding: EdgeInsets.only(
+                                left: 0,
+                                right: 0,
+                                top: 0 * ScreenSize.shu,
+                                bottom: 0 * ScreenSize.shu),
+                            child: GestureDetector(
+                                onTap: () => changeScreen(screen, context),
+                                child: isPhoneScreen
+                                    ? Text(
+                                        screen.toUpperCase(),
+                                        style: GoogleFonts.mohave(
+                                            fontSize: ScreenSize.width * 0.05,
+                                            color: (currentPage == screen)
+                                                ? Colors.white
+                                                : HexColor("#4F4F4F")),
                                       )
-                                    : BoxDecoration(
-                                        border: Border.all(
-                                            color: colors.scaffoldBackgroundColor,
-                                            width: 5 * ScreenSize.swu))),
-                                child: Padding(
-                                    padding: EdgeInsets.only(
-                                        left: 4 * ScreenSize.swu,
-                                        right: 4 * ScreenSize.swu,
-                                        top: 2 * ScreenSize.swu,
-                                        bottom: 2 * ScreenSize.swu),
-                                    child: Text(
-                                      screen.toUpperCase(),
-                                      style: GoogleFonts.mohave(
-                                          textStyle: pageStyle),
-                                    )))))
-                ]),
+                                    : Container(
+                                        decoration: ((currentPage == screen)
+                                            ? BoxDecoration(
+                                                border: Border.all(
+                                                    color: HexColor(isSupervise
+                                                        ? (colors.scaffoldBackgroundColor ==
+                                                                Colors.white
+                                                            ? "#FF729F"
+                                                            : "#81F4E1")
+                                                        : "#56CBF9"),
+                                                    width: 5 * ScreenSize.shu),
+                                                borderRadius: BorderRadius.all(
+                                                    Radius.circular(
+                                                        5 * ScreenSize.swu)),
+                                              )
+                                            : BoxDecoration(
+                                                border: Border.all(
+                                                    color: colors
+                                                        .scaffoldBackgroundColor,
+                                                    width:
+                                                        5 * ScreenSize.swu))),
+                                        child: Padding(
+                                            padding: EdgeInsets.only(
+                                                left: 4 * ScreenSize.swu,
+                                                right: 4 * ScreenSize.swu,
+                                                top: 2 * ScreenSize.swu,
+                                                bottom: 2 * ScreenSize.swu),
+                                            child: Text(
+                                              screen.toUpperCase(),
+                                              style: GoogleFonts.mohave(
+                                                  textStyle: pageStyle),
+                                            )))))
+                    ]),
                 Divider(
                   color: colors.primaryColorDark,
-                  thickness: (isPhoneScreen ? 0 : 4)* ScreenSize.shu,
+                  thickness: (isPhoneScreen ? 0 : 4) * ScreenSize.shu,
                 ),
               ],
             ),

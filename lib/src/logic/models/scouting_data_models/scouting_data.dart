@@ -50,6 +50,7 @@ class ScoutingData {
 
     for (var i in pages.values) {
       ret += i.toJson().toString();
+      ret += "\n";
     }
     return ret;
   }
@@ -96,7 +97,9 @@ class ScoutingData {
     List<Data> values = pages[pageName]!.getValues();
     for (var i in components) {
       if (i.name == componentName) {
-        return i.values == null || i.values!.isEmpty ? values[componentCount].getSimplified() : i.values![int.parse(values[componentCount].getSimplified())];
+        return i.values == null || i.values!.isEmpty
+            ? values[componentCount].getSimplified()
+            : i.values![int.parse(values[componentCount].getSimplified())];
       }
       componentCount += 1;
     }

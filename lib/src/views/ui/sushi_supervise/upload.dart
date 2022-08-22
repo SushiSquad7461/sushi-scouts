@@ -7,7 +7,9 @@ import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter_svg/parser.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:localstore/localstore.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
+import 'package:sushi_scouts/src/logic/Constants.dart';
 import 'package:sushi_scouts/src/logic/data/Decompressor.dart';
 import 'package:sushi_scouts/src/logic/data/config_file_reader.dart';
 import 'package:sushi_scouts/src/logic/helpers/size/ScreenSize.dart';
@@ -28,6 +30,7 @@ class Upload extends StatefulWidget {
 
 class _UploadState extends State<Upload> {
   final GlobalKey qrKey = GlobalKey(debugLabel: 'QR');
+  final ConfigFileReader reader = ConfigFileReader.instance;
   Barcode? result;
   QRViewController? controller;
   List<ScoutingData> toAdd = [];
@@ -45,6 +48,21 @@ class _UploadState extends State<Upload> {
       controller!.pauseCamera();
     } else if (Platform.isIOS) {
       controller!.resumeCamera();
+    }
+  }
+
+  Future<void> upload() async {
+    var db = Localstore.instance;
+    for (ScoutingData i in toAdd) {
+      await db
+          .collection(SUPERVISE_DATABASE_NAME)
+          .doc(
+              "${i.stringfy()[0]} - ${reader.getSuperviseDisplayString(i, 1)} - ${reader.getSuperviseDisplayString(i, 2)}::$login")
+          .set({
+        "data": i.stringfy(),
+        "flagged": false,
+        "deleted": false,
+      });
     }
   }
 
@@ -142,7 +160,7 @@ class _UploadState extends State<Upload> {
                                               width: ScreenSize.width * 0.58,
                                               child: Center(
                                                   child: Text(
-                                                      "${toAdd[i].stringfy()[0]} - ${ConfigFileReader.instance.getSuperviseDisplayString(toAdd[i], 1)} - ${ConfigFileReader.instance.getSuperviseDisplayString(toAdd[i], 2)}",
+                                                      "${toAdd[i].stringfy()[0]} - ${reader.getSuperviseDisplayString(toAdd[i], 1)} - ${reader.getSuperviseDisplayString(toAdd[i], 2)}",
                                                       style: fontStyle))),
                                         ),
                                       Padding(
@@ -182,7 +200,11 @@ class _UploadState extends State<Upload> {
                                   width: ScreenSize.width * 0.58,
                                   child: Center(
                                     child: TextButton(
-                                        onPressed: () {},
+                                        onPressed: () {
+                                          if (configFile) {
+                                            upload();
+                                          }
+                                        },
                                         child: Container(
                                           decoration: BoxDecoration(
                                             border: Border.all(

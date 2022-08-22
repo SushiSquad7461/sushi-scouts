@@ -21,3 +21,4 @@ const Map COMPONENT_MAP = {
   "multiselect": Multiselect.create
 };
 
+const SUPERVISE_DATABASE_NAME = "supervise-data";
