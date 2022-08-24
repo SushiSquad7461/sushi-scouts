@@ -10,7 +10,8 @@ class HeaderTitleTabletSupervise extends StatelessWidget {
   Widget build(BuildContext context) {
     var colors = Theme.of(context);
     return Container(
-        height: ScreenSize.height * 0.1,
+        color: colors.primaryColor,
+        height: ScreenSize.height * 0.07,
         child: Padding(
           padding: EdgeInsets.only(
               left: 20 * ScreenSize.swu,

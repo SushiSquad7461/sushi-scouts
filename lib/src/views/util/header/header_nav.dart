@@ -76,6 +76,7 @@ class HeaderNav extends StatelessWidget {
     );
     bool isPhoneScreen = isPhone(context);
     return Container(
+        color: colors.primaryColor,
         height: ScreenSize.height * 0.1,
         child: Padding(
           padding: EdgeInsets.only(

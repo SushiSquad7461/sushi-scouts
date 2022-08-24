@@ -99,7 +99,7 @@ class ScoutingData {
       if (i.name == componentName) {
         return i.values == null || i.values!.isEmpty
             ? values[componentCount].getSimplified()
-            : i.values![int.parse(values[componentCount].getSimplified())];
+            : i.values![int.parse(values[componentCount].getSimplified()) + (i.component == "select" ? 1 : 0)];
       }
       componentCount += 1;
     }

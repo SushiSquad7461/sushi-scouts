@@ -98,7 +98,7 @@ class _LoginState extends State<Login> {
           HeaderTitle(isSupervise: !widget.sushi_scouts),
           SizedBox(
             width: ScreenSize.width,
-            height: ScreenSize.height * 0.9,
+            height: ScreenSize.height * (!widget.sushi_scouts ? 0.93 : 0.9),
             child: Stack(
               fit: StackFit.expand,
               children: [

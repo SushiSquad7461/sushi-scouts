@@ -64,6 +64,12 @@ class _UploadState extends State<Upload> {
         "deleted": false,
       });
     }
+
+    setState(() {
+      toAdd = [];
+      result = null;
+      controller!.resumeCamera();
+    });
   }
 
   @override
@@ -89,7 +95,7 @@ class _UploadState extends State<Upload> {
             isSupervise: true,
           ),
           SizedBox(
-            height: ScreenSize.height * 0.6,
+            height: ScreenSize.height * 0.63,
             child: Padding(
               padding: EdgeInsets.only(top: ScreenSize.height * 0.02),
               child: Stack(
@@ -97,7 +103,7 @@ class _UploadState extends State<Upload> {
                   Center(
                     child: Container(
                       width: ScreenSize.width * 0.8,
-                      height: ScreenSize.height * 0.58,
+                      height: ScreenSize.height * 0.6,
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.all(
                               Radius.circular(8 * ScreenSize.swu)),
@@ -209,16 +215,15 @@ class _UploadState extends State<Upload> {
                                           decoration: BoxDecoration(
                                             border: Border.all(
                                               color: Colors.black,
-                                              width: ScreenSize.width * 0.01,
+                                              width: ScreenSize.width * 0.005,
                                             ),
                                             borderRadius: BorderRadius.circular(
                                                 ScreenSize.width * 0.035),
                                           ),
                                           child: Padding(
                                             padding: EdgeInsets.only(
-                                                top: ScreenSize.height * 0.001,
-                                                bottom:
-                                                    ScreenSize.height * 0.001,
+                                                top: ScreenSize.height * 0,
+                                                bottom: ScreenSize.height * 0,
                                                 left: ScreenSize.width * 0.03,
                                                 right: ScreenSize.width * 0.03),
                                             child: Text(

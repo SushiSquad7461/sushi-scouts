@@ -11,7 +11,8 @@ class SuperviseFooter extends StatelessWidget {
   Widget build(BuildContext context) {
     var colors = Theme.of(context);
     var phone = !isTable(context);
-    return SizedBox(
+    return Container(
+      color: colors.primaryColor,
       width: ScreenSize.width,
       height: ScreenSize.height * (phone ? 0.15 : 0.2),
       child: Column(
