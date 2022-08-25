@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:get/get_state_manager/get_state_manager.dart';
 
 import '../../data/Data.dart';
@@ -49,7 +51,7 @@ class ScoutingData {
     String ret = "${name[0].toUpperCase()}\n";
 
     for (var i in pages.values) {
-      ret += i.toJson().toString();
+      ret += json.encode(i.toJson());
       ret += "\n";
     }
     return ret;
@@ -99,7 +101,8 @@ class ScoutingData {
       if (i.name == componentName) {
         return i.values == null || i.values!.isEmpty
             ? values[componentCount].getSimplified()
-            : i.values![int.parse(values[componentCount].getSimplified()) + (i.component == "select" ? 1 : 0)];
+            : i.values![int.parse(values[componentCount].getSimplified()) +
+                (i.component == "select" ? 1 : 0)];
       }
       componentCount += 1;
     }
