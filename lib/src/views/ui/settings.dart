@@ -148,7 +148,7 @@ class _SettingsState extends State<Settings> {
               ),
               SizedBox(
                   width: ScreenSize.width,
-                  height: ScreenSize.height * (isSupervise ? 0.63 : (isPhoneScreen ? 0.61 : 0.64)),
+                  height: ScreenSize.height * (isSupervise ? (isPhoneScreen ? 0.65 : 0.63) : (isPhoneScreen ? 0.61 : 0.64)),
                   child: Stack(
                     fit: StackFit.expand,
                     children: [

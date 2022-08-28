@@ -7,6 +7,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:localstore/localstore.dart';
 import 'package:sushi_scouts/src/logic/blocs/login_bloc/login_cubit.dart';
+import 'package:sushi_scouts/src/logic/helpers/color/hex_color.dart';
 import 'package:sushi_scouts/src/logic/helpers/routing_helper.dart';
 import 'package:sushi_scouts/src/logic/helpers/size/ScreenSize.dart';
 import 'package:sushi_scouts/src/views/ui/sushi_scouts/scouting.dart';
@@ -98,65 +99,68 @@ class _LoginState extends State<Login> {
           HeaderTitle(isSupervise: !widget.sushi_scouts),
           SizedBox(
             width: ScreenSize.width,
-            height: ScreenSize.height * (!widget.sushi_scouts ? 0.93 : 0.9),
+            height: ScreenSize.height * (!widget.sushi_scouts ? 0.9 : 0.9),
             child: Stack(
               fit: StackFit.expand,
               children: [
                 Align(
-                  alignment: Alignment(0, 1),
-                  child: Stack(
-                    children: [
-                      SvgPicture.asset(
-                        isPhoneScreen
-                            ? "./assets/images/mobile_footer.svg"
-                            : (widget.sushi_scouts
-                                ? "./assets/images/FooterColors.svg"
-                                : (colors.scaffoldBackgroundColor ==
-                                        Colors.black
-                                    ? "./assets/images/loginsupervisefooterdark.svg"
-                                    : "./assets/images/loginfootersupervise.svg")),
-                        width: ScreenSize.width,
-                      ),
-                      if (teamNum != null &&
-                          eventCode != null &&
-                          (name != null || password != null))
-                        Padding(
-                          padding: EdgeInsets.only(
-                              top: ScreenSize.height *
-                                  (isPhoneScreen ? 0.32 : 0.2),
-                              left: ScreenSize.width *
-                                  (isPhoneScreen ? 0.075 : 0)),
-                          child: Container(
-                              width:
-                                  ScreenSize.width * (isPhoneScreen ? 0.85 : 1),
-                              decoration: BoxDecoration(
-                                color: colors.primaryColorDark,
-                                borderRadius: BorderRadius.all(Radius.circular(
-                                    ScreenSize.swu * (isPhoneScreen ? 20 : 0))),
-                              ),
-                              child: TextButton(
-                                onPressed: () {
-                                  if (!widget.sushi_scouts &&
-                                      !reader.checkPassword(password ?? "")) {
-                                    showDialog(
-                                        context: context,
-                                        builder: (context) =>
-                                            IncorrectPassword());
-                                  } else {
-                                    nextPage(context);
-                                  }
-                                },
-                                child: Text(
-                                  'GO',
-                                  style: TextStyle(
-                                      fontSize: 35 * ScreenSize.swu,
-                                      fontFamily: "Sushi",
-                                      color: colors.primaryColor,
-                                      fontWeight: FontWeight.bold),
-                                ),
-                              )),
+                  alignment: const Alignment(0, 1),
+                  child: SizedBox(
+                    height: ScreenSize.height * 0.2,
+                    child: Stack(
+                      children: [
+                        SvgPicture.asset(
+                          isPhoneScreen
+                              ? (widget.sushi_scouts ? "./assets/images/mobile_footer.svg" : "./assets/images/mobilesupervisefooter.svg")
+                              : (widget.sushi_scouts
+                                  ? "./assets/images/FooterColors.svg"
+                                  : (colors.scaffoldBackgroundColor ==
+                                          Colors.black
+                                      ? "./assets/images/loginsupervisefooterdark.svg"
+                                      : "./assets/images/loginfootersupervise.svg")),
+                          width: ScreenSize.width,
                         ),
-                    ],
+                        if (teamNum != null &&
+                            eventCode != null &&
+                            (name != null || password != null))
+                          Padding(
+                            padding: EdgeInsets.only(
+                                top: ScreenSize.height *
+                                    (isPhoneScreen ? (widget.sushi_scouts ? 0.32 : 0.09) : 0.2),
+                                left: ScreenSize.width *
+                                    (isPhoneScreen ? 0.075 : 0)),
+                            child: Container(
+                                width:
+                                    ScreenSize.width * (isPhoneScreen ? 0.85 : 1),
+                                decoration: BoxDecoration(
+                                  color: !widget.sushi_scouts && isPhoneScreen ? HexColor("#4F4F4F") : colors.primaryColorDark,
+                                  borderRadius: BorderRadius.all(Radius.circular(
+                                      ScreenSize.swu * (isPhoneScreen ? 20 : 0))),
+                                ),
+                                child: TextButton(
+                                  onPressed: () {
+                                    if (!widget.sushi_scouts &&
+                                        !reader.checkPassword(password ?? "")) {
+                                      showDialog(
+                                          context: context,
+                                          builder: (context) =>
+                                              IncorrectPassword());
+                                    } else {
+                                      nextPage(context);
+                                    }
+                                  },
+                                  child: Text(
+                                    'GO',
+                                    style: TextStyle(
+                                        fontSize: 35 * ScreenSize.swu,
+                                        fontFamily: "Sushi",
+                                        color: colors.primaryColor,
+                                        fontWeight: widget.sushi_scouts ? FontWeight.bold : FontWeight.w100),
+                                  ),
+                                )),
+                          ),
+                      ],
+                    ),
                   ),
                 ),
                 Align(

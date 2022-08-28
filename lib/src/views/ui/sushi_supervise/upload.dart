@@ -12,6 +12,7 @@ import 'package:qr_code_scanner/qr_code_scanner.dart';
 import 'package:sushi_scouts/src/logic/Constants.dart';
 import 'package:sushi_scouts/src/logic/data/Decompressor.dart';
 import 'package:sushi_scouts/src/logic/data/config_file_reader.dart';
+import 'package:sushi_scouts/src/logic/deviceType.dart';
 import 'package:sushi_scouts/src/logic/helpers/size/ScreenSize.dart';
 import 'package:sushi_scouts/src/logic/models/compressed_data_model.dart';
 import 'package:sushi_scouts/src/logic/models/scouting_data_models/scouting_data.dart';
@@ -83,6 +84,8 @@ class _UploadState extends State<Upload> {
       color: colors.primaryColorDark,
     ));
 
+    var phone = isPhone(context);
+
     return Scaffold(
       body: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -95,20 +98,20 @@ class _UploadState extends State<Upload> {
             isSupervise: true,
           ),
           SizedBox(
-            height: ScreenSize.height * 0.63,
+            height: ScreenSize.height * (phone ? 0.65 : 0.63),
             child: Padding(
               padding: EdgeInsets.only(top: ScreenSize.height * 0.02),
               child: Stack(
                 children: <Widget>[
                   Center(
                     child: Container(
-                      width: ScreenSize.width * 0.8,
-                      height: ScreenSize.height * 0.6,
+                      width: ScreenSize.width * (phone ? 1 : 0.8),
+                      height: ScreenSize.height * (phone ? 0.65 : 0.6),
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.all(
                               Radius.circular(8 * ScreenSize.swu)),
                           border: Border.all(
-                            color: colors.primaryColorDark,
+                            color: phone ? colors.scaffoldBackgroundColor : colors.primaryColorDark,
                             width: 5 * ScreenSize.swu,
                           )),
                       child: QRView(

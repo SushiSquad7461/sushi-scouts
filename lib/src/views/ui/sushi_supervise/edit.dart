@@ -122,13 +122,13 @@ class _EditState extends State<Edit> {
             opacityOn: (flagMode || deleteMode),
           ),
           SizedBox(
-            height: ScreenSize.height * 0.63,
+            height: ScreenSize.height * (phone ? 0.65 : 0.63),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 SizedBox(
-                  height: ScreenSize.height * 0.05,
+                  height: ScreenSize.height * (phone ? 0.07 : 0.05),
                   width: ScreenSize.width * 0.82,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -261,9 +261,9 @@ class _EditState extends State<Edit> {
                                       textStyle: TextStyle(
                                           fontSize: ScreenSize.width * 0.06,
                                           fontWeight: FontWeight.bold),
-                                      color: (flagMode && data[i]!.flagged)
+                                      color: (data[i]!.flagged)
                                           ? HexColor("#56CBF9")
-                                          : (deleteMode && data[i]!.deleted)
+                                          : (data[i]!.deleted)
                                               ? HexColor("#FCD6F6")
                                               : Colors.black),
                                 ),

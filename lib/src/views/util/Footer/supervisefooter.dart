@@ -18,7 +18,7 @@ class SuperviseFooter extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
-          Image.asset(colors.scaffoldBackgroundColor == Colors.black
+          Image.asset(phone ? "./assets/images/supervisefootermain.png" : colors.scaffoldBackgroundColor == Colors.black
               ? "./assets/images/supervisefooterdark.png"
               : "./assets/images/supervisefooter.png"),
         ],
