@@ -12,6 +12,7 @@ class TextInput extends StatefulWidget {
   final Color textColor;
   final double width;
   final bool setCommonValue;
+  final double height;
 
   TextInput(
       {Key? key,
@@ -20,19 +21,31 @@ class TextInput extends StatefulWidget {
       required this.color,
       required this.width,
       required this.textColor,
-      required this.setCommonValue})
+      required this.setCommonValue,
+      required this.height})
       : super(key: key);
 
-  static TextInput create(Key key, String name, Data data, List<String>? values,
-      Data defaultValue, Color color, double width, Color textColor, bool setCommonValue) {
+  static TextInput create(
+      Key key,
+      String name,
+      Data data,
+      List<String>? values,
+      Data defaultValue,
+      Color color,
+      double width,
+      Color textColor,
+      bool setCommonValue,
+      double height) {
     return TextInput(
-        key: key,
-        name: name,
-        data: data,
-        width: width,
-        color: color,
-        textColor: textColor,
-        setCommonValue: setCommonValue,);
+      key: key,
+      name: name,
+      data: data,
+      width: width,
+      color: color,
+      textColor: textColor,
+      setCommonValue: setCommonValue,
+      height: height,
+    );
   }
 
   @override
@@ -77,7 +90,12 @@ class TextInputState extends State<TextInput> {
             width: widget.width,
             height: widget.width * 0.6,
             decoration: BoxDecoration(
-                border: Border.all(width: widget.width * 0.02, color: Theme.of(context).scaffoldBackgroundColor == Colors.black ? Colors.white : Colors.black),
+                border: Border.all(
+                    width: widget.width * 0.02,
+                    color: Theme.of(context).scaffoldBackgroundColor ==
+                            Colors.black
+                        ? Colors.white
+                        : Colors.black),
                 shape: BoxShape.rectangle,
                 borderRadius:
                     BorderRadius.all(Radius.circular(widget.width * 0.1))),

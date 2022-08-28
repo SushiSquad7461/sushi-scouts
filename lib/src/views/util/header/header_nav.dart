@@ -82,7 +82,7 @@ class HeaderNav extends StatelessWidget {
           padding: EdgeInsets.only(
               left: 0,
               right: 0,
-              top: (isPhoneScreen ? 17.5 : 7) * ScreenSize.shu,
+              top: (isPhoneScreen ? 17 : 7) * ScreenSize.shu,
               bottom: (isPhoneScreen ? 6 : 0) * ScreenSize.shu),
           child: Container(
             color: isPhoneScreen

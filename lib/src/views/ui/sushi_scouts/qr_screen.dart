@@ -178,7 +178,7 @@ class _QRScreenState extends State<QRScreen> {
                           padding: EdgeInsets.only(top: 35 * ScreenSize.swu),
                           child: Container(
                             width: 340 * ScreenSize.swu,
-                            height: 65 * ScreenSize.swu,
+                            height: (isPhoneScreen ? 75 : 65) * ScreenSize.swu,
                             decoration: BoxDecoration(
                               border: Border.all(
                                   color: colors.primaryColorDark, width: 3.5),
@@ -205,8 +205,8 @@ class _QRScreenState extends State<QRScreen> {
                         Padding(
                           padding: EdgeInsets.only(top: 35 * ScreenSize.swu),
                           child: Container(
-                            width: 277 * ScreenSize.swu,
-                            height: 65 * ScreenSize.swu,
+                            width: (isPhoneScreen ? 295 : 277) * ScreenSize.swu,
+                            height: (isPhoneScreen ? 75 : 65) * ScreenSize.swu,
                             decoration: BoxDecoration(
                               border: Border.all(
                                   color: colors.primaryColorDark, width: 3.5),
@@ -235,7 +235,7 @@ class _QRScreenState extends State<QRScreen> {
                           padding: EdgeInsets.only(top: 35 * ScreenSize.swu),
                           child: Container(
                             width: 277 * ScreenSize.swu,
-                            height: 65 * ScreenSize.swu,
+                            height: (isPhoneScreen ? 75 : 65) * ScreenSize.swu,
                             decoration: BoxDecoration(
                               border: Border.all(
                                   color: colors.primaryColorDark, width: 3.5),

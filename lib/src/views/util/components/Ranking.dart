@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:sushi_scouts/src/logic/deviceType.dart';
 
 import '../../../logic/data/Data.dart';
 
@@ -24,7 +25,8 @@ class Ranking extends StatefulWidget {
       this.values})
       : super(key: key);
   static Ranking create(Key key, String name, Data data, List<String>? values,
-      Data defaultValue, Color color, double width, Color textColor, bool setCommonValue) {
+      Data defaultValue, Color color, double width, Color textColor, bool setCommonValue,
+      double height) {
     return Ranking(
       key: key,
       name: name,
@@ -57,54 +59,53 @@ class RankingState extends State<Ranking> {
 
   @override
   Widget build(BuildContext context) {
-    double width = widget.width / 1.6;
+    double width = widget.width / (isPhone(context) ? 1.4 : 1.6);
     widget.data.set(widget.values!.toString(), setByUser: true);
-    return Padding(
-        padding: EdgeInsets.only(left: width / 6),
-        child: Row(
-          children: [
-            Text(
-              widget.values![0],
-              style: TextStyle(
-                  fontFamily: "Sushi",
-                  fontSize: width / 10,
-                  fontWeight: FontWeight.bold,
-                  color: widget.textColor),
-            ),
-            for (int i = 1; i < widget.values!.length; i++)
-              Row(
-                children: [
-                  IconButton(
-                    padding: EdgeInsets.zero,
-                    constraints: BoxConstraints(),
-                    onPressed: () {
-                      setState(() {
-                        String temp = widget.values![i];
-                        widget.values![i] = widget.values![i - 1];
-                        widget.values![i - 1] = temp;
-                        widget.data
-                            .set(widget.values!.toString(), setByUser: true);
-                      });
-                      build(context);
-                    },
-                    iconSize: width / 3.0,
-                    icon: Icon(
-                      Icons.arrow_left_rounded,
-                      color: widget.color,
-                      semanticLabel: 'Back Arrow',
-                    ),
-                  ),
-                  Text(
-                    widget.values![i],
-                    style: TextStyle(
-                        fontFamily: "Sushi",
-                        fontSize: width / 10,
-                        fontWeight: FontWeight.bold,
-                        color: widget.textColor),
-                  ),
-                ],
-              )
-          ],
-        ));
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Text(
+          widget.values![0],
+          style: TextStyle(
+              fontFamily: "Sushi",
+              fontSize: width / 10,
+              fontWeight: FontWeight.bold,
+              color: widget.textColor),
+        ),
+        for (int i = 1; i < widget.values!.length; i++)
+          Row(
+            children: [
+              IconButton(
+                padding: EdgeInsets.zero,
+                constraints: BoxConstraints(),
+                onPressed: () {
+                  setState(() {
+                    String temp = widget.values![i];
+                    widget.values![i] = widget.values![i - 1];
+                    widget.values![i - 1] = temp;
+                    widget.data
+                        .set(widget.values!.toString(), setByUser: true);
+                  });
+                  build(context);
+                },
+                iconSize: width / 3.0,
+                icon: Icon(
+                  Icons.arrow_left_rounded,
+                  color: widget.color,
+                  semanticLabel: 'Back Arrow',
+                ),
+              ),
+              Text(
+                widget.values![i],
+                style: TextStyle(
+                    fontFamily: "Sushi",
+                    fontSize: width / 10,
+                    fontWeight: FontWeight.bold,
+                    color: widget.textColor),
+              ),
+            ],
+          )
+      ],
+    );
   }
 }

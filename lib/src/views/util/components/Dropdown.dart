@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:sushi_scouts/src/logic/helpers/size/ScreenSize.dart';
 
 import '../../../logic/data/Data.dart';
+import '../../../logic/deviceType.dart';
 
 class Dropdown extends StatefulWidget {
   final String name;
@@ -22,7 +24,8 @@ class Dropdown extends StatefulWidget {
       }
     }
   static Dropdown create(Key key, String name, Data data, List<String> values,
-      Data defaultValue, Color color, double width, Color textColor, bool setCommonValue) {
+      Data defaultValue, Color color, double width, Color textColor, bool setCommonValue,
+      double height) {
     return Dropdown(
       key: key,
       name: name,
@@ -45,6 +48,7 @@ class DropdownState extends State<Dropdown> {
   Widget build(BuildContext context) {
     double width = widget.width;
     var colors = Theme.of(context);
+    var isPhoneScreen = isPhone(context);
 
     return Padding(
         padding: EdgeInsets.only(
@@ -53,18 +57,21 @@ class DropdownState extends State<Dropdown> {
             top: width / 30,
             bottom: width / 30),
         child: SizedBox(
-          width: width*0.8,
+          width: width* 0.8,
           child: Column(
             children: [
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-              Text(widget.name.toUpperCase(),
-                style: GoogleFonts.mohave(
-                        fontSize: width/8,
-                        fontWeight: FontWeight.w400,
-                        color: widget.textColor,
-                      ),
+              Padding(
+                padding: EdgeInsets.only(right: ScreenSize.width * (isPhoneScreen ? 0.01 : 0)),
+                child: Text(widget.name.toUpperCase(),
+                  style: GoogleFonts.mohave(
+                          fontSize: width/ (isPhoneScreen ? 6 : 8),
+                          fontWeight: isPhoneScreen ? FontWeight.w100 : FontWeight.w400,
+                          color: widget.textColor,
+                        ),
+                ),
               ),
               Expanded(
                 child: Align(
@@ -77,8 +84,8 @@ class DropdownState extends State<Dropdown> {
                       elevation: (width/100.0*3).floor(),
                       dropdownColor: colors.scaffoldBackgroundColor,
                       style: GoogleFonts.mohave(
-                        fontSize: width/8,
-                        fontWeight: FontWeight.w400,
+                        fontSize: widget.width / (isPhoneScreen ? 7 : 8),
+                        fontWeight: isPhoneScreen ? FontWeight.w100 : FontWeight.w400,
                         color: widget.textColor,
                       ),
                       alignment: AlignmentDirectional.center,

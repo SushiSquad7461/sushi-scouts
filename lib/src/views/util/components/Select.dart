@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:sushi_scouts/src/logic/deviceType.dart';
+import 'package:sushi_scouts/src/logic/helpers/color/hex_color.dart';
+import 'package:sushi_scouts/src/logic/helpers/size/ScreenSize.dart';
 
 import '../../../logic/data/Data.dart';
 
@@ -37,14 +40,23 @@ class Select extends StatefulWidget {
       checked[value] = false;
     }
 
-      if(defaultValue.setByUser){
-        double val = double.parse(defaultValue.get());
-        checked[this.values[(val).floor()]] = true;
-        data.set(val, setByUser: true);
-      }
+    if (defaultValue.setByUser) {
+      double val = double.parse(defaultValue.get());
+      checked[this.values[(val).floor()]] = true;
+      data.set(val, setByUser: true);
     }
-  static Select create(Key key, String name, Data data, List<String>? values,
-      Data defaultValue, Color color, double width, Color textColor, bool setCommonValue) {
+  }
+  static Select create(
+      Key key,
+      String name,
+      Data data,
+      List<String>? values,
+      Data defaultValue,
+      Color color,
+      double width,
+      Color textColor,
+      bool setCommonValue,
+      double height) {
     return Select(
       key: key,
       name: name,
@@ -76,9 +88,9 @@ class SelectState extends State<Select> {
   }
 
   void change(String value) {
-    widget.data.set(widget.values.indexOf(value)*1.0, setByUser: true);
+    widget.data.set(widget.values.indexOf(value) * 1.0, setByUser: true);
     setState(() {
-      for( String val in widget.values) {
+      for (String val in widget.values) {
         widget.checked[val] = false;
       }
       widget.checked[value] = true;
@@ -89,48 +101,92 @@ class SelectState extends State<Select> {
   Widget build(BuildContext context) {
     double width = widget.isRow ? widget.width / 2 : widget.width;
     List<Widget> options = [];
+    var isPhoneScreen = isPhone(context) && !widget.isRow;
     for (String value in widget.values) {
       options.add(
-        Container(
-            padding: EdgeInsets.only(
-                right: widget.isRow ? width / 20 : width / 60,
-                bottom: widget.isRow ? width / 50 : width / 10),
-            child: GestureDetector(
-              onTap: () {
-                change(value);
-              },
-              child: Row(mainAxisAlignment: MainAxisAlignment.start, children: [
-                Transform.scale(
-                    scale: width / 180,
-                    child: Checkbox(
-                        side: BorderSide(
-                            color: widget.color,
-                            width: width / 100,
-                            style: BorderStyle.solid),
-                        splashRadius: width / 10,
-                        checkColor: Colors.white,
-                        fillColor: MaterialStateProperty.resolveWith(getColor),
-                        value: widget.checked[value],
-                        onChanged: (bool? val) {
-                          change(value);
-                        })),
-                Text(value,
-                    style: TextStyle(
-                        fontFamily: "Sushi",
-                        fontSize: width / 8,
-                        fontWeight: FontWeight.bold,
-                        color: widget.textColor)),
-              ]),
-            )),
+        Padding(
+          padding: EdgeInsets.only(
+              top: ScreenSize.height * (isPhoneScreen ? 0.01 : 0)),
+          child: Container(
+              padding: EdgeInsets.only(
+                  right: widget.isRow ? width / 20 : width / 60,
+                  bottom: widget.isRow ? width / 50 : width / 10),
+              child: GestureDetector(
+                onTap: () {
+                  change(value);
+                },
+                child: Row(
+                    mainAxisAlignment: isPhoneScreen
+                        ? MainAxisAlignment.center
+                        : MainAxisAlignment.start,
+                    children: [
+                      if (!isPhoneScreen)
+                        Transform.scale(
+                            scale: width / 180,
+                            child: Checkbox(
+                                side: BorderSide(
+                                    color: widget.color,
+                                    width: width / 100,
+                                    style: BorderStyle.solid),
+                                splashRadius: width / 10,
+                                checkColor: Colors.white,
+                                fillColor:
+                                    MaterialStateProperty.resolveWith(getColor),
+                                value: widget.checked[value],
+                                onChanged: (bool? val) {
+                                  change(value);
+                                })),
+                      GestureDetector(
+                        onTap: () {
+                          if (isPhoneScreen) {
+                            change(value);
+                          }
+                        },
+                        child: Container(
+                          decoration: isPhoneScreen
+                              ? BoxDecoration(
+                                  border: Border.all(
+                                    color: widget.checked[value]! ? widget.color : Colors.white,
+                                    width: ScreenSize.width * 0.01,
+                                  ),
+                                  borderRadius: BorderRadius.circular(
+                                      ScreenSize.width * 0.04),
+                                )
+                              : null,
+                          padding: isPhoneScreen
+                              ? EdgeInsets.only(
+                                  top: ScreenSize.height * 0.01,
+                                  bottom: ScreenSize.height * 0.01,
+                                  left: ScreenSize.width * 0.015,
+                                  right: ScreenSize.width * 0.015,
+                                )
+                              : null,
+                          child: Text(value,
+                              style: TextStyle(
+                                  fontFamily: "Sushi",
+                                  fontSize: width / (isPhoneScreen ? 8 : 8),
+                                  fontWeight: isPhoneScreen
+                                      ? FontWeight.w200
+                                      : FontWeight.bold,
+                                  color: widget.textColor)),
+                        ),
+                      ),
+                    ]),
+              )),
+        ),
       );
     }
     return widget.isRow
         ? Row(
-            mainAxisAlignment: MainAxisAlignment.start,
+            mainAxisAlignment: isPhoneScreen
+                ? MainAxisAlignment.spaceEvenly
+                : MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: options)
         : Column(
-            mainAxisAlignment: MainAxisAlignment.start,
+            mainAxisAlignment: isPhoneScreen
+                ? MainAxisAlignment.spaceEvenly
+                : MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: options);
   }

@@ -30,7 +30,8 @@ class Increment extends StatefulWidget {
       }
 
   static Increment create(Key key, String name, Data data, List<String>? values,
-      Data defaultValue, Color color, double width, Color textColor, bool setCommonValue) {
+      Data defaultValue, Color color, double width, Color textColor, bool setCommonValue,
+      double height) {
     return Increment(
       key: key,
       name: name,

@@ -16,6 +16,7 @@ import 'package:localstore/localstore.dart';
 import 'package:sushi_scouts/src/logic/blocs/login_bloc/login_cubit.dart';
 import 'package:sushi_scouts/src/logic/blocs/theme_bloc/theme_cubit.dart';
 import 'package:sushi_scouts/src/logic/data/config_file_reader.dart';
+import 'package:sushi_scouts/src/logic/deviceType.dart';
 import 'package:sushi_scouts/src/logic/helpers/routing_helper.dart';
 import 'package:sushi_scouts/src/logic/helpers/secret/secret.dart';
 import 'package:sushi_scouts/src/logic/helpers/secret/secret_loader.dart';
@@ -71,7 +72,8 @@ class _SettingsState extends State<Settings> {
     String? configFile =
         await ApiRepository().getConfigFile(configYear, teamNum);
     if (configFile != null) {
-      var parsedFile = await json.decode((await json.decode(configFile))["config"]);
+      var parsedFile =
+          await json.decode((await json.decode(configFile))["config"]);
       await db
           .collection("config_files")
           .doc(parsedFile["teamNumber"].toString())
@@ -124,197 +126,218 @@ class _SettingsState extends State<Settings> {
       fontSize: ScreenSize.swu * 30,
     );
 
+    var isPhoneScreen = isPhone(context);
+
     BoxDecoration boxDecoration = BoxDecoration(
         border: Border.all(
             color: colors.primaryColorDark, width: 4 * ScreenSize.shu),
         borderRadius: BorderRadius.all(Radius.circular(25 * ScreenSize.swu)));
 
     return Scaffold(
-      resizeToAvoidBottomInset: false,
-      body: BlocBuilder<LoginCubit, LoginStates>(
-        builder: (context, state) {
+        resizeToAvoidBottomInset: false,
+        body: BlocBuilder<LoginCubit, LoginStates>(builder: (context, state) {
           bool isSupervise = state is SushiSuperviseLogin;
           return Column(
-          children: [
-            HeaderTitle(
-              isSupervise: isSupervise,
-            ),
-            HeaderNav(
-              currentPage: "settings",
-              isSupervise: isSupervise,
-            ),
-            SizedBox(
-                width: ScreenSize.width,
-                height: ScreenSize.height * (isSupervise ? 0.63 : 0.64),
-                child: Stack(
-                  fit: StackFit.expand,
-                  children: [
-                    Align(
-                      alignment: const Alignment(0, -0.8),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          Container(
-                            decoration: BoxDecoration(
-                                color: Colors.black,
-                                borderRadius: BorderRadius.all(
-                                    Radius.circular(20 * ScreenSize.swu))),
-                            child: Padding(
-                              padding: EdgeInsets.all(ScreenSize.width * 0.02),
-                              child: TextButton(
-                                  onPressed: () => toggleMode("dark"),
-                                  child: Text(
-                                    "DARK MODE",
-                                    style: TextStyle(
-                                      fontFamily: "Sushi",
-                                      color: Colors.white,
-                                      fontSize: ScreenSize.swu * 30,
-                                    ),
-                                  )),
-                            ),
-                          ),
-                          Container(
-                            decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.all(
-                                    Radius.circular(20 * ScreenSize.swu))),
-                            child: Padding(
-                              padding: EdgeInsets.all(ScreenSize.width * 0.02),
-                              child: TextButton(
-                                  onPressed: () => toggleMode("light"),
-                                  child: Text(
-                                    "light mode",
-                                    style: TextStyle(
-                                      fontFamily: "Sushi",
-                                      color: Colors.black,
-                                      fontSize: ScreenSize.swu * 30,
-                                    ),
-                                  )),
-                            ),
-                          )
-                        ],
-                      ),
-                    ),
-                    Align(
-                      alignment: const Alignment(0, -0.5),
-                      child: Container(
-                        decoration: boxDecoration,
-                        child: TextButton(
-                            onPressed: downloadMatchSchedule,
-                            child: Text(
-                              "download match schedule",
-                              style: textStyle,
-                            )),
-                      ),
-                    ),
-                    Align(
-                      alignment: const Alignment(0, -0.2),
-                      child: Container(
-                        decoration: boxDecoration,
-                        width: ScreenSize.width * 0.47,
-                        child: TextButton(
-                            onPressed: downloadConfigFile,
-                            child: Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                children: [
-                                  SizedBox(
-                                    width: ScreenSize.width * 0.15,
-                                    height: ScreenSize.height * 0.04,
-                                    child: TextFormField(
-                                      decoration: InputDecoration(
-                                        enabledBorder: UnderlineInputBorder(
-                                          borderSide: BorderSide(
-                                              width: ScreenSize.height * 0.003,
-                                              color: colors.primaryColorDark),
-                                        ),
-                                        focusedBorder: UnderlineInputBorder(
-                                          borderSide: BorderSide(
-                                              width: ScreenSize.height * 0.003,
-                                              color: colors.primaryColorDark),
-                                        ),
-                                        hintText: "YEAR",
-                                        hintStyle: TextStyle(
-                                            color: colors.primaryColorDark),
-                                        isDense: true,
-                                        contentPadding: EdgeInsets.symmetric(
-                                            vertical: ScreenSize.height * 0.005),
+            children: [
+              HeaderTitle(
+                isSupervise: isSupervise,
+              ),
+              HeaderNav(
+                currentPage: "settings",
+                isSupervise: isSupervise,
+              ),
+              SizedBox(
+                  width: ScreenSize.width,
+                  height: ScreenSize.height * (isSupervise ? 0.63 : (isPhoneScreen ? 0.61 : 0.64)),
+                  child: Stack(
+                    fit: StackFit.expand,
+                    children: [
+                      Align(
+                        alignment: const Alignment(0, -0.8),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            Container(
+                              decoration: BoxDecoration(
+                                  color: Colors.black,
+                                  borderRadius: BorderRadius.all(
+                                      Radius.circular(20 * ScreenSize.swu))),
+                              child: Padding(
+                                padding:
+                                    EdgeInsets.all(ScreenSize.width * 0.02),
+                                child: TextButton(
+                                    onPressed: () => toggleMode("dark"),
+                                    child: Text(
+                                      "DARK MODE",
+                                      style: TextStyle(
+                                        fontFamily: "Sushi",
+                                        color: Colors.white,
+                                        fontSize: ScreenSize.swu * 30,
                                       ),
-                                      textAlign: TextAlign.center,
-                                      style: GoogleFonts.mohave(
-                                          textStyle: TextStyle(
-                                        fontSize: ScreenSize.width * 0.05,
-                                        color: colors.primaryColorDark,
-                                        fontWeight: FontWeight.w500,
-                                      )),
-                                      keyboardType: TextInputType.number,
-                                      inputFormatters: <TextInputFormatter>[
-                                        FilteringTextInputFormatter.digitsOnly
-                                      ],
-                                      onChanged: (String? val) => setState(() {
-                                        year = (val != null ? int.parse(val) : val)
-                                            as int?;
-                                      }),
+                                    )),
+                              ),
+                            ),
+                            Container(
+                              decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.all(
+                                      Radius.circular(20 * ScreenSize.swu))),
+                              child: Padding(
+                                padding:
+                                    EdgeInsets.all(ScreenSize.width * 0.02),
+                                child: TextButton(
+                                    onPressed: () => toggleMode("light"),
+                                    child: Text(
+                                      "light mode",
+                                      style: TextStyle(
+                                        fontFamily: "Sushi",
+                                        color: Colors.black,
+                                        fontSize: ScreenSize.swu * 30,
+                                      ),
+                                    )),
+                              ),
+                            )
+                          ],
+                        ),
+                      ),
+                      Align(
+                        alignment: Alignment(0, isPhoneScreen ? -0.4 : -0.5),
+                        child: Container(
+                          decoration: boxDecoration,
+                          child: TextButton(
+                              onPressed: downloadMatchSchedule,
+                              child: Text(
+                                "download match schedule",
+                                style: textStyle,
+                              )),
+                        ),
+                      ),
+                      Align(
+                        alignment: Alignment(0, isPhoneScreen ? 0 : -0.2),
+                        child: Container(
+                          decoration: boxDecoration,
+                          width: ScreenSize.width * 0.47,
+                          child: TextButton(
+                              onPressed: downloadConfigFile,
+                              child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceEvenly,
+                                  children: [
+                                    SizedBox(
+                                      width: ScreenSize.width * 0.15,
+                                      height: ScreenSize.height * 0.04,
+                                      child: TextFormField(
+                                        decoration: InputDecoration(
+                                          enabledBorder: UnderlineInputBorder(
+                                            borderSide: BorderSide(
+                                                width:
+                                                    ScreenSize.height * 0.003,
+                                                color: colors.primaryColorDark),
+                                          ),
+                                          focusedBorder: UnderlineInputBorder(
+                                            borderSide: BorderSide(
+                                                width:
+                                                    ScreenSize.height * 0.003,
+                                                color: colors.primaryColorDark),
+                                          ),
+                                          hintText: "YEAR",
+                                          hintStyle: TextStyle(
+                                              color: colors.primaryColorDark),
+                                          isDense: true,
+                                          contentPadding: EdgeInsets.symmetric(
+                                              vertical:
+                                                  ScreenSize.height * 0.005),
+                                        ),
+                                        textAlign: TextAlign.center,
+                                        style: GoogleFonts.mohave(
+                                            textStyle: TextStyle(
+                                          fontSize: ScreenSize.width * 0.05,
+                                          color: colors.primaryColorDark,
+                                          fontWeight: FontWeight.w500,
+                                        )),
+                                        keyboardType: TextInputType.number,
+                                        inputFormatters: <TextInputFormatter>[
+                                          FilteringTextInputFormatter.digitsOnly
+                                        ],
+                                        onChanged: (String? val) =>
+                                            setState(() {
+                                          year = (val != null
+                                              ? int.parse(val)
+                                              : val) as int?;
+                                        }),
+                                      ),
                                     ),
-                                  ),
-                                  Text(
-                                    "config file",
-                                    style: textStyle,
-                                  ),
-                                ])),
+                                    Text(
+                                      "config file",
+                                      style: textStyle,
+                                    ),
+                                  ])),
+                        ),
                       ),
-                    ),
-                    Align(
-                      alignment: const Alignment(0, 0.1),
-                      child: Container(
-                        decoration: boxDecoration,
-                        child: TextButton(
-                            onPressed: downloadNames,
-                            child: Text(
-                              "download names",
-                              style: textStyle,
-                            )),
+                      Align(
+                        alignment: Alignment(0, isPhoneScreen ? 0.4 : 0.01),
+                        child: Container(
+                          decoration: boxDecoration,
+                          child: TextButton(
+                              onPressed: downloadNames,
+                              child: Text(
+                                "download names",
+                                style: textStyle,
+                              )),
+                        ),
                       ),
-                    ),
-                    Align(
-                      alignment: const Alignment(0, 0.4),
-                      child: Container(
-                        decoration: boxDecoration,
-                        child: TextButton(
-                            onPressed: () {
-                              setLogout();
-                            },
-                            child: Text(
-                              "log out",
-                              style: textStyle,
-                            )),
+                      Align(
+                        alignment: Alignment(0, isPhoneScreen ? 0.8 : 0.4),
+                        child: Container(
+                          decoration: boxDecoration,
+                          child: TextButton(
+                              onPressed: () {
+                                setLogout();
+                              },
+                              child: Text(
+                                "log out",
+                                style: textStyle,
+                              )),
+                        ),
                       ),
-                    ),
-                    if(isLoggingOut)
-                    AlertDialog(
-                      title: const Text("Unsent data will be deleted"),
-                      content: const Text("Please go to the QR code screen to send data to your scouting admin."),
-                      actions: [
-                        TextButton(onPressed: logOut, child: const Text("OK")),
-                        TextButton(onPressed: () => setState((){isLoggingOut = false;}), child: const Text("CANCEL"))
-                      ],
-                    )  
-                  ],
-                )),
-            isSupervise
-                ? const SuperviseFooter()
-                : Padding(
-                    padding: EdgeInsets.all(ScreenSize.height * 0.01),
-                    child: SizedBox(
-                        width: ScreenSize.width / 10.0, //57
-                        height: ScreenSize.width / 10.0, //59
-                        child: SvgPicture.asset(
-                          "./assets/images/${colors.scaffoldBackgroundColor == Colors.black ? "darknori" : "nori"}.svg",
-                        )),
-                  ),
-            if (!isSupervise) Footer(pageTitle: ""),
-          ],
-        );
-        })
-    );
+                      if (isLoggingOut)
+                        AlertDialog(
+                          title: const Text("Unsent data will be deleted"),
+                          content: const Text(
+                              "Please go to the QR code screen to send data to your scouting admin."),
+                          actions: [
+                            TextButton(
+                                onPressed: logOut, child: const Text("OK")),
+                            TextButton(
+                                onPressed: () => setState(() {
+                                      isLoggingOut = false;
+                                    }),
+                                child: const Text("CANCEL"))
+                          ],
+                        )
+                    ],
+                  )),
+              isSupervise
+                  ? const SuperviseFooter()
+                  : !isPhoneScreen ? Padding(
+                      padding: EdgeInsets.all(ScreenSize.height * 0.01),
+                      child: SizedBox(
+                          width: ScreenSize.width / 10.0, //57
+                          height: ScreenSize.width / 10.0, //59
+                          child: SvgPicture.asset(
+                            "./assets/images/${colors.scaffoldBackgroundColor == Colors.black ? "darknori" : "nori"}.svg",
+                          )),
+                    ) : SizedBox(
+                width: ScreenSize.width,
+                child: SvgPicture.asset(
+                  "./assets/images/mobilefooter.svg",
+                  width: ScreenSize.width,
+                  fit: BoxFit.fitWidth,
+                ),
+              ),
+              if (!isSupervise && !isPhoneScreen) Footer(pageTitle: ""),
+            ],
+          );
+        }));
   }
 }

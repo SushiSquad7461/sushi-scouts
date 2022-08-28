@@ -36,7 +36,7 @@ class ScoutingState extends State<Scouting> {
   }
 
   //builds the components in a certain section
-  Widget _buildSection(double width, Section section, int currColumn) {
+  Widget _buildSection(double width, Section section, int currColumn, double height) {
     try {
       double scaledWidth = (width > 500 ? 500 : width);
       var reader = ConfigFileReader.instance;
@@ -90,7 +90,9 @@ class ScoutingState extends State<Scouting> {
                     scaledWidth,
                     section.getTextColor(
                         colors.scaffoldBackgroundColor == Colors.black),
-                    currComponent.setCommonValue))
+                    currComponent.setCommonValue,
+                    height / (section.componentsPerColumn[currColumn] - startComponent)),
+                    )
             : SizedBox(
                 width: scaledWidth,
                 child: Text(
@@ -107,7 +109,9 @@ class ScoutingState extends State<Scouting> {
       return SizedBox(
         width: scaledWidth,
         child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
+            mainAxisAlignment: isPhone(context)
+                ? MainAxisAlignment.spaceEvenly
+                : MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: builtComponents),
       );
@@ -120,8 +124,14 @@ class ScoutingState extends State<Scouting> {
   Widget _buildBody(Size size) {
     try {
       List<Widget> builtSections = [];
-      for (var i in currPage!.sections) {
 
+      double height = isPhone(context) ? 0.58 : 0.61;
+
+      for (var i in currPage!.sections) {
+        height -= i.title != "" ? 0.035 : 0;
+      }
+
+      for (var i in currPage!.sections) {
         // idk why da hell this was here but its gone now.  check with sidarth before perment deletaion
         // int rows = size.width / i.columns < 300
         //     ? (size.width / 300).floor()
@@ -130,26 +140,34 @@ class ScoutingState extends State<Scouting> {
         if (i.title != "") {
           builtSections.add(Align(
             alignment: const Alignment(-0.8, 0),
-            child: Text(
-              i.title,
-              style: GoogleFonts.mohave(
-                  color: i.getTextColor(
-                      Theme.of(context).scaffoldBackgroundColor ==
-                          Colors.black),
-                  fontSize: size.width / 15,
-                  fontWeight: FontWeight.w400),
+            child: SizedBox(
+              height: ScreenSize.height * 0.035,
+              child: Text(
+                i.title,
+                style: GoogleFonts.mohave(
+                    color: i.getTextColor(
+                        Theme.of(context).scaffoldBackgroundColor ==
+                            Colors.black),
+                    fontSize: size.width / 15,
+                    fontWeight: FontWeight.w400),
+              ),
             ),
           ));
         }
-        builtSections.add(Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              for (int j = 0; j < rows; j++)
-                Padding(
-                    padding: EdgeInsets.only(bottom: ScreenSize.height * 0.01),
-                    child: _buildSection(size.width / rows, i, j)),
-            ]));
+        builtSections.add(Padding(
+          padding: EdgeInsets.only(bottom: ScreenSize.height * 0.01),
+          child: SizedBox(
+            child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  for (int j = 0; j < rows; j++)
+                    Padding(
+                        padding: EdgeInsets.only(bottom: ScreenSize.height * 0.01),
+                        child: _buildSection(size.width / rows, i, j, ScreenSize.height * ((height - currPage!.sections.length * 0.01) / currPage!.sections.length))),
+                ]),
+          ),
+        ));
       }
       return Column(children: builtSections);
     } catch (e) {
@@ -183,10 +201,11 @@ class ScoutingState extends State<Scouting> {
                 const HeaderTitle(),
                 HeaderNav(currentPage: state.method),
                 Padding(
-                  padding: EdgeInsets.only(top: ScreenSize.height * (isPhoneScreen? 0 : 0.02)),
+                  padding: EdgeInsets.only(
+                      top: ScreenSize.height * (isPhoneScreen ? 0.02 : 0.02)),
                   child: SizedBox(
                     width: ScreenSize.width,
-                    height: ScreenSize.height * 0.61,
+                    height: ScreenSize.height * (isPhoneScreen ? 0.59 : 0.61),
                     child: _buildBody(ScreenSize.get()),
                   ),
                 ),
