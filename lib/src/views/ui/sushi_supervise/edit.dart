@@ -50,16 +50,16 @@ class _EditState extends State<Edit> {
         for (var name in newData.keys) {
           data.addAll({
             name.split("/")[2]: SuperviseData(
-                data: newData[name]["data"],
-                flagged: newData[name]["flagged"],
-                deleted: newData[name]["deleted"])
+              data: newData[name]["data"],
+              flagged: newData[name]["flagged"],
+              deleted: newData[name]["deleted"],
+              teamNum: newData[name]["teamNum"],
+              methodName: newData[name]["method name"],
+              display1: newData[name]["display1"],
+              display2: newData[name]["display2"],
+              name: newData[name]["name"],
+            )
           });
-        }
-
-        // DEBUGGING
-        for (var i in data.keys) {
-          print(i);
-          print(data[i]!.data);
         }
       });
     }
@@ -78,6 +78,11 @@ class _EditState extends State<Edit> {
           "data": data[key]!.data,
           "flagged": data[key]!.flagged,
           "deleted": data[key]!.deleted,
+          "method name": data[key]!.methodName,
+          "display1": data[key]!.display1,
+          "display2": data[key]!.display2,
+          "name": data[key]!.name,
+          "teamNum": data[key]!.teamNum,
         });
       }
     });
@@ -249,14 +254,15 @@ class _EditState extends State<Edit> {
                       children: [
                         for (var i in data.keys)
                           if ((currState == "ALL" ||
-                              currState[0].toUpperCase() == i[0]) && (deleteMode || !data[i]!.deleted))
+                                  currState == data[i]!.methodName) &&
+                              (deleteMode || !data[i]!.deleted))
                             Padding(
                               padding: EdgeInsets.only(
                                   left: ScreenSize.width * 0.02),
                               child: GestureDetector(
                                 onTap: () => updateData(i),
                                 child: Text(
-                                  i.split("::")[0],
+                                  "${data[i]!.methodName[0].toUpperCase()} - ${data[i]!.display1} - ${data[i]!.display2}",
                                   style: GoogleFonts.mohave(
                                       textStyle: TextStyle(
                                           fontSize: ScreenSize.width * 0.06,

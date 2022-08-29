@@ -47,11 +47,12 @@ class ConfigFileReader {
   }
 
   String getSuperviseDisplayString(ScoutingData data, int number) {
-    if (supervise == null ||
-        supervise![data.name] == null) {
+    if (supervise == null || supervise![data.name] == null) {
       return "ERR";
     }
-    return data.getCertainData(supervise![data.name][number == 1 ? "first" : "second"]["page"], supervise![data.name][number == 1 ? "first" : "second"]["name"]);
+    return data.getCertainData(
+        supervise![data.name][number == 1 ? "first" : "second"]["page"],
+        supervise![data.name][number == 1 ? "first" : "second"]["name"]);
   }
 
   Future<void> readInitalConfig() async {
@@ -138,4 +139,6 @@ class ConfigFileReader {
   String get name => _name ?? "";
 
   set setName(String name) => _name = name;
+
+  String get id => "${teamNum!}+${year.toString()}+${version.toString()}";
 }

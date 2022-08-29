@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:ffi';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -12,6 +13,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:localstore/localstore.dart';
+import 'package:sushi_scouts/src/logic/Constants.dart';
 
 import 'package:sushi_scouts/src/logic/blocs/login_bloc/login_cubit.dart';
 import 'package:sushi_scouts/src/logic/blocs/theme_bloc/theme_cubit.dart';
@@ -44,6 +46,7 @@ class _SettingsState extends State<Settings> {
   Secret? secrets;
   int? year;
   bool isLoggingOut = false;
+  String collectionName = "";
 
   Future<void> toggleMode(String mode) async {
     BlocProvider.of<ThemeCubit>(context)
@@ -116,6 +119,37 @@ class _SettingsState extends State<Settings> {
     secrets = await SecretLoader(secretPath: "assets/secrets.json").load();
   }
 
+  Future<void> uploadData() async {
+    final upload =
+        await Localstore.instance.collection(SUPERVISE_DATABASE_NAME).get();
+    final db = FirebaseFirestore.instance;
+
+    for (var i in upload!.keys) {
+      db.collection(collectionName).doc(i.split("/")[2]).set(upload[i]);
+    }
+  }
+
+  Future<void> downloadData() async {
+    final toAdd =
+        await FirebaseFirestore.instance.collection(collectionName).get();
+
+    for (var i in toAdd.docs) {
+      db.collection(SUPERVISE_DATABASE_NAME).doc(i.id).set(i.data());
+    }
+  }
+
+  Future<void> wipeData() async {
+    var db = Localstore.instance;
+    final delete = await db.collection(SUPERVISE_DATABASE_NAME).get();
+
+    for (var i in delete!.keys) {
+      await db
+          .collection(SUPERVISE_DATABASE_NAME)
+          .doc(i.split("/")[2])
+          .delete();
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     var colors = Theme.of(context);
@@ -137,6 +171,7 @@ class _SettingsState extends State<Settings> {
         resizeToAvoidBottomInset: false,
         body: BlocBuilder<LoginCubit, LoginStates>(builder: (context, state) {
           bool isSupervise = state is SushiSuperviseLogin;
+          collectionName = "${state.eventCode}:${ConfigFileReader.instance.id}";
           return Column(
             children: [
               HeaderTitle(
@@ -148,7 +183,10 @@ class _SettingsState extends State<Settings> {
               ),
               SizedBox(
                   width: ScreenSize.width,
-                  height: ScreenSize.height * (isSupervise ? (isPhoneScreen ? 0.65 : 0.63) : (isPhoneScreen ? 0.61 : 0.64)),
+                  height: ScreenSize.height *
+                      (isSupervise
+                          ? (isPhoneScreen ? 0.65 : 0.63)
+                          : (isPhoneScreen ? 0.61 : 0.64)),
                   child: Stack(
                     fit: StackFit.expand,
                     children: [
@@ -202,15 +240,40 @@ class _SettingsState extends State<Settings> {
                       ),
                       Align(
                         alignment: Alignment(0, isPhoneScreen ? -0.4 : -0.5),
-                        child: Container(
-                          decoration: boxDecoration,
-                          child: TextButton(
-                              onPressed: downloadMatchSchedule,
-                              child: Text(
-                                "download match schedule",
-                                style: textStyle,
-                              )),
-                        ),
+                        child: isSupervise
+                            ? Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
+                                children: [
+                                  Container(
+                                    decoration: boxDecoration,
+                                    child: TextButton(
+                                        onPressed: downloadData,
+                                        child: Text(
+                                          "download data",
+                                          style: textStyle,
+                                        )),
+                                  ),
+                                  Container(
+                                    decoration: boxDecoration,
+                                    child: TextButton(
+                                        onPressed: uploadData,
+                                        child: Text(
+                                          "upload data",
+                                          style: textStyle,
+                                        )),
+                                  ),
+                                ],
+                              )
+                            : Container(
+                                decoration: boxDecoration,
+                                child: TextButton(
+                                    onPressed: downloadMatchSchedule,
+                                    child: Text(
+                                      "download match schedule",
+                                      style: textStyle,
+                                    )),
+                              ),
                       ),
                       Align(
                         alignment: Alignment(0, isPhoneScreen ? 0 : -0.2),
@@ -278,12 +341,24 @@ class _SettingsState extends State<Settings> {
                         alignment: Alignment(0, isPhoneScreen ? 0.4 : 0.01),
                         child: Container(
                           decoration: boxDecoration,
-                          child: TextButton(
-                              onPressed: downloadNames,
-                              child: Text(
-                                "download names",
-                                style: textStyle,
-                              )),
+                          child: isSupervise
+                              ? TextButton(
+                                  onPressed: wipeData,
+                                  child: Text(
+                                    "WIPE ALL DATA",
+                                    style: TextStyle(
+                                      fontFamily: "Sushi",
+                                      color: colors.primaryColorDark,
+                                      fontSize: ScreenSize.swu * 30,
+                                      fontWeight: FontWeight.w900,
+                                    ),
+                                  ))
+                              : TextButton(
+                                  onPressed: downloadNames,
+                                  child: Text(
+                                    "download names",
+                                    style: textStyle,
+                                  )),
                         ),
                       ),
                       Align(
@@ -319,22 +394,24 @@ class _SettingsState extends State<Settings> {
                   )),
               isSupervise
                   ? const SuperviseFooter()
-                  : !isPhoneScreen ? Padding(
-                      padding: EdgeInsets.all(ScreenSize.height * 0.01),
-                      child: SizedBox(
-                          width: ScreenSize.width / 10.0, //57
-                          height: ScreenSize.width / 10.0, //59
+                  : !isPhoneScreen
+                      ? Padding(
+                          padding: EdgeInsets.all(ScreenSize.height * 0.01),
+                          child: SizedBox(
+                              width: ScreenSize.width / 10.0, //57
+                              height: ScreenSize.width / 10.0, //59
+                              child: SvgPicture.asset(
+                                "./assets/images/${colors.scaffoldBackgroundColor == Colors.black ? "darknori" : "nori"}.svg",
+                              )),
+                        )
+                      : SizedBox(
+                          width: ScreenSize.width,
                           child: SvgPicture.asset(
-                            "./assets/images/${colors.scaffoldBackgroundColor == Colors.black ? "darknori" : "nori"}.svg",
-                          )),
-                    ) : SizedBox(
-                width: ScreenSize.width,
-                child: SvgPicture.asset(
-                  "./assets/images/mobilefooter.svg",
-                  width: ScreenSize.width,
-                  fit: BoxFit.fitWidth,
-                ),
-              ),
+                            "./assets/images/mobilefooter.svg",
+                            width: ScreenSize.width,
+                            fit: BoxFit.fitWidth,
+                          ),
+                        ),
               if (!isSupervise && !isPhoneScreen) Footer(pageTitle: ""),
             ],
           );

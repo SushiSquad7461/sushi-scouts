@@ -36,7 +36,8 @@ class _UploadState extends State<Upload> {
   QRViewController? controller;
   List<ScoutingData> toAdd = [];
   bool configFile = false;
-  String login = "";
+  String name = "";
+  int teamNum = 0;
   String eventCode = "";
 
   // In order to get hot reload to work we need to pause the camera if the platform
@@ -58,11 +59,16 @@ class _UploadState extends State<Upload> {
       await db
           .collection(SUPERVISE_DATABASE_NAME)
           .doc(
-              "${i.stringfy()[0]} - ${reader.getSuperviseDisplayString(i, 1)} - ${reader.getSuperviseDisplayString(i, 2)}::$login")
+              "${i.stringfy()[0]} - ${reader.getSuperviseDisplayString(i, 1)} - ${reader.getSuperviseDisplayString(i, 2)}::$name ${teamNum.toString()}")
           .set({
         "data": i.stringfy(),
         "flagged": false,
         "deleted": false,
+        "method name": i.name,
+        "display1": reader.getSuperviseDisplayString(i, 1),
+        "display2": reader.getSuperviseDisplayString(i, 2),
+        "name": name,
+        "teamNum": teamNum,
       });
     }
 
@@ -111,7 +117,9 @@ class _UploadState extends State<Upload> {
                           borderRadius: BorderRadius.all(
                               Radius.circular(8 * ScreenSize.swu)),
                           border: Border.all(
-                            color: phone ? colors.scaffoldBackgroundColor : colors.primaryColorDark,
+                            color: phone
+                                ? colors.scaffoldBackgroundColor
+                                : colors.primaryColorDark,
                             width: 5 * ScreenSize.swu,
                           )),
                       child: QRView(
@@ -123,8 +131,8 @@ class _UploadState extends State<Upload> {
                   if (toAdd.isNotEmpty)
                     Center(
                       child: Container(
-                        height: ScreenSize.height * 0.4,
-                        width: ScreenSize.width * 0.6,
+                        height: ScreenSize.height * (phone ? 0.5 :  0.4),
+                        width: ScreenSize.width * (phone ? 0.8 : 0.6),
                         decoration: BoxDecoration(
                           border: Border.all(
                               color: Colors.white,
@@ -133,7 +141,7 @@ class _UploadState extends State<Upload> {
                               Radius.circular(10 * ScreenSize.swu)),
                         ),
                         child: Container(
-                          width: ScreenSize.width * 0.58,
+                          width: ScreenSize.width * (phone ? 0.78 : 0.58),
                           height:
                               ScreenSize.height * 0.4 - ScreenSize.width * 0.02,
                           color: Colors.white,
@@ -157,7 +165,7 @@ class _UploadState extends State<Upload> {
                                 ),
                                 SizedBox(
                                   height: ScreenSize.height * 0.28,
-                                  width: ScreenSize.width * 0.58,
+                                  width: ScreenSize.width * (phone ? 0.78 : 0.58),
                                   child: ListView(
                                     children: [
                                       for (int i = 0; i < toAdd.length; ++i)
@@ -166,7 +174,7 @@ class _UploadState extends State<Upload> {
                                               bottom:
                                                   ScreenSize.height * 0.005),
                                           child: SizedBox(
-                                              width: ScreenSize.width * 0.58,
+                                              width: ScreenSize.width * (phone ? 0.78 : 0.58),
                                               child: Center(
                                                   child: Text(
                                                       "${toAdd[i].stringfy()[0]} - ${reader.getSuperviseDisplayString(toAdd[i], 1)} - ${reader.getSuperviseDisplayString(toAdd[i], 2)}",
@@ -177,7 +185,7 @@ class _UploadState extends State<Upload> {
                                               bottom:
                                                   ScreenSize.height * 0.005),
                                           child: SizedBox(
-                                              width: ScreenSize.width * 0.58,
+                                              width: ScreenSize.width * (phone ? 0.78 : 0.58),
                                               child: Center(
                                                   child: Text(
                                                       "CONFIG - ${configFile ? "Y" : "N"}",
@@ -187,7 +195,7 @@ class _UploadState extends State<Upload> {
                                               bottom:
                                                   ScreenSize.height * 0.005),
                                           child: SizedBox(
-                                              width: ScreenSize.width * 0.58,
+                                              width: ScreenSize.width * (phone ? 0.78 : 0.58),
                                               child: Center(
                                                   child: Text(
                                                 "CODE - ${eventCode.toUpperCase()}",
@@ -198,15 +206,15 @@ class _UploadState extends State<Upload> {
                                               bottom:
                                                   ScreenSize.height * 0.005),
                                           child: SizedBox(
-                                              width: ScreenSize.width * 0.58,
+                                              width: ScreenSize.width * (phone ? 0.78 : 0.58),
                                               child: Center(
-                                                  child: Text(login,
+                                                  child: Text("$name ${teamNum.toString()}",
                                                       style: fontStyle)))),
                                     ],
                                   ),
                                 ),
                                 SizedBox(
-                                  width: ScreenSize.width * 0.58,
+                                  width: ScreenSize.width * (phone ? 0.78 : 0.58),
                                   child: Center(
                                     child: TextButton(
                                         onPressed: () {
@@ -233,7 +241,7 @@ class _UploadState extends State<Upload> {
                                               "UPLOAD",
                                               style: TextStyle(
                                                 fontFamily: "Sushi",
-                                                fontSize: 30 * ScreenSize.swu,
+                                                fontSize: (phone ? 40 : 30) * ScreenSize.swu,
                                                 fontWeight: FontWeight.bold,
                                                 color: colors.primaryColorDark,
                                               ),
@@ -274,9 +282,9 @@ class _UploadState extends State<Upload> {
             CompressedDataModel.fromJson(json.decode(result!.code!));
 
         configFile = decodedData.metadata.configId ==
-            "${reader.teamNum!}+${reader.year}+${reader.version}";
-        login =
-            "${decodedData.metadata.name.toUpperCase()} ${decodedData.metadata.teamNum}";
+            reader.id;
+        name = decodedData.metadata.name.toUpperCase();
+        teamNum = decodedData.metadata.teamNum;
         eventCode = decodedData.metadata.eventCode;
 
         for (var s in decodedData.data) {
