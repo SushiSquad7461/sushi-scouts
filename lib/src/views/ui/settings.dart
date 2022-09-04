@@ -133,7 +133,10 @@ class _SettingsState extends State<Settings> {
     final toAdd =
         await FirebaseFirestore.instance.collection(collectionName).get();
 
+    print("asdawsd");
+    print(toAdd.size);
     for (var i in toAdd.docs) {
+      print("adding");
       db.collection(SUPERVISE_DATABASE_NAME).doc(i.id).set(i.data());
     }
   }
