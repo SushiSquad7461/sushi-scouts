@@ -77,13 +77,13 @@ class HeaderNav extends StatelessWidget {
     bool isPhoneScreen = isPhone(context);
     return Container(
         color: colors.primaryColor,
-        height: ScreenSize.height * 0.1,
+        height: ScreenSize.height * 0.09,
         child: Padding(
           padding: EdgeInsets.only(
               left: 0,
               right: 0,
-              top: (isPhoneScreen ? 17 : 7) * ScreenSize.shu,
-              bottom: (isPhoneScreen ? 6 : 0) * ScreenSize.shu),
+              top: (isPhoneScreen ? 2 : 7) * ScreenSize.shu,
+              bottom: (isPhoneScreen ? 0 : 0) * ScreenSize.shu),
           child: Container(
             color: isPhoneScreen
                 ? colors.primaryColorDark

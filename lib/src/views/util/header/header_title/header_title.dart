@@ -14,7 +14,11 @@ class HeaderTitle extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return isPhone(context)
-        ? (!isSupervise ?  const HeaderTitleMobile() : const HeaderTitleMobileSupervise())
-        : (isSupervise ? const HeaderTitleTabletSupervise() : const HeaderTitleTablet());
+        ? (!isSupervise
+            ? const HeaderTitleMobile()
+            : const HeaderTitleMobileSupervise())
+        : (isSupervise
+            ? const HeaderTitleTabletSupervise()
+            : const HeaderTitleTablet());
   }
 }

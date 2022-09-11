@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
@@ -14,7 +15,8 @@ class HeaderTitleMobileSupervise extends StatelessWidget {
   Widget build(BuildContext context) {
     var colors = Theme.of(context);
     return SizedBox(
-        height: ScreenSize.height * 0.1,
+        height: ScreenSize.height * 0.12,
+        width: ScreenSize.width,
         child: Stack(
           children: [
             Center(
@@ -22,25 +24,31 @@ class HeaderTitleMobileSupervise extends StatelessWidget {
                 colors.scaffoldBackgroundColor == Colors.black
                     ? "./assets/images/headertitlemobilesupervise.png"
                     : "./assets/images/headertitlemobilesupervise.png",
-                    scale: ScreenSize.width / 11,
+                    scale: ScreenSize.width / 20,
               ),
             ),
             Center(
               child: Padding(
                 padding: EdgeInsets.only(
                     top: ScreenSize.height *
-                        (Device.get().hasNotch ? 0.03 : 0.01), left: 20 * ScreenSize.swu, right: 20 * ScreenSize.swu),
-                child: Text(
-                  "sushi supervise",
-                  style: TextStyle(
-                    fontFamily: "Sushi",
-                    fontSize: 78 * ScreenSize.swu,
-                    fontWeight: FontWeight.bold,
-                    color: colors.primaryColorDark,
+                        (Device.get().hasNotch ? 0.03 : 0)),
+                child: SizedBox(
+                  width: ScreenSize.width * 0.9,
+                  child: FittedBox(
+                    fit: BoxFit.contain,
+                    child: Text(
+                          "sushi supervise",
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            fontFamily: "Sushi",
+                            fontWeight: FontWeight.bold,
+                            color: colors.primaryColorDark,
+                          )
+                        ),
+                  ),
                   ),
                 ),
-              ),
-            ),
+                ),
           ],
         ));
   }

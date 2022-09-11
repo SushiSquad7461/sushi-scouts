@@ -1,10 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter_svg/parser.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:localstore/localstore.dart';
@@ -16,7 +13,6 @@ import 'package:sushi_scouts/src/logic/deviceType.dart';
 import 'package:sushi_scouts/src/logic/helpers/size/ScreenSize.dart';
 import 'package:sushi_scouts/src/logic/models/compressed_data_model.dart';
 import 'package:sushi_scouts/src/logic/models/scouting_data_models/scouting_data.dart';
-import 'package:sushi_scouts/src/views/ui/sushi_scouts/scouting.dart';
 import 'package:sushi_scouts/src/views/util/footer/supervisefooter.dart';
 import 'package:sushi_scouts/src/views/util/header/header_nav.dart';
 
@@ -104,7 +100,7 @@ class _UploadState extends State<Upload> {
             isSupervise: true,
           ),
           SizedBox(
-            height: ScreenSize.height * (phone ? 0.65 : 0.63),
+            height: ScreenSize.height * (phone ? 0.64 : 0.63),
             child: Padding(
               padding: EdgeInsets.only(top: ScreenSize.height * 0.02),
               child: Stack(

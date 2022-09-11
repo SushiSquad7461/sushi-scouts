@@ -176,6 +176,7 @@ class _SettingsState extends State<Settings> {
           bool isSupervise = state is SushiSuperviseLogin;
           collectionName = "${state.eventCode}:${ConfigFileReader.instance.id}";
           return Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               HeaderTitle(
                 isSupervise: isSupervise,
@@ -188,8 +189,8 @@ class _SettingsState extends State<Settings> {
                   width: ScreenSize.width,
                   height: ScreenSize.height *
                       (isSupervise
-                          ? (isPhoneScreen ? 0.65 : 0.63)
-                          : (isPhoneScreen ? 0.61 : 0.64)),
+                          ? (isPhoneScreen ? 0.63 : 0.63)
+                          : (isPhoneScreen ? 0.55 : 0.64)),
                   child: Stack(
                     fit: StackFit.expand,
                     children: [

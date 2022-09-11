@@ -127,7 +127,7 @@ class _EditState extends State<Edit> {
             opacityOn: (flagMode || deleteMode),
           ),
           SizedBox(
-            height: ScreenSize.height * (phone ? 0.65 : 0.63),
+            height: ScreenSize.height * (phone ? 0.64 : 0.63),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.center,

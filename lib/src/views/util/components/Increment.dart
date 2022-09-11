@@ -127,7 +127,7 @@ class IncrementState extends State<Increment> {
                       ),
                       style: TextStyle(
                           fontFamily: "Sushi",
-                          fontSize: width / 14,
+                          fontSize: width / 20,
                           fontWeight: FontWeight.bold,
                           color: widget.textColor),
                       textAlign: TextAlign.center,

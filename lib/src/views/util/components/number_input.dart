@@ -106,13 +106,13 @@ class NumberInputState extends State<NumberInput> {
                               constraints:
                                   BoxConstraints(maxWidth: widget.width / 6.0),
                               hintText: widget.name.toUpperCase(),
-                              hintStyle: TextStyle(color: widget.textColor, fontSize: widget.width / (isPhoneScreen ? 6 : 8),
+                              hintStyle: TextStyle(color: widget.textColor, fontSize: widget.width / (isPhoneScreen ? 6.8 : 8),
                                 fontWeight: isPhoneScreen ? FontWeight.w100 : FontWeight.w400,),
                             ),
                             cursorHeight: ScreenSize.height * 0.041,
                             style: GoogleFonts.mohave(
                                 textStyle: TextStyle(
-                                    fontSize: widget.width / (isPhoneScreen ? 6.2 : 8),
+                                    fontSize: widget.width / (isPhoneScreen ? 7 : 8),
                                     fontWeight: isPhoneScreen ? FontWeight.w100 : FontWeight.w400,
                                     color: widget.textColor)),
                             textAlign: TextAlign.left,

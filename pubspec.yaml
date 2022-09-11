@@ -46,6 +46,7 @@ dependencies:
   flutter_device_type: ^0.4.0
   firebase_core: ^1.21.1
   cloud_firestore: ^3.4.6
+  auto_size_text: ^3.0.0
 
 dev_dependencies:
   flutter_test:

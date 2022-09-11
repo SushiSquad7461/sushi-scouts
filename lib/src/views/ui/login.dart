@@ -99,16 +99,17 @@ class _LoginState extends State<Login> {
           HeaderTitle(isSupervise: !widget.sushi_scouts),
           SizedBox(
             width: ScreenSize.width,
-            height: ScreenSize.height * (!widget.sushi_scouts ? 0.9 : 0.9),
+            height: ScreenSize.height * (isPhoneScreen ? (widget.sushi_scouts ? 0.89 : 0.88) : 0.9),
             child: Stack(
               fit: StackFit.expand,
               children: [
                 Align(
                   alignment: const Alignment(0, 1),
                   child: SizedBox(
-                    height: ScreenSize.height * (isPhoneScreen && widget.sushi_scouts ? 0.32 : 0.2),
+                    height: ScreenSize.height * (isPhoneScreen ? (widget.sushi_scouts ? 0.39 : 0.244) : 0.2),
                     width: ScreenSize.width * 1,
                     child: Stack(
+                      alignment: AlignmentDirectional.bottomStart,
                       children: [
                         SvgPicture.asset(
                           isPhoneScreen
@@ -131,13 +132,17 @@ class _LoginState extends State<Login> {
                             padding: EdgeInsets.only(
                                 top: ScreenSize.height *
                                     (isPhoneScreen
-                                        ? (widget.sushi_scouts ? (isPhoneScreen ? 0.13 : 0.32) : 0.09)
+                                        ? 
+                                          isPhoneScreen ? 0 : (widget.sushi_scouts ? 0.32 : 0.09)
                                         : 0.2),
                                 left: ScreenSize.width *
-                                    (isPhoneScreen ? 0.075 : 0)),
+                                    (isPhoneScreen ? 0.075 : 0),
+                                bottom: ScreenSize.height * (isPhoneScreen ? (widget.sushi_scouts ? 0.12 : 0.085) : 0),
+                            ),
                             child: Container(
                                 width: ScreenSize.width *
                                     (isPhoneScreen ? 0.85 : 1),
+                                height: ScreenSize.height * 0.058,
                                 decoration: BoxDecoration(
                                   color: !widget.sushi_scouts && isPhoneScreen
                                       ? HexColor("#4F4F4F")
@@ -175,7 +180,7 @@ class _LoginState extends State<Login> {
                   ),
                 ),
                 Align(
-                  alignment: const Alignment(0, -0.8),
+                  alignment: const Alignment(0, -0.9),
                   child: SizedBox(
                     width: ScreenSize.width * 0.75,
                     height: ScreenSize.height * 0.07,
@@ -217,7 +222,7 @@ class _LoginState extends State<Login> {
                   ),
                 ),
                 Align(
-                  alignment: Alignment(0, -0.3),
+                  alignment: Alignment(0, -0.4),
                   child: SizedBox(
                     width: ScreenSize.width * 0.75,
                     height: ScreenSize.height * 0.07,
@@ -258,7 +263,7 @@ class _LoginState extends State<Login> {
                 ),
                 widget.sushi_scouts
                     ? Align(
-                        alignment: Alignment(0, 0.2),
+                        alignment: Alignment(0, 0.1),
                         child: SizedBox(
                           width: ScreenSize.width * 0.75,
                           height: ScreenSize.height * 0.07,
