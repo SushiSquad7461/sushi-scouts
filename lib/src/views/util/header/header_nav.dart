@@ -83,14 +83,18 @@ class HeaderNav extends StatelessWidget {
               left: 0,
               right: 0,
               top: (isPhoneScreen ? 2 : 7) * ScreenSize.shu,
-              bottom: (isPhoneScreen ? 0 : 0) * ScreenSize.shu),
+              bottom: (isPhoneScreen ? 17 : 0) * ScreenSize.shu),
           child: Container(
             color: isPhoneScreen
                 ? colors.primaryColorDark
                 : colors.scaffoldBackgroundColor,
             child: Column(
               children: [
-                Divider(
+               isPhoneScreen ? Divider(
+                  height: ScreenSize.height * 0.018,
+                  color: colors.primaryColorDark,
+                  thickness: (isPhoneScreen ? 0 : 4) * ScreenSize.shu,
+                ) : Divider(
                   color: colors.primaryColorDark,
                   thickness: (isPhoneScreen ? 0 : 4) * ScreenSize.shu,
                 ),
@@ -111,7 +115,7 @@ class HeaderNav extends StatelessWidget {
                                     ? Text(
                                         screen.toUpperCase(),
                                         style: GoogleFonts.mohave(
-                                            fontSize: ScreenSize.width * 0.05,
+                                            fontSize: isPhoneScreen ? ScreenSize.height * 0.023 : ScreenSize.width * 0.05,
                                             color: (currentPage == screen)
                                                 ? Colors.white
                                                 : HexColor("#4F4F4F")),
@@ -149,7 +153,11 @@ class HeaderNav extends StatelessWidget {
                                                   textStyle: pageStyle),
                                             )))))
                     ]),
-                Divider(
+                isPhoneScreen ? Divider(
+                  height: ScreenSize.height * 0.013,
+                  color: colors.primaryColorDark,
+                  thickness: (isPhoneScreen ? 0 : 4) * ScreenSize.shu,
+                ) : Divider(
                   color: colors.primaryColorDark,
                   thickness: (isPhoneScreen ? 0 : 4) * ScreenSize.shu,
                 ),

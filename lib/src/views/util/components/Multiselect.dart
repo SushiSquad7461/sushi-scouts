@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sushi_scouts/src/logic/deviceType.dart';
+import 'package:sushi_scouts/src/logic/helpers/size/ScreenSize.dart';
 
 import '../../../logic/data/Data.dart';
 
@@ -142,37 +143,48 @@ class MultiselectState extends State<Multiselect> {
     var isPhoneScreen = isPhone(context);
     double width = widget.width / 2;
     int index = 0;
+
+    var max = -1;
+    for (var i in widget.layout) {
+      if (i >= max) {
+        max = i;
+      }
+    }
+
     for (int i in widget.layout) {
       List<Widget> column = [];
       int startPostion = index;
       for (index = startPostion; index < startPostion + i; index++) {
         String value = widget.values[index];
-        column.add(GestureDetector(
-          onTap: () {
-            change(value);
-          },
-          child: Row(mainAxisAlignment: MainAxisAlignment.start, children: [
-            Transform.scale(
-                scale: width / 180,
-                child: Checkbox(
-                    side: BorderSide(
-                        color: widget.color,
-                        width: width / 100,
-                        style: BorderStyle.solid),
-                    splashRadius: width / 10,
-                    checkColor: Colors.white,
-                    fillColor: MaterialStateProperty.resolveWith(getColor),
-                    value: widget.checked[value],
-                    onChanged: (bool? val) {
-                      change(value);
-                    })),
-            Text(value,
-                style: TextStyle(
-                    fontFamily: "Sushi",
-                    fontSize: width / (isPhoneScreen ? 9 : 8),
-                    fontWeight: FontWeight.bold,
-                    color: widget.textColor)),
-          ]),
+        column.add(SizedBox(
+          height: ScreenSize.height * 0.05,
+          child: GestureDetector(
+            onTap: () {
+              change(value);
+            },
+            child: Row(mainAxisAlignment: MainAxisAlignment.start, children: [
+              Transform.scale(
+                  scale: width / 180,
+                  child: Checkbox(
+                      side: BorderSide(
+                          color: widget.color,
+                          width: width / 100,
+                          style: BorderStyle.solid),
+                      splashRadius: width / 10,
+                      checkColor: Colors.white,
+                      fillColor: MaterialStateProperty.resolveWith(getColor),
+                      value: widget.checked[value],
+                      onChanged: (bool? val) {
+                        change(value);
+                      })),
+              Text(value,
+                  style: TextStyle(
+                      fontFamily: "Sushi",
+                      fontSize: width / (isPhoneScreen ? 9 : 8),
+                      fontWeight: FontWeight.bold,
+                      color: widget.textColor)),
+            ]),
+          ),
         ));
       }
       options.add(Column(
@@ -181,9 +193,16 @@ class MultiselectState extends State<Multiselect> {
         children: column,
       ));
     }
-    return Row(
+    final multiSelect = Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: options,
     );
+
+    return isPhoneScreen
+        ? SizedBox(
+            height: ScreenSize.height * (0.05 * max),
+            child: multiSelect,
+          )
+        : multiSelect;
   }
 }

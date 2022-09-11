@@ -36,7 +36,8 @@ class ScoutingState extends State<Scouting> {
   }
 
   //builds the components in a certain section
-  Widget _buildSection(double width, Section section, int currColumn, double height) {
+  Widget _buildSection(
+      double width, Section section, int currColumn, double height) {
     try {
       double scaledWidth = (width > 500 ? 500 : width);
       var reader = ConfigFileReader.instance;
@@ -70,8 +71,6 @@ class ScoutingState extends State<Scouting> {
 
         var colors = Theme.of(context);
 
-        print(currComponent.component);
-
         builtComponents.add(COMPONENT_MAP.containsKey(currComponent.component)
             ? Padding(
                 padding: EdgeInsets.only(
@@ -91,8 +90,10 @@ class ScoutingState extends State<Scouting> {
                     section.getTextColor(
                         colors.scaffoldBackgroundColor == Colors.black),
                     currComponent.setCommonValue,
-                    height / (section.componentsPerColumn[currColumn] - startComponent)),
-                    )
+                    height /
+                        (section.componentsPerColumn[currColumn] -
+                            startComponent)),
+              )
             : SizedBox(
                 width: scaledWidth,
                 child: Text(
@@ -132,10 +133,6 @@ class ScoutingState extends State<Scouting> {
       }
 
       for (var i in currPage!.sections) {
-        // idk why da hell this was here but its gone now.  check with sidarth before perment deletaion
-        // int rows = size.width / i.columns < 300
-        //     ? (size.width / 300).floor()
-        //     : i.columns;
         int rows = i.columns;
         if (i.title != "") {
           builtSections.add(Align(
@@ -148,7 +145,9 @@ class ScoutingState extends State<Scouting> {
                     color: i.getTextColor(
                         Theme.of(context).scaffoldBackgroundColor ==
                             Colors.black),
-                    fontSize: size.width / 15,
+                    fontSize: isPhone(context)
+                        ? ScreenSize.height * 0.035
+                        : size.width / 15,
                     fontWeight: FontWeight.w400),
               ),
             ),
@@ -163,8 +162,15 @@ class ScoutingState extends State<Scouting> {
                 children: [
                   for (int j = 0; j < rows; j++)
                     Padding(
-                        padding: EdgeInsets.only(bottom: ScreenSize.height * 0.01),
-                        child: _buildSection(size.width / rows, i, j, ScreenSize.height * ((height - currPage!.sections.length * 0.01) / currPage!.sections.length))),
+                        padding:
+                            EdgeInsets.only(bottom: ScreenSize.height * 0.01),
+                        child: _buildSection(
+                            size.width / rows,
+                            i,
+                            j,
+                            ScreenSize.height *
+                                ((height - currPage!.sections.length * 0.01) /
+                                    currPage!.sections.length))),
                 ]),
           ),
         ));
@@ -202,10 +208,10 @@ class ScoutingState extends State<Scouting> {
                 HeaderNav(currentPage: state.method),
                 Padding(
                   padding: EdgeInsets.only(
-                      top: ScreenSize.height * (isPhoneScreen ? 0.02 : 0.02)),
+                      top: ScreenSize.height * (isPhoneScreen ? 0.03 : 0.02)),
                   child: SizedBox(
                     width: ScreenSize.width,
-                    height: ScreenSize.height * (isPhoneScreen ? 0.59 : 0.61),
+                    height: ScreenSize.height * (isPhoneScreen ? 0.58 : 0.61),
                     child: _buildBody(ScreenSize.get()),
                   ),
                 ),

@@ -7,14 +7,13 @@ import 'package:sushi_scouts/src/logic/helpers/size/ScreenSize.dart';
 import '../../../../logic/deviceType.dart';
 
 class HeaderTitleMobile extends StatelessWidget {
-  final double heightExtension;
-  const HeaderTitleMobile({Key? key, this.heightExtension = 0}) : super(key: key);
+  const HeaderTitleMobile({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     var colors = Theme.of(context);
     return SizedBox(
-        height: ScreenSize.height * (0.11 + heightExtension),
+        height: ScreenSize.height * 0.11,
         child: Padding(
           padding: EdgeInsets.only(
               left: 20 * ScreenSize.swu,
@@ -24,11 +23,11 @@ class HeaderTitleMobile extends StatelessWidget {
           child: Stack(
             children: [
               SizedBox(
-                width: ScreenSize.width,
+                width: ScreenSize.width * 0.99,
+                height: ScreenSize.height * 0.11,
                 child: FittedBox(
                   fit: BoxFit.cover,
                   child: Image.asset(
-                    fit: BoxFit.cover,
                     colors.scaffoldBackgroundColor == Colors.black
                         ? "./assets/images/header_title_mobile.png"
                         : "./assets/images/header_title_mobile.png",

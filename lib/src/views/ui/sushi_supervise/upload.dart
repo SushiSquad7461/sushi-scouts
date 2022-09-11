@@ -100,7 +100,7 @@ class _UploadState extends State<Upload> {
             isSupervise: true,
           ),
           SizedBox(
-            height: ScreenSize.height * (phone ? 0.64 : 0.63),
+            height: ScreenSize.height * (phone ? 0.6 : 0.63),
             child: Padding(
               padding: EdgeInsets.only(top: ScreenSize.height * 0.02),
               child: Stack(

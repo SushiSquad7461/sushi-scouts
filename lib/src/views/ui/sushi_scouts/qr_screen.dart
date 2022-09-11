@@ -142,13 +142,13 @@ class _QRScreenState extends State<QRScreen> {
         ),
         generateCode
             ? Align(
-                alignment: const Alignment(0, -0.5),
+                alignment: const Alignment(0, -0.65),
                 child: Stack(
                   alignment: AlignmentDirectional.center,
                   children: [
                     Container(
-                      width: ScreenSize.width * (isPhoneScreen ? 1 : 0.8),
-                      height: ScreenSize.width * (isPhoneScreen ? 1 : 0.8),
+                      width: ScreenSize.width * (isPhoneScreen ? 0.84 : 0.8),
+                      height: ScreenSize.width * (isPhoneScreen ? 0.84 : 0.8),
                       decoration: BoxDecoration(
                           color: isPhoneScreen
                               ? colors.primaryColor
@@ -157,12 +157,12 @@ class _QRScreenState extends State<QRScreen> {
                               Radius.circular(ScreenSize.width * 0.1))),
                     ),
                     Container(
-                      width: ScreenSize.width * (isPhoneScreen ? 1 : 0.7),
-                      height: ScreenSize.width * (isPhoneScreen ? 1 : 0.7),
+                      width: ScreenSize.width * (isPhoneScreen ? 0.84 : 0.7),
+                      height: ScreenSize.width * (isPhoneScreen ? 0.84 : 0.7),
                       color: Colors.white,
                     ),
                     SizedBox(
-                      height: ((isPhoneScreen ? 0.8 : 0.7) * ScreenSize.width),
+                      height: ((isPhoneScreen ? 0.83 : 0.7) * ScreenSize.width),
                       child: QrImage(data: stringifiedData!),
                     ),
                   ],
@@ -263,7 +263,7 @@ class _QRScreenState extends State<QRScreen> {
                 )),
         (!generateCode)
             ? Align(
-                alignment: Alignment(0, 0.83),
+                alignment: const Alignment(0, 0.83),
                 child: Container(
                     width: ScreenSize.width,
                     decoration: BoxDecoration(
@@ -293,24 +293,6 @@ class _QRScreenState extends State<QRScreen> {
                         ScreenSize.swu * (isPhoneScreen ? 20 : 0))),
                   ),
                   child: Row(children: [
-                    // Removed back button, check with sidarth before permenet delation, keep for debugging purposes
-                    // Expanded(
-                    //   flex: 1,
-                    //   child: TextButton(
-                    //     onPressed: () => setState(() {
-                    //       generateCode = false;
-                    //     }),
-                    //     child: Text(
-                    //       'BACK',
-                    //       style: TextStyle(
-                    //         fontSize: 35 * ScreenSize.swu,
-                    //         fontFamily: "Sushi",
-                    //         color: colors.primaryColor,
-                    //         fontWeight: FontWeight.bold
-                    //       ),
-                    //     )
-                    //   ),
-                    // ),
                     Expanded(
                       flex: 1,
                       child: TextButton(
@@ -345,7 +327,7 @@ class _QRScreenState extends State<QRScreen> {
               const HeaderTitle(),
               SizedBox(
                   width: ScreenSize.width,
-                  height: ScreenSize.height * 0.9,
+                  height: ScreenSize.height * 0.89,
                   child: buildQRCode()),
             ],
           ),

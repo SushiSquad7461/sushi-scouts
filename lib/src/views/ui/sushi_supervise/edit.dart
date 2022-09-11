@@ -91,14 +91,12 @@ class _EditState extends State<Edit> {
   @override
   Widget build(BuildContext context) {
     var colors = Theme.of(context);
+    var phone = !isTable(context);
 
     TextStyle textStyle = TextStyle(
       fontFamily: "Sushi",
       color: colors.primaryColorDark,
-      fontSize: ScreenSize.swu * 22,
     );
-
-    var phone = !isTable(context);
 
     BoxDecoration boxDecoration = BoxDecoration(
         border: Border.all(
@@ -115,7 +113,7 @@ class _EditState extends State<Edit> {
             childComponent: const HeaderTitle(
               isSupervise: true,
             ),
-            height: 0.07,
+            height: phone ? 0.12 : 0.07,
             opacityOn: (flagMode || deleteMode),
           ),
           OpacityFilter(
@@ -123,11 +121,11 @@ class _EditState extends State<Edit> {
               currentPage: "edit",
               isSupervise: true,
             ),
-            height: 0.1,
+            height: 0.09,
             opacityOn: (flagMode || deleteMode),
           ),
           SizedBox(
-            height: ScreenSize.height * (phone ? 0.64 : 0.63),
+            height: ScreenSize.height * (phone ? 0.62 : 0.63),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -199,7 +197,7 @@ class _EditState extends State<Edit> {
                                 width: 4 * ScreenSize.shu),
                             borderRadius: BorderRadius.all(
                                 Radius.circular(22 * ScreenSize.swu))),
-                        height: ScreenSize.height * 0.045,
+                        height: ScreenSize.height * 0.05,
                         child: TextButton(
                             onPressed: () {
                               setState(() {
@@ -207,9 +205,12 @@ class _EditState extends State<Edit> {
                                 deleteMode = false;
                               });
                             },
-                            child: Text(
-                              "FLAG",
-                              style: textStyle,
+                            child: FittedBox(
+                              fit: BoxFit.contain,
+                              child: Text(
+                                "FLAG",
+                                style: textStyle,
+                              ),
                             )),
                       ),
                       Container(
@@ -222,7 +223,7 @@ class _EditState extends State<Edit> {
                                 width: 4 * ScreenSize.shu),
                             borderRadius: BorderRadius.all(
                                 Radius.circular(22 * ScreenSize.swu))),
-                        height: ScreenSize.height * 0.045,
+                        height: ScreenSize.height * 0.05,
                         child: TextButton(
                             onPressed: () {
                               setState(() {
@@ -230,16 +231,19 @@ class _EditState extends State<Edit> {
                                 deleteMode = !deleteMode;
                               });
                             },
-                            child: Text(
-                              "DELETE",
-                              style: textStyle,
+                            child: FittedBox(
+                              fit: BoxFit.contain,
+                              child: Text(
+                                "DELETE",
+                                style: textStyle,
+                              ),
                             )),
                       ),
                     ],
                   ),
                 ),
-                Container(
-                  height: ScreenSize.height * 0.57,
+                SizedBox(
+                  height: ScreenSize.height * 0.55,
                   width: ScreenSize.width * 0.82,
                   child: Container(
                     decoration: BoxDecoration(

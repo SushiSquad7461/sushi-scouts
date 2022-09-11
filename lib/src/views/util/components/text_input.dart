@@ -2,8 +2,10 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:sushi_scouts/src/logic/deviceType.dart';
 
 import '../../../logic/data/Data.dart';
+import '../../../logic/helpers/size/ScreenSize.dart';
 
 class TextInput extends StatefulWidget {
   final String name;
@@ -80,6 +82,7 @@ class TextInputState extends State<TextInput> {
   @override
   Widget build(BuildContext context) {
     _controller.text = widget.data.setByUser ? widget.data.get() : "";
+    var phone = isPhone(context);
     return Padding(
         padding: EdgeInsets.only(
             left: widget.width / 60,
@@ -91,7 +94,7 @@ class TextInputState extends State<TextInput> {
             height: widget.width * 0.6,
             decoration: BoxDecoration(
                 border: Border.all(
-                    width: widget.width * 0.02,
+                    width: widget.width * (phone ? 0.01 : 0.02),
                     color: Theme.of(context).scaffoldBackgroundColor ==
                             Colors.black
                         ? Colors.white
@@ -105,7 +108,7 @@ class TextInputState extends State<TextInput> {
               },
               child: Stack(fit: StackFit.expand, children: [
                 Align(
-                  alignment: Alignment(-0.95, -0.95),
+                  alignment: const Alignment(-0.95, -0.95),
                   child: TextFormField(
                       focusNode: _focusNode,
                       controller: _controller,
@@ -119,8 +122,8 @@ class TextInputState extends State<TextInput> {
                       ),
                       style: GoogleFonts.mohave(
                           textStyle: TextStyle(
-                              fontSize: widget.width / 15,
-                              fontWeight: FontWeight.w400,
+                              fontSize: phone ? ScreenSize.height * 0.03 : widget.width / 15,
+                              fontWeight: phone ? FontWeight.w100 : FontWeight.w400,
                               color: widget.textColor)),
                       keyboardType: TextInputType.multiline,
                       onFieldSubmitted: (value) {
@@ -129,12 +132,12 @@ class TextInputState extends State<TextInput> {
                 ),
                 if (!isClicked && !widget.data.setByUser)
                   Align(
-                      alignment: Alignment(0, 0),
+                      alignment: const Alignment(0, 0),
                       child: Text(
                         widget.name,
                         style: TextStyle(
                             fontFamily: "Sushi",
-                            fontSize: widget.width / 12,
+                            fontSize: phone ? ScreenSize.height * 0.03 : widget.width / 12,
                             fontWeight: FontWeight.bold,
                             color: widget.textColor),
                       ))

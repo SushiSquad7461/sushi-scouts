@@ -189,8 +189,8 @@ class _SettingsState extends State<Settings> {
                   width: ScreenSize.width,
                   height: ScreenSize.height *
                       (isSupervise
-                          ? (isPhoneScreen ? 0.63 : 0.63)
-                          : (isPhoneScreen ? 0.55 : 0.64)),
+                          ? (isPhoneScreen ? 0.6 : 0.63)
+                          : (isPhoneScreen ? 0.56 : 0.64)),
                   child: Stack(
                     fit: StackFit.expand,
                     children: [

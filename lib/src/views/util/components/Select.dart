@@ -146,7 +146,9 @@ class SelectState extends State<Select> {
                           decoration: isPhoneScreen
                               ? BoxDecoration(
                                   border: Border.all(
-                                    color: widget.checked[value]! ? widget.color : Colors.white,
+                                    color: widget.checked[value]!
+                                        ? widget.color
+                                        : Colors.white,
                                     width: ScreenSize.width * 0.01,
                                   ),
                                   borderRadius: BorderRadius.circular(
@@ -164,7 +166,9 @@ class SelectState extends State<Select> {
                           child: Text(value,
                               style: TextStyle(
                                   fontFamily: "Sushi",
-                                  fontSize: width / (isPhoneScreen ? 8 : 8),
+                                  fontSize: isPhone(context) 
+                                      ? ScreenSize.height * 0.03
+                                      : widget.width / 8,
                                   fontWeight: isPhoneScreen
                                       ? FontWeight.w200
                                       : FontWeight.bold,
@@ -176,6 +180,7 @@ class SelectState extends State<Select> {
         ),
       );
     }
+
     return widget.isRow
         ? Row(
             mainAxisAlignment: isPhoneScreen

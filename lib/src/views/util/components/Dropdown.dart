@@ -67,7 +67,7 @@ class DropdownState extends State<Dropdown> {
                 padding: EdgeInsets.only(right: ScreenSize.width * (isPhoneScreen ? 0.01 : 0)),
                 child: Text(widget.name.toUpperCase(),
                   style: GoogleFonts.mohave(
-                          fontSize: width/ (isPhoneScreen ? 6.8 : 8),
+                          fontSize: isPhoneScreen ? ScreenSize.height * 0.04 : widget.width / 8,
                           fontWeight: isPhoneScreen ? FontWeight.w100 : FontWeight.w400,
                           color: widget.textColor,
                         ),
