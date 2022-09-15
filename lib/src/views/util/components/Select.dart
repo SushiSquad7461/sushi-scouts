@@ -102,6 +102,8 @@ class SelectState extends State<Select> {
     double width = widget.isRow ? widget.width / 2 : widget.width;
     List<Widget> options = [];
     var isPhoneScreen = isPhone(context) && !widget.isRow;
+    var colors = Theme.of(context);
+
     for (String value in widget.values) {
       options.add(
         Padding(
@@ -148,7 +150,7 @@ class SelectState extends State<Select> {
                                   border: Border.all(
                                     color: widget.checked[value]!
                                         ? widget.color
-                                        : Colors.white,
+                                        : colors.scaffoldBackgroundColor,
                                     width: ScreenSize.width * 0.01,
                                   ),
                                   borderRadius: BorderRadius.circular(

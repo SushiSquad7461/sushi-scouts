@@ -186,6 +186,8 @@ class ScoutingState extends State<Scouting> {
   @override
   Widget build(BuildContext context) {
     var isPhoneScreen = isPhone(context);
+    var colors = Theme.of(context);
+
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: BlocBuilder<ScoutingMethodCubit, ScoutingMethodStates>(

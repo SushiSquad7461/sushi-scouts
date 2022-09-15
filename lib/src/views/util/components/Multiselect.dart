@@ -143,6 +143,7 @@ class MultiselectState extends State<Multiselect> {
     var isPhoneScreen = isPhone(context);
     double width = widget.width / 2;
     int index = 0;
+    var colors = Theme.of(context);
 
     var max = -1;
     for (var i in widget.layout) {

@@ -72,7 +72,7 @@ class _ScoutingFooterState extends State<ScoutingFooter> {
               SizedBox(
                 width: ScreenSize.width,
                 child: SvgPicture.asset(
-                  "./assets/images/mobilefooter.svg",
+                  colors.scaffoldBackgroundColor == Colors.white ? "./assets/images/mobilefooter.svg" : "./assets/images/mobilefooterdark.svg",
                   width: ScreenSize.width,
                   fit: BoxFit.fitWidth,
                 ),

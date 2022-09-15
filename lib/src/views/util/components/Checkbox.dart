@@ -76,6 +76,7 @@ class CheckboxState extends State<CheckboxInput> {
     }
 
     var isPhoneScreen = isPhone(context);
+    var colors = Theme.of(context);
 
     return Padding(
         padding: EdgeInsets.only(
@@ -105,7 +106,7 @@ class CheckboxState extends State<CheckboxInput> {
                                 width: width / 100,
                                 style: BorderStyle.solid),
                             splashRadius: width / 10,
-                            checkColor: Colors.white,
+                            checkColor: colors.scaffoldBackgroundColor,
                             fillColor:
                                 MaterialStateProperty.resolveWith(getColor),
                             value: widget.data.get() == "true",
@@ -120,7 +121,7 @@ class CheckboxState extends State<CheckboxInput> {
                         decoration: isPhoneScreen
                               ? BoxDecoration(
                                   border: Border.all(
-                                    color: widget.checked ? widget.color : Colors.white,
+                                    color: widget.checked ? widget.color : colors.scaffoldBackgroundColor,
                                     width: ScreenSize.width * 0.01,
                                   ),
                                   borderRadius: BorderRadius.circular(

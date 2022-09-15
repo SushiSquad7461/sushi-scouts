@@ -410,10 +410,11 @@ class _SettingsState extends State<Settings> {
                         )
                       : SizedBox(
                           width: ScreenSize.width,
+                          height: ScreenSize.height * 0.19,
                           child: SvgPicture.asset(
-                            "./assets/images/mobilefooter.svg",
+                            colors.scaffoldBackgroundColor == Colors.white ? "./assets/images/mobilefooter.svg" : "./assets/images/mobilefooterdark.svg",
                             width: ScreenSize.width,
-                            fit: BoxFit.fitWidth,
+                            fit: BoxFit.cover,
                           ),
                         ),
               if (!isSupervise && !isPhoneScreen) Footer(pageTitle: ""),

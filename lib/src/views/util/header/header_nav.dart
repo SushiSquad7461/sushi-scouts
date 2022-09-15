@@ -117,7 +117,7 @@ class HeaderNav extends StatelessWidget {
                                         style: GoogleFonts.mohave(
                                             fontSize: isPhoneScreen ? ScreenSize.height * 0.023 : ScreenSize.width * 0.05,
                                             color: (currentPage == screen)
-                                                ? Colors.white
+                                                ? colors.primaryColor
                                                 : HexColor("#4F4F4F")),
                                       )
                                     : Container(
