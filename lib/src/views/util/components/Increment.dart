@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -98,7 +97,6 @@ class IncrementState extends State<Increment> {
                     padding: const EdgeInsets.all(0),
                     onPressed: () {
                       if (widget.value > 0) {
-                        print(widget.value);
                         _controller.text = (widget.value - 1).toString();
                         widget.data.decrement();
                         setState(() {

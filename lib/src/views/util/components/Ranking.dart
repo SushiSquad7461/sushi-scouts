@@ -14,6 +14,7 @@ class Ranking extends StatefulWidget {
   final double width;
   final bool setCommonValue;
   final List<String>? values;
+
   Ranking(
       {Key? key,
       required this.name,

@@ -1,7 +1,4 @@
-import 'dart:io';
-
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:sushi_scouts/src/logic/blocs/theme_bloc/theme_cubit.dart';
 
 import '../../data/config_file_reader.dart';
 

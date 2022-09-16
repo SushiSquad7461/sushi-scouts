@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
@@ -222,7 +221,7 @@ class _LoginState extends State<Login> {
                   ),
                 ),
                 Align(
-                  alignment: Alignment(0, -0.4),
+                  alignment: const Alignment(0, -0.4),
                   child: SizedBox(
                     width: ScreenSize.width * 0.75,
                     height: ScreenSize.height * 0.07,
@@ -255,15 +254,12 @@ class _LoginState extends State<Login> {
                         )),
                         onChanged: (String? val) => setState(() {
                               eventCode = val;
-                              print(eventCode);
-                              print(teamNum);
-                              print(name);
                             })),
                   ),
                 ),
                 widget.sushi_scouts
                     ? Align(
-                        alignment: Alignment(0, 0.1),
+                        alignment: const Alignment(0, 0.1),
                         child: SizedBox(
                           width: ScreenSize.width * 0.75,
                           height: ScreenSize.height * 0.07,
@@ -301,7 +297,7 @@ class _LoginState extends State<Login> {
                         ),
                       )
                     : Align(
-                        alignment: Alignment(0, 0.2),
+                        alignment: const Alignment(0, 0.2),
                         child: SizedBox(
                           width: ScreenSize.width * 0.75,
                           height: ScreenSize.height * 0.07,

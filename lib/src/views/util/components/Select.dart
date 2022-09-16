@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:sushi_scouts/src/logic/deviceType.dart';
-import 'package:sushi_scouts/src/logic/helpers/color/hex_color.dart';
 import 'package:sushi_scouts/src/logic/helpers/size/ScreenSize.dart';
 
 import '../../../logic/data/Data.dart';
@@ -14,7 +13,7 @@ class Select extends StatefulWidget {
   final double width;
   final bool setCommonValue;
   late List<String> values;
-  late final isRow;
+  late final bool isRow;
   Map<String, bool> checked = {};
   Select(
       {Key? key,
@@ -28,12 +27,13 @@ class Select extends StatefulWidget {
       List<String>? values})
       : super(key: key) {
     this.values = List.from(values!);
-    if (values[0] == 'r')
+    if (values[0] == 'r') {
       isRow = true;
-    else if (values[0] == 'c')
+    } else if (values[0] == 'c') {
       isRow = false;
-    else
+    } else {
       throw ("row or column is not defined");
+    }
     this.values.remove(values[0]);
 
     for (String value in this.values) {

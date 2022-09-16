@@ -1,9 +1,6 @@
 import 'dart:convert';
-import 'dart:typed_data';
 
 import 'package:sushi_scouts/src/logic/data/Data.dart' as Data;
-
-import 'data.dart';
 
 class Compressor{
   final List<Data.Data> data;
@@ -76,7 +73,6 @@ class Compressor{
         } 
       }
     }
-    print(temp);
     List<int> compressed = List.filled((partial.length/16).floor()+1, 0);
     for(int i = 0; i<partial.length; i++) {
       compressed[(i/16).floor()] = compressed[(i/16).floor()] | (partial[i] ? 1 : 0)<<(i%16);

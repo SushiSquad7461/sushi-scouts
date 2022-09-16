@@ -1,14 +1,10 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:localstore/localstore.dart';
 import 'package:sushi_scouts/src/logic/Constants.dart';
 import 'package:sushi_scouts/src/logic/data/SuperviseData.dart';
 import 'package:sushi_scouts/src/logic/data/config_file_reader.dart';
 import 'package:sushi_scouts/src/logic/helpers/color/hex_color.dart';
-import 'package:sushi_scouts/src/logic/models/match_schedule.dart';
 import 'package:sushi_scouts/src/views/util/opacityfilter.dart';
 
 import '../../../logic/deviceType.dart';
@@ -98,10 +94,6 @@ class _EditState extends State<Edit> {
       color: colors.primaryColorDark,
     );
 
-    BoxDecoration boxDecoration = BoxDecoration(
-        border: Border.all(
-            color: colors.primaryColorDark, width: 4 * ScreenSize.shu),
-        borderRadius: BorderRadius.all(Radius.circular(22 * ScreenSize.swu)));
 
     return Scaffold(
       backgroundColor:

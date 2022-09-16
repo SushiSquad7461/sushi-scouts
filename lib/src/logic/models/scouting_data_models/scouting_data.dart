@@ -1,5 +1,3 @@
-import 'package:get/get_state_manager/get_state_manager.dart';
-
 import '../../data/Data.dart';
 import 'component.dart';
 import 'page.dart';
@@ -60,7 +58,6 @@ class ScoutingData {
   }
 
   void empty() {
-    print('e');
     currPage = 0;
     for (var page in pageNames) {
       pages[page]!.empty();
@@ -103,6 +100,6 @@ class ScoutingData {
       }
       componentCount += 1;
     }
-    return "INVALID COMPOMENT NAME";
+    return "INVALID COMPONENT NAME";
   }
 }

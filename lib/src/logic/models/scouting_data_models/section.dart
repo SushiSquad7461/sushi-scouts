@@ -1,4 +1,3 @@
-import 'package:json_annotation/json_annotation.dart';
 import 'package:sushi_scouts/src/logic/data/Data.dart';
 import 'package:sushi_scouts/src/logic/helpers/color/hex_color.dart';
 

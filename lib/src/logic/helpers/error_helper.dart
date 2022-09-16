@@ -30,7 +30,7 @@ class ErrorHelper {
               }
               break;
             case 401:
-              errorDescription = 'Unauthorised request';
+              errorDescription = 'Unauthorized request';
               break;
             case 403:
               errorDescription = error.response!.data;

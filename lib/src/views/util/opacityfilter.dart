@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
 
 import '../../logic/helpers/color/hex_color.dart';
 import '../../logic/helpers/size/ScreenSize.dart';

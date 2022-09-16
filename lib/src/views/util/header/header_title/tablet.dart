@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:sushi_scouts/src/logic/helpers/size/ScreenSize.dart';
 
 class HeaderTitleTablet extends StatelessWidget {
@@ -9,7 +7,7 @@ class HeaderTitleTablet extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var colors = Theme.of(context);
-    return Container(
+    return SizedBox(
         height: ScreenSize.height * 0.1,
         child: Padding(
           padding: EdgeInsets.only(
@@ -30,7 +28,7 @@ class HeaderTitleTablet extends StatelessWidget {
                 ),
               ),
               ConstrainedBox(
-                constraints: BoxConstraints(minWidth: 1, minHeight: 1), // here
+                constraints: const BoxConstraints(minWidth: 1, minHeight: 1), // here
                 child: Image.asset(
                   colors.scaffoldBackgroundColor == Colors.black
                       ? "./assets/images/toprightlogodark.png"

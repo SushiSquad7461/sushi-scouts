@@ -1,12 +1,6 @@
-import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_device_type/flutter_device_type.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:sushi_scouts/src/logic/helpers/size/ScreenSize.dart';
-
-import '../../../../logic/deviceType.dart';
 
 class HeaderTitleMobileSupervise extends StatelessWidget {
   const HeaderTitleMobileSupervise({Key? key}) : super(key: key);

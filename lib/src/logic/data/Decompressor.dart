@@ -2,8 +2,6 @@ import 'dart:convert';
 
 import 'package:sushi_scouts/src/logic/data/Data.dart' as Data;
 
-import 'data.dart';
-
 class Decompressor {
   final List<String> screens;
   String compressed;
@@ -26,7 +24,7 @@ class Decompressor {
     return partial.removeAt(0);
   }
 
-  //must call getScreen everytime before you call decompress
+  //must call getScreen every time before you call decompress
   String getScreen() {
     screenGotten = true;
     int screen = getInt(4);

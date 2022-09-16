@@ -28,10 +28,11 @@ class Multiselect extends StatefulWidget {
       List<String>? values})
       : super(key: key) {
     this.values = List.from(values!);
-    if (values[0] == '#o')
+    if (values[0] == '#o') {
       numberOfOptions = int.parse(values[1]);
-    else
+    } else {
       throw ("number of options is not defined");
+    }
     this.values.remove(values[0]);
     this.values.remove(values[1]);
     if (this.values[0] == 'l') {
@@ -40,8 +41,9 @@ class Multiselect extends StatefulWidget {
         layout.add(int.parse(this.values[0]));
         this.values.remove(this.values[0]);
       }
-    } else
+    } else {
       throw ("layout is not defined");
+    }
 
     this.values.remove(this.values[0]);
 
@@ -154,8 +156,8 @@ class MultiselectState extends State<Multiselect> {
 
     for (int i in widget.layout) {
       List<Widget> column = [];
-      int startPostion = index;
-      for (index = startPostion; index < startPostion + i; index++) {
+      int startPosition = index;
+      for (index = startPosition; index < startPosition + i; index++) {
         String value = widget.values[index];
         column.add(SizedBox(
           height: ScreenSize.height * 0.05,

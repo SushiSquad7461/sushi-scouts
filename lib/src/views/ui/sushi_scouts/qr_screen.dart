@@ -8,7 +8,6 @@ import 'package:qr_flutter/qr_flutter.dart';
 import 'package:sushi_scouts/src/logic/blocs/login_bloc/login_cubit.dart';
 import 'package:sushi_scouts/src/logic/blocs/scouting_method_bloc/scouting_method_cubit.dart';
 import 'package:sushi_scouts/src/logic/data/Compressor.dart';
-import 'package:sushi_scouts/src/logic/data/Decompressor.dart';
 import 'package:sushi_scouts/src/logic/data/config_file_reader.dart';
 import 'package:sushi_scouts/src/logic/helpers/routing_helper.dart';
 import 'package:sushi_scouts/src/logic/helpers/size/ScreenSize.dart';
@@ -132,7 +131,7 @@ class _QRScreenState extends State<QRScreen> {
       fit: StackFit.expand,
       children: [
         Align(
-          alignment: Alignment(0, 1),
+          alignment: const Alignment(0, 1),
           child: SvgPicture.asset(
             isPhoneScreen
                 ? "./assets/images/mobile_footer.svg"
@@ -169,7 +168,7 @@ class _QRScreenState extends State<QRScreen> {
                 ))
             : Align(
                 alignment: const Alignment(0, -1.4),
-                child: Container(
+                child: SizedBox(
                   height: ScreenSize.height * 0.75,
                   child: Column(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -217,7 +216,6 @@ class _QRScreenState extends State<QRScreen> {
                             child: TextButton(
                               onPressed: () {
                                 isBackup = true;
-                                print(0);
                                 getData();
                               },
                               child: Text(

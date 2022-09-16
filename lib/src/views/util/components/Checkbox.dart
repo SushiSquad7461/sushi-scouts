@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:sushi_scouts/src/logic/deviceType.dart';
 
 import '../../../logic/data/Data.dart';

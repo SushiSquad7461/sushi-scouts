@@ -1,13 +1,8 @@
 import 'dart:convert';
-import 'dart:ffi';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
@@ -27,7 +22,6 @@ import 'package:sushi_scouts/src/logic/models/match_schedule.dart';
 import 'package:sushi_scouts/src/logic/network/api_repository.dart';
 import 'package:sushi_scouts/src/views/ui/app_choser.dart';
 import 'package:sushi_scouts/src/views/ui/loading.dart';
-import 'package:sushi_scouts/src/views/ui/sushi_scouts/qr_screen.dart';
 import 'package:sushi_scouts/src/views/util/footer/supervisefooter.dart';
 import 'package:sushi_scouts/src/views/util/header/header_nav.dart';
 import 'package:sushi_scouts/src/views/util/header/header_title/header_title.dart';
@@ -133,10 +127,7 @@ class _SettingsState extends State<Settings> {
     final toAdd =
         await FirebaseFirestore.instance.collection(collectionName).get();
 
-    print("asdawsd");
-    print(toAdd.size);
     for (var i in toAdd.docs) {
-      print("adding");
       db.collection(SUPERVISE_DATABASE_NAME).doc(i.id).set(i.data());
     }
   }
@@ -417,7 +408,7 @@ class _SettingsState extends State<Settings> {
                             fit: BoxFit.cover,
                           ),
                         ),
-              if (!isSupervise && !isPhoneScreen) Footer(pageTitle: ""),
+              if (!isSupervise && !isPhoneScreen) const Footer(pageTitle: ""),
             ],
           );
         }));

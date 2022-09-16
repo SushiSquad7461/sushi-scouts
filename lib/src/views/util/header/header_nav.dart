@@ -43,8 +43,7 @@ class HeaderNav extends StatelessWidget {
       }
     } else {
       if (screens.contains(screen) && currentPage != screen) {
-        var toAdd;
-        print("switching");
+        Widget toAdd;
         switch (screen) {
           case "upload":
             toAdd = const Upload();

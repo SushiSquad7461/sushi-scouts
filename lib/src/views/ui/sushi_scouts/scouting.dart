@@ -177,7 +177,6 @@ class ScoutingState extends State<Scouting> {
       }
       return Column(children: builtSections);
     } catch (e) {
-      print(e);
       error = true;
       return const Center(child: Text("Error in Config File "));
     }
@@ -196,7 +195,7 @@ class ScoutingState extends State<Scouting> {
           if (state is ScoutingMethodsUninitialized) {
             BlocProvider.of<ScoutingMethodCubit>(context)
                 .changeMethod(reader.getScoutingMethods()[0], 0);
-            return Text("Loading");
+            return const Text("Loading");
           }
           currentScoutingData = reader
               .getScoutingData((state as ScoutingMethodsInitialized).method);

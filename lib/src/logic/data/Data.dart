@@ -34,7 +34,7 @@ class Data<ValueType> {
     }
   }
 
-  // Increments the current value if it is an number and retuns true, otherwise returns false
+  // Increments the current value if it is an number and returns true, otherwise returns false
   bool increment() {
     if (currValue is double) {
       currValue = ((currValue as double) + 1) as ValueType;
@@ -42,10 +42,9 @@ class Data<ValueType> {
       logeTimeStamp();
       return true;
     }
-    return false;
-  }
+    return false;  }
 
-  // Decrements the current value if it is an number and retuns true, otherwise returns false
+  // Decrements the current value if it is an number and returns true, otherwise returns false
   bool decrement() {
     if (currValue is double) {
       currValue = ((currValue as double) - 1) as ValueType;

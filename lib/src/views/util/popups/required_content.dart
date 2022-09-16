@@ -1,10 +1,9 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class RequiredContent extends StatelessWidget {
   final List<String> notFilled;
   
-  RequiredContent(this.notFilled);
+  const RequiredContent(this.notFilled, {Key? key}): super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -14,12 +13,12 @@ class RequiredContent extends StatelessWidget {
     }
     message = message.substring(0, message.length-2);
     return AlertDialog(
-      title: Text("Required Content"),
+      title: const Text("Required Content"),
       content: Text(message),
       actions: [
         TextButton(
           onPressed: () => Navigator.pop(context),
-          child: Text("OK")
+          child: const Text("OK")
         )
       ]
     );

@@ -36,8 +36,6 @@ class ConfigFileReader {
       password = parsedFile!["password"];
       _version = parsedFile!["version"];
       supervise = parsedFile!["supervise"];
-      print("FILE : " + parsedFile!.toString());
-      print("SUPERVISE : " + parsedFile!["supervise"].toString());
       parsedFile = parsedFile!["scouting"];
       defaultConfig = true;
       return;
@@ -80,7 +78,6 @@ class ConfigFileReader {
     try {
       parsedFile =
           await db.collection("config_files").doc(teamNum.toString()).get();
-      print(parsedFile);
       teamNum = parsedFile!["teamNumber"];
       password = parsedFile!["password"];
       _version = parsedFile!["version"];

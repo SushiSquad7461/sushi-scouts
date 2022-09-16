@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:sushi_scouts/src/logic/helpers/size/ScreenSize.dart';
 
@@ -80,7 +79,7 @@ class DropdownState extends State<Dropdown> {
                     child: DropdownButton<String>(
                       isExpanded: true,
                       value: widget.currentValue,
-                      icon: Icon(Icons.arrow_drop_down_rounded),
+                      icon: const Icon(Icons.arrow_drop_down_rounded),
                       elevation: (width/100.0*3).floor(),
                       dropdownColor: colors.scaffoldBackgroundColor,
                       style: GoogleFonts.mohave(
