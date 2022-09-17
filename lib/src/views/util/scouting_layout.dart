@@ -5,7 +5,6 @@ import 'package:sushi_scouts/src/logic/constants.dart';
 import 'package:sushi_scouts/src/logic/data/Data.dart';
 import 'package:sushi_scouts/src/logic/data/config_file_reader.dart';
 import 'package:sushi_scouts/src/logic/deviceType.dart';
-import 'package:sushi_scouts/src/logic/helpers/size/ScreenSize.dart';
 import 'package:sushi_scouts/src/logic/models/scouting_data_models/component.dart';
 import 'package:sushi_scouts/src/logic/models/scouting_data_models/page.dart';
 import 'package:sushi_scouts/src/logic/models/scouting_data_models/scouting_data.dart';
@@ -14,8 +13,9 @@ import 'package:sushi_scouts/src/logic/models/scouting_data_models/section.dart'
 class ScoutingLayout extends StatelessWidget{
   ScoutingData currentScoutingData;
   Screen? currentPage;
+  Size size;
   Function(bool) error;
-  ScoutingLayout({Key? key, required this.currentScoutingData, required this.error}) : super(key: key) {
+  ScoutingLayout({Key? key, required this.currentScoutingData, required this.error, required this.size}) : super(key: key) {
     currentPage = currentScoutingData.getCurrentPage();
     if (currentPage == null) {
       throw ErrorDescription("No pages found");
@@ -60,7 +60,7 @@ class ScoutingLayout extends StatelessWidget{
         builtComponents.add(COMPONENT_MAP.containsKey(currComponent.component)
             ? Padding(
                 padding: EdgeInsets.only(
-                    top: ScreenSize.height *
+                    top: size.height *
                         (i != startComponent
                             ? 0.15 / currentPage!.getComponentsPerRow(currColumn)
                             : 0)),
@@ -125,7 +125,7 @@ class ScoutingLayout extends StatelessWidget{
           builtSections.add(Align(
             alignment: const Alignment(-0.8, 0),
             child: SizedBox(
-              height: ScreenSize.height * 0.035,
+              height: size.height * 0.035,
               child: Text(
                 i.title,
                 style: GoogleFonts.mohave(
@@ -133,15 +133,15 @@ class ScoutingLayout extends StatelessWidget{
                         Theme.of(context).scaffoldBackgroundColor ==
                             Colors.black),
                     fontSize: isPhone(context)
-                        ? ScreenSize.height * 0.035
-                        : ScreenSize.width / 15,
+                        ? size.height * 0.035
+                        : size.width / 15,
                     fontWeight: FontWeight.w400),
               ),
             ),
           ));
         }
         builtSections.add(Padding(
-          padding: EdgeInsets.only(bottom: ScreenSize.height * 0.01),
+          padding: EdgeInsets.only(bottom: size.height * 0.01),
           child: SizedBox(
             child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -150,12 +150,12 @@ class ScoutingLayout extends StatelessWidget{
                   for (int j = 0; j < rows; j++)
                     Padding(
                         padding:
-                            EdgeInsets.only(bottom: ScreenSize.height * 0.01),
+                            EdgeInsets.only(bottom: size.height * 0.01),
                         child: _buildSection(
-                            ScreenSize.width / rows,
+                            size.width / rows,
                             i,
                             j,
-                            ScreenSize.height *
+                            size.height *
                                 ((height - currentPage!.sections.length * 0.01) /
                                     currentPage!.sections.length), 
                             context)
