@@ -1,3 +1,6 @@
+import 'package:json_annotation/json_annotation.dart';
+import 'package:sushi_scouts/src/logic/data/config_file_reader.dart';
+
 import '../../data/Data.dart';
 import 'component.dart';
 import 'page.dart';
@@ -13,6 +16,19 @@ class ScoutingData {
       pageNames.add(k);
       pages[k] = Screen.fromJson(config[k]);
     }
+  }
+
+  factory ScoutingData.fromJson(Map<String, dynamic> json) {
+    var reader = ConfigFileReader.instance;
+    var emptyData = reader.getScoutingData(json["name"]);
+    for(String pageName in emptyData.pages.keys) {
+      var values = emptyData.pages[pageName]!.getValues();
+      var components = emptyData.pages[pageName]!.getComponents();
+      for(int i = 0; i < values.length; i++) {
+        values[i].set(json["pageName"][components[i].name]);
+      }
+    }
+    return emptyData;
   }
 
   List<String> notFilled() {
@@ -72,6 +88,23 @@ class ScoutingData {
       }
     }
     return data;
+  }
+
+  @JsonSerializable(explicitToJson: true)
+  Map<String, dynamic> toJson() {
+    Map<String, dynamic> json = {};
+    json["name"] = name;
+    for (int i = 0; i<pages.values.length; i++) {
+      var p = pages.values.toList()[i];
+      Map<String, dynamic> screenJson = {};
+      List<Data> data = p.getValues();
+      List<String> names = p.getComponents().map((e) => e.name).toList();
+      for( int i = 0; i<data.length; i++) {
+        screenJson[names[i]] = data[i].currValue;
+      }
+      json[pages.keys.toList()[i]] = screenJson;
+    }
+    return json;
   }
 
   List<Component> getComponents() {

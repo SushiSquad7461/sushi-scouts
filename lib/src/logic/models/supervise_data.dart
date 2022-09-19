@@ -6,7 +6,7 @@ part 'supervise_data.g.dart';
 
 @JsonSerializable()
 class SuperviseData {
-  final ScoutingData data;
+  ScoutingData data;
   bool flagged;
   bool deleted;
   String methodName;
@@ -17,7 +17,7 @@ class SuperviseData {
 
   SuperviseData(this.data, this.flagged, this.deleted, this.methodName, this.display1, this.display2, this.name, this.teamNum);
 
-  factory SuperviseData.fromJson(Map<String,dynamic> json) => _$SuperviseData.fromJson(this);
+  factory SuperviseData.fromJson(Map<String,dynamic> json) => _$SuperviseDataFromJson(json);
   
   Map<String, dynamic> toJson() => _$SuperviseDataToJson(this);
 }

@@ -45,16 +45,7 @@ class _EditState extends State<Edit> {
       setState(() {
         for (var name in newData.keys) {
           data.addAll({
-            name.split("/")[2]: SuperviseData(
-              data: newData[name]["data"],
-              flagged: newData[name]["flagged"],
-              deleted: newData[name]["deleted"],
-              teamNum: newData[name]["teamNum"],
-              methodName: newData[name]["method name"],
-              display1: newData[name]["display1"],
-              display2: newData[name]["display2"],
-              name: newData[name]["name"],
-            )
+            name.split("/")[2]: SuperviseData.fromJson(newData[name])
           });
         }
         print(data);
@@ -71,16 +62,7 @@ class _EditState extends State<Edit> {
       }
 
       if (flagMode || deleteMode) {
-        Localstore.instance.collection(SUPERVISE_DATABASE_NAME).doc(key).set({
-          "data": data[key]!.data,
-          "flagged": data[key]!.flagged,
-          "deleted": data[key]!.deleted,
-          "method name": data[key]!.methodName,
-          "display1": data[key]!.display1,
-          "display2": data[key]!.display2,
-          "name": data[key]!.name,
-          "teamNum": data[key]!.teamNum,
-        });
+        Localstore.instance.collection(SUPERVISE_DATABASE_NAME).doc(key).set(data[key]!.toJson());
       }
     });
   }
