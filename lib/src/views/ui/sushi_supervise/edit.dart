@@ -1,19 +1,25 @@
-import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:localstore/localstore.dart';
-import 'package:sushi_scouts/src/logic/Constants.dart';
-import 'package:sushi_scouts/src/logic/models/supervise_data.dart';
-import 'package:sushi_scouts/src/logic/data/config_file_reader.dart';
-import 'package:sushi_scouts/src/logic/helpers/color/hex_color.dart';
-import 'package:sushi_scouts/src/views/util/opacityfilter.dart';
-import 'package:sushi_scouts/src/views/ui/sushi_supervise/edit_content.dart';
+// Flutter imports:
+import "package:flutter/foundation.dart";
+import "package:flutter/material.dart";
 
-import '../../../logic/deviceType.dart';
-import '../../../logic/helpers/routing_helper.dart';
-import '../../../logic/helpers/size/ScreenSize.dart';
-import '../../util/footer/supervisefooter.dart';
-import '../../util/header/header_nav.dart';
-import '../../util/header/header_title/header_title.dart';
+// Package imports:
+import "package:google_fonts/google_fonts.dart";
+import "package:localstore/localstore.dart";
+
+// Project imports:
+import "../../../logic/Constants.dart";
+import "../../../logic/constants.dart";
+import "../../../logic/data/config_file_reader.dart";
+import "../../../logic/device_type.dart";
+import "../../../logic/helpers/color/hex_color.dart";
+import "../../../logic/helpers/routing_helper.dart";
+import "../../../logic/helpers/size/screen_size.dart";
+import "../../../logic/models/supervise_data.dart";
+import "../../util/footer/supervise_footer.dart";
+import "../../util/header/header_nav.dart";
+import "../../util/header/header_title/header_title.dart";
+import "../../util/opacityfilter.dart";
+import "edit_content.dart";
 
 class Edit extends StatefulWidget {
   const Edit({Key? key}) : super(key: key);
@@ -42,22 +48,25 @@ class _EditState extends State<Edit> {
 
   Future<void> refreshData() async {
     final newData =
-        await Localstore.instance.collection(SUPERVISE_DATABASE_NAME).get();
-    print(newData);
+        await Localstore.instance.collection(superviseDatabaseName).get();
+    if (kDebugMode) {
+      print(newData);
+    }
     if (newData != null) {
       setState(() {
         for (var name in newData.keys) {
-          data.addAll({
-            name.split("/")[2]: SuperviseData.fromJson(newData[name])
-          });
+          data.addAll(
+              {name.split("/")[2]: SuperviseData.fromJson(newData[name])});
         }
-        print(data);
+        if (kDebugMode) {
+          print(data);
+        }
       });
     }
   }
 
   void updateData(String key) {
-    if( flagMode || deleteMode) {
+    if (flagMode || deleteMode) {
       setState(() {
         if (flagMode) {
           data[key]!.flagged = !data[key]!.flagged;
@@ -66,16 +75,28 @@ class _EditState extends State<Edit> {
         }
 
         if (flagMode || deleteMode) {
-          Localstore.instance.collection(SUPERVISE_DATABASE_NAME).doc(key).set(data[key]!.toJson());
+          Localstore.instance
+              .collection(superviseDatabaseName)
+              .doc(key)
+              .set(data[key]!.toJson());
         }
       });
     } else {
-      RouteHelper.pushAndRemoveUntilToScreen(1, 0, ctx: context, screen: EditContent(currentScoutingData: data[key]!.data, editDB: () => updateDB(key), title: "${data[key]!.methodName[0].toUpperCase()} - ${data[key]!.display1} - ${data[key]!.display2}"));
+      RouteHelper.pushAndRemoveUntilToScreen(1, 0,
+          ctx: context,
+          screen: EditContent(
+              currentScoutingData: data[key]!.data,
+              editDB: () => updateDB(key),
+              title:
+                  "${data[key]!.methodName[0].toUpperCase()} - ${data[key]!.display1} - ${data[key]!.display2}"));
     }
   }
 
   void updateDB(key) {
-    Localstore.instance.collection(SUPERVISE_DATABASE_NAME).doc(key).set(data[key]!.toJson());
+    Localstore.instance
+        .collection(superviseDatabaseName)
+        .doc(key)
+        .set(data[key]!.toJson());
   }
 
   @override
@@ -87,7 +108,6 @@ class _EditState extends State<Edit> {
       fontFamily: "Sushi",
       color: colors.primaryColorDark,
     );
-
 
     return Scaffold(
       backgroundColor:

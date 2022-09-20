@@ -1,22 +1,27 @@
-import 'dart:convert';
-import 'dart:io';
+// Dart imports:
+import "dart:convert";
+import "dart:io";
 
-import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:localstore/localstore.dart';
-import 'package:qr_code_scanner/qr_code_scanner.dart';
-import 'package:sushi_scouts/src/logic/Constants.dart';
-import 'package:sushi_scouts/src/logic/data/Decompressor.dart';
-import 'package:sushi_scouts/src/logic/data/config_file_reader.dart';
-import 'package:sushi_scouts/src/logic/deviceType.dart';
-import 'package:sushi_scouts/src/logic/helpers/size/ScreenSize.dart';
-import 'package:sushi_scouts/src/logic/models/compressed_data_model.dart';
-import 'package:sushi_scouts/src/logic/models/scouting_data_models/scouting_data.dart';
-import 'package:sushi_scouts/src/views/util/footer/supervisefooter.dart';
-import 'package:sushi_scouts/src/views/util/header/header_nav.dart';
+// Flutter imports:
+import "package:flutter/material.dart";
 
-import '../../util/header/header_title/header_title.dart';
+// Package imports:
+import "package:flutter_svg/svg.dart";
+import "package:google_fonts/google_fonts.dart";
+import "package:localstore/localstore.dart";
+import "package:qr_code_scanner/qr_code_scanner.dart";
+
+// Project imports:
+import "../../../logic/constants.dart";
+import "../../../logic/data/config_file_reader.dart";
+import "../../../logic/data/decompressor.dart";
+import "../../../logic/device_type.dart";
+import "../../../logic/helpers/size/screen_size.dart";
+import "../../../logic/models/compressed_data_model.dart";
+import "../../../logic/models/scouting_data_models/scouting_data.dart";
+import "../../util/footer/supervise_footer.dart";
+import "../../util/header/header_nav.dart";
+import "../../util/header/header_title/header_title.dart";
 
 class Upload extends StatefulWidget {
   const Upload({Key? key}) : super(key: key);
@@ -26,7 +31,7 @@ class Upload extends StatefulWidget {
 }
 
 class _UploadState extends State<Upload> {
-  final GlobalKey qrKey = GlobalKey(debugLabel: 'QR');
+  final GlobalKey qrKey = GlobalKey(debugLabel: "QR");
   final ConfigFileReader reader = ConfigFileReader.instance;
   Barcode? result;
   QRViewController? controller;
@@ -53,7 +58,7 @@ class _UploadState extends State<Upload> {
     var db = Localstore.instance;
     for (ScoutingData i in toAdd) {
       await db
-          .collection(SUPERVISE_DATABASE_NAME)
+          .collection(superviseDatabaseName)
           .doc(
               "${i.stringfy()[0]} - ${reader.getSuperviseDisplayString(i, 1)} - ${reader.getSuperviseDisplayString(i, 2)}::$name ${teamNum.toString()}")
           .set({
@@ -127,7 +132,7 @@ class _UploadState extends State<Upload> {
                   if (toAdd.isNotEmpty)
                     Center(
                       child: Container(
-                        height: ScreenSize.height * (phone ? 0.5 :  0.4),
+                        height: ScreenSize.height * (phone ? 0.5 : 0.4),
                         width: ScreenSize.width * (phone ? 0.8 : 0.6),
                         decoration: BoxDecoration(
                           border: Border.all(
@@ -161,7 +166,8 @@ class _UploadState extends State<Upload> {
                                 ),
                                 SizedBox(
                                   height: ScreenSize.height * 0.28,
-                                  width: ScreenSize.width * (phone ? 0.78 : 0.58),
+                                  width:
+                                      ScreenSize.width * (phone ? 0.78 : 0.58),
                                   child: ListView(
                                     children: [
                                       for (int i = 0; i < toAdd.length; ++i)
@@ -170,7 +176,8 @@ class _UploadState extends State<Upload> {
                                               bottom:
                                                   ScreenSize.height * 0.005),
                                           child: SizedBox(
-                                              width: ScreenSize.width * (phone ? 0.78 : 0.58),
+                                              width: ScreenSize.width *
+                                                  (phone ? 0.78 : 0.58),
                                               child: Center(
                                                   child: Text(
                                                       "${toAdd[i].stringfy()[0]} - ${reader.getSuperviseDisplayString(toAdd[i], 1)} - ${reader.getSuperviseDisplayString(toAdd[i], 2)}",
@@ -181,7 +188,8 @@ class _UploadState extends State<Upload> {
                                               bottom:
                                                   ScreenSize.height * 0.005),
                                           child: SizedBox(
-                                              width: ScreenSize.width * (phone ? 0.78 : 0.58),
+                                              width: ScreenSize.width *
+                                                  (phone ? 0.78 : 0.58),
                                               child: Center(
                                                   child: Text(
                                                       "CONFIG - ${configFile ? "Y" : "N"}",
@@ -191,7 +199,8 @@ class _UploadState extends State<Upload> {
                                               bottom:
                                                   ScreenSize.height * 0.005),
                                           child: SizedBox(
-                                              width: ScreenSize.width * (phone ? 0.78 : 0.58),
+                                              width: ScreenSize.width *
+                                                  (phone ? 0.78 : 0.58),
                                               child: Center(
                                                   child: Text(
                                                 "CODE - ${eventCode.toUpperCase()}",
@@ -202,15 +211,18 @@ class _UploadState extends State<Upload> {
                                               bottom:
                                                   ScreenSize.height * 0.005),
                                           child: SizedBox(
-                                              width: ScreenSize.width * (phone ? 0.78 : 0.58),
+                                              width: ScreenSize.width *
+                                                  (phone ? 0.78 : 0.58),
                                               child: Center(
-                                                  child: Text("$name ${teamNum.toString()}",
+                                                  child: Text(
+                                                      "$name ${teamNum.toString()}",
                                                       style: fontStyle)))),
                                     ],
                                   ),
                                 ),
                                 SizedBox(
-                                  width: ScreenSize.width * (phone ? 0.78 : 0.58),
+                                  width:
+                                      ScreenSize.width * (phone ? 0.78 : 0.58),
                                   child: Center(
                                     child: TextButton(
                                         onPressed: () {
@@ -237,7 +249,8 @@ class _UploadState extends State<Upload> {
                                               "UPLOAD",
                                               style: TextStyle(
                                                 fontFamily: "Sushi",
-                                                fontSize: (phone ? 40 : 30) * ScreenSize.swu,
+                                                fontSize: (phone ? 40 : 30) *
+                                                    ScreenSize.swu,
                                                 fontWeight: FontWeight.bold,
                                                 color: colors.primaryColorDark,
                                               ),
@@ -277,8 +290,7 @@ class _UploadState extends State<Upload> {
         CompressedDataModel decodedData =
             CompressedDataModel.fromJson(json.decode(result!.code!));
 
-        configFile = decodedData.metadata.configId ==
-            reader.id;
+        configFile = decodedData.metadata.configId == reader.id;
         name = decodedData.metadata.name.toUpperCase();
         teamNum = decodedData.metadata.teamNum;
         eventCode = decodedData.metadata.eventCode;

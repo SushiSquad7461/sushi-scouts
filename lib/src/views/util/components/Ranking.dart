@@ -1,9 +1,10 @@
-import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:sushi_scouts/src/logic/deviceType.dart';
+// Flutter imports:
+import "package:flutter/material.dart";
 
-import '../../../logic/data/Data.dart';
-import '../../../logic/helpers/size/ScreenSize.dart';
+// Project imports:
+import "../../../logic/data/data.dart";
+import "../../../logic/device_type.dart";
+import "../../../logic/helpers/size/screen_size.dart";
 
 class Ranking extends StatefulWidget {
   final String name;
@@ -15,7 +16,7 @@ class Ranking extends StatefulWidget {
   final bool setCommonValue;
   final List<String>? values;
 
-  Ranking(
+  const Ranking(
       {Key? key,
       required this.name,
       required this.data,
@@ -89,7 +90,7 @@ class RankingState extends State<Ranking> {
             children: [
               IconButton(
                 padding: EdgeInsets.zero,
-                constraints: BoxConstraints(),
+                constraints: const BoxConstraints(),
                 onPressed: () {
                   setState(() {
                     String temp = widget.values![i];
@@ -103,14 +104,16 @@ class RankingState extends State<Ranking> {
                 icon: Icon(
                   Icons.arrow_left_rounded,
                   color: widget.color,
-                  semanticLabel: 'Back Arrow',
+                  semanticLabel: "Back Arrow",
                 ),
               ),
               Text(
                 widget.values![i],
                 style: TextStyle(
                     fontFamily: "Sushi",
-                    fontSize: isPhoneScreen ? ScreenSize.height * 0.04 : widget.width / 8,
+                    fontSize: isPhoneScreen
+                        ? ScreenSize.height * 0.04
+                        : widget.width / 8,
                     fontWeight: FontWeight.bold,
                     color: widget.textColor),
               ),

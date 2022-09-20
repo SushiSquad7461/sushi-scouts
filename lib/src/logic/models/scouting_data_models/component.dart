@@ -1,6 +1,7 @@
-import 'package:json_annotation/json_annotation.dart';
+// Package imports:
+import "package:json_annotation/json_annotation.dart";
 
-part 'component.g.dart';
+part "component.g.dart";
 
 @JsonSerializable()
 class Component {
@@ -16,6 +17,7 @@ class Component {
   bool setCommonValue;
   bool timestamp;
 
-  factory Component.fromJson(Map<String, dynamic> json) => _$ComponentFromJson(json);
+  factory Component.fromJson(Map<String, dynamic> json) =>
+      _$ComponentFromJson(json);
   Map<String, dynamic> toJson() => _$ComponentToJson(this);
 }

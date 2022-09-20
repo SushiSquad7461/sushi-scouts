@@ -1,16 +1,21 @@
-import 'dart:async';
+// Dart imports:
+import "dart:async";
 
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:sushi_scouts/src/logic/blocs/file_reader_bloc/file_reader_cubit.dart';
-import 'package:sushi_scouts/src/logic/blocs/scouting_method_bloc/scouting_method_cubit.dart';
-import 'package:sushi_scouts/src/logic/blocs/theme_bloc/theme_cubit.dart';
-import 'package:sushi_scouts/src/logic/helpers/routing_helper.dart';
-import 'package:sushi_scouts/src/logic/helpers/size/ScreenSize.dart';
-import 'package:sushi_scouts/src/views/ui/app_choser.dart';
+// Flutter imports:
+import "package:flutter/material.dart";
 
-import '../../logic/data/config_file_reader.dart';
+// Package imports:
+import "package:flutter_bloc/flutter_bloc.dart";
+import "package:flutter_svg/flutter_svg.dart";
+
+// Project imports:
+import "../../logic/blocs/file_reader_bloc/file_reader_cubit.dart";
+import "../../logic/blocs/scouting_method_bloc/scouting_method_cubit.dart";
+import "../../logic/blocs/theme_bloc/theme_cubit.dart";
+import "../../logic/data/config_file_reader.dart";
+import "../../logic/helpers/routing_helper.dart";
+import "../../logic/helpers/size/screen_size.dart";
+import "app_choser.dart";
 
 class Loading extends StatefulWidget {
   const Loading({Key? key}) : super(key: key);
@@ -19,7 +24,7 @@ class Loading extends StatefulWidget {
   LoadingState createState() => LoadingState();
 }
 
-class LoadingState extends State<Loading> with TickerProviderStateMixin{
+class LoadingState extends State<Loading> with TickerProviderStateMixin {
   late final AnimationController _controller = AnimationController(
     duration: const Duration(seconds: 2),
     vsync: this,
@@ -33,7 +38,7 @@ class LoadingState extends State<Loading> with TickerProviderStateMixin{
   LoadingState() {
     _timer = Timer(const Duration(milliseconds: 5200), () {
       RouteHelper.pushReplacement(ctx: context, screen: const AppChooser());
-    }); 
+    });
   }
 
   @override
@@ -45,24 +50,29 @@ class LoadingState extends State<Loading> with TickerProviderStateMixin{
 
   Future<void> loadConfig() async {
     await BlocProvider.of<ThemeCubit>(context).setMode();
+
+    if (!mounted) return;
     await BlocProvider.of<FileReaderCubit>(context).readConfig();
+
     var reader = ConfigFileReader.instance;
-    BlocProvider.of<ScoutingMethodCubit>(context).changeMethod(reader.getScoutingMethods().isNotEmpty ? reader.getScoutingMethods()[0] : "", 0);
+
+    if (!mounted) return;
+    BlocProvider.of<ScoutingMethodCubit>(context).changeMethod(
+        reader.getScoutingMethods().isNotEmpty
+            ? reader.getScoutingMethods()[0]
+            : "",
+        0);
   }
 
   @override
   Widget build(BuildContext context) {
     loadConfig();
     return Scaffold(
-      body: Center(
-        child: RotationTransition(
-          turns: _animation,
-          child: SvgPicture.asset(
-            "./assets/images/${Theme.of(context).scaffoldBackgroundColor == Colors.black ? "darknori" : "nori"}.svg",
-            width: ScreenSize.swu*200
-          )
-        )
-      )
-    );
+        body: Center(
+            child: RotationTransition(
+                turns: _animation,
+                child: SvgPicture.asset(
+                    "./assets/images/${Theme.of(context).scaffoldBackgroundColor == Colors.black ? "darknori" : "nori"}.svg",
+                    width: ScreenSize.swu * 200))));
   }
 }

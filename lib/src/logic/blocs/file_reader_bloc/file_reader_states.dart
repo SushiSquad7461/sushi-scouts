@@ -1,4 +1,4 @@
-part of 'file_reader_cubit.dart';
+part of "file_reader_cubit.dart";
 
 abstract class FileReaderStates {}
 

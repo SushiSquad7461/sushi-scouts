@@ -1,5 +1,8 @@
-import 'package:flutter/material.dart';
-import 'package:sushi_scouts/src/logic/helpers/size/ScreenSize.dart';
+// Flutter imports:
+import "package:flutter/material.dart";
+
+// Project imports:
+import "../../../../logic/helpers/size/screen_size.dart";
 
 class HeaderTitleTablet extends StatelessWidget {
   const HeaderTitleTablet({Key? key}) : super(key: key);
@@ -28,7 +31,8 @@ class HeaderTitleTablet extends StatelessWidget {
                 ),
               ),
               ConstrainedBox(
-                constraints: const BoxConstraints(minWidth: 1, minHeight: 1), // here
+                constraints:
+                    const BoxConstraints(minWidth: 1, minHeight: 1), // here
                 child: Image.asset(
                   colors.scaffoldBackgroundColor == Colors.black
                       ? "./assets/images/toprightlogodark.png"

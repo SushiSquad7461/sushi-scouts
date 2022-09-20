@@ -1,15 +1,17 @@
-import 'package:json_annotation/json_annotation.dart';
+// Package imports:
+import "package:json_annotation/json_annotation.dart";
 
-part 'match_schedule.g.dart';
+part "match_schedule.g.dart";
 
 @JsonSerializable(explicitToJson: true)
 class MatchSchedule {
   MatchSchedule(this.schedule);
 
-  @JsonKey(name: 'Schedule')
+  @JsonKey(name: "Schedule")
   List<Match> schedule;
-  
-  factory MatchSchedule.fromJson(Map<String, dynamic> json) => _$MatchScheduleFromJson(json);
+
+  factory MatchSchedule.fromJson(Map<String, dynamic> json) =>
+      _$MatchScheduleFromJson(json);
   Map<String, dynamic> toJson() => _$MatchScheduleToJson(this);
 }
 
@@ -26,7 +28,7 @@ class Match {
 class Team {
   Team(this.number, this.station);
 
-  @JsonKey(name: 'teamNumber')
+  @JsonKey(name: "teamNumber")
   int number;
   String station;
 

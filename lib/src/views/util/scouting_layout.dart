@@ -1,29 +1,38 @@
+// Flutter imports:
+import "package:flutter/material.dart";
 
-import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:sushi_scouts/src/logic/constants.dart';
-import 'package:sushi_scouts/src/logic/data/Data.dart';
-import 'package:sushi_scouts/src/logic/data/config_file_reader.dart';
-import 'package:sushi_scouts/src/logic/deviceType.dart';
-import 'package:sushi_scouts/src/logic/models/scouting_data_models/component.dart';
-import 'package:sushi_scouts/src/logic/models/scouting_data_models/page.dart';
-import 'package:sushi_scouts/src/logic/models/scouting_data_models/scouting_data.dart';
-import 'package:sushi_scouts/src/logic/models/scouting_data_models/section.dart';
+// Package imports:
+import "package:google_fonts/google_fonts.dart";
 
-class ScoutingLayout extends StatelessWidget{
-  ScoutingData currentScoutingData;
-  Screen? currentPage;
-  Size size;
-  Function(bool) error;
-  ScoutingLayout({Key? key, required this.currentScoutingData, required this.error, required this.size}) : super(key: key) {
-    currentPage = currentScoutingData.getCurrentPage();
+// Project imports:
+import "../../logic/constants.dart";
+import "../../logic/data/config_file_reader.dart";
+import "../../logic/data/data.dart";
+import "../../logic/device_type.dart";
+import "../../logic/models/scouting_data_models/component.dart";
+import "../../logic/models/scouting_data_models/page.dart";
+import "../../logic/models/scouting_data_models/scouting_data.dart";
+import "../../logic/models/scouting_data_models/section.dart";
+
+class ScoutingLayout extends StatelessWidget {
+  final ScoutingData currentScoutingData;
+  final Screen? currentPage;
+  final Size size;
+  final Function(bool) error;
+  ScoutingLayout(
+      {Key? key,
+      required this.currentScoutingData,
+      required this.error,
+      required this.size})
+      : currentPage = currentScoutingData.getCurrentPage(),
+        super(key: key) {
     if (currentPage == null) {
       throw ErrorDescription("No pages found");
     }
   }
 
-  Widget _buildSection(
-      double width, Section section, int currColumn, double height, BuildContext context) {
+  Widget _buildSection(double width, Section section, int currColumn,
+      double height, BuildContext context) {
     try {
       double scaledWidth = (width > 500 ? 500 : width);
       var reader = ConfigFileReader.instance;
@@ -50,21 +59,22 @@ class ScoutingLayout extends StatelessWidget{
         }
         Data currData = section.values[i];
 
-        if (!COMPONENT_MAP.containsKey(currComponent.component)) {
+        if (!componentMap.containsKey(currComponent.component)) {
           throw ErrorDescription(
               "No component exsits called: ${currComponent.component}");
         }
 
         var colors = Theme.of(context);
 
-        builtComponents.add(COMPONENT_MAP.containsKey(currComponent.component)
+        builtComponents.add(componentMap.containsKey(currComponent.component)
             ? Padding(
                 padding: EdgeInsets.only(
                     top: size.height *
                         (i != startComponent
-                            ? 0.15 / currentPage!.getComponentsPerRow(currColumn)
+                            ? 0.15 /
+                                currentPage!.getComponentsPerRow(currColumn)
                             : 0)),
-                child: COMPONENT_MAP[currComponent.component](
+                child: componentMap[currComponent.component](
                     Key("${currentScoutingData.name}${currComponent.name}"),
                     currComponent.name,
                     currData,
@@ -149,17 +159,16 @@ class ScoutingLayout extends StatelessWidget{
                 children: [
                   for (int j = 0; j < rows; j++)
                     Padding(
-                        padding:
-                            EdgeInsets.only(bottom: size.height * 0.01),
+                        padding: EdgeInsets.only(bottom: size.height * 0.01),
                         child: _buildSection(
                             size.width / rows,
                             i,
                             j,
                             size.height *
-                                ((height - currentPage!.sections.length * 0.01) /
-                                    currentPage!.sections.length), 
-                            context)
-                        ),
+                                ((height -
+                                        currentPage!.sections.length * 0.01) /
+                                    currentPage!.sections.length),
+                            context)),
                 ]),
           ),
         ));

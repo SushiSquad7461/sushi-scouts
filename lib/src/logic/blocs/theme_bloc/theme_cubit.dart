@@ -1,7 +1,8 @@
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:localstore/localstore.dart';
+// Package imports:
+import "package:flutter_bloc/flutter_bloc.dart";
+import "package:localstore/localstore.dart";
 
-part 'theme_states.dart';
+part "theme_states.dart";
 
 class ThemeCubit extends Cubit<ThemeStates> {
   ThemeCubit() : super(LightMode());
@@ -19,9 +20,7 @@ class ThemeCubit extends Cubit<ThemeStates> {
     final data = await db.collection("preferences").doc("mode").get();
 
     if (data != null) {
-      data["mode"] == "dark"
-          ? emit(DarkMode())
-          : emit(LightMode());
+      data["mode"] == "dark" ? emit(DarkMode()) : emit(LightMode());
     }
   }
 }

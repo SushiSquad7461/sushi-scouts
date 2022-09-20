@@ -1,7 +1,9 @@
-import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+// Flutter imports:
+import "package:flutter/material.dart";
+import "package:flutter/services.dart";
 
-import '../../../logic/data/Data.dart';
+// Project imports:
+import "../../../logic/data/data.dart";
 
 class Increment extends StatefulWidget {
   final String name;
@@ -12,7 +14,6 @@ class Increment extends StatefulWidget {
   final double width;
   final List<String>? values;
   final bool setCommonValue;
-  int value = 0;
   Increment(
       {Key? key,
       required this.name,
@@ -23,13 +24,21 @@ class Increment extends StatefulWidget {
       required this.textColor,
       required this.setCommonValue,
       this.values})
-      : super(key: key){
-        double val = double.parse(defaultValue.get());
-        data.set(val==-1.0 ? 0.0 : val, setByUser: true);
-      }
+      : super(key: key) {
+    double val = double.parse(defaultValue.get());
+    data.set(val == -1.0 ? 0.0 : val, setByUser: true);
+  }
 
-  static Increment create(Key key, String name, Data data, List<String>? values,
-      Data defaultValue, Color color, double width, Color textColor, bool setCommonValue,
+  static Increment create(
+      Key key,
+      String name,
+      Data data,
+      List<String>? values,
+      Data defaultValue,
+      Color color,
+      double width,
+      Color textColor,
+      bool setCommonValue,
       double height) {
     return Increment(
       key: key,
@@ -49,6 +58,8 @@ class Increment extends StatefulWidget {
 }
 
 class IncrementState extends State<Increment> {
+  int _value = 0;
+
   final TextEditingController _controller = TextEditingController();
   Color getColor(Set<MaterialState> states) {
     const Set<MaterialState> interactiveStates = <MaterialState>{
@@ -71,8 +82,8 @@ class IncrementState extends State<Increment> {
   @override
   Widget build(BuildContext context) {
     double width = widget.width;
-    widget.value = double.parse(widget.data.get()).round();
-    _controller.text = (widget.value).toString();
+    _value = double.parse(widget.data.get()).round();
+    _controller.text = (_value).toString();
     return Padding(
         padding: EdgeInsets.only(
             left: width / 60,
@@ -96,11 +107,11 @@ class IncrementState extends State<Increment> {
                   IconButton(
                     padding: const EdgeInsets.all(0),
                     onPressed: () {
-                      if (widget.value > 0) {
-                        _controller.text = (widget.value - 1).toString();
+                      if (_value > 0) {
+                        _controller.text = (_value - 1).toString();
                         widget.data.decrement();
                         setState(() {
-                          widget.value--;
+                          _value--;
                         });
                         build(context);
                       }
@@ -109,7 +120,7 @@ class IncrementState extends State<Increment> {
                     icon: Icon(
                       Icons.arrow_left_rounded,
                       color: widget.color,
-                      semanticLabel: 'Back Arrow',
+                      semanticLabel: "Back Arrow",
                     ),
                   ),
                   TextFormField(
@@ -133,24 +144,25 @@ class IncrementState extends State<Increment> {
                       inputFormatters: <TextInputFormatter>[
                         FilteringTextInputFormatter.digitsOnly
                       ],
-                      onFieldSubmitted: (value) {
-                        widget.value = int.parse(value);
-                        widget.data.set(double.parse(value), setByUser: true);
+                      onFieldSubmitted: (strValue) {
+                        _value = int.parse(strValue);
+                        widget.data
+                            .set(double.parse(strValue), setByUser: true);
                       }),
                   IconButton(
                     padding: const EdgeInsets.all(0),
                     onPressed: () {
-                      _controller.text = (widget.value + 1).toString();
+                      _controller.text = (_value + 1).toString();
                       widget.data.increment();
                       setState(() {
-                        widget.value++;
+                        _value++;
                       });
                     },
                     iconSize: width / 3.0,
                     icon: Icon(
                       Icons.arrow_right_rounded,
                       color: widget.color,
-                      semanticLabel: 'Back Arrow',
+                      semanticLabel: "Back Arrow",
                     ),
                   ),
                 ],

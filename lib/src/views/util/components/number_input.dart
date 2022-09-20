@@ -1,10 +1,15 @@
-import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:sushi_scouts/src/logic/helpers/size/ScreenSize.dart';
-import '../../../logic/data/Data.dart';
-import '../../../logic/data/config_file_reader.dart';
-import '../../../logic/deviceType.dart';
+// Flutter imports:
+import "package:flutter/material.dart";
+import "package:flutter/services.dart";
+
+// Package imports:
+import "package:google_fonts/google_fonts.dart";
+
+// Project imports:
+import "../../../logic/data/config_file_reader.dart";
+import "../../../logic/data/data.dart";
+import "../../../logic/device_type.dart";
+import "../../../logic/helpers/size/screen_size.dart";
 
 class NumberInput extends StatefulWidget {
   final String name;
@@ -15,7 +20,7 @@ class NumberInput extends StatefulWidget {
   final bool setCommonValue;
   final double height;
 
-  NumberInput(
+  const NumberInput(
       {Key? key,
       required this.name,
       required this.data,
@@ -84,19 +89,19 @@ class NumberInputState extends State<NumberInput> {
       },
       child: Padding(
           padding: EdgeInsets.only(
-              left: widget.width / 60,
-              right: widget.width / 60,
-              top: widget.width / 30,
+            left: widget.width / 60,
+            right: widget.width / 60,
+            top: widget.width / 30,
             bottom: widget.width / 30,
-             ),
+          ),
           child: SizedBox(
               width: widget.width * 0.8,
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                  Expanded(
-                      child: SizedBox(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+                      Expanded(
+                          child: SizedBox(
                         height: ScreenSize.height * 0.04,
                         child: TextFormField(
                             focusNode: _focusNode,
@@ -106,14 +111,25 @@ class NumberInputState extends State<NumberInput> {
                               constraints:
                                   BoxConstraints(maxWidth: widget.width / 6.0),
                               hintText: widget.name.toUpperCase(),
-                              hintStyle: TextStyle(color: widget.textColor, fontSize: isPhoneScreen ? ScreenSize.height * 0.04 : widget.width / 8,
-                                fontWeight: isPhoneScreen ? FontWeight.w100 : FontWeight.w400,),
+                              hintStyle: TextStyle(
+                                color: widget.textColor,
+                                fontSize: isPhoneScreen
+                                    ? ScreenSize.height * 0.04
+                                    : widget.width / 8,
+                                fontWeight: isPhoneScreen
+                                    ? FontWeight.w100
+                                    : FontWeight.w400,
+                              ),
                             ),
                             cursorHeight: ScreenSize.height * 0.041,
                             style: GoogleFonts.mohave(
                                 textStyle: TextStyle(
-                                    fontSize: isPhoneScreen ? ScreenSize.height * 0.04 : widget.width / 8,
-                                    fontWeight: isPhoneScreen ? FontWeight.w100 : FontWeight.w400,
+                                    fontSize: isPhoneScreen
+                                        ? ScreenSize.height * 0.04
+                                        : widget.width / 8,
+                                    fontWeight: isPhoneScreen
+                                        ? FontWeight.w100
+                                        : FontWeight.w400,
                                     color: widget.textColor)),
                             textAlign: TextAlign.left,
                             keyboardType: TextInputType.number,
@@ -125,13 +141,15 @@ class NumberInputState extends State<NumberInput> {
                                   .set(double.parse(value), setByUser: true);
                               var reader = ConfigFileReader.instance;
                               if (widget.setCommonValue) {
-                                reader.setCommonValue(widget.name, int.parse(value));
+                                reader.setCommonValue(
+                                    widget.name, int.parse(value));
                               }
                             }),
                       ))
-                ]),
-                Divider(color: widget.textColor, thickness: widget.width / 50)
-              ]))),
+                    ]),
+                    Divider(
+                        color: widget.textColor, thickness: widget.width / 50)
+                  ]))),
     );
   }
 }

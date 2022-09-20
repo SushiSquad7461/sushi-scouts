@@ -1,6 +1,11 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_device_type/flutter_device_type.dart';
-import 'package:sushi_scouts/src/logic/helpers/size/ScreenSize.dart';
+// Flutter imports:
+import "package:flutter/material.dart";
+
+// Package imports:
+import "package:flutter_device_type/flutter_device_type.dart";
+
+// Project imports:
+import "../../../../logic/helpers/size/screen_size.dart";
 
 class HeaderTitleMobileSupervise extends StatelessWidget {
   const HeaderTitleMobileSupervise({Key? key}) : super(key: key);
@@ -18,31 +23,29 @@ class HeaderTitleMobileSupervise extends StatelessWidget {
                 colors.scaffoldBackgroundColor == Colors.black
                     ? "./assets/images/headertitlemobilesupervise.png"
                     : "./assets/images/headertitlemobilesupervise.png",
-                    scale: ScreenSize.width / 20,
+                scale: ScreenSize.width / 20,
               ),
             ),
             Center(
               child: Padding(
                 padding: EdgeInsets.only(
-                    top: ScreenSize.height *
-                        (Device.get().hasNotch ? 0.03 : 0)),
+                    top:
+                        ScreenSize.height * (Device.get().hasNotch ? 0.03 : 0)),
                 child: SizedBox(
                   width: ScreenSize.width * 0.9,
                   child: FittedBox(
                     fit: BoxFit.contain,
-                    child: Text(
-                          "sushi supervise",
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            fontFamily: "Sushi",
-                            fontWeight: FontWeight.bold,
-                            color: colors.primaryColorDark,
-                          )
-                        ),
-                  ),
+                    child: Text("sushi supervise",
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontFamily: "Sushi",
+                          fontWeight: FontWeight.bold,
+                          color: colors.primaryColorDark,
+                        )),
                   ),
                 ),
-                ),
+              ),
+            ),
           ],
         ));
   }

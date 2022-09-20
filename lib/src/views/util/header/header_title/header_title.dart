@@ -1,9 +1,12 @@
-import 'package:flutter/material.dart';
-import 'package:sushi_scouts/src/logic/deviceType.dart';
-import 'package:sushi_scouts/src/views/util/header/header_title/mobile.dart';
-import 'package:sushi_scouts/src/views/util/header/header_title/mobile_supervise.dart';
-import 'package:sushi_scouts/src/views/util/header/header_title/tablet.dart';
-import 'package:sushi_scouts/src/views/util/header/header_title/tablet_supervise.dart';
+// Flutter imports:
+import "package:flutter/material.dart";
+
+// Project imports:
+import "../../../../logic/device_type.dart";
+import "mobile.dart";
+import "mobile_supervise.dart";
+import "tablet.dart";
+import "tablet_supervise.dart";
 
 class HeaderTitle extends StatelessWidget {
   final bool isSupervise;

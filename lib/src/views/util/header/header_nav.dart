@@ -1,22 +1,26 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:sushi_scouts/src/logic/blocs/scouting_method_bloc/scouting_method_cubit.dart';
-import 'package:sushi_scouts/src/logic/helpers/color/hex_color.dart';
-import 'package:sushi_scouts/src/logic/helpers/routing_helper.dart';
-import 'package:sushi_scouts/src/logic/helpers/size/ScreenSize.dart';
-import 'package:sushi_scouts/src/views/ui/sushi_scouts/scouting.dart';
-import 'package:sushi_scouts/src/views/ui/settings.dart';
-import 'package:sushi_scouts/src/views/ui/sushi_supervise/upload.dart';
+// Flutter imports:
+import "package:flutter/material.dart";
 
-import '../../../logic/data/config_file_reader.dart';
-import '../../../logic/deviceType.dart';
-import '../../ui/sushi_supervise/edit.dart';
+// Package imports:
+import "package:flutter_bloc/flutter_bloc.dart";
+import "package:google_fonts/google_fonts.dart";
+
+// Project imports:
+import "../../../logic/blocs/scouting_method_bloc/scouting_method_cubit.dart";
+import "../../../logic/data/config_file_reader.dart";
+import "../../../logic/device_type.dart";
+import "../../../logic/helpers/color/hex_color.dart";
+import "../../../logic/helpers/routing_helper.dart";
+import "../../../logic/helpers/size/screen_size.dart";
+import "../../ui/settings.dart";
+import "../../ui/sushi_scouts/scouting.dart";
+import "../../ui/sushi_supervise/edit.dart";
+import "../../ui/sushi_supervise/upload.dart";
 
 class HeaderNav extends StatelessWidget {
   final String currentPage;
   final bool isSupervise;
-  late List<String> screens;
+  late final List<String> screens;
 
   HeaderNav({Key? key, required this.currentPage, this.isSupervise = false})
       : super(key: key) {
@@ -89,14 +93,16 @@ class HeaderNav extends StatelessWidget {
                 : colors.scaffoldBackgroundColor,
             child: Column(
               children: [
-               isPhoneScreen ? Divider(
-                  height: ScreenSize.height * 0.018,
-                  color: colors.primaryColorDark,
-                  thickness: (isPhoneScreen ? 0 : 4) * ScreenSize.shu,
-                ) : Divider(
-                  color: colors.primaryColorDark,
-                  thickness: (isPhoneScreen ? 0 : 4) * ScreenSize.shu,
-                ),
+                isPhoneScreen
+                    ? Divider(
+                        height: ScreenSize.height * 0.018,
+                        color: colors.primaryColorDark,
+                        thickness: (isPhoneScreen ? 0 : 4) * ScreenSize.shu,
+                      )
+                    : Divider(
+                        color: colors.primaryColorDark,
+                        thickness: (isPhoneScreen ? 0 : 4) * ScreenSize.shu,
+                      ),
                 Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     crossAxisAlignment: CrossAxisAlignment.center,
@@ -114,7 +120,9 @@ class HeaderNav extends StatelessWidget {
                                     ? Text(
                                         screen.toUpperCase(),
                                         style: GoogleFonts.mohave(
-                                            fontSize: isPhoneScreen ? ScreenSize.height * 0.023 : ScreenSize.width * 0.05,
+                                            fontSize: isPhoneScreen
+                                                ? ScreenSize.height * 0.023
+                                                : ScreenSize.width * 0.05,
                                             color: (currentPage == screen)
                                                 ? colors.primaryColor
                                                 : HexColor("#4F4F4F")),
@@ -152,14 +160,16 @@ class HeaderNav extends StatelessWidget {
                                                   textStyle: pageStyle),
                                             )))))
                     ]),
-                isPhoneScreen ? Divider(
-                  height: ScreenSize.height * 0.013,
-                  color: colors.primaryColorDark,
-                  thickness: (isPhoneScreen ? 0 : 4) * ScreenSize.shu,
-                ) : Divider(
-                  color: colors.primaryColorDark,
-                  thickness: (isPhoneScreen ? 0 : 4) * ScreenSize.shu,
-                ),
+                isPhoneScreen
+                    ? Divider(
+                        height: ScreenSize.height * 0.013,
+                        color: colors.primaryColorDark,
+                        thickness: (isPhoneScreen ? 0 : 4) * ScreenSize.shu,
+                      )
+                    : Divider(
+                        color: colors.primaryColorDark,
+                        thickness: (isPhoneScreen ? 0 : 4) * ScreenSize.shu,
+                      ),
               ],
             ),
           ),

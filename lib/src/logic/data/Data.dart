@@ -2,8 +2,10 @@
   The Data classes purpose is to store the current value of a component.
   It currently supports strings and numbers.
 */
-import '../helpers/Constants.dart';
-import '../models/scouting_data_models/component.dart';
+
+// Project imports:
+import "../helpers/constants.dart";
+import "../models/scouting_data_models/component.dart";
 
 class Data<ValueType> {
   // Current value of the component
@@ -42,7 +44,8 @@ class Data<ValueType> {
       logeTimeStamp();
       return true;
     }
-    return false;  }
+    return false;
+  }
 
   // Decrements the current value if it is an number and returns true, otherwise returns false
   bool decrement() {
@@ -65,11 +68,11 @@ class Data<ValueType> {
   }
 
   String getSimplified() {
-   return (currValue is double)
+    return (currValue is double)
         ? (currValue as double).floor().toString()
         : (currValue is bool)
             ? (currValue as bool).toString()
-            : (currValue as String); 
+            : (currValue as String);
   }
 
   void empty() {
@@ -79,7 +82,7 @@ class Data<ValueType> {
         ? (currValue = -1.0 as ValueType)
         : (currValue is bool)
             ? (currValue = false as ValueType)
-            : (currValue = '' as ValueType);
+            : (currValue = "" as ValueType);
   }
 
   void logeTimeStamp() {
@@ -93,7 +96,7 @@ class Data<ValueType> {
 
       int? diffBetweenLast =
           lastTime?.difference(DateTime.now()).inMilliseconds;
-      if (diffBetweenLast!.abs() > MIN_TIMESTAMP_DIFFERENCE) {
+      if (diffBetweenLast!.abs() > minTimestampDifference) {
         timestamps[diffBetweenInitial!] = currValue;
         lastTime = DateTime.now();
       }
