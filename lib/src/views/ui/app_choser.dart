@@ -8,6 +8,7 @@ import "package:flutter_svg/svg.dart";
 // Project imports:
 import "../../logic/helpers/routing_helper.dart";
 import "../../logic/helpers/size/screen_size.dart";
+import '../../logic/login_type.dart';
 import "login.dart";
 
 class AppChooser extends StatelessWidget {
@@ -40,7 +41,7 @@ class AppChooser extends StatelessWidget {
           child: GestureDetector(
             onTap: () => {
               RouteHelper.pushAndRemoveUntilToScreen(0, 0,
-                  ctx: context, screen: const Login(sushiScouts: false))
+                  ctx: context, screen: const Login(type: LoginType.supervise))
             },
             child: SvgPicture.asset(
               "./assets/images/superviselogo.svg",
@@ -53,7 +54,7 @@ class AppChooser extends StatelessWidget {
           child: GestureDetector(
             onTap: () => {
               RouteHelper.pushAndRemoveUntilToScreen(0, 0,
-                  ctx: context, screen: const Login(sushiScouts: true))
+                  ctx: context, screen: const Login(type: LoginType.scout))
             },
             child: SvgPicture.asset(
               "./assets/images/scoutslogo.svg",
@@ -68,7 +69,7 @@ class AppChooser extends StatelessWidget {
               child: GestureDetector(
                 onTap: () => {
                   RouteHelper.pushAndRemoveUntilToScreen(0, 0,
-                      ctx: context, screen: const Login(sushiScouts: true))
+                      ctx: context, screen: const Login(type: LoginType.strategy))
                 },
                 child: SvgPicture.asset(
                   "./assets/images/stratchoice.svg",
@@ -80,7 +81,7 @@ class AppChooser extends StatelessWidget {
         ),
         Padding(
           padding: EdgeInsets.only(bottom: ScreenSize.height * 0.02),
-          child: SvgPicture.asset("./assets/images/choocerfooter.svg",
+          child: SvgPicture.asset("./assets/images/choicefooter.svg",
               width: ScreenSize.width),
         )
       ]),

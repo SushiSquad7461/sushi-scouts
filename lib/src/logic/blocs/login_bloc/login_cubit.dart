@@ -29,6 +29,18 @@ class LoginCubit extends Cubit<LoginStates> {
     emit(SushiSuperviseLogin(eventCode, teamNum));
   }
 
+  Future<void> loginSushiStrategy(String name, int teamNum, String eventCode) async {
+    var db = Localstore.instance;
+
+    await db.collection("preferences").doc("user").set({
+      "name": name,
+      "teamNum": teamNum,
+      "eventCode": eventCode,
+    });
+
+    emit(SushiStrategyLogin(name, teamNum, eventCode)); 
+  }
+
   void logOut() {
     emit(LoggedOut());
   }

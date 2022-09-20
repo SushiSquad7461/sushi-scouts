@@ -24,6 +24,7 @@ import "../../logic/helpers/routing_helper.dart";
 import "../../logic/helpers/secret/secret.dart";
 import "../../logic/helpers/secret/secret_loader.dart";
 import "../../logic/helpers/size/screen_size.dart";
+import '../../logic/login_type.dart';
 import "../../logic/models/match_schedule.dart";
 import "../../logic/network/api_repository.dart";
 import "../util/Footer/footer.dart";
@@ -172,7 +173,7 @@ class _SettingsState extends State<Settings> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               HeaderTitle(
-                isSupervise: isSupervise,
+               type: isSupervise ? LoginType.supervise : LoginType.scout
               ),
               HeaderNav(
                 currentPage: "settings",
