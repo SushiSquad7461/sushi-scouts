@@ -1,6 +1,6 @@
-import "package:sushi_scouts/src/logic/data/data.dart";
-import "package:sushi_scouts/src/logic/helpers/color/hex_color.dart";
-
+// Project imports:
+import "../../data/data.dart";
+import "../../helpers/color/hex_color.dart";
 import "component.dart";
 
 class Section {

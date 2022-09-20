@@ -1,6 +1,9 @@
+// Flutter imports:
 import "package:flutter/material.dart";
-import "package:sushi_scouts/src/logic/device_type.dart";
-import "package:sushi_scouts/src/logic/helpers/size/screen_size.dart";
+
+// Project imports:
+import "../../../logic/device_type.dart";
+import "../../../logic/helpers/size/screen_size.dart";
 
 class SuperviseFooter extends StatelessWidget {
   const SuperviseFooter({Key? key}) : super(key: key);

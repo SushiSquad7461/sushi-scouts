@@ -1,3 +1,4 @@
+// Package imports:
 import "package:json_annotation/json_annotation.dart";
 
 part "compressed_data_model.g.dart";

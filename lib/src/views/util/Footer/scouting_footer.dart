@@ -1,14 +1,19 @@
+// Flutter imports:
 import "package:flutter/material.dart";
+
+// Package imports:
 import "package:flutter_bloc/flutter_bloc.dart";
 import "package:flutter_svg/svg.dart";
-import "package:sushi_scouts/src/logic/blocs/scouting_method_bloc/scouting_method_cubit.dart";
-import "package:sushi_scouts/src/logic/helpers/routing_helper.dart";
-import "package:sushi_scouts/src/logic/helpers/size/screen_size.dart";
-import "package:sushi_scouts/src/logic/models/scouting_data_models/scouting_data.dart";
-import "package:sushi_scouts/src/views/ui/sushi_scouts/qr_screen.dart";
-import "package:sushi_scouts/src/views/util/popups/required_content.dart";
+
+// Project imports:
+import "../../../logic/blocs/scouting_method_bloc/scouting_method_cubit.dart";
 import "../../../logic/data/config_file_reader.dart";
 import "../../../logic/device_type.dart";
+import "../../../logic/helpers/routing_helper.dart";
+import "../../../logic/helpers/size/screen_size.dart";
+import "../../../logic/models/scouting_data_models/scouting_data.dart";
+import "../../ui/sushi_scouts/qr_screen.dart";
+import "../popups/required_content.dart";
 import "footer.dart";
 
 class ScoutingFooter extends StatefulWidget {

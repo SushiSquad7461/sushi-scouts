@@ -1,12 +1,12 @@
-import "package:sushi_scouts/src/views/util/components/multiselect.dart";
-import "package:sushi_scouts/src/views/util/components/select.dart";
-import "package:sushi_scouts/src/views/util/components/ranking.dart";
-import "package:sushi_scouts/src/views/util/components/text_input.dart";
-
+// Project imports:
 import "../views/util/components/checkbox.dart";
 import "../views/util/components/dropdown.dart";
 import "../views/util/components/increment.dart";
+import "../views/util/components/multiselect.dart";
 import "../views/util/components/number_input.dart";
+import "../views/util/components/ranking.dart";
+import "../views/util/components/select.dart";
+import "../views/util/components/text_input.dart";
 
 const String configFilePath = "assets/config/";
 const List<int> authorizedTeams = [7461];

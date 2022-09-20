@@ -1,9 +1,13 @@
+// Flutter imports:
 import "package:flutter/material.dart";
-import "package:google_fonts/google_fonts.dart";
-import "package:sushi_scouts/src/logic/helpers/size/screen_size.dart";
 
+// Package imports:
+import "package:google_fonts/google_fonts.dart";
+
+// Project imports:
 import "../../../logic/data/data.dart";
 import "../../../logic/device_type.dart";
+import "../../../logic/helpers/size/screen_size.dart";
 
 class Dropdown extends StatefulWidget {
   final String name;

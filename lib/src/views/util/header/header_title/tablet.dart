@@ -1,5 +1,8 @@
+// Flutter imports:
 import "package:flutter/material.dart";
-import "package:sushi_scouts/src/logic/helpers/size/screen_size.dart";
+
+// Project imports:
+import "../../../../logic/helpers/size/screen_size.dart";
 
 class HeaderTitleTablet extends StatelessWidget {
   const HeaderTitleTablet({Key? key}) : super(key: key);

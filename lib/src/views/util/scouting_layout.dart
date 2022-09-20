@@ -1,13 +1,18 @@
+// Flutter imports:
 import "package:flutter/material.dart";
+
+// Package imports:
 import "package:google_fonts/google_fonts.dart";
-import "package:sushi_scouts/src/logic/constants.dart";
-import "package:sushi_scouts/src/logic/data/data.dart";
-import "package:sushi_scouts/src/logic/data/config_file_reader.dart";
-import "package:sushi_scouts/src/logic/device_type.dart";
-import "package:sushi_scouts/src/logic/models/scouting_data_models/component.dart";
-import "package:sushi_scouts/src/logic/models/scouting_data_models/page.dart";
-import "package:sushi_scouts/src/logic/models/scouting_data_models/scouting_data.dart";
-import "package:sushi_scouts/src/logic/models/scouting_data_models/section.dart";
+
+// Project imports:
+import "../../logic/constants.dart";
+import "../../logic/data/config_file_reader.dart";
+import "../../logic/data/data.dart";
+import "../../logic/device_type.dart";
+import "../../logic/models/scouting_data_models/component.dart";
+import "../../logic/models/scouting_data_models/page.dart";
+import "../../logic/models/scouting_data_models/scouting_data.dart";
+import "../../logic/models/scouting_data_models/section.dart";
 
 class ScoutingLayout extends StatelessWidget {
   final ScoutingData currentScoutingData;

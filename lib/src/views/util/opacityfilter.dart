@@ -1,5 +1,7 @@
+// Flutter imports:
 import "package:flutter/material.dart";
 
+// Project imports:
 import "../../logic/helpers/color/hex_color.dart";
 import "../../logic/helpers/size/screen_size.dart";
 

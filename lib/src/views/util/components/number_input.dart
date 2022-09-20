@@ -1,10 +1,15 @@
+// Flutter imports:
 import "package:flutter/material.dart";
 import "package:flutter/services.dart";
+
+// Package imports:
 import "package:google_fonts/google_fonts.dart";
-import "package:sushi_scouts/src/logic/helpers/size/screen_size.dart";
-import "../../../logic/data/data.dart";
+
+// Project imports:
 import "../../../logic/data/config_file_reader.dart";
+import "../../../logic/data/data.dart";
 import "../../../logic/device_type.dart";
+import "../../../logic/helpers/size/screen_size.dart";
 
 class NumberInput extends StatefulWidget {
   final String name;

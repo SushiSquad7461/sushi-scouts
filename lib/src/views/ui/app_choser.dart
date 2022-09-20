@@ -1,9 +1,14 @@
+// Flutter imports:
 import "package:flutter/material.dart";
+
+// Package imports:
 import "package:flutter_device_type/flutter_device_type.dart";
 import "package:flutter_svg/svg.dart";
-import "package:sushi_scouts/src/logic/helpers/routing_helper.dart";
-import "package:sushi_scouts/src/logic/helpers/size/screen_size.dart";
-import "package:sushi_scouts/src/views/ui/login.dart";
+
+// Project imports:
+import "../../logic/helpers/routing_helper.dart";
+import "../../logic/helpers/size/screen_size.dart";
+import "login.dart";
 
 class AppChooser extends StatelessWidget {
   const AppChooser({Key? key}) : super(key: key);

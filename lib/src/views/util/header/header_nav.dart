@@ -1,17 +1,21 @@
+// Flutter imports:
 import "package:flutter/material.dart";
+
+// Package imports:
 import "package:flutter_bloc/flutter_bloc.dart";
 import "package:google_fonts/google_fonts.dart";
-import "package:sushi_scouts/src/logic/blocs/scouting_method_bloc/scouting_method_cubit.dart";
-import "package:sushi_scouts/src/logic/helpers/color/hex_color.dart";
-import "package:sushi_scouts/src/logic/helpers/routing_helper.dart";
-import "package:sushi_scouts/src/logic/helpers/size/screen_size.dart";
-import "package:sushi_scouts/src/views/ui/sushi_scouts/scouting.dart";
-import "package:sushi_scouts/src/views/ui/settings.dart";
-import "package:sushi_scouts/src/views/ui/sushi_supervise/upload.dart";
 
+// Project imports:
+import "../../../logic/blocs/scouting_method_bloc/scouting_method_cubit.dart";
 import "../../../logic/data/config_file_reader.dart";
 import "../../../logic/device_type.dart";
+import "../../../logic/helpers/color/hex_color.dart";
+import "../../../logic/helpers/routing_helper.dart";
+import "../../../logic/helpers/size/screen_size.dart";
+import "../../ui/settings.dart";
+import "../../ui/sushi_scouts/scouting.dart";
 import "../../ui/sushi_supervise/edit.dart";
+import "../../ui/sushi_supervise/upload.dart";
 
 class HeaderNav extends StatelessWidget {
   final String currentPage;

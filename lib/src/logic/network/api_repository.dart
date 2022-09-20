@@ -1,13 +1,16 @@
+// Dart imports:
+import "dart:convert";
 import "dart:developer";
 
+// Package imports:
 import "package:dio/dio.dart";
-import "package:sushi_scouts/src/logic/helpers/error_helper.dart";
-import "package:sushi_scouts/src/logic/helpers/secret/secret.dart";
-import "package:sushi_scouts/src/logic/helpers/secret/secret_loader.dart";
-import "package:sushi_scouts/src/logic/models/match_schedule.dart";
-import "dart:convert";
 
-import "package:sushi_scouts/src/logic/network/rest_client.dart";
+// Project imports:
+import "../helpers/error_helper.dart";
+import "../helpers/secret/secret.dart";
+import "../helpers/secret/secret_loader.dart";
+import "../models/match_schedule.dart";
+import "rest_client.dart";
 
 class ApiRepository {
   RestClient? _restClient;

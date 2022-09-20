@@ -63,6 +63,7 @@ dev_dependencies:
   build_runner: ^2.2.0
   json_serializable: ^6.3.1
   retrofit_generator: ^4.0.2
+  import_sorter: ^4.6.0
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

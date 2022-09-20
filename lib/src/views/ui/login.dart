@@ -1,21 +1,25 @@
+// Flutter imports:
 import "package:flutter/foundation.dart";
 import "package:flutter/material.dart";
 import "package:flutter/services.dart";
+
+// Package imports:
 import "package:flutter_bloc/flutter_bloc.dart";
 import "package:flutter_svg/svg.dart";
 import "package:google_fonts/google_fonts.dart";
 import "package:localstore/localstore.dart";
-import "package:sushi_scouts/src/logic/blocs/login_bloc/login_cubit.dart";
-import "package:sushi_scouts/src/logic/helpers/color/hex_color.dart";
-import "package:sushi_scouts/src/logic/helpers/routing_helper.dart";
-import "package:sushi_scouts/src/logic/helpers/size/screen_size.dart";
-import "package:sushi_scouts/src/views/ui/sushi_scouts/scouting.dart";
-import "package:sushi_scouts/src/views/ui/sushi_supervise/upload.dart";
-import "package:sushi_scouts/src/views/util/header/header_title/header_title.dart";
-import "package:sushi_scouts/src/views/util/popups/incorrect_password.dart";
 
+// Project imports:
+import "../../logic/blocs/login_bloc/login_cubit.dart";
 import "../../logic/data/config_file_reader.dart";
 import "../../logic/device_type.dart";
+import "../../logic/helpers/color/hex_color.dart";
+import "../../logic/helpers/routing_helper.dart";
+import "../../logic/helpers/size/screen_size.dart";
+import "../util/header/header_title/header_title.dart";
+import "../util/popups/incorrect_password.dart";
+import "sushi_scouts/scouting.dart";
+import "sushi_supervise/upload.dart";
 
 class Login extends StatefulWidget {
   final bool sushiScouts;

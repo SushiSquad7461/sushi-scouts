@@ -1,6 +1,8 @@
+// Dart imports:
 import "dart:convert";
 
-import "package:sushi_scouts/src/logic/data/data.dart";
+// Project imports:
+import "data.dart";
 
 class Compressor {
   final List<Data> data;

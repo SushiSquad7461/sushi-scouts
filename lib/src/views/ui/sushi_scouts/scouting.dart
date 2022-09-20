@@ -1,15 +1,19 @@
+// Flutter imports:
 import "package:flutter/material.dart";
-import "package:flutter_bloc/flutter_bloc.dart";
-import "package:sushi_scouts/src/logic/blocs/scouting_method_bloc/scouting_method_cubit.dart";
-import "package:sushi_scouts/src/logic/helpers/size/screen_size.dart";
-import "package:sushi_scouts/src/logic/models/scouting_data_models/scouting_data.dart";
-import "package:sushi_scouts/src/views/util/footer/scouting_footer.dart";
-import "package:sushi_scouts/src/views/util/header/header_nav.dart";
-import "package:sushi_scouts/src/views/util/header/header_title/header_title.dart";
-import "package:sushi_scouts/src/views/util/scouting_layout.dart";
 
+// Package imports:
+import "package:flutter_bloc/flutter_bloc.dart";
+
+// Project imports:
+import "../../../logic/blocs/scouting_method_bloc/scouting_method_cubit.dart";
 import "../../../logic/data/config_file_reader.dart";
 import "../../../logic/device_type.dart";
+import "../../../logic/helpers/size/screen_size.dart";
+import "../../../logic/models/scouting_data_models/scouting_data.dart";
+import "../../util/footer/scouting_footer.dart";
+import "../../util/header/header_nav.dart";
+import "../../util/header/header_title/header_title.dart";
+import "../../util/scouting_layout.dart";
 
 class Scouting extends StatefulWidget {
   const Scouting({Key? key}) : super(key: key);

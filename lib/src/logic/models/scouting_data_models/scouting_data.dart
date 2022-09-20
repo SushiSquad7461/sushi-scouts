@@ -1,5 +1,5 @@
-import "package:sushi_scouts/src/logic/data/config_file_reader.dart";
-
+// Project imports:
+import "../../data/config_file_reader.dart";
 import "../../data/data.dart";
 import "component.dart";
 import "page.dart";

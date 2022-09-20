@@ -1,13 +1,18 @@
-import "package:firebase_core/firebase_core.dart";
+// Flutter imports:
 import "package:flutter/material.dart";
+
+// Package imports:
+import "package:firebase_core/firebase_core.dart";
 import "package:flutter_bloc/flutter_bloc.dart";
 import "package:get/get.dart";
-import "package:sushi_scouts/provider.dart";
-import "package:sushi_scouts/src/logic/blocs/theme_bloc/theme_cubit.dart";
-import "package:sushi_scouts/src/logic/helpers/size/screen_size.dart";
-import "package:sushi_scouts/src/views/ui/loading.dart";
-import "package:sushi_scouts/src/views/util/themes.dart";
+
+// Project imports:
 import "firebase_options.dart";
+import "provider.dart";
+import "src/logic/blocs/theme_bloc/theme_cubit.dart";
+import "src/logic/helpers/size/screen_size.dart";
+import "src/views/ui/loading.dart";
+import "src/views/util/themes.dart";
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();

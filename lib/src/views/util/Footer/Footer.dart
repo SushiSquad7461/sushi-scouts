@@ -1,5 +1,7 @@
+// Flutter imports:
 import "package:flutter/material.dart";
 
+// Project imports:
 import "../../../logic/helpers/size/screen_size.dart";
 
 class Footer extends StatelessWidget {

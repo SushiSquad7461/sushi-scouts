@@ -2,6 +2,8 @@
   The Data classes purpose is to store the current value of a component.
   It currently supports strings and numbers.
 */
+
+// Project imports:
 import "../helpers/constants.dart";
 import "../models/scouting_data_models/component.dart";
 

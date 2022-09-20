@@ -1,7 +1,10 @@
+// Flutter imports:
 import "package:flutter/cupertino.dart";
-import "package:sushi_scouts/src/logic/helpers/size/screen_size.dart";
-import "package:sushi_scouts/src/logic/models/scouting_data_models/scouting_data.dart";
-import "package:sushi_scouts/src/views/util/scouting_layout.dart";
+
+// Project imports:
+import "../../../logic/helpers/size/screen_size.dart";
+import "../../../logic/models/scouting_data_models/scouting_data.dart";
+import "../scouting_layout.dart";
 
 class EditContent extends StatefulWidget {
   final ScoutingData currentScoutingData;

@@ -1,18 +1,22 @@
+// Flutter imports:
 import "package:flutter/foundation.dart";
 import "package:flutter/material.dart";
+
+// Package imports:
 import "package:google_fonts/google_fonts.dart";
 import "package:localstore/localstore.dart";
-import "package:sushi_scouts/src/logic/constants.dart";
-import "package:sushi_scouts/src/logic/models/supervise_data.dart";
-import "package:sushi_scouts/src/logic/data/config_file_reader.dart";
-import "package:sushi_scouts/src/logic/helpers/color/hex_color.dart";
-import "package:sushi_scouts/src/views/util/opacityfilter.dart";
 
+// Project imports:
+import "../../../logic/constants.dart";
+import "../../../logic/data/config_file_reader.dart";
 import "../../../logic/device_type.dart";
+import "../../../logic/helpers/color/hex_color.dart";
 import "../../../logic/helpers/size/screen_size.dart";
+import "../../../logic/models/supervise_data.dart";
 import "../../util/footer/supervise_footer.dart";
 import "../../util/header/header_nav.dart";
 import "../../util/header/header_title/header_title.dart";
+import "../../util/opacityfilter.dart";
 
 class Edit extends StatefulWidget {
   const Edit({Key? key}) : super(key: key);

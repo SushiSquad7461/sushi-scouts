@@ -1,16 +1,21 @@
+// Dart imports:
 import "dart:async";
 
+// Flutter imports:
 import "package:flutter/material.dart";
+
+// Package imports:
 import "package:flutter_bloc/flutter_bloc.dart";
 import "package:flutter_svg/flutter_svg.dart";
-import "package:sushi_scouts/src/logic/blocs/file_reader_bloc/file_reader_cubit.dart";
-import "package:sushi_scouts/src/logic/blocs/scouting_method_bloc/scouting_method_cubit.dart";
-import "package:sushi_scouts/src/logic/blocs/theme_bloc/theme_cubit.dart";
-import "package:sushi_scouts/src/logic/helpers/routing_helper.dart";
-import "package:sushi_scouts/src/logic/helpers/size/screen_size.dart";
-import "package:sushi_scouts/src/views/ui/app_choser.dart";
 
+// Project imports:
+import "../../logic/blocs/file_reader_bloc/file_reader_cubit.dart";
+import "../../logic/blocs/scouting_method_bloc/scouting_method_cubit.dart";
+import "../../logic/blocs/theme_bloc/theme_cubit.dart";
 import "../../logic/data/config_file_reader.dart";
+import "../../logic/helpers/routing_helper.dart";
+import "../../logic/helpers/size/screen_size.dart";
+import "app_choser.dart";
 
 class Loading extends StatefulWidget {
   const Loading({Key? key}) : super(key: key);

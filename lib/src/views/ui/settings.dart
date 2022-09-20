@@ -1,32 +1,37 @@
+// Dart imports:
 import "dart:convert";
 
-import "package:cloud_firestore/cloud_firestore.dart";
+// Flutter imports:
 import "package:flutter/material.dart";
 import "package:flutter/services.dart";
+
+// Package imports:
+import "package:cloud_firestore/cloud_firestore.dart";
 import "package:flutter_bloc/flutter_bloc.dart";
 import "package:flutter_svg/svg.dart";
 import "package:get/get.dart";
 import "package:google_fonts/google_fonts.dart";
 import "package:localstore/localstore.dart";
-import "package:sushi_scouts/src/logic/constants.dart";
 
-import "package:sushi_scouts/src/logic/blocs/login_bloc/login_cubit.dart";
-import "package:sushi_scouts/src/logic/blocs/theme_bloc/theme_cubit.dart";
-import "package:sushi_scouts/src/logic/data/config_file_reader.dart";
-import "package:sushi_scouts/src/logic/device_type.dart";
-import "package:sushi_scouts/src/logic/helpers/routing_helper.dart";
-import "package:sushi_scouts/src/logic/helpers/secret/secret.dart";
-import "package:sushi_scouts/src/logic/helpers/secret/secret_loader.dart";
-import "package:sushi_scouts/src/logic/helpers/size/screen_size.dart";
-import "package:sushi_scouts/src/logic/models/match_schedule.dart";
-import "package:sushi_scouts/src/logic/network/api_repository.dart";
-import "package:sushi_scouts/src/views/ui/app_choser.dart";
-import "package:sushi_scouts/src/views/ui/loading.dart";
-import "package:sushi_scouts/src/views/util/footer/supervise_footer.dart";
-import "package:sushi_scouts/src/views/util/header/header_nav.dart";
-import "package:sushi_scouts/src/views/util/header/header_title/header_title.dart";
+// Project imports:
 import "../../../main.dart";
+import "../../logic/blocs/login_bloc/login_cubit.dart";
+import "../../logic/blocs/theme_bloc/theme_cubit.dart";
+import "../../logic/constants.dart";
+import "../../logic/data/config_file_reader.dart";
+import "../../logic/device_type.dart";
+import "../../logic/helpers/routing_helper.dart";
+import "../../logic/helpers/secret/secret.dart";
+import "../../logic/helpers/secret/secret_loader.dart";
+import "../../logic/helpers/size/screen_size.dart";
+import "../../logic/models/match_schedule.dart";
+import "../../logic/network/api_repository.dart";
 import "../util/Footer/footer.dart";
+import "../util/footer/supervise_footer.dart";
+import "../util/header/header_nav.dart";
+import "../util/header/header_title/header_title.dart";
+import "app_choser.dart";
+import "loading.dart";
 
 class Settings extends StatefulWidget {
   const Settings({Key? key}) : super(key: key);
