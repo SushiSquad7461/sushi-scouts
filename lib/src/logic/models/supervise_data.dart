@@ -1,8 +1,7 @@
-import 'package:json_annotation/json_annotation.dart';
-import 'package:sushi_scouts/src/logic/models/compressed_data_model.dart';
-import 'package:sushi_scouts/src/logic/models/scouting_data_models/scouting_data.dart';
+import "package:json_annotation/json_annotation.dart";
+import "package:sushi_scouts/src/logic/models/scouting_data_models/scouting_data.dart";
 
-part 'supervise_data.g.dart';
+part "supervise_data.g.dart";
 
 @JsonSerializable()
 class SuperviseData {

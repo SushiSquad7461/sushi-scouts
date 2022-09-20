@@ -1,9 +1,9 @@
-import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:sushi_scouts/src/logic/deviceType.dart';
+import "package:flutter/material.dart";
+import "package:google_fonts/google_fonts.dart";
+import "package:sushi_scouts/src/logic/deviceType.dart";
 
-import '../../../logic/data/Data.dart';
-import '../../../logic/helpers/size/ScreenSize.dart';
+import "../../../logic/data/Data.dart";
+import "../../../logic/helpers/size/ScreenSize.dart";
 
 class TextInput extends StatefulWidget {
   final String name;
@@ -14,7 +14,7 @@ class TextInput extends StatefulWidget {
   final bool setCommonValue;
   final double height;
 
-  TextInput(
+  const TextInput(
       {Key? key,
       required this.name,
       required this.data,

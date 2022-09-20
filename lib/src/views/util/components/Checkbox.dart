@@ -1,8 +1,8 @@
-import 'package:flutter/material.dart';
-import 'package:sushi_scouts/src/logic/deviceType.dart';
+import "package:flutter/material.dart";
+import "package:sushi_scouts/src/logic/deviceType.dart";
 
-import '../../../logic/data/Data.dart';
-import '../../../logic/helpers/size/ScreenSize.dart';
+import "../../../logic/data/Data.dart";
+import "../../../logic/helpers/size/ScreenSize.dart";
 
 class CheckboxInput extends StatefulWidget {
   final String name;

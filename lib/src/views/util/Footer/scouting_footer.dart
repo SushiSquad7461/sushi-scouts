@@ -1,15 +1,15 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_svg/svg.dart';
-import 'package:sushi_scouts/src/logic/blocs/scouting_method_bloc/scouting_method_cubit.dart';
-import 'package:sushi_scouts/src/logic/helpers/routing_helper.dart';
-import 'package:sushi_scouts/src/logic/helpers/size/ScreenSize.dart';
-import 'package:sushi_scouts/src/logic/models/scouting_data_models/scouting_data.dart';
-import 'package:sushi_scouts/src/views/ui/sushi_scouts/qr_screen.dart';
-import 'package:sushi_scouts/src/views/util/popups/required_content.dart';
-import '../../../logic/data/config_file_reader.dart';
-import '../../../logic/deviceType.dart';
-import 'footer.dart';
+import "package:flutter/material.dart";
+import "package:flutter_bloc/flutter_bloc.dart";
+import "package:flutter_svg/svg.dart";
+import "package:sushi_scouts/src/logic/blocs/scouting_method_bloc/scouting_method_cubit.dart";
+import "package:sushi_scouts/src/logic/helpers/routing_helper.dart";
+import "package:sushi_scouts/src/logic/helpers/size/ScreenSize.dart";
+import "package:sushi_scouts/src/logic/models/scouting_data_models/scouting_data.dart";
+import "package:sushi_scouts/src/views/ui/sushi_scouts/qr_screen.dart";
+import "package:sushi_scouts/src/views/util/popups/required_content.dart";
+import "../../../logic/data/config_file_reader.dart";
+import "../../../logic/deviceType.dart";
+import "footer.dart";
 
 class ScoutingFooter extends StatefulWidget {
   final BuildContext popupContext;
@@ -96,7 +96,7 @@ class _ScoutingFooterState extends State<ScoutingFooter> {
                               color: prevPage
                                   ? colors.scaffoldBackgroundColor
                                   : colors.primaryColorDark,
-                              semanticLabel: 'Back Arrow',
+                              semanticLabel: "Back Arrow",
                             ),
                           ),
                           if (nextPage)
@@ -124,7 +124,7 @@ class _ScoutingFooterState extends State<ScoutingFooter> {
                                 }
                               },
                               child: Text(
-                                'SUBMIT',
+                                "SUBMIT",
                                 style: TextStyle(
                                     fontSize: 45 * ScreenSize.swu,
                                     fontFamily: "Sushi",
@@ -151,7 +151,7 @@ class _ScoutingFooterState extends State<ScoutingFooter> {
                                 color: nextPage
                                     ? colors.scaffoldBackgroundColor
                                     : colors.primaryColorDark,
-                                semanticLabel: 'Forward Arrow'),
+                                semanticLabel: "Forward Arrow"),
                           ),
                         ],
                       ),
@@ -172,7 +172,7 @@ class _ScoutingFooterState extends State<ScoutingFooter> {
                         color: prevPage
                             ? colors.primaryColorDark
                             : colors.scaffoldBackgroundColor,
-                        semanticLabel: 'Back Arrow',
+                        semanticLabel: "Back Arrow",
                       ),
                     ),
                     (nextPage
@@ -207,7 +207,7 @@ class _ScoutingFooterState extends State<ScoutingFooter> {
                                 }
                               },
                               child: Text(
-                                'SUBMIT',
+                                "SUBMIT",
                                 style: TextStyle(
                                     fontSize: 29 * ScreenSize.swu,
                                     fontFamily: "Sushi",
@@ -233,7 +233,7 @@ class _ScoutingFooterState extends State<ScoutingFooter> {
                           color: nextPage
                               ? colors.primaryColorDark
                               : colors.scaffoldBackgroundColor,
-                          semanticLabel: 'Forward Arrow'),
+                          semanticLabel: "Forward Arrow"),
                     ),
                   ],
                 ),

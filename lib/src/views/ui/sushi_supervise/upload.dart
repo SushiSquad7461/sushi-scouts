@@ -1,22 +1,22 @@
-import 'dart:convert';
-import 'dart:io';
+import "dart:convert";
+import "dart:io";
 
-import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:localstore/localstore.dart';
-import 'package:qr_code_scanner/qr_code_scanner.dart';
-import 'package:sushi_scouts/src/logic/Constants.dart';
-import 'package:sushi_scouts/src/logic/data/Decompressor.dart';
-import 'package:sushi_scouts/src/logic/data/config_file_reader.dart';
-import 'package:sushi_scouts/src/logic/deviceType.dart';
-import 'package:sushi_scouts/src/logic/helpers/size/ScreenSize.dart';
-import 'package:sushi_scouts/src/logic/models/compressed_data_model.dart';
-import 'package:sushi_scouts/src/logic/models/scouting_data_models/scouting_data.dart';
-import 'package:sushi_scouts/src/views/util/footer/supervisefooter.dart';
-import 'package:sushi_scouts/src/views/util/header/header_nav.dart';
+import "package:flutter/material.dart";
+import "package:flutter_svg/svg.dart";
+import "package:google_fonts/google_fonts.dart";
+import "package:localstore/localstore.dart";
+import "package:qr_code_scanner/qr_code_scanner.dart";
+import "package:sushi_scouts/src/logic/Constants.dart";
+import "package:sushi_scouts/src/logic/data/Decompressor.dart";
+import "package:sushi_scouts/src/logic/data/config_file_reader.dart";
+import "package:sushi_scouts/src/logic/deviceType.dart";
+import "package:sushi_scouts/src/logic/helpers/size/ScreenSize.dart";
+import "package:sushi_scouts/src/logic/models/compressed_data_model.dart";
+import "package:sushi_scouts/src/logic/models/scouting_data_models/scouting_data.dart";
+import "package:sushi_scouts/src/views/util/footer/supervisefooter.dart";
+import "package:sushi_scouts/src/views/util/header/header_nav.dart";
 
-import '../../util/header/header_title/header_title.dart';
+import "../../util/header/header_title/header_title.dart";
 
 class Upload extends StatefulWidget {
   const Upload({Key? key}) : super(key: key);
@@ -26,7 +26,7 @@ class Upload extends StatefulWidget {
 }
 
 class _UploadState extends State<Upload> {
-  final GlobalKey qrKey = GlobalKey(debugLabel: 'QR');
+  final GlobalKey qrKey = GlobalKey(debugLabel: "QR");
   final ConfigFileReader reader = ConfigFileReader.instance;
   Barcode? result;
   QRViewController? controller;

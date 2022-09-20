@@ -2,8 +2,8 @@
   The Data classes purpose is to store the current value of a component.
   It currently supports strings and numbers.
 */
-import '../helpers/Constants.dart';
-import '../models/scouting_data_models/component.dart';
+import "../helpers/Constants.dart";
+import "../models/scouting_data_models/component.dart";
 
 class Data<ValueType> {
   // Current value of the component
@@ -80,7 +80,7 @@ class Data<ValueType> {
         ? (currValue = -1.0 as ValueType)
         : (currValue is bool)
             ? (currValue = false as ValueType)
-            : (currValue = '' as ValueType);
+            : (currValue = "" as ValueType);
   }
 
   void logeTimeStamp() {

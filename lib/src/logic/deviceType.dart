@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import "package:flutter/material.dart";
 
 bool isPhone(BuildContext context) {
   // The equivalent of the "smallestWidth" qualifier on Android.

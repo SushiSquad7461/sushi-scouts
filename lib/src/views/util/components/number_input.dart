@@ -1,10 +1,10 @@
-import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:sushi_scouts/src/logic/helpers/size/ScreenSize.dart';
-import '../../../logic/data/Data.dart';
-import '../../../logic/data/config_file_reader.dart';
-import '../../../logic/deviceType.dart';
+import "package:flutter/material.dart";
+import "package:flutter/services.dart";
+import "package:google_fonts/google_fonts.dart";
+import "package:sushi_scouts/src/logic/helpers/size/ScreenSize.dart";
+import "../../../logic/data/Data.dart";
+import "../../../logic/data/config_file_reader.dart";
+import "../../../logic/deviceType.dart";
 
 class NumberInput extends StatefulWidget {
   final String name;
@@ -15,7 +15,7 @@ class NumberInput extends StatefulWidget {
   final bool setCommonValue;
   final double height;
 
-  NumberInput(
+  const NumberInput(
       {Key? key,
       required this.name,
       required this.data,

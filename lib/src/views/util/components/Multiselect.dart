@@ -1,8 +1,8 @@
-import 'package:flutter/material.dart';
-import 'package:sushi_scouts/src/logic/deviceType.dart';
-import 'package:sushi_scouts/src/logic/helpers/size/ScreenSize.dart';
+import "package:flutter/material.dart";
+import "package:sushi_scouts/src/logic/deviceType.dart";
+import "package:sushi_scouts/src/logic/helpers/size/ScreenSize.dart";
 
-import '../../../logic/data/Data.dart';
+import "../../../logic/data/Data.dart";
 
 class Multiselect extends StatefulWidget {
   final String name;
@@ -28,14 +28,14 @@ class Multiselect extends StatefulWidget {
       List<String>? values})
       : super(key: key) {
     this.values = List.from(values!);
-    if (values[0] == '#o') {
+    if (values[0] == "#o") {
       numberOfOptions = int.parse(values[1]);
     } else {
       throw ("number of options is not defined");
     }
     this.values.remove(values[0]);
     this.values.remove(values[1]);
-    if (this.values[0] == 'l') {
+    if (this.values[0] == "l") {
       this.values.remove(this.values[0]);
       while (this.values[0] != "c") {
         layout.add(int.parse(this.values[0]));

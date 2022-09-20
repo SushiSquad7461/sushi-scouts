@@ -1,7 +1,7 @@
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:localstore/localstore.dart';
+import "package:flutter_bloc/flutter_bloc.dart";
+import "package:localstore/localstore.dart";
 
-part 'theme_states.dart';
+part "theme_states.dart";
 
 class ThemeCubit extends Cubit<ThemeStates> {
   ThemeCubit() : super(LightMode());

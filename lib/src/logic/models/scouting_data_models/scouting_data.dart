@@ -1,9 +1,9 @@
-import 'package:json_annotation/json_annotation.dart';
-import 'package:sushi_scouts/src/logic/data/config_file_reader.dart';
+import "package:json_annotation/json_annotation.dart";
+import "package:sushi_scouts/src/logic/data/config_file_reader.dart";
 
-import '../../data/Data.dart';
-import 'component.dart';
-import 'page.dart';
+import "../../data/Data.dart";
+import "component.dart";
+import "page.dart";
 
 class ScoutingData {
   String name;

@@ -1,12 +1,12 @@
-import 'package:json_annotation/json_annotation.dart';
+import "package:json_annotation/json_annotation.dart";
 
-part 'match_schedule.g.dart';
+part "match_schedule.g.dart";
 
 @JsonSerializable(explicitToJson: true)
 class MatchSchedule {
   MatchSchedule(this.schedule);
 
-  @JsonKey(name: 'Schedule')
+  @JsonKey(name: "Schedule")
   List<Match> schedule;
 
   factory MatchSchedule.fromJson(Map<String, dynamic> json) =>
@@ -27,7 +27,7 @@ class Match {
 class Team {
   Team(this.number, this.station);
 
-  @JsonKey(name: 'teamNumber')
+  @JsonKey(name: "teamNumber")
   int number;
   String station;
 

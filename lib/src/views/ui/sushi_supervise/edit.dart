@@ -1,17 +1,17 @@
-import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:localstore/localstore.dart';
-import 'package:sushi_scouts/src/logic/Constants.dart';
-import 'package:sushi_scouts/src/logic/models/supervise_data.dart';
-import 'package:sushi_scouts/src/logic/data/config_file_reader.dart';
-import 'package:sushi_scouts/src/logic/helpers/color/hex_color.dart';
-import 'package:sushi_scouts/src/views/util/opacityfilter.dart';
+import "package:flutter/material.dart";
+import "package:google_fonts/google_fonts.dart";
+import "package:localstore/localstore.dart";
+import "package:sushi_scouts/src/logic/Constants.dart";
+import "package:sushi_scouts/src/logic/models/supervise_data.dart";
+import "package:sushi_scouts/src/logic/data/config_file_reader.dart";
+import "package:sushi_scouts/src/logic/helpers/color/hex_color.dart";
+import "package:sushi_scouts/src/views/util/opacityfilter.dart";
 
-import '../../../logic/deviceType.dart';
-import '../../../logic/helpers/size/ScreenSize.dart';
-import '../../util/footer/supervisefooter.dart';
-import '../../util/header/header_nav.dart';
-import '../../util/header/header_title/header_title.dart';
+import "../../../logic/deviceType.dart";
+import "../../../logic/helpers/size/ScreenSize.dart";
+import "../../util/footer/supervisefooter.dart";
+import "../../util/header/header_nav.dart";
+import "../../util/header/header_title/header_title.dart";
 
 class Edit extends StatefulWidget {
   const Edit({Key? key}) : super(key: key);

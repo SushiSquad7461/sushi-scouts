@@ -1,13 +1,13 @@
-import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:sushi_scouts/src/logic/constants.dart';
-import 'package:sushi_scouts/src/logic/data/Data.dart';
-import 'package:sushi_scouts/src/logic/data/config_file_reader.dart';
-import 'package:sushi_scouts/src/logic/deviceType.dart';
-import 'package:sushi_scouts/src/logic/models/scouting_data_models/component.dart';
-import 'package:sushi_scouts/src/logic/models/scouting_data_models/page.dart';
-import 'package:sushi_scouts/src/logic/models/scouting_data_models/scouting_data.dart';
-import 'package:sushi_scouts/src/logic/models/scouting_data_models/section.dart';
+import "package:flutter/material.dart";
+import "package:google_fonts/google_fonts.dart";
+import "package:sushi_scouts/src/logic/constants.dart";
+import "package:sushi_scouts/src/logic/data/Data.dart";
+import "package:sushi_scouts/src/logic/data/config_file_reader.dart";
+import "package:sushi_scouts/src/logic/deviceType.dart";
+import "package:sushi_scouts/src/logic/models/scouting_data_models/component.dart";
+import "package:sushi_scouts/src/logic/models/scouting_data_models/page.dart";
+import "package:sushi_scouts/src/logic/models/scouting_data_models/scouting_data.dart";
+import "package:sushi_scouts/src/logic/models/scouting_data_models/section.dart";
 
 class ScoutingLayout extends StatelessWidget {
   ScoutingData currentScoutingData;

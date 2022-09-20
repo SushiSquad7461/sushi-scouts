@@ -1,6 +1,6 @@
-import 'dart:convert';
+import "dart:convert";
 
-import 'package:sushi_scouts/src/logic/data/Data.dart' as Data;
+import "package:sushi_scouts/src/logic/data/Data.dart" as Data;
 
 class Decompressor {
   final List<String> screens;

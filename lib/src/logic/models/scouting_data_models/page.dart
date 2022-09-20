@@ -1,10 +1,10 @@
-import 'package:json_annotation/json_annotation.dart';
-import 'package:sushi_scouts/src/logic/data/Data.dart';
+import "package:json_annotation/json_annotation.dart";
+import "package:sushi_scouts/src/logic/data/Data.dart";
 
-import 'component.dart';
-import 'section.dart';
+import "component.dart";
+import "section.dart";
 
-part 'page.g.dart';
+part "page.g.dart";
 
 @JsonSerializable(explicitToJson: true)
 class Screen {

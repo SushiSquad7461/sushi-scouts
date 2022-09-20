@@ -1,7 +1,7 @@
-import 'package:sushi_scouts/src/logic/data/Data.dart';
-import 'package:sushi_scouts/src/logic/helpers/color/hex_color.dart';
+import "package:sushi_scouts/src/logic/data/Data.dart";
+import "package:sushi_scouts/src/logic/helpers/color/hex_color.dart";
 
-import 'component.dart';
+import "component.dart";
 
 class Section {
   Section(
@@ -33,15 +33,15 @@ class Section {
     List<Data> values = components.map((e) => Data.fromComponent(e)).toList();
     return Section(
         properties["title"],
-        HexColor(properties['color']),
-        properties['rows'],
-        HexColor(properties['textColor']),
+        HexColor(properties["color"]),
+        properties["rows"],
+        HexColor(properties["textColor"]),
         components,
-        (properties['componentsInRow'] as List<dynamic>)
+        (properties["componentsInRow"] as List<dynamic>)
             .map((e) => e as int)
             .toList(),
-        HexColor(properties['darkColor']),
-        HexColor(properties['darkTextColor']),
+        HexColor(properties["darkColor"]),
+        HexColor(properties["darkTextColor"]),
         values);
   }
 

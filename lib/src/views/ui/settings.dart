@@ -1,32 +1,32 @@
-import 'dart:convert';
+import "dart:convert";
 
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_svg/svg.dart';
-import 'package:get/get.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:localstore/localstore.dart';
-import 'package:sushi_scouts/src/logic/Constants.dart';
+import "package:cloud_firestore/cloud_firestore.dart";
+import "package:flutter/material.dart";
+import "package:flutter/services.dart";
+import "package:flutter_bloc/flutter_bloc.dart";
+import "package:flutter_svg/svg.dart";
+import "package:get/get.dart";
+import "package:google_fonts/google_fonts.dart";
+import "package:localstore/localstore.dart";
+import "package:sushi_scouts/src/logic/Constants.dart";
 
-import 'package:sushi_scouts/src/logic/blocs/login_bloc/login_cubit.dart';
-import 'package:sushi_scouts/src/logic/blocs/theme_bloc/theme_cubit.dart';
-import 'package:sushi_scouts/src/logic/data/config_file_reader.dart';
-import 'package:sushi_scouts/src/logic/deviceType.dart';
-import 'package:sushi_scouts/src/logic/helpers/routing_helper.dart';
-import 'package:sushi_scouts/src/logic/helpers/secret/secret.dart';
-import 'package:sushi_scouts/src/logic/helpers/secret/secret_loader.dart';
-import 'package:sushi_scouts/src/logic/helpers/size/ScreenSize.dart';
-import 'package:sushi_scouts/src/logic/models/match_schedule.dart';
-import 'package:sushi_scouts/src/logic/network/api_repository.dart';
-import 'package:sushi_scouts/src/views/ui/app_choser.dart';
-import 'package:sushi_scouts/src/views/ui/loading.dart';
-import 'package:sushi_scouts/src/views/util/footer/supervisefooter.dart';
-import 'package:sushi_scouts/src/views/util/header/header_nav.dart';
-import 'package:sushi_scouts/src/views/util/header/header_title/header_title.dart';
-import '../../../main.dart';
-import '../util/Footer/Footer.dart';
+import "package:sushi_scouts/src/logic/blocs/login_bloc/login_cubit.dart";
+import "package:sushi_scouts/src/logic/blocs/theme_bloc/theme_cubit.dart";
+import "package:sushi_scouts/src/logic/data/config_file_reader.dart";
+import "package:sushi_scouts/src/logic/deviceType.dart";
+import "package:sushi_scouts/src/logic/helpers/routing_helper.dart";
+import "package:sushi_scouts/src/logic/helpers/secret/secret.dart";
+import "package:sushi_scouts/src/logic/helpers/secret/secret_loader.dart";
+import "package:sushi_scouts/src/logic/helpers/size/ScreenSize.dart";
+import "package:sushi_scouts/src/logic/models/match_schedule.dart";
+import "package:sushi_scouts/src/logic/network/api_repository.dart";
+import "package:sushi_scouts/src/views/ui/app_choser.dart";
+import "package:sushi_scouts/src/views/ui/loading.dart";
+import "package:sushi_scouts/src/views/util/footer/supervisefooter.dart";
+import "package:sushi_scouts/src/views/util/header/header_nav.dart";
+import "package:sushi_scouts/src/views/util/header/header_title/header_title.dart";
+import "../../../main.dart";
+import "../util/Footer/Footer.dart";
 
 class Settings extends StatefulWidget {
   const Settings({Key? key}) : super(key: key);
@@ -56,7 +56,7 @@ class _SettingsState extends State<Settings> {
 
   Future<void> downloadMatchSchedule() async {
     MatchSchedule? schedule = await ApiRepository().getMatchSchedule(
-        BlocProvider.of<LoginCubit>(context).state.eventCode, 'qual');
+        BlocProvider.of<LoginCubit>(context).state.eventCode, "qual");
     if (schedule != null) {
       db.collection("data").doc("schedule").set(schedule.toJson());
     }

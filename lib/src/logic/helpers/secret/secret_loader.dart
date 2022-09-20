@@ -1,8 +1,8 @@
-import 'dart:async' show Future;
-import 'dart:convert' show json;
-import 'package:flutter/services.dart' show rootBundle;
+import "dart:async" show Future;
+import "dart:convert" show json;
+import "package:flutter/services.dart" show rootBundle;
 
-import 'secret.dart';
+import "secret.dart";
 
 class SecretLoader {
   final String secretPath;

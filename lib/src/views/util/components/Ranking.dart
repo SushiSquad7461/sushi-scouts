@@ -1,9 +1,8 @@
-import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:sushi_scouts/src/logic/deviceType.dart';
+import "package:flutter/material.dart";
+import "package:sushi_scouts/src/logic/deviceType.dart";
 
-import '../../../logic/data/Data.dart';
-import '../../../logic/helpers/size/ScreenSize.dart';
+import "../../../logic/data/Data.dart";
+import "../../../logic/helpers/size/ScreenSize.dart";
 
 class Ranking extends StatefulWidget {
   final String name;
@@ -15,7 +14,7 @@ class Ranking extends StatefulWidget {
   final bool setCommonValue;
   final List<String>? values;
 
-  Ranking(
+  const Ranking(
       {Key? key,
       required this.name,
       required this.data,
@@ -89,7 +88,7 @@ class RankingState extends State<Ranking> {
             children: [
               IconButton(
                 padding: EdgeInsets.zero,
-                constraints: BoxConstraints(),
+                constraints: const BoxConstraints(),
                 onPressed: () {
                   setState(() {
                     String temp = widget.values![i];
@@ -103,7 +102,7 @@ class RankingState extends State<Ranking> {
                 icon: Icon(
                   Icons.arrow_left_rounded,
                   color: widget.color,
-                  semanticLabel: 'Back Arrow',
+                  semanticLabel: "Back Arrow",
                 ),
               ),
               Text(

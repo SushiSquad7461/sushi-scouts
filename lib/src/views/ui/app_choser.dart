@@ -1,9 +1,9 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_device_type/flutter_device_type.dart';
-import 'package:flutter_svg/svg.dart';
-import 'package:sushi_scouts/src/logic/helpers/routing_helper.dart';
-import 'package:sushi_scouts/src/logic/helpers/size/ScreenSize.dart';
-import 'package:sushi_scouts/src/views/ui/login.dart';
+import "package:flutter/material.dart";
+import "package:flutter_device_type/flutter_device_type.dart";
+import "package:flutter_svg/svg.dart";
+import "package:sushi_scouts/src/logic/helpers/routing_helper.dart";
+import "package:sushi_scouts/src/logic/helpers/size/ScreenSize.dart";
+import "package:sushi_scouts/src/views/ui/login.dart";
 
 class AppChooser extends StatelessWidget {
   const AppChooser({Key? key}) : super(key: key);

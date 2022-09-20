@@ -1,8 +1,8 @@
-import 'package:flutter/material.dart';
-import 'package:sushi_scouts/src/logic/deviceType.dart';
-import 'package:sushi_scouts/src/logic/helpers/size/ScreenSize.dart';
+import "package:flutter/material.dart";
+import "package:sushi_scouts/src/logic/deviceType.dart";
+import "package:sushi_scouts/src/logic/helpers/size/ScreenSize.dart";
 
-import '../../../logic/data/Data.dart';
+import "../../../logic/data/Data.dart";
 
 class Select extends StatefulWidget {
   final String name;
@@ -27,9 +27,9 @@ class Select extends StatefulWidget {
       List<String>? values})
       : super(key: key) {
     this.values = List.from(values!);
-    if (values[0] == 'r') {
+    if (values[0] == "r") {
       isRow = true;
-    } else if (values[0] == 'c') {
+    } else if (values[0] == "c") {
       isRow = false;
     } else {
       throw ("row or column is not defined");

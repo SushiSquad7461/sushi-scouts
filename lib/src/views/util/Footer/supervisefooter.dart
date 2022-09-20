@@ -1,6 +1,6 @@
-import 'package:flutter/material.dart';
-import 'package:sushi_scouts/src/logic/deviceType.dart';
-import 'package:sushi_scouts/src/logic/helpers/size/ScreenSize.dart';
+import "package:flutter/material.dart";
+import "package:sushi_scouts/src/logic/deviceType.dart";
+import "package:sushi_scouts/src/logic/helpers/size/ScreenSize.dart";
 
 class SuperviseFooter extends StatelessWidget {
   const SuperviseFooter({Key? key}) : super(key: key);

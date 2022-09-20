@@ -1,7 +1,7 @@
-import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+import "package:flutter/material.dart";
+import "package:flutter/services.dart";
 
-import '../../../logic/data/Data.dart';
+import "../../../logic/data/Data.dart";
 
 class Increment extends StatefulWidget {
   final String name;
@@ -117,7 +117,7 @@ class IncrementState extends State<Increment> {
                     icon: Icon(
                       Icons.arrow_left_rounded,
                       color: widget.color,
-                      semanticLabel: 'Back Arrow',
+                      semanticLabel: "Back Arrow",
                     ),
                   ),
                   TextFormField(
@@ -158,7 +158,7 @@ class IncrementState extends State<Increment> {
                     icon: Icon(
                       Icons.arrow_right_rounded,
                       color: widget.color,
-                      semanticLabel: 'Back Arrow',
+                      semanticLabel: "Back Arrow",
                     ),
                   ),
                 ],

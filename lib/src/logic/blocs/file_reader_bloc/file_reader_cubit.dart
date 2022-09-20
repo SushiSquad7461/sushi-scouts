@@ -1,8 +1,8 @@
-import 'package:flutter_bloc/flutter_bloc.dart';
+import "package:flutter_bloc/flutter_bloc.dart";
 
-import '../../data/config_file_reader.dart';
+import "../../data/config_file_reader.dart";
 
-part 'file_reader_states.dart';
+part "file_reader_states.dart";
 
 class FileReaderCubit extends Cubit<FileReaderStates> {
   FileReaderCubit() : super(FileReaderLoading());

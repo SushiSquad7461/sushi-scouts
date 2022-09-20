@@ -1,6 +1,6 @@
-import 'package:json_annotation/json_annotation.dart';
+import "package:json_annotation/json_annotation.dart";
 
-part 'compressed_data_model.g.dart';
+part "compressed_data_model.g.dart";
 
 @JsonSerializable(explicitToJson: true)
 class CompressedDataModel {

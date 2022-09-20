@@ -1,5 +1,5 @@
-import 'package:flutter/material.dart';
-import 'package:sushi_scouts/src/logic/helpers/size/ScreenSize.dart';
+import "package:flutter/material.dart";
+import "package:sushi_scouts/src/logic/helpers/size/ScreenSize.dart";
 
 class HeaderTitleTabletSupervise extends StatelessWidget {
   const HeaderTitleTabletSupervise({Key? key}) : super(key: key);

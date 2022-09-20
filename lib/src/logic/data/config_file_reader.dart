@@ -1,10 +1,10 @@
-import 'dart:convert';
+import "dart:convert";
 
-import 'package:flutter/services.dart';
-import 'package:localstore/localstore.dart';
+import "package:flutter/services.dart";
+import "package:localstore/localstore.dart";
 
-import '../helpers/Constants.dart';
-import '../models/scouting_data_models/scouting_data.dart';
+import "../helpers/Constants.dart";
+import "../models/scouting_data_models/scouting_data.dart";
 
 class ConfigFileReader {
   String configFileFolder;
@@ -111,8 +111,8 @@ class ConfigFileReader {
   //   return ret;
   // }
 
-  bool extraFeatureAccess(var AUTHORIZED_TEAMS) {
-    return AUTHORIZED_TEAMS.contains(teamNum);
+  bool extraFeatureAccess(var AUTHORIZEDTEAMS) {
+    return AUTHORIZEDTEAMS.contains(teamNum);
   }
 
   void setCommonValue(String key, int value) {

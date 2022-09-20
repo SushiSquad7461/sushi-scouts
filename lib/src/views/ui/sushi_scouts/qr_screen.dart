@@ -1,22 +1,22 @@
-import 'dart:convert';
+import "dart:convert";
 
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:localstore/localstore.dart';
-import 'package:qr_flutter/qr_flutter.dart';
-import 'package:sushi_scouts/src/logic/blocs/login_bloc/login_cubit.dart';
-import 'package:sushi_scouts/src/logic/blocs/scouting_method_bloc/scouting_method_cubit.dart';
-import 'package:sushi_scouts/src/logic/data/Compressor.dart';
-import 'package:sushi_scouts/src/logic/data/config_file_reader.dart';
-import 'package:sushi_scouts/src/logic/helpers/routing_helper.dart';
-import 'package:sushi_scouts/src/logic/helpers/size/ScreenSize.dart';
-import 'package:sushi_scouts/src/logic/models/compressed_data_model.dart';
-import 'package:sushi_scouts/src/logic/models/scouting_data_models/scouting_data.dart';
-import 'package:sushi_scouts/src/views/ui/sushi_scouts/scouting.dart';
-import 'package:sushi_scouts/src/views/util/header/header_title/header_title.dart';
+import "package:flutter/material.dart";
+import "package:flutter_bloc/flutter_bloc.dart";
+import "package:flutter_svg/flutter_svg.dart";
+import "package:localstore/localstore.dart";
+import "package:qr_flutter/qr_flutter.dart";
+import "package:sushi_scouts/src/logic/blocs/login_bloc/login_cubit.dart";
+import "package:sushi_scouts/src/logic/blocs/scouting_method_bloc/scouting_method_cubit.dart";
+import "package:sushi_scouts/src/logic/data/Compressor.dart";
+import "package:sushi_scouts/src/logic/data/config_file_reader.dart";
+import "package:sushi_scouts/src/logic/helpers/routing_helper.dart";
+import "package:sushi_scouts/src/logic/helpers/size/ScreenSize.dart";
+import "package:sushi_scouts/src/logic/models/compressed_data_model.dart";
+import "package:sushi_scouts/src/logic/models/scouting_data_models/scouting_data.dart";
+import "package:sushi_scouts/src/views/ui/sushi_scouts/scouting.dart";
+import "package:sushi_scouts/src/views/util/header/header_title/header_title.dart";
 
-import '../../../logic/deviceType.dart';
+import "../../../logic/deviceType.dart";
 
 class QRScreen extends StatefulWidget {
   final db = Localstore.instance;
@@ -35,7 +35,7 @@ class _QRScreenState extends State<QRScreen> {
   bool generateCode = false;
   ScoutingData? currentScoutingData;
   int pageIndex = 0;
-  String currPage = '';
+  String currPage = "";
 
   Future<void> convertData() async {
     if (!dataConverted) {
@@ -191,7 +191,7 @@ class _QRScreenState extends State<QRScreen> {
                                 getData();
                               },
                               child: Text(
-                                'generate QR code',
+                                "generate QR code",
                                 style: TextStyle(
                                     fontSize: 34 * ScreenSize.swu,
                                     fontFamily: "Sushi",
@@ -219,7 +219,7 @@ class _QRScreenState extends State<QRScreen> {
                                 getData();
                               },
                               child: Text(
-                                'restore backup',
+                                "restore backup",
                                 style: TextStyle(
                                     fontSize: 34 * ScreenSize.swu,
                                     fontFamily: "Sushi",
@@ -247,7 +247,7 @@ class _QRScreenState extends State<QRScreen> {
                                 deleteBackup();
                               },
                               child: Text(
-                                'delete backup',
+                                "delete backup",
                                 style: TextStyle(
                                     fontSize: 34 * ScreenSize.swu,
                                     fontFamily: "Sushi",
@@ -272,7 +272,7 @@ class _QRScreenState extends State<QRScreen> {
                         back();
                       },
                       child: Text(
-                        'CONTINUE',
+                        "CONTINUE",
                         style: TextStyle(
                             fontSize: 35 * ScreenSize.swu,
                             fontFamily: "Sushi",
@@ -296,7 +296,7 @@ class _QRScreenState extends State<QRScreen> {
                       child: TextButton(
                           onPressed: () => back(),
                           child: Text(
-                            'CONTINUE',
+                            "CONTINUE",
                             style: TextStyle(
                                 fontSize: 35 * ScreenSize.swu,
                                 fontFamily: "Sushi",

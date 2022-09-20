@@ -1,9 +1,9 @@
-import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:sushi_scouts/src/logic/helpers/size/ScreenSize.dart';
+import "package:flutter/material.dart";
+import "package:google_fonts/google_fonts.dart";
+import "package:sushi_scouts/src/logic/helpers/size/ScreenSize.dart";
 
-import '../../../logic/data/Data.dart';
-import '../../../logic/deviceType.dart';
+import "../../../logic/data/Data.dart";
+import "../../../logic/deviceType.dart";
 
 class Dropdown extends StatefulWidget {
   final String name;
@@ -28,8 +28,8 @@ class Dropdown extends StatefulWidget {
       : super(key: key) {
     currentValue =
         data.setByUser ? values[double.parse(data.get()).floor()] : " ";
-    if (!this.values.contains(" ")) {
-      this.values.add(" ");
+    if (!values.contains(" ")) {
+      values.add(" ");
     }
   }
   static Dropdown create(

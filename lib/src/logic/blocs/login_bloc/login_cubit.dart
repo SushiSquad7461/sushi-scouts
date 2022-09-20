@@ -1,7 +1,7 @@
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:localstore/localstore.dart';
+import "package:flutter_bloc/flutter_bloc.dart";
+import "package:localstore/localstore.dart";
 
-part 'login_states.dart';
+part "login_states.dart";
 
 class LoginCubit extends Cubit<LoginStates> {
   LoginCubit() : super(LoggedOut());

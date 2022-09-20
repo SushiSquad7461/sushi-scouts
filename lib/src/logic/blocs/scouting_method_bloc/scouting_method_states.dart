@@ -1,4 +1,4 @@
-part of 'scouting_method_cubit.dart';
+part of "scouting_method_cubit.dart";
 
 abstract class ScoutingMethodStates {}
 

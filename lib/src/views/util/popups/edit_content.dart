@@ -1,9 +1,8 @@
-import 'dart:html';
 
-import 'package:flutter/cupertino.dart';
-import 'package:sushi_scouts/src/logic/helpers/size/ScreenSize.dart';
-import 'package:sushi_scouts/src/logic/models/scouting_data_models/scouting_data.dart';
-import 'package:sushi_scouts/src/views/util/scouting_layout.dart';
+import "package:flutter/cupertino.dart";
+import "package:sushi_scouts/src/logic/helpers/size/ScreenSize.dart";
+import "package:sushi_scouts/src/logic/models/scouting_data_models/scouting_data.dart";
+import "package:sushi_scouts/src/views/util/scouting_layout.dart";
 
 class EditContent extends StatefulWidget {
   ScoutingData currentScoutingData;

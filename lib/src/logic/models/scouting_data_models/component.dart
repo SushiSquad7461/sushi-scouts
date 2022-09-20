@@ -1,6 +1,6 @@
-import 'package:json_annotation/json_annotation.dart';
+import "package:json_annotation/json_annotation.dart";
 
-part 'component.g.dart';
+part "component.g.dart";
 
 @JsonSerializable()
 class Component {
