@@ -6,9 +6,10 @@ import 'package:sushi_scouts/src/logic/models/supervise_data.dart';
 import 'package:sushi_scouts/src/logic/data/config_file_reader.dart';
 import 'package:sushi_scouts/src/logic/helpers/color/hex_color.dart';
 import 'package:sushi_scouts/src/views/util/opacityfilter.dart';
-import 'package:sushi_scouts/src/views/util/popups/edit_content.dart';
+import 'package:sushi_scouts/src/views/ui/sushi_supervise/edit_content.dart';
 
 import '../../../logic/deviceType.dart';
+import '../../../logic/helpers/routing_helper.dart';
 import '../../../logic/helpers/size/ScreenSize.dart';
 import '../../util/footer/supervisefooter.dart';
 import '../../util/header/header_nav.dart';
@@ -69,7 +70,7 @@ class _EditState extends State<Edit> {
         }
       });
     } else {
-      showDialog(context: context, builder: (context) => EditContent(currentScoutingData: data[key]!.data, editDB: () => updateDB(key), title: "${data[key]!.methodName[0].toUpperCase()} - ${data[key]!.display1} - ${data[key]!.display2}"));
+      RouteHelper.pushAndRemoveUntilToScreen(1, 0, ctx: context, screen: EditContent(currentScoutingData: data[key]!.data, editDB: () => updateDB(key), title: "${data[key]!.methodName[0].toUpperCase()} - ${data[key]!.display1} - ${data[key]!.display2}"));
     }
   }
 
