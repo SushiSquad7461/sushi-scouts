@@ -6,6 +6,7 @@ import 'package:sushi_scouts/src/logic/models/supervise_data.dart';
 import 'package:sushi_scouts/src/logic/data/config_file_reader.dart';
 import 'package:sushi_scouts/src/logic/helpers/color/hex_color.dart';
 import 'package:sushi_scouts/src/views/util/opacityfilter.dart';
+import 'package:sushi_scouts/src/views/util/popups/edit_content.dart';
 
 import '../../../logic/deviceType.dart';
 import '../../../logic/helpers/size/ScreenSize.dart';
@@ -30,6 +31,7 @@ class _EditState extends State<Edit> {
   String currState = "ALL";
   bool flagMode = false;
   bool deleteMode = false;
+  String? editKey;
 
   @override
   void initState() {
@@ -54,17 +56,21 @@ class _EditState extends State<Edit> {
   }
 
   void updateData(String key) {
-    setState(() {
-      if (flagMode) {
-        data[key]!.flagged = !data[key]!.flagged;
-      } else if (deleteMode) {
-        data[key]!.deleted = !data[key]!.deleted;
-      }
+    if( flagMode || deleteMode) {
+      setState(() {
+        if (flagMode) {
+          data[key]!.flagged = !data[key]!.flagged;
+        } else if (deleteMode) {
+          data[key]!.deleted = !data[key]!.deleted;
+        }
 
-      if (flagMode || deleteMode) {
-        Localstore.instance.collection(SUPERVISE_DATABASE_NAME).doc(key).set(data[key]!.toJson());
-      }
-    });
+        if (flagMode || deleteMode) {
+          Localstore.instance.collection(SUPERVISE_DATABASE_NAME).doc(key).set(data[key]!.toJson());
+        }
+      });
+    } else {
+      showDialog(context: context, builder: (context) => EditContent(currentScoutingData: data[key]!.data, title: "${data[key]!.methodName[0].toUpperCase()} - ${data[key]!.display1} - ${data[key]!.display2}"));
+    }
   }
 
   @override
