@@ -18,37 +18,71 @@ class AppChooser extends StatelessWidget {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body:
-          Column(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+          Column(mainAxisAlignment: MainAxisAlignment.spaceBetween, crossAxisAlignment: CrossAxisAlignment.start, children: [
         Padding(
           padding: EdgeInsets.only(
-              top: ScreenSize.height * (Device.get().hasNotch ? 0.02 : 0)),
-          child: SvgPicture.asset(
-            "./assets/images/sushiheaderlogo.svg",
+              top: ScreenSize.height * (Device.get().hasNotch ? 0.04 : 0.02),
+              left: ScreenSize.width * 0.05,
+          ),
+          child: Text(
+            "SUSHI SQUAD____\nSCOUTING____\nINITIATIVE____",
+            style: TextStyle(
+              fontSize: ScreenSize.height * 0.05,
+              fontFamily: "Sushi",
+              decoration: TextDecoration.underline,
+              decorationThickness: ScreenSize.width * 0.005,
+              color: Colors.black,
+            ),
+          ),
+        ),
+        SizedBox(
+          width: ScreenSize.width,
+          child: GestureDetector(
+            onTap: () => {
+              RouteHelper.pushAndRemoveUntilToScreen(0, 0,
+                  ctx: context, screen: const Login(sushiScouts: false))
+            },
+            child: SvgPicture.asset(
+              "./assets/images/superviselogo.svg",
+              width: ScreenSize.width * 0.75,
+            ),
+          ),
+        ),
+        SizedBox(
+          width: ScreenSize.width,
+          child: GestureDetector(
+            onTap: () => {
+              RouteHelper.pushAndRemoveUntilToScreen(0, 0,
+                  ctx: context, screen: const Login(sushiScouts: true))
+            },
+            child: SvgPicture.asset(
+              "./assets/images/scoutslogo.svg",
+              width: ScreenSize.width * 0.75,
+            ),
+          ),
+        ),
+        SizedBox(
+          child: SizedBox(
             width: ScreenSize.width,
+            child: Center(
+              child: GestureDetector(
+                onTap: () => {
+                  RouteHelper.pushAndRemoveUntilToScreen(0, 0,
+                      ctx: context, screen: const Login(sushiScouts: true))
+                },
+                child: SvgPicture.asset(
+                  "./assets/images/stratchoice.svg",
+                  width: ScreenSize.width * 0.7,
+                ),
+              ),
+            ),
           ),
         ),
-        GestureDetector(
-          onTap: () => {
-            RouteHelper.pushAndRemoveUntilToScreen(0, 0,
-                ctx: context, screen: const Login(sushiScouts: false))
-          },
-          child: SvgPicture.asset(
-            "./assets/images/sushisuperviselogo.svg",
-            width: ScreenSize.width * 0.75,
-          ),
-        ),
-        GestureDetector(
-          onTap: () => {
-            RouteHelper.pushAndRemoveUntilToScreen(0, 0,
-                ctx: context, screen: const Login(sushiScouts: true))
-          },
-          child: SvgPicture.asset(
-            "./assets/images/sushiscoutslogo.svg",
-            width: ScreenSize.width * 0.75,
-          ),
-        ),
-        SvgPicture.asset("./assets/images/choocerscoutingfooter.svg",
-            width: ScreenSize.width)
+        Padding(
+          padding: EdgeInsets.only(bottom: ScreenSize.height * 0.02),
+          child: SvgPicture.asset("./assets/images/choocerfooter.svg",
+              width: ScreenSize.width),
+        )
       ]),
     );
   }
