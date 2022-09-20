@@ -1,6 +1,6 @@
 import "dart:convert";
 
-import "package:sushi_scouts/src/logic/data/Data.dart" as Data;
+import "package:sushi_scouts/src/logic/data/data.dart";
 
 class Decompressor {
   final List<String> screens;
@@ -35,7 +35,7 @@ class Decompressor {
   }
 
   //returns true if there is more data
-  bool decompress(List<Data.Data> data) {
+  bool decompress(List<Data> data) {
     if (!screenGotten) {
       throw ("get screen first");
     }

@@ -1,7 +1,7 @@
 import "package:flutter/material.dart";
 import "package:flutter_bloc/flutter_bloc.dart";
 import "package:sushi_scouts/src/logic/blocs/scouting_method_bloc/scouting_method_cubit.dart";
-import "package:sushi_scouts/src/logic/helpers/size/ScreenSize.dart";
+import "package:sushi_scouts/src/logic/helpers/size/screen_size.dart";
 import "package:sushi_scouts/src/logic/models/scouting_data_models/scouting_data.dart";
 import "package:sushi_scouts/src/views/util/footer/scouting_footer.dart";
 import "package:sushi_scouts/src/views/util/header/header_nav.dart";
@@ -9,7 +9,7 @@ import "package:sushi_scouts/src/views/util/header/header_title/header_title.dar
 import "package:sushi_scouts/src/views/util/scouting_layout.dart";
 
 import "../../../logic/data/config_file_reader.dart";
-import "../../../logic/deviceType.dart";
+import "../../../logic/device_type.dart";
 
 class Scouting extends StatefulWidget {
   const Scouting({Key? key}) : super(key: key);
@@ -23,7 +23,7 @@ class ScoutingState extends State<Scouting> {
   @override
   Widget build(BuildContext context) {
     var isPhoneScreen = isPhone(context);
-    var colors = Theme.of(context);
+    // var colors = Theme.of(context);
 
     return Scaffold(
       resizeToAvoidBottomInset: false,

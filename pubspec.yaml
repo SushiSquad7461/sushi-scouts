@@ -47,6 +47,8 @@ dependencies:
   firebase_core: ^1.21.1
   cloud_firestore: ^3.4.6
   auto_size_text: ^3.0.0
+  dio: ^4.0.6
+  retrofit: ^3.0.1+1
 
 dev_dependencies:
   flutter_test:

@@ -1,8 +1,8 @@
 import "package:flutter/material.dart";
-import "package:sushi_scouts/src/logic/deviceType.dart";
-import "package:sushi_scouts/src/logic/helpers/size/ScreenSize.dart";
+import "package:sushi_scouts/src/logic/device_type.dart";
+import "package:sushi_scouts/src/logic/helpers/size/screen_size.dart";
 
-import "../../../logic/data/Data.dart";
+import "../../../logic/data/data.dart";
 
 class Multiselect extends StatefulWidget {
   final String name;
@@ -11,11 +11,11 @@ class Multiselect extends StatefulWidget {
   final Color color;
   final Color textColor;
   final double width;
-  bool setCommonValue;
-  late List<String> values;
+  final bool setCommonValue;
+  late final List<String> values;
   late final int numberOfOptions;
-  List<int> layout = [];
-  Map<String, bool> checked = {};
+  final List<int> layout = [];
+  final Map<String, bool> checked = {};
   Multiselect(
       {Key? key,
       required this.name,
@@ -145,7 +145,7 @@ class MultiselectState extends State<Multiselect> {
     var isPhoneScreen = isPhone(context);
     double width = widget.width / 2;
     int index = 0;
-    var colors = Theme.of(context);
+    // var colors = Theme.of(context);
 
     var max = -1;
     for (var i in widget.layout) {

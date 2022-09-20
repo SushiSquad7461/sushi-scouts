@@ -1,7 +1,7 @@
 import "package:flutter/material.dart";
 
 import "../../logic/helpers/color/hex_color.dart";
-import "../../logic/helpers/size/ScreenSize.dart";
+import "../../logic/helpers/size/screen_size.dart";
 
 class OpacityFilter extends StatelessWidget {
   final Widget childComponent;

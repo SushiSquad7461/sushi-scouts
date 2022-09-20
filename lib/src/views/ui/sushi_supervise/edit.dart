@@ -1,15 +1,16 @@
+import "package:flutter/foundation.dart";
 import "package:flutter/material.dart";
 import "package:google_fonts/google_fonts.dart";
 import "package:localstore/localstore.dart";
-import "package:sushi_scouts/src/logic/Constants.dart";
+import "package:sushi_scouts/src/logic/constants.dart";
 import "package:sushi_scouts/src/logic/models/supervise_data.dart";
 import "package:sushi_scouts/src/logic/data/config_file_reader.dart";
 import "package:sushi_scouts/src/logic/helpers/color/hex_color.dart";
 import "package:sushi_scouts/src/views/util/opacityfilter.dart";
 
-import "../../../logic/deviceType.dart";
-import "../../../logic/helpers/size/ScreenSize.dart";
-import "../../util/footer/supervisefooter.dart";
+import "../../../logic/device_type.dart";
+import "../../../logic/helpers/size/screen_size.dart";
+import "../../util/footer/supervise_footer.dart";
 import "../../util/header/header_nav.dart";
 import "../../util/header/header_title/header_title.dart";
 
@@ -39,15 +40,19 @@ class _EditState extends State<Edit> {
 
   Future<void> refreshData() async {
     final newData =
-        await Localstore.instance.collection(SUPERVISE_DATABASE_NAME).get();
-    print(newData);
+        await Localstore.instance.collection(superviseDatabaseName).get();
+    if (kDebugMode) {
+      print(newData);
+    }
     if (newData != null) {
       setState(() {
         for (var name in newData.keys) {
           data.addAll(
               {name.split("/")[2]: SuperviseData.fromJson(newData[name])});
         }
-        print(data);
+        if (kDebugMode) {
+          print(data);
+        }
       });
     }
   }
@@ -62,7 +67,7 @@ class _EditState extends State<Edit> {
 
       if (flagMode || deleteMode) {
         Localstore.instance
-            .collection(SUPERVISE_DATABASE_NAME)
+            .collection(superviseDatabaseName)
             .doc(key)
             .set(data[key]!.toJson());
       }

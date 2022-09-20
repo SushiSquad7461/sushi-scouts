@@ -1,26 +1,26 @@
 import "package:flutter/material.dart";
 import "package:google_fonts/google_fonts.dart";
 import "package:sushi_scouts/src/logic/constants.dart";
-import "package:sushi_scouts/src/logic/data/Data.dart";
+import "package:sushi_scouts/src/logic/data/data.dart";
 import "package:sushi_scouts/src/logic/data/config_file_reader.dart";
-import "package:sushi_scouts/src/logic/deviceType.dart";
+import "package:sushi_scouts/src/logic/device_type.dart";
 import "package:sushi_scouts/src/logic/models/scouting_data_models/component.dart";
 import "package:sushi_scouts/src/logic/models/scouting_data_models/page.dart";
 import "package:sushi_scouts/src/logic/models/scouting_data_models/scouting_data.dart";
 import "package:sushi_scouts/src/logic/models/scouting_data_models/section.dart";
 
 class ScoutingLayout extends StatelessWidget {
-  ScoutingData currentScoutingData;
-  Screen? currentPage;
-  Size size;
-  Function(bool) error;
+  final ScoutingData currentScoutingData;
+  final Screen? currentPage;
+  final Size size;
+  final Function(bool) error;
   ScoutingLayout(
       {Key? key,
       required this.currentScoutingData,
       required this.error,
       required this.size})
-      : super(key: key) {
-    currentPage = currentScoutingData.getCurrentPage();
+      : currentPage = currentScoutingData.getCurrentPage(),
+        super(key: key) {
     if (currentPage == null) {
       throw ErrorDescription("No pages found");
     }
@@ -54,14 +54,14 @@ class ScoutingLayout extends StatelessWidget {
         }
         Data currData = section.values[i];
 
-        if (!COMPONENT_MAP.containsKey(currComponent.component)) {
+        if (!componentMap.containsKey(currComponent.component)) {
           throw ErrorDescription(
               "No component exsits called: ${currComponent.component}");
         }
 
         var colors = Theme.of(context);
 
-        builtComponents.add(COMPONENT_MAP.containsKey(currComponent.component)
+        builtComponents.add(componentMap.containsKey(currComponent.component)
             ? Padding(
                 padding: EdgeInsets.only(
                     top: size.height *
@@ -69,7 +69,7 @@ class ScoutingLayout extends StatelessWidget {
                             ? 0.15 /
                                 currentPage!.getComponentsPerRow(currColumn)
                             : 0)),
-                child: COMPONENT_MAP[currComponent.component](
+                child: componentMap[currComponent.component](
                     Key("${currentScoutingData.name}${currComponent.name}"),
                     currComponent.name,
                     currData,

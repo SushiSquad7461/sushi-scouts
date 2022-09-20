@@ -7,7 +7,7 @@ import "package:sushi_scouts/src/logic/blocs/file_reader_bloc/file_reader_cubit.
 import "package:sushi_scouts/src/logic/blocs/scouting_method_bloc/scouting_method_cubit.dart";
 import "package:sushi_scouts/src/logic/blocs/theme_bloc/theme_cubit.dart";
 import "package:sushi_scouts/src/logic/helpers/routing_helper.dart";
-import "package:sushi_scouts/src/logic/helpers/size/ScreenSize.dart";
+import "package:sushi_scouts/src/logic/helpers/size/screen_size.dart";
 import "package:sushi_scouts/src/views/ui/app_choser.dart";
 
 import "../../logic/data/config_file_reader.dart";
@@ -45,8 +45,13 @@ class LoadingState extends State<Loading> with TickerProviderStateMixin {
 
   Future<void> loadConfig() async {
     await BlocProvider.of<ThemeCubit>(context).setMode();
+
+    if (!mounted) return;
     await BlocProvider.of<FileReaderCubit>(context).readConfig();
+
     var reader = ConfigFileReader.instance;
+
+    if (!mounted) return;
     BlocProvider.of<ScoutingMethodCubit>(context).changeMethod(
         reader.getScoutingMethods().isNotEmpty
             ? reader.getScoutingMethods()[0]

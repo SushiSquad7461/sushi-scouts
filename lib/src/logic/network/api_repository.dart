@@ -1,3 +1,5 @@
+import "dart:developer";
+
 import "package:dio/dio.dart";
 import "package:sushi_scouts/src/logic/helpers/error_helper.dart";
 import "package:sushi_scouts/src/logic/helpers/secret/secret.dart";
@@ -22,7 +24,7 @@ class ApiRepository {
     try {
       return await _restClient!.getMatchSchedule(event, tournamentLevel);
     } catch (error) {
-      print(ErrorHelper.handleError(error as Exception));
+      log(ErrorHelper.handleError(error as Exception));
       return null;
     }
   }
@@ -33,7 +35,7 @@ class ApiRepository {
     try {
       return await _restClient!.getConfigFile(year, teamNum);
     } catch (error) {
-      print(ErrorHelper.handleError(error as Exception));
+      log(ErrorHelper.handleError(error as Exception));
     }
     return null;
   }

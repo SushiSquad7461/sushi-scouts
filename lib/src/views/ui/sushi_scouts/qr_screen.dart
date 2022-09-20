@@ -7,16 +7,16 @@ import "package:localstore/localstore.dart";
 import "package:qr_flutter/qr_flutter.dart";
 import "package:sushi_scouts/src/logic/blocs/login_bloc/login_cubit.dart";
 import "package:sushi_scouts/src/logic/blocs/scouting_method_bloc/scouting_method_cubit.dart";
-import "package:sushi_scouts/src/logic/data/Compressor.dart";
+import "package:sushi_scouts/src/logic/data/compressor.dart";
 import "package:sushi_scouts/src/logic/data/config_file_reader.dart";
 import "package:sushi_scouts/src/logic/helpers/routing_helper.dart";
-import "package:sushi_scouts/src/logic/helpers/size/ScreenSize.dart";
+import "package:sushi_scouts/src/logic/helpers/size/screen_size.dart";
 import "package:sushi_scouts/src/logic/models/compressed_data_model.dart";
 import "package:sushi_scouts/src/logic/models/scouting_data_models/scouting_data.dart";
 import "package:sushi_scouts/src/views/ui/sushi_scouts/scouting.dart";
 import "package:sushi_scouts/src/views/util/header/header_title/header_title.dart";
 
-import "../../../logic/deviceType.dart";
+import "../../../logic/device_type.dart";
 
 class QRScreen extends StatefulWidget {
   final db = Localstore.instance;
@@ -44,6 +44,8 @@ class _QRScreenState extends State<QRScreen> {
       Compressor compressor =
           Compressor(currentScoutingData!.getData(), pageIndex);
       String newData;
+
+      if (!mounted) return;
 
       if (unprocessedData == null) {
         newData = compressor.firstCompress();

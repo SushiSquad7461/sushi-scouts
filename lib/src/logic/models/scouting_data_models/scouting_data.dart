@@ -1,7 +1,6 @@
-import "package:json_annotation/json_annotation.dart";
 import "package:sushi_scouts/src/logic/data/config_file_reader.dart";
 
-import "../../data/Data.dart";
+import "../../data/data.dart";
 import "component.dart";
 import "page.dart";
 
@@ -90,7 +89,6 @@ class ScoutingData {
     return data;
   }
 
-  @JsonSerializable(explicitToJson: true)
   Map<String, dynamic> toJson() {
     Map<String, dynamic> json = {};
     json["name"] = name;

@@ -1,8 +1,8 @@
 import "package:flutter/material.dart";
-import "package:sushi_scouts/src/logic/deviceType.dart";
-import "package:sushi_scouts/src/logic/helpers/size/ScreenSize.dart";
+import "package:sushi_scouts/src/logic/device_type.dart";
+import "package:sushi_scouts/src/logic/helpers/size/screen_size.dart";
 
-import "../../../logic/data/Data.dart";
+import "../../../logic/data/data.dart";
 
 class Select extends StatefulWidget {
   final String name;
@@ -12,9 +12,9 @@ class Select extends StatefulWidget {
   final Color textColor;
   final double width;
   final bool setCommonValue;
-  late List<String> values;
+  late final List<String> values;
   late final bool isRow;
-  Map<String, bool> checked = {};
+  final Map<String, bool> checked = {};
   Select(
       {Key? key,
       required this.name,

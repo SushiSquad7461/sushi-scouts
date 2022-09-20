@@ -2,7 +2,7 @@
   The Data classes purpose is to store the current value of a component.
   It currently supports strings and numbers.
 */
-import "../helpers/Constants.dart";
+import "../helpers/constants.dart";
 import "../models/scouting_data_models/component.dart";
 
 class Data<ValueType> {
@@ -94,7 +94,7 @@ class Data<ValueType> {
 
       int? diffBetweenLast =
           lastTime?.difference(DateTime.now()).inMilliseconds;
-      if (diffBetweenLast!.abs() > MIN_TIMESTAMP_DIFFERENCE) {
+      if (diffBetweenLast!.abs() > minTimestampDifference) {
         timestamps[diffBetweenInitial!] = currValue;
         lastTime = DateTime.now();
       }

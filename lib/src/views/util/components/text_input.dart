@@ -1,9 +1,9 @@
 import "package:flutter/material.dart";
 import "package:google_fonts/google_fonts.dart";
-import "package:sushi_scouts/src/logic/deviceType.dart";
+import "package:sushi_scouts/src/logic/device_type.dart";
 
-import "../../../logic/data/Data.dart";
-import "../../../logic/helpers/size/ScreenSize.dart";
+import "../../../logic/data/data.dart";
+import "../../../logic/helpers/size/screen_size.dart";
 
 class TextInput extends StatefulWidget {
   final String name;

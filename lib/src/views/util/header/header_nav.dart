@@ -4,19 +4,19 @@ import "package:google_fonts/google_fonts.dart";
 import "package:sushi_scouts/src/logic/blocs/scouting_method_bloc/scouting_method_cubit.dart";
 import "package:sushi_scouts/src/logic/helpers/color/hex_color.dart";
 import "package:sushi_scouts/src/logic/helpers/routing_helper.dart";
-import "package:sushi_scouts/src/logic/helpers/size/ScreenSize.dart";
+import "package:sushi_scouts/src/logic/helpers/size/screen_size.dart";
 import "package:sushi_scouts/src/views/ui/sushi_scouts/scouting.dart";
 import "package:sushi_scouts/src/views/ui/settings.dart";
 import "package:sushi_scouts/src/views/ui/sushi_supervise/upload.dart";
 
 import "../../../logic/data/config_file_reader.dart";
-import "../../../logic/deviceType.dart";
+import "../../../logic/device_type.dart";
 import "../../ui/sushi_supervise/edit.dart";
 
 class HeaderNav extends StatelessWidget {
   final String currentPage;
   final bool isSupervise;
-  late List<String> screens;
+  late final List<String> screens;
 
   HeaderNav({Key? key, required this.currentPage, this.isSupervise = false})
       : super(key: key) {

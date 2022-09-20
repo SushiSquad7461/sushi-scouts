@@ -1,9 +1,9 @@
 import "package:flutter/material.dart";
 import "package:google_fonts/google_fonts.dart";
-import "package:sushi_scouts/src/logic/helpers/size/ScreenSize.dart";
+import "package:sushi_scouts/src/logic/helpers/size/screen_size.dart";
 
-import "../../../logic/data/Data.dart";
-import "../../../logic/deviceType.dart";
+import "../../../logic/data/data.dart";
+import "../../../logic/device_type.dart";
 
 class Dropdown extends StatefulWidget {
   final String name;
@@ -13,8 +13,7 @@ class Dropdown extends StatefulWidget {
   final Color textColor;
   final double width;
   final bool setCommonValue;
-  List<String> values;
-  String currentValue = "";
+  final List<String> values;
   Dropdown(
       {Key? key,
       required this.name,
@@ -26,8 +25,6 @@ class Dropdown extends StatefulWidget {
       required this.values,
       required this.setCommonValue})
       : super(key: key) {
-    currentValue =
-        data.setByUser ? values[double.parse(data.get()).floor()] : " ";
     if (!values.contains(" ")) {
       values.add(" ");
     }
@@ -61,6 +58,17 @@ class Dropdown extends StatefulWidget {
 }
 
 class DropdownState extends State<Dropdown> {
+  // Check my comment on checkbox.dart to see what effect this will have.
+  String _currentValue = "";
+
+  @override
+  void initState() {
+    super.initState();
+    _currentValue = widget.data.setByUser
+        ? widget.values[double.parse(widget.data.get()).floor()]
+        : " ";
+  }
+
   @override
   Widget build(BuildContext context) {
     double width = widget.width;
@@ -98,7 +106,7 @@ class DropdownState extends State<Dropdown> {
                         child: DropdownButtonHideUnderline(
                             child: DropdownButton<String>(
                           isExpanded: true,
-                          value: widget.currentValue,
+                          value: _currentValue,
                           icon: const Icon(Icons.arrow_drop_down_rounded),
                           elevation: (width / 100.0 * 3).floor(),
                           dropdownColor: colors.scaffoldBackgroundColor,
@@ -116,7 +124,7 @@ class DropdownState extends State<Dropdown> {
                                   widget.values.indexOf(newValue) * 1.0,
                                   setByUser: newValue != " ");
                               setState(() {
-                                widget.currentValue = newValue;
+                                _currentValue = newValue;
                               });
                               build(context);
                             }

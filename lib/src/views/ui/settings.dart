@@ -8,25 +8,25 @@ import "package:flutter_svg/svg.dart";
 import "package:get/get.dart";
 import "package:google_fonts/google_fonts.dart";
 import "package:localstore/localstore.dart";
-import "package:sushi_scouts/src/logic/Constants.dart";
+import "package:sushi_scouts/src/logic/constants.dart";
 
 import "package:sushi_scouts/src/logic/blocs/login_bloc/login_cubit.dart";
 import "package:sushi_scouts/src/logic/blocs/theme_bloc/theme_cubit.dart";
 import "package:sushi_scouts/src/logic/data/config_file_reader.dart";
-import "package:sushi_scouts/src/logic/deviceType.dart";
+import "package:sushi_scouts/src/logic/device_type.dart";
 import "package:sushi_scouts/src/logic/helpers/routing_helper.dart";
 import "package:sushi_scouts/src/logic/helpers/secret/secret.dart";
 import "package:sushi_scouts/src/logic/helpers/secret/secret_loader.dart";
-import "package:sushi_scouts/src/logic/helpers/size/ScreenSize.dart";
+import "package:sushi_scouts/src/logic/helpers/size/screen_size.dart";
 import "package:sushi_scouts/src/logic/models/match_schedule.dart";
 import "package:sushi_scouts/src/logic/network/api_repository.dart";
 import "package:sushi_scouts/src/views/ui/app_choser.dart";
 import "package:sushi_scouts/src/views/ui/loading.dart";
-import "package:sushi_scouts/src/views/util/footer/supervisefooter.dart";
+import "package:sushi_scouts/src/views/util/footer/supervise_footer.dart";
 import "package:sushi_scouts/src/views/util/header/header_nav.dart";
 import "package:sushi_scouts/src/views/util/header/header_title/header_title.dart";
 import "../../../main.dart";
-import "../util/Footer/Footer.dart";
+import "../util/Footer/footer.dart";
 
 class Settings extends StatefulWidget {
   const Settings({Key? key}) : super(key: key);
@@ -115,7 +115,7 @@ class _SettingsState extends State<Settings> {
 
   Future<void> uploadData() async {
     final upload =
-        await Localstore.instance.collection(SUPERVISE_DATABASE_NAME).get();
+        await Localstore.instance.collection(superviseDatabaseName).get();
     final db = FirebaseFirestore.instance;
 
     for (var i in upload!.keys) {
@@ -128,19 +128,16 @@ class _SettingsState extends State<Settings> {
         await FirebaseFirestore.instance.collection(collectionName).get();
 
     for (var i in toAdd.docs) {
-      db.collection(SUPERVISE_DATABASE_NAME).doc(i.id).set(i.data());
+      db.collection(superviseDatabaseName).doc(i.id).set(i.data());
     }
   }
 
   Future<void> wipeData() async {
     var db = Localstore.instance;
-    final delete = await db.collection(SUPERVISE_DATABASE_NAME).get();
+    final delete = await db.collection(superviseDatabaseName).get();
 
     for (var i in delete!.keys) {
-      await db
-          .collection(SUPERVISE_DATABASE_NAME)
-          .doc(i.split("/")[2])
-          .delete();
+      await db.collection(superviseDatabaseName).doc(i.split("/")[2]).delete();
     }
   }
 

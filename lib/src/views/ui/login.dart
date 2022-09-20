@@ -1,3 +1,4 @@
+import "package:flutter/foundation.dart";
 import "package:flutter/material.dart";
 import "package:flutter/services.dart";
 import "package:flutter_bloc/flutter_bloc.dart";
@@ -7,18 +8,18 @@ import "package:localstore/localstore.dart";
 import "package:sushi_scouts/src/logic/blocs/login_bloc/login_cubit.dart";
 import "package:sushi_scouts/src/logic/helpers/color/hex_color.dart";
 import "package:sushi_scouts/src/logic/helpers/routing_helper.dart";
-import "package:sushi_scouts/src/logic/helpers/size/ScreenSize.dart";
+import "package:sushi_scouts/src/logic/helpers/size/screen_size.dart";
 import "package:sushi_scouts/src/views/ui/sushi_scouts/scouting.dart";
 import "package:sushi_scouts/src/views/ui/sushi_supervise/upload.dart";
 import "package:sushi_scouts/src/views/util/header/header_title/header_title.dart";
 import "package:sushi_scouts/src/views/util/popups/incorrect_password.dart";
 
 import "../../logic/data/config_file_reader.dart";
-import "../../logic/deviceType.dart";
+import "../../logic/device_type.dart";
 
 class Login extends StatefulWidget {
-  final bool sushi_scouts;
-  const Login({Key? key, this.sushi_scouts = true}) : super(key: key);
+  final bool sushiScouts;
+  const Login({Key? key, this.sushiScouts = true}) : super(key: key);
 
   @override
   State<Login> createState() => _LoginState();
@@ -38,7 +39,7 @@ class _LoginState extends State<Login> {
   final reader = ConfigFileReader.instance;
 
   Future<void> nextPage(BuildContext context) async {
-    if (widget.sushi_scouts) {
+    if (widget.sushiScouts) {
       if (teamNum != null && name != null && eventCode != null) {
         await BlocProvider.of<LoginCubit>(context)
             .loginSushiScouts(name!, teamNum!, eventCode!);
@@ -71,7 +72,7 @@ class _LoginState extends State<Login> {
           eventCode = userInfo["eventCode"];
         }
 
-        if (widget.sushi_scouts) {
+        if (widget.sushiScouts) {
           if (userInfo["name"] != null && userInfo["name"] != "") {
             _nameController.text = userInfo["name"];
             name = userInfo["name"];
@@ -88,18 +89,20 @@ class _LoginState extends State<Login> {
 
   @override
   Widget build(BuildContext context) {
-    print(ScreenSize.width);
+    if (kDebugMode) {
+      print(ScreenSize.width);
+    }
     var colors = Theme.of(context);
     bool isPhoneScreen = isPhone(context);
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: Column(
         children: [
-          HeaderTitle(isSupervise: !widget.sushi_scouts),
+          HeaderTitle(isSupervise: !widget.sushiScouts),
           SizedBox(
             width: ScreenSize.width,
             height: ScreenSize.height *
-                (isPhoneScreen ? (widget.sushi_scouts ? 0.89 : 0.88) : 0.9),
+                (isPhoneScreen ? (widget.sushiScouts ? 0.89 : 0.88) : 0.9),
             child: Stack(
               fit: StackFit.expand,
               children: [
@@ -109,10 +112,10 @@ class _LoginState extends State<Login> {
                     children: [
                       SvgPicture.asset(
                         isPhoneScreen
-                            ? (widget.sushi_scouts
+                            ? (widget.sushiScouts
                                 ? "./assets/images/mobile_footer.svg"
                                 : "./assets/images/mobilesupervisefooter.svg")
-                            : (widget.sushi_scouts
+                            : (widget.sushiScouts
                                 ? "./assets/images/colorbar.svg"
                                 : (colors.scaffoldBackgroundColor ==
                                         Colors.black
@@ -130,13 +133,13 @@ class _LoginState extends State<Login> {
                                 (isPhoneScreen
                                     ? isPhoneScreen
                                         ? 0
-                                        : (widget.sushi_scouts ? 0.32 : 0.09)
+                                        : (widget.sushiScouts ? 0.32 : 0.09)
                                     : 0.2),
                             left:
                                 ScreenSize.width * (isPhoneScreen ? 0.075 : 0),
                             bottom: ScreenSize.height *
                                 (isPhoneScreen
-                                    ? (widget.sushi_scouts ? 0.12 : 0.085)
+                                    ? (widget.sushiScouts ? 0.12 : 0.085)
                                     : 0),
                           ),
                           child: Container(
@@ -144,7 +147,7 @@ class _LoginState extends State<Login> {
                                   ScreenSize.width * (isPhoneScreen ? 0.85 : 1),
                               height: ScreenSize.height * 0.058,
                               decoration: BoxDecoration(
-                                color: !widget.sushi_scouts && isPhoneScreen
+                                color: !widget.sushiScouts && isPhoneScreen
                                     ? HexColor("#4F4F4F")
                                     : colors.primaryColorDark,
                                 borderRadius: BorderRadius.all(Radius.circular(
@@ -152,7 +155,7 @@ class _LoginState extends State<Login> {
                               ),
                               child: TextButton(
                                 onPressed: () {
-                                  if (!widget.sushi_scouts &&
+                                  if (!widget.sushiScouts &&
                                       !reader.checkPassword(password ?? "")) {
                                     showDialog(
                                         context: context,
@@ -168,7 +171,7 @@ class _LoginState extends State<Login> {
                                       fontSize: 35 * ScreenSize.swu,
                                       fontFamily: "Sushi",
                                       color: colors.primaryColor,
-                                      fontWeight: widget.sushi_scouts
+                                      fontWeight: widget.sushiScouts
                                           ? FontWeight.bold
                                           : FontWeight.w100),
                                 ),
@@ -256,7 +259,7 @@ class _LoginState extends State<Login> {
                             })),
                   ),
                 ),
-                widget.sushi_scouts
+                widget.sushiScouts
                     ? Align(
                         alignment: const Alignment(0, 0.1),
                         child: SizedBox(

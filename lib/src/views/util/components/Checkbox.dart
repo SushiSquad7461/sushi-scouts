@@ -1,8 +1,8 @@
 import "package:flutter/material.dart";
-import "package:sushi_scouts/src/logic/deviceType.dart";
+import "package:sushi_scouts/src/logic/device_type.dart";
 
-import "../../../logic/data/Data.dart";
-import "../../../logic/helpers/size/ScreenSize.dart";
+import "../../../logic/data/data.dart";
+import "../../../logic/helpers/size/screen_size.dart";
 
 class CheckboxInput extends StatefulWidget {
   final String name;
@@ -13,8 +13,7 @@ class CheckboxInput extends StatefulWidget {
   final double width;
   final List<String>? values;
   final bool setCommonValue;
-  bool checked = false;
-  CheckboxInput(
+  const CheckboxInput(
       {Key? key,
       required this.name,
       required this.data,
@@ -54,6 +53,11 @@ class CheckboxInput extends StatefulWidget {
 }
 
 class CheckboxState extends State<CheckboxInput> {
+  // Perhaps you guys intentionally had the box unchecked on widget render,
+  // but this code change will make it remember state on widget render. (I think)
+  // Something to just keep in mind.
+  bool _checked = false;
+
   Color getColor(Set<MaterialState> states) {
     const Set<MaterialState> interactiveStates = <MaterialState>{
       MaterialState.pressed,
@@ -88,9 +92,9 @@ class CheckboxState extends State<CheckboxInput> {
             child: Column(children: [
               GestureDetector(
                 onTap: () {
-                  widget.data.set(!widget.checked, setByUser: true);
+                  widget.data.set(!_checked, setByUser: true);
                   setState(() {
-                    widget.checked = !widget.checked;
+                    _checked = !_checked;
                   });
                 },
                 child: Row(
@@ -111,10 +115,9 @@ class CheckboxState extends State<CheckboxInput> {
                                   MaterialStateProperty.resolveWith(getColor),
                               value: widget.data.get() == "true",
                               onChanged: (bool? value) {
-                                widget.data
-                                    .set(!widget.checked, setByUser: true);
+                                widget.data.set(!_checked, setByUser: true);
                                 setState(() {
-                                  widget.checked = !widget.checked;
+                                  _checked = !_checked;
                                 });
                               },
                             )),
@@ -122,7 +125,7 @@ class CheckboxState extends State<CheckboxInput> {
                         decoration: isPhoneScreen
                             ? BoxDecoration(
                                 border: Border.all(
-                                  color: widget.checked
+                                  color: _checked
                                       ? widget.color
                                       : colors.scaffoldBackgroundColor,
                                   width: ScreenSize.width * 0.01,
