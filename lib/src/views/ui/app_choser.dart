@@ -24,7 +24,7 @@ class AppChooser extends StatelessWidget {
         ),
         GestureDetector(
           onTap: () => {
-            RouteHelper.pushAndRemoveUntilToScreen(0,0,
+            RouteHelper.pushAndRemoveUntilToScreen(0, 0,
                 ctx: context, screen: const Login(sushi_scouts: false))
           },
           child: SvgPicture.asset(
@@ -34,7 +34,7 @@ class AppChooser extends StatelessWidget {
         ),
         GestureDetector(
           onTap: () => {
-            RouteHelper.pushAndRemoveUntilToScreen(0,0,
+            RouteHelper.pushAndRemoveUntilToScreen(0, 0,
                 ctx: context, screen: const Login(sushi_scouts: true))
           },
           child: SvgPicture.asset(

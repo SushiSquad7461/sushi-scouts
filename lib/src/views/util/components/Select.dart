@@ -168,7 +168,7 @@ class SelectState extends State<Select> {
                           child: Text(value,
                               style: TextStyle(
                                   fontFamily: "Sushi",
-                                  fontSize: isPhone(context) 
+                                  fontSize: isPhone(context)
                                       ? ScreenSize.height * 0.03
                                       : widget.width / 8,
                                   fontWeight: isPhoneScreen

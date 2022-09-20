@@ -8,8 +8,8 @@ import 'package:sushi_scouts/src/views/util/scouting_layout.dart';
 class EditContent extends StatefulWidget {
   ScoutingData currentScoutingData;
   late Size size;
-  EditContent({Key? key, required this.currentScoutingData}) : super(key: key){
-    size = Size(ScreenSize.width*0.8, ScreenSize.height*0.8);
+  EditContent({Key? key, required this.currentScoutingData}) : super(key: key) {
+    size = Size(ScreenSize.width * 0.8, ScreenSize.height * 0.8);
   }
 
   @override
@@ -24,7 +24,10 @@ class EditContentState extends State<EditContent> {
       height: widget.size.height,
       child: Column(
         children: [
-          ScoutingLayout(currentScoutingData: widget.currentScoutingData, error: (bool b) => b, size: widget.size)
+          ScoutingLayout(
+              currentScoutingData: widget.currentScoutingData,
+              error: (bool b) => b,
+              size: widget.size)
         ],
       ),
     );

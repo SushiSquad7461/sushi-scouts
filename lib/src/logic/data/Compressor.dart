@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:sushi_scouts/src/logic/data/Data.dart' as Data;
 
-class Compressor{
+class Compressor {
   final List<Data.Data> data;
   final List<bool> partial = [];
   int screen;
@@ -11,16 +11,17 @@ class Compressor{
   Compressor(this.data, this.screen);
 
   static String setBackUp(String compressedData) {
-    return String.fromCharCode(compressedData.runes.toList()[0] | 1) + compressedData.substring(1);
+    return String.fromCharCode(compressedData.runes.toList()[0] | 1) +
+        compressedData.substring(1);
   }
 
   void encode() {
-    addInt(screen+1, 4);
+    addInt(screen + 1, 4);
 
-    for( Data.Data d in data) {
-      if(d.currValue is bool) {
+    for (Data.Data d in data) {
+      if (d.currValue is bool) {
         addNum(d.currValue as bool ? 1 : 0);
-      } else if(d.currValue is double) {
+      } else if (d.currValue is double) {
         addNum((d.currValue as double).floor());
       } else {
         addString(d.get());
@@ -29,9 +30,10 @@ class Compressor{
   }
 
   String getCompressedString() {
-    List<int> compressed = List.filled((partial.length/16).floor()+1, 0);
-    for(int i = 0; i<partial.length; i++) {
-      compressed[(i/16).floor()] = compressed[(i/16).floor()] | (partial[i] ? 1 : 0)<<(i%16);
+    List<int> compressed = List.filled((partial.length / 16).floor() + 1, 0);
+    for (int i = 0; i < partial.length; i++) {
+      compressed[(i / 16).floor()] =
+          compressed[(i / 16).floor()] | (partial[i] ? 1 : 0) << (i % 16);
     }
     return String.fromCharCodes(compressed);
   }
@@ -45,53 +47,55 @@ class Compressor{
   }
 
   String addTo(String prev, int length) {
-    int rune = prev.runes.toList()[prev.length-1];
-    for (int i = 0; i<(length%16); i++) {
-      partial.add(rune & (1<<i) != 0);
+    int rune = prev.runes.toList()[prev.length - 1];
+    for (int i = 0; i < (length % 16); i++) {
+      partial.add(rune & (1 << i) != 0);
     }
     encode();
     String additional = getCompressedString();
-    return prev.substring(0, prev.length-1) + additional;
+    return prev.substring(0, prev.length - 1) + additional;
   }
 
   static String update(String prev, int length, String newContent) {
     final List<bool> partial = [];
-    int lastRune = prev.runes.toList()[prev.length-1];
+    int lastRune = prev.runes.toList()[prev.length - 1];
     bool firstItem = true;
 
-    for (int i = 0; i<(length%16); i++) {
-      partial.add(lastRune & (1<<i) != 0);
+    for (int i = 0; i < (length % 16); i++) {
+      partial.add(lastRune & (1 << i) != 0);
     }
     List<bool> temp = [];
     for (int rune in newContent.runes) {
-      for (int i = 0; i<16; i++) {
-        if(firstItem) {
-           firstItem = false;
+      for (int i = 0; i < 16; i++) {
+        if (firstItem) {
+          firstItem = false;
         } else {
-          temp.add(rune & (1<<i) != 0);
-          partial.add(rune & (1<<i) != 0);
-        } 
+          temp.add(rune & (1 << i) != 0);
+          partial.add(rune & (1 << i) != 0);
+        }
       }
     }
-    List<int> compressed = List.filled((partial.length/16).floor()+1, 0);
-    for(int i = 0; i<partial.length; i++) {
-      compressed[(i/16).floor()] = compressed[(i/16).floor()] | (partial[i] ? 1 : 0)<<(i%16);
+    List<int> compressed = List.filled((partial.length / 16).floor() + 1, 0);
+    for (int i = 0; i < partial.length; i++) {
+      compressed[(i / 16).floor()] =
+          compressed[(i / 16).floor()] | (partial[i] ? 1 : 0) << (i % 16);
     }
-    return prev.substring(0, prev.length-1) + String.fromCharCodes(compressed).substring(0, compressed.length);
+    return prev.substring(0, prev.length - 1) +
+        String.fromCharCodes(compressed).substring(0, compressed.length);
   }
 
   int getLength() => length;
-  
+
   void addNum(int i) {
-    if(i < 8) {
+    if (i < 8) {
       partial.add(false);
       partial.add(false);
       addInt(i, 3);
-    } else if (i < 128 ) {
+    } else if (i < 128) {
       partial.add(false);
       partial.add(true);
       addInt(i, 7);
-    } else if(i< 16384 ) {
+    } else if (i < 16384) {
       partial.add(true);
       partial.add(false);
       addInt(i, 14);
@@ -111,8 +115,8 @@ class Compressor{
   }
 
   void addInt(int num, int len) {
-    for(int i = 0; i<len; i++) {
-      partial.add(num&(1<<i) != 0);
+    for (int i = 0; i < len; i++) {
+      partial.add(num & (1 << i) != 0);
     }
   }
 }

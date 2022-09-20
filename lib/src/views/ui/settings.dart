@@ -403,7 +403,9 @@ class _SettingsState extends State<Settings> {
                           width: ScreenSize.width,
                           height: ScreenSize.height * 0.19,
                           child: SvgPicture.asset(
-                            colors.scaffoldBackgroundColor == Colors.white ? "./assets/images/mobilefooter.svg" : "./assets/images/mobilefooterdark.svg",
+                            colors.scaffoldBackgroundColor == Colors.white
+                                ? "./assets/images/mobilefooter.svg"
+                                : "./assets/images/mobilefooterdark.svg",
                             width: ScreenSize.width,
                             fit: BoxFit.cover,
                           ),

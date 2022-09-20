@@ -56,7 +56,10 @@ class ScoutingState extends State<Scouting> {
                   child: SizedBox(
                     width: ScreenSize.width,
                     height: ScreenSize.height * (isPhoneScreen ? 0.58 : 0.61),
-                    child: ScoutingLayout(currentScoutingData: currentScoutingData!, error: (bool b) => error=b, size: ScreenSize.get()),
+                    child: ScoutingLayout(
+                        currentScoutingData: currentScoutingData!,
+                        error: (bool b) => error = b,
+                        size: ScreenSize.get()),
                   ),
                 ),
                 if (!error)

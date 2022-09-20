@@ -19,9 +19,7 @@ class ThemeCubit extends Cubit<ThemeStates> {
     final data = await db.collection("preferences").doc("mode").get();
 
     if (data != null) {
-      data["mode"] == "dark"
-          ? emit(DarkMode())
-          : emit(LightMode());
+      data["mode"] == "dark" ? emit(DarkMode()) : emit(LightMode());
     }
   }
 }

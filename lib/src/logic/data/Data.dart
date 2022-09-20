@@ -42,7 +42,8 @@ class Data<ValueType> {
       logeTimeStamp();
       return true;
     }
-    return false;  }
+    return false;
+  }
 
   // Decrements the current value if it is an number and returns true, otherwise returns false
   bool decrement() {
@@ -65,11 +66,11 @@ class Data<ValueType> {
   }
 
   String getSimplified() {
-   return (currValue is double)
+    return (currValue is double)
         ? (currValue as double).floor().toString()
         : (currValue is bool)
             ? (currValue as bool).toString()
-            : (currValue as String); 
+            : (currValue as String);
   }
 
   void empty() {

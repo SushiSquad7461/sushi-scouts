@@ -29,7 +29,8 @@ class HeaderTitleTabletSupervise extends StatelessWidget {
                 ),
               ),
               ConstrainedBox(
-                constraints: const BoxConstraints(minWidth: 1, minHeight: 1), // here
+                constraints:
+                    const BoxConstraints(minWidth: 1, minHeight: 1), // here
                 child: Image.asset(
                   colors.scaffoldBackgroundColor == Colors.black
                       ? "./assets/images/superviseheaderlogodark.png"

@@ -120,8 +120,11 @@ class TextInputState extends State<TextInput> {
                       ),
                       style: GoogleFonts.mohave(
                           textStyle: TextStyle(
-                              fontSize: phone ? ScreenSize.height * 0.03 : widget.width / 15,
-                              fontWeight: phone ? FontWeight.w100 : FontWeight.w400,
+                              fontSize: phone
+                                  ? ScreenSize.height * 0.03
+                                  : widget.width / 15,
+                              fontWeight:
+                                  phone ? FontWeight.w100 : FontWeight.w400,
                               color: widget.textColor)),
                       keyboardType: TextInputType.multiline,
                       onFieldSubmitted: (value) {
@@ -135,7 +138,9 @@ class TextInputState extends State<TextInput> {
                         widget.name,
                         style: TextStyle(
                             fontFamily: "Sushi",
-                            fontSize: phone ? ScreenSize.height * 0.03 : widget.width / 12,
+                            fontSize: phone
+                                ? ScreenSize.height * 0.03
+                                : widget.width / 12,
                             fontWeight: FontWeight.bold,
                             color: widget.textColor),
                       ))

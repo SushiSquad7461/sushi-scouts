@@ -110,7 +110,9 @@ class RankingState extends State<Ranking> {
                 widget.values![i],
                 style: TextStyle(
                     fontFamily: "Sushi",
-                    fontSize: isPhoneScreen ? ScreenSize.height * 0.04 : widget.width / 8,
+                    fontSize: isPhoneScreen
+                        ? ScreenSize.height * 0.04
+                        : widget.width / 8,
                     fontWeight: FontWeight.bold,
                     color: widget.textColor),
               ),

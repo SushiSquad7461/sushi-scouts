@@ -7,16 +7,16 @@ final ThemeData darkTheme = ThemeData(
   backgroundColor: Colors.black,
   scaffoldBackgroundColor: Colors.black,
   appBarTheme: const AppBarTheme(
-          systemOverlayStyle: SystemUiOverlayStyle.light,
-        ),
+    systemOverlayStyle: SystemUiOverlayStyle.light,
+  ),
 );
 
 final ThemeData lightTheme = ThemeData(
   primaryColor: Colors.white,
   primaryColorDark: Colors.black,
-  backgroundColor:  Colors.white,
+  backgroundColor: Colors.white,
   scaffoldBackgroundColor: Colors.white,
   appBarTheme: const AppBarTheme(
-          systemOverlayStyle: SystemUiOverlayStyle.dark,
-        ),
+    systemOverlayStyle: SystemUiOverlayStyle.dark,
+  ),
 );

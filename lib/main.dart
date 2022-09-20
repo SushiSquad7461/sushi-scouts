@@ -42,7 +42,7 @@ class Wrapper extends StatelessWidget {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       title: "Sushi Scouts",
-      theme: Themes.light, 
+      theme: Themes.light,
       darkTheme: Themes.dark,
       themeMode: ThemeMode.system,
       home: const Scaffold(
@@ -62,7 +62,6 @@ class SushiScouts extends StatefulWidget {
 }
 
 class _SushiScoutsState extends State<SushiScouts> {
-
   @override
   void initState() {
     super.initState();
@@ -75,24 +74,19 @@ class _SushiScoutsState extends State<SushiScouts> {
     ScreenSize.setWidth(MediaQuery.of(context).size.width);
     return MultiBlocProvider(
       providers: providers,
-      child: GestureDetector(
-        onTap: () {
-          FocusScopeNode currentFocus = FocusScope.of(context);
-          if (!currentFocus.hasPrimaryFocus) {
-            currentFocus.unfocus();
-          }
-        },
-        child: BlocBuilder<ThemeCubit, ThemeStates>(
-          builder: (context, state) {
-            return MaterialApp(
-              debugShowCheckedModeBanner: false,
-              theme: state is DarkMode ? darkTheme : lightTheme,
-              home: const Loading(),
-              navigatorKey: SushiScouts.navigatorKey,
-            );
-          }
-        )
-      ),
+      child: GestureDetector(onTap: () {
+        FocusScopeNode currentFocus = FocusScope.of(context);
+        if (!currentFocus.hasPrimaryFocus) {
+          currentFocus.unfocus();
+        }
+      }, child: BlocBuilder<ThemeCubit, ThemeStates>(builder: (context, state) {
+        return MaterialApp(
+          debugShowCheckedModeBanner: false,
+          theme: state is DarkMode ? darkTheme : lightTheme,
+          home: const Loading(),
+          navigatorKey: SushiScouts.navigatorKey,
+        );
+      })),
     );
   }
 }

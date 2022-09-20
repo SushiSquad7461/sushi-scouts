@@ -99,7 +99,8 @@ class _LoginState extends State<Login> {
           HeaderTitle(isSupervise: !widget.sushi_scouts),
           SizedBox(
             width: ScreenSize.width,
-            height: ScreenSize.height * (isPhoneScreen ? (widget.sushi_scouts ? 0.89 : 0.88) : 0.9),
+            height: ScreenSize.height *
+                (isPhoneScreen ? (widget.sushi_scouts ? 0.89 : 0.88) : 0.9),
             child: Stack(
               fit: StackFit.expand,
               children: [
@@ -122,30 +123,33 @@ class _LoginState extends State<Login> {
                         fit: BoxFit.fitWidth,
                       ),
                       if (teamNum != null &&
-                          eventCode != null && 
+                          eventCode != null &&
                           (name != null || password != null))
                         Padding(
                           padding: EdgeInsets.only(
-                              top: ScreenSize.height *
-                                  (isPhoneScreen
-                                      ? 
-                                        isPhoneScreen ? 0 : (widget.sushi_scouts ? 0.32 : 0.09)
-                                      : 0.2),
-                              left: ScreenSize.width *
-                                  (isPhoneScreen ? 0.075 : 0),
-                              bottom: ScreenSize.height * (isPhoneScreen ? (widget.sushi_scouts ? 0.12 : 0.085) : 0),
+                            top: ScreenSize.height *
+                                (isPhoneScreen
+                                    ? isPhoneScreen
+                                        ? 0
+                                        : (widget.sushi_scouts ? 0.32 : 0.09)
+                                    : 0.2),
+                            left:
+                                ScreenSize.width * (isPhoneScreen ? 0.075 : 0),
+                            bottom: ScreenSize.height *
+                                (isPhoneScreen
+                                    ? (widget.sushi_scouts ? 0.12 : 0.085)
+                                    : 0),
                           ),
                           child: Container(
-                              width: ScreenSize.width *
-                                  (isPhoneScreen ? 0.85 : 1),
+                              width:
+                                  ScreenSize.width * (isPhoneScreen ? 0.85 : 1),
                               height: ScreenSize.height * 0.058,
                               decoration: BoxDecoration(
                                 color: !widget.sushi_scouts && isPhoneScreen
                                     ? HexColor("#4F4F4F")
                                     : colors.primaryColorDark,
-                                borderRadius: BorderRadius.all(
-                                    Radius.circular(ScreenSize.swu *
-                                        (isPhoneScreen ? 20 : 0))),
+                                borderRadius: BorderRadius.all(Radius.circular(
+                                    ScreenSize.swu * (isPhoneScreen ? 20 : 0))),
                               ),
                               child: TextButton(
                                 onPressed: () {

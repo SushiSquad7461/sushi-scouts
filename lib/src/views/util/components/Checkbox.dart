@@ -97,44 +97,48 @@ class CheckboxState extends State<CheckboxInput> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      if (!isPhoneScreen) Transform.scale(
-                          scale: width / 170,
-                          child: Checkbox(
-                            side: BorderSide(
-                                color: widget.color,
-                                width: width / 100,
-                                style: BorderStyle.solid),
-                            splashRadius: width / 10,
-                            checkColor: colors.scaffoldBackgroundColor,
-                            fillColor:
-                                MaterialStateProperty.resolveWith(getColor),
-                            value: widget.data.get() == "true",
-                            onChanged: (bool? value) {
-                              widget.data.set(!widget.checked, setByUser: true);
-                              setState(() {
-                                widget.checked = !widget.checked;
-                              });
-                            },
-                          )),
+                      if (!isPhoneScreen)
+                        Transform.scale(
+                            scale: width / 170,
+                            child: Checkbox(
+                              side: BorderSide(
+                                  color: widget.color,
+                                  width: width / 100,
+                                  style: BorderStyle.solid),
+                              splashRadius: width / 10,
+                              checkColor: colors.scaffoldBackgroundColor,
+                              fillColor:
+                                  MaterialStateProperty.resolveWith(getColor),
+                              value: widget.data.get() == "true",
+                              onChanged: (bool? value) {
+                                widget.data
+                                    .set(!widget.checked, setByUser: true);
+                                setState(() {
+                                  widget.checked = !widget.checked;
+                                });
+                              },
+                            )),
                       Container(
                         decoration: isPhoneScreen
-                              ? BoxDecoration(
-                                  border: Border.all(
-                                    color: widget.checked ? widget.color : colors.scaffoldBackgroundColor,
-                                    width: ScreenSize.width * 0.01,
-                                  ),
-                                  borderRadius: BorderRadius.circular(
-                                      ScreenSize.width * 0.04),
-                                )
-                              : null,
-                          padding: isPhoneScreen
-                              ? EdgeInsets.only(
-                                  top: ScreenSize.height * 0.01,
-                                  bottom: ScreenSize.height * 0.01,
-                                  left: ScreenSize.width * 0.015,
-                                  right: ScreenSize.width * 0.015,
-                                )
-                              : null,
+                            ? BoxDecoration(
+                                border: Border.all(
+                                  color: widget.checked
+                                      ? widget.color
+                                      : colors.scaffoldBackgroundColor,
+                                  width: ScreenSize.width * 0.01,
+                                ),
+                                borderRadius: BorderRadius.circular(
+                                    ScreenSize.width * 0.04),
+                              )
+                            : null,
+                        padding: isPhoneScreen
+                            ? EdgeInsets.only(
+                                top: ScreenSize.height * 0.01,
+                                bottom: ScreenSize.height * 0.01,
+                                left: ScreenSize.width * 0.015,
+                                right: ScreenSize.width * 0.015,
+                              )
+                            : null,
                         child: Text(widget.name,
                             style: TextStyle(
                                 fontFamily: "Sushi",

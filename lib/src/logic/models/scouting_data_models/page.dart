@@ -12,14 +12,14 @@ class Screen {
 
   String footer;
   List<Section> sections;
- 
+
   factory Screen.fromJson(Map<String, dynamic> json) => _$ScreenFromJson(json);
   Map<String, dynamic> toJson() => _$ScreenToJson(this);
 
   List<String> notFilled() {
     List<String> ret = [];
     for (Section i in sections) {
-      for( String s in i.notFilled()) {
+      for (String s in i.notFilled()) {
         ret.add(s);
       }
     }
@@ -34,8 +34,8 @@ class Screen {
 
   List<Component> getComponents() {
     List<Component> components = [];
-    for ( Section s in sections) {
-      for ( Component c in s.components) {
+    for (Section s in sections) {
+      for (Component c in s.components) {
         components.add(c);
       }
     }
@@ -44,8 +44,8 @@ class Screen {
 
   List<Data> getValues() {
     List<Data> data = [];
-    for ( Section s in sections) {
-      for ( Data d in s.values) {
+    for (Section s in sections) {
+      for (Data d in s.values) {
         data.add(d);
       }
     }
@@ -59,5 +59,4 @@ class Screen {
     }
     return ret;
   }
-
 }

@@ -8,8 +8,9 @@ class MatchSchedule {
 
   @JsonKey(name: 'Schedule')
   List<Match> schedule;
-  
-  factory MatchSchedule.fromJson(Map<String, dynamic> json) => _$MatchScheduleFromJson(json);
+
+  factory MatchSchedule.fromJson(Map<String, dynamic> json) =>
+      _$MatchScheduleFromJson(json);
   Map<String, dynamic> toJson() => _$MatchScheduleToJson(this);
 }
 

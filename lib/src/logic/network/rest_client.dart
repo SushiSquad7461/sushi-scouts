@@ -15,6 +15,6 @@ abstract class RestClient {
 
   @GET(
       'https://sushi-structeres.herokuapp.com/api/getconfigfile?teamNum={teamNum}&year={year}')
-  Future<String> getConfigFile(@Path('year') int year,
-      @Path('teamNum') int teamNum);
+  Future<String> getConfigFile(
+      @Path('year') int year, @Path('teamNum') int teamNum);
 }

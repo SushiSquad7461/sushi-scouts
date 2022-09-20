@@ -19,7 +19,7 @@ class Loading extends StatefulWidget {
   LoadingState createState() => LoadingState();
 }
 
-class LoadingState extends State<Loading> with TickerProviderStateMixin{
+class LoadingState extends State<Loading> with TickerProviderStateMixin {
   late final AnimationController _controller = AnimationController(
     duration: const Duration(seconds: 2),
     vsync: this,
@@ -33,7 +33,7 @@ class LoadingState extends State<Loading> with TickerProviderStateMixin{
   LoadingState() {
     _timer = Timer(const Duration(milliseconds: 5200), () {
       RouteHelper.pushReplacement(ctx: context, screen: const AppChooser());
-    }); 
+    });
   }
 
   @override
@@ -47,22 +47,22 @@ class LoadingState extends State<Loading> with TickerProviderStateMixin{
     await BlocProvider.of<ThemeCubit>(context).setMode();
     await BlocProvider.of<FileReaderCubit>(context).readConfig();
     var reader = ConfigFileReader.instance;
-    BlocProvider.of<ScoutingMethodCubit>(context).changeMethod(reader.getScoutingMethods().isNotEmpty ? reader.getScoutingMethods()[0] : "", 0);
+    BlocProvider.of<ScoutingMethodCubit>(context).changeMethod(
+        reader.getScoutingMethods().isNotEmpty
+            ? reader.getScoutingMethods()[0]
+            : "",
+        0);
   }
 
   @override
   Widget build(BuildContext context) {
     loadConfig();
     return Scaffold(
-      body: Center(
-        child: RotationTransition(
-          turns: _animation,
-          child: SvgPicture.asset(
-            "./assets/images/${Theme.of(context).scaffoldBackgroundColor == Colors.black ? "darknori" : "nori"}.svg",
-            width: ScreenSize.swu*200
-          )
-        )
-      )
-    );
+        body: Center(
+            child: RotationTransition(
+                turns: _animation,
+                child: SvgPicture.asset(
+                    "./assets/images/${Theme.of(context).scaffoldBackgroundColor == Colors.black ? "darknori" : "nori"}.svg",
+                    width: ScreenSize.swu * 200))));
   }
 }

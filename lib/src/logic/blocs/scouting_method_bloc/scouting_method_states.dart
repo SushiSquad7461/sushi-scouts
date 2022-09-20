@@ -9,4 +9,3 @@ class ScoutingMethodsInitialized extends ScoutingMethodStates {
   final int pageNumber;
   ScoutingMethodsInitialized(this.method, this.pageNumber);
 }
-

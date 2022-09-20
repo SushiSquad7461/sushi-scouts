@@ -18,31 +18,29 @@ class HeaderTitleMobileSupervise extends StatelessWidget {
                 colors.scaffoldBackgroundColor == Colors.black
                     ? "./assets/images/headertitlemobilesupervise.png"
                     : "./assets/images/headertitlemobilesupervise.png",
-                    scale: ScreenSize.width / 20,
+                scale: ScreenSize.width / 20,
               ),
             ),
             Center(
               child: Padding(
                 padding: EdgeInsets.only(
-                    top: ScreenSize.height *
-                        (Device.get().hasNotch ? 0.03 : 0)),
+                    top:
+                        ScreenSize.height * (Device.get().hasNotch ? 0.03 : 0)),
                 child: SizedBox(
                   width: ScreenSize.width * 0.9,
                   child: FittedBox(
                     fit: BoxFit.contain,
-                    child: Text(
-                          "sushi supervise",
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            fontFamily: "Sushi",
-                            fontWeight: FontWeight.bold,
-                            color: colors.primaryColorDark,
-                          )
-                        ),
-                  ),
+                    child: Text("sushi supervise",
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontFamily: "Sushi",
+                          fontWeight: FontWeight.bold,
+                          color: colors.primaryColorDark,
+                        )),
                   ),
                 ),
-                ),
+              ),
+            ),
           ],
         ));
   }

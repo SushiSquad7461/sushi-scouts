@@ -16,6 +16,7 @@ class Component {
   bool setCommonValue;
   bool timestamp;
 
-  factory Component.fromJson(Map<String, dynamic> json) => _$ComponentFromJson(json);
+  factory Component.fromJson(Map<String, dynamic> json) =>
+      _$ComponentFromJson(json);
   Map<String, dynamic> toJson() => _$ComponentToJson(this);
 }

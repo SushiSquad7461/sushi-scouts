@@ -44,9 +44,8 @@ class _EditState extends State<Edit> {
     if (newData != null) {
       setState(() {
         for (var name in newData.keys) {
-          data.addAll({
-            name.split("/")[2]: SuperviseData.fromJson(newData[name])
-          });
+          data.addAll(
+              {name.split("/")[2]: SuperviseData.fromJson(newData[name])});
         }
         print(data);
       });
@@ -62,7 +61,10 @@ class _EditState extends State<Edit> {
       }
 
       if (flagMode || deleteMode) {
-        Localstore.instance.collection(SUPERVISE_DATABASE_NAME).doc(key).set(data[key]!.toJson());
+        Localstore.instance
+            .collection(SUPERVISE_DATABASE_NAME)
+            .doc(key)
+            .set(data[key]!.toJson());
       }
     });
   }
@@ -76,7 +78,6 @@ class _EditState extends State<Edit> {
       fontFamily: "Sushi",
       color: colors.primaryColorDark,
     );
-
 
     return Scaffold(
       backgroundColor:

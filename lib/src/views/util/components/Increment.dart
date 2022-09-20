@@ -23,13 +23,21 @@ class Increment extends StatefulWidget {
       required this.textColor,
       required this.setCommonValue,
       this.values})
-      : super(key: key){
-        double val = double.parse(defaultValue.get());
-        data.set(val==-1.0 ? 0.0 : val, setByUser: true);
-      }
+      : super(key: key) {
+    double val = double.parse(defaultValue.get());
+    data.set(val == -1.0 ? 0.0 : val, setByUser: true);
+  }
 
-  static Increment create(Key key, String name, Data data, List<String>? values,
-      Data defaultValue, Color color, double width, Color textColor, bool setCommonValue,
+  static Increment create(
+      Key key,
+      String name,
+      Data data,
+      List<String>? values,
+      Data defaultValue,
+      Color color,
+      double width,
+      Color textColor,
+      bool setCommonValue,
       double height) {
     return Increment(
       key: key,

@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:sushi_scouts/src/logic/constants.dart';
@@ -10,20 +9,25 @@ import 'package:sushi_scouts/src/logic/models/scouting_data_models/page.dart';
 import 'package:sushi_scouts/src/logic/models/scouting_data_models/scouting_data.dart';
 import 'package:sushi_scouts/src/logic/models/scouting_data_models/section.dart';
 
-class ScoutingLayout extends StatelessWidget{
+class ScoutingLayout extends StatelessWidget {
   ScoutingData currentScoutingData;
   Screen? currentPage;
   Size size;
   Function(bool) error;
-  ScoutingLayout({Key? key, required this.currentScoutingData, required this.error, required this.size}) : super(key: key) {
+  ScoutingLayout(
+      {Key? key,
+      required this.currentScoutingData,
+      required this.error,
+      required this.size})
+      : super(key: key) {
     currentPage = currentScoutingData.getCurrentPage();
     if (currentPage == null) {
       throw ErrorDescription("No pages found");
     }
   }
 
-  Widget _buildSection(
-      double width, Section section, int currColumn, double height, BuildContext context) {
+  Widget _buildSection(double width, Section section, int currColumn,
+      double height, BuildContext context) {
     try {
       double scaledWidth = (width > 500 ? 500 : width);
       var reader = ConfigFileReader.instance;
@@ -62,7 +66,8 @@ class ScoutingLayout extends StatelessWidget{
                 padding: EdgeInsets.only(
                     top: size.height *
                         (i != startComponent
-                            ? 0.15 / currentPage!.getComponentsPerRow(currColumn)
+                            ? 0.15 /
+                                currentPage!.getComponentsPerRow(currColumn)
                             : 0)),
                 child: COMPONENT_MAP[currComponent.component](
                     Key("${currentScoutingData.name}${currComponent.name}"),
@@ -149,17 +154,16 @@ class ScoutingLayout extends StatelessWidget{
                 children: [
                   for (int j = 0; j < rows; j++)
                     Padding(
-                        padding:
-                            EdgeInsets.only(bottom: size.height * 0.01),
+                        padding: EdgeInsets.only(bottom: size.height * 0.01),
                         child: _buildSection(
                             size.width / rows,
                             i,
                             j,
                             size.height *
-                                ((height - currentPage!.sections.length * 0.01) /
-                                    currentPage!.sections.length), 
-                            context)
-                        ),
+                                ((height -
+                                        currentPage!.sections.length * 0.01) /
+                                    currentPage!.sections.length),
+                            context)),
                 ]),
           ),
         ));

@@ -89,14 +89,16 @@ class HeaderNav extends StatelessWidget {
                 : colors.scaffoldBackgroundColor,
             child: Column(
               children: [
-               isPhoneScreen ? Divider(
-                  height: ScreenSize.height * 0.018,
-                  color: colors.primaryColorDark,
-                  thickness: (isPhoneScreen ? 0 : 4) * ScreenSize.shu,
-                ) : Divider(
-                  color: colors.primaryColorDark,
-                  thickness: (isPhoneScreen ? 0 : 4) * ScreenSize.shu,
-                ),
+                isPhoneScreen
+                    ? Divider(
+                        height: ScreenSize.height * 0.018,
+                        color: colors.primaryColorDark,
+                        thickness: (isPhoneScreen ? 0 : 4) * ScreenSize.shu,
+                      )
+                    : Divider(
+                        color: colors.primaryColorDark,
+                        thickness: (isPhoneScreen ? 0 : 4) * ScreenSize.shu,
+                      ),
                 Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     crossAxisAlignment: CrossAxisAlignment.center,
@@ -114,7 +116,9 @@ class HeaderNav extends StatelessWidget {
                                     ? Text(
                                         screen.toUpperCase(),
                                         style: GoogleFonts.mohave(
-                                            fontSize: isPhoneScreen ? ScreenSize.height * 0.023 : ScreenSize.width * 0.05,
+                                            fontSize: isPhoneScreen
+                                                ? ScreenSize.height * 0.023
+                                                : ScreenSize.width * 0.05,
                                             color: (currentPage == screen)
                                                 ? colors.primaryColor
                                                 : HexColor("#4F4F4F")),
@@ -152,14 +156,16 @@ class HeaderNav extends StatelessWidget {
                                                   textStyle: pageStyle),
                                             )))))
                     ]),
-                isPhoneScreen ? Divider(
-                  height: ScreenSize.height * 0.013,
-                  color: colors.primaryColorDark,
-                  thickness: (isPhoneScreen ? 0 : 4) * ScreenSize.shu,
-                ) : Divider(
-                  color: colors.primaryColorDark,
-                  thickness: (isPhoneScreen ? 0 : 4) * ScreenSize.shu,
-                ),
+                isPhoneScreen
+                    ? Divider(
+                        height: ScreenSize.height * 0.013,
+                        color: colors.primaryColorDark,
+                        thickness: (isPhoneScreen ? 0 : 4) * ScreenSize.shu,
+                      )
+                    : Divider(
+                        color: colors.primaryColorDark,
+                        thickness: (isPhoneScreen ? 0 : 4) * ScreenSize.shu,
+                      ),
               ],
             ),
           ),

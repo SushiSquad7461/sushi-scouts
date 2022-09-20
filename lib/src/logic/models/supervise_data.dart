@@ -15,9 +15,11 @@ class SuperviseData {
   String name;
   int teamNum;
 
-  SuperviseData(this.data, this.flagged, this.deleted, this.methodName, this.display1, this.display2, this.name, this.teamNum);
+  SuperviseData(this.data, this.flagged, this.deleted, this.methodName,
+      this.display1, this.display2, this.name, this.teamNum);
 
-  factory SuperviseData.fromJson(Map<String,dynamic> json) => _$SuperviseDataFromJson(json);
-  
+  factory SuperviseData.fromJson(Map<String, dynamic> json) =>
+      _$SuperviseDataFromJson(json);
+
   Map<String, dynamic> toJson() => _$SuperviseDataToJson(this);
 }

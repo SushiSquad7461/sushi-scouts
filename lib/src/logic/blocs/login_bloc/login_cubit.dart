@@ -6,7 +6,8 @@ part 'login_states.dart';
 class LoginCubit extends Cubit<LoginStates> {
   LoginCubit() : super(LoggedOut());
 
-  Future<void> loginSushiScouts(String name, int teamNum, String eventCode) async {
+  Future<void> loginSushiScouts(
+      String name, int teamNum, String eventCode) async {
     var db = Localstore.instance;
     await db.collection("preferences").doc("user").set({
       "name": name,
@@ -17,13 +18,12 @@ class LoginCubit extends Cubit<LoginStates> {
     emit(SushiScoutsLogin(name, teamNum, eventCode));
   }
 
-    Future<void> loginSushiSupervise(String eventCode, int teamNum) async {
-      var db = Localstore.instance;
-      await db.collection("preferences").doc("user").set({
-        "eventCode": eventCode,
-        "teamNum": teamNum,
-        "name": ""
-      });
+  Future<void> loginSushiSupervise(String eventCode, int teamNum) async {
+    var db = Localstore.instance;
+    await db
+        .collection("preferences")
+        .doc("user")
+        .set({"eventCode": eventCode, "teamNum": teamNum, "name": ""});
 
     emit(SushiSuperviseLogin(eventCode, teamNum));
   }

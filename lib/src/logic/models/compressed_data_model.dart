@@ -33,7 +33,8 @@ class CompressedDataModel {
 
 @JsonSerializable(explicitToJson: true)
 class MetadataModel {
-  MetadataModel(this.name, this.configId, this.isBackup, this.teamNum, this.eventCode);
+  MetadataModel(
+      this.name, this.configId, this.isBackup, this.teamNum, this.eventCode);
   String name;
   String configId;
   bool isBackup;
