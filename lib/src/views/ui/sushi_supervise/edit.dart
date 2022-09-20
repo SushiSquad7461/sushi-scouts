@@ -69,8 +69,12 @@ class _EditState extends State<Edit> {
         }
       });
     } else {
-      showDialog(context: context, builder: (context) => EditContent(currentScoutingData: data[key]!.data, title: "${data[key]!.methodName[0].toUpperCase()} - ${data[key]!.display1} - ${data[key]!.display2}"));
+      showDialog(context: context, builder: (context) => EditContent(currentScoutingData: data[key]!.data, editDB: () => updateDB(key), title: "${data[key]!.methodName[0].toUpperCase()} - ${data[key]!.display1} - ${data[key]!.display2}"));
     }
+  }
+
+  void updateDB(key) {
+    Localstore.instance.collection(SUPERVISE_DATABASE_NAME).doc(key).set(data[key]!.toJson());
   }
 
   @override

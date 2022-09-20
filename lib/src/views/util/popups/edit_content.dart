@@ -7,8 +7,9 @@ import 'package:sushi_scouts/src/views/util/scouting_layout.dart';
 class EditContent extends StatefulWidget {
   ScoutingData currentScoutingData;
   String title;
+  Function editDB;
   late Size size;
-  EditContent({Key? key, required this.currentScoutingData, required this.title}) : super(key: key){
+  EditContent({Key? key, required this.currentScoutingData, required this.editDB, required this.title}) : super(key: key){
     size = Size(ScreenSize.width*0.8, ScreenSize.height*0.8);
     print(title);
   }
@@ -66,7 +67,10 @@ class EditContentState extends State<EditContent> {
                         ),
                       ),
                       TextButton(
-                        onPressed: () => Navigator.pop(context), 
+                        onPressed: () {
+                          widget.editDB();
+                          Navigator.pop(context);
+                        }, 
                         child: Container(
                           decoration: BoxDecoration(
                             border: Border.all(
