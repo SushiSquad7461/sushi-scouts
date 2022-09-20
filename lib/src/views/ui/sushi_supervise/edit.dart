@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:localstore/localstore.dart';
 import 'package:sushi_scouts/src/logic/Constants.dart';
-import 'package:sushi_scouts/src/logic/data/SuperviseData.dart';
+import 'package:sushi_scouts/src/logic/models/supervise_data.dart';
 import 'package:sushi_scouts/src/logic/data/config_file_reader.dart';
 import 'package:sushi_scouts/src/logic/helpers/color/hex_color.dart';
 import 'package:sushi_scouts/src/views/util/opacityfilter.dart';
@@ -40,23 +40,15 @@ class _EditState extends State<Edit> {
   Future<void> refreshData() async {
     final newData =
         await Localstore.instance.collection(SUPERVISE_DATABASE_NAME).get();
-
+    print(newData);
     if (newData != null) {
       setState(() {
         for (var name in newData.keys) {
           data.addAll({
-            name.split("/")[2]: SuperviseData(
-              data: newData[name]["data"],
-              flagged: newData[name]["flagged"],
-              deleted: newData[name]["deleted"],
-              teamNum: newData[name]["teamNum"],
-              methodName: newData[name]["method name"],
-              display1: newData[name]["display1"],
-              display2: newData[name]["display2"],
-              name: newData[name]["name"],
-            )
+            name.split("/")[2]: SuperviseData.fromJson(newData[name])
           });
         }
+        print(data);
       });
     }
   }
@@ -70,16 +62,7 @@ class _EditState extends State<Edit> {
       }
 
       if (flagMode || deleteMode) {
-        Localstore.instance.collection(SUPERVISE_DATABASE_NAME).doc(key).set({
-          "data": data[key]!.data,
-          "flagged": data[key]!.flagged,
-          "deleted": data[key]!.deleted,
-          "method name": data[key]!.methodName,
-          "display1": data[key]!.display1,
-          "display2": data[key]!.display2,
-          "name": data[key]!.name,
-          "teamNum": data[key]!.teamNum,
-        });
+        Localstore.instance.collection(SUPERVISE_DATABASE_NAME).doc(key).set(data[key]!.toJson());
       }
     });
   }

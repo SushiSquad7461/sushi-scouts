@@ -57,10 +57,10 @@ class _UploadState extends State<Upload> {
           .doc(
               "${i.stringfy()[0]} - ${reader.getSuperviseDisplayString(i, 1)} - ${reader.getSuperviseDisplayString(i, 2)}::$name ${teamNum.toString()}")
           .set({
-        "data": i.stringfy(),
+        "data": i.toJson(),
         "flagged": false,
         "deleted": false,
-        "method name": i.name,
+        "methodName": i.name,
         "display1": reader.getSuperviseDisplayString(i, 1),
         "display2": reader.getSuperviseDisplayString(i, 2),
         "name": name,

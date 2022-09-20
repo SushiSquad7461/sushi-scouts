@@ -9,7 +9,6 @@ import 'package:sushi_scouts/src/views/ui/loading.dart';
 import 'package:sushi_scouts/src/views/util/themes.dart';
 import 'firebase_options.dart';
 
-
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
