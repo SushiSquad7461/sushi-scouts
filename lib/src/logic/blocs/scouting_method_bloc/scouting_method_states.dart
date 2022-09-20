@@ -1,4 +1,4 @@
-part of 'scouting_method_cubit.dart';
+part of "scouting_method_cubit.dart";
 
 abstract class ScoutingMethodStates {}
 
@@ -9,4 +9,3 @@ class ScoutingMethodsInitialized extends ScoutingMethodStates {
   final int pageNumber;
   ScoutingMethodsInitialized(this.method, this.pageNumber);
 }
-

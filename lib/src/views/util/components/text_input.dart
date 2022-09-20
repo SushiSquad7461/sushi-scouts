@@ -1,9 +1,13 @@
-import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:sushi_scouts/src/logic/deviceType.dart';
+// Flutter imports:
+import "package:flutter/material.dart";
 
-import '../../../logic/data/Data.dart';
-import '../../../logic/helpers/size/ScreenSize.dart';
+// Package imports:
+import "package:google_fonts/google_fonts.dart";
+
+// Project imports:
+import "../../../logic/data/data.dart";
+import "../../../logic/device_type.dart";
+import "../../../logic/helpers/size/screen_size.dart";
 
 class TextInput extends StatefulWidget {
   final String name;
@@ -14,7 +18,7 @@ class TextInput extends StatefulWidget {
   final bool setCommonValue;
   final double height;
 
-  TextInput(
+  const TextInput(
       {Key? key,
       required this.name,
       required this.data,
@@ -120,8 +124,11 @@ class TextInputState extends State<TextInput> {
                       ),
                       style: GoogleFonts.mohave(
                           textStyle: TextStyle(
-                              fontSize: phone ? ScreenSize.height * 0.03 : widget.width / 15,
-                              fontWeight: phone ? FontWeight.w100 : FontWeight.w400,
+                              fontSize: phone
+                                  ? ScreenSize.height * 0.03
+                                  : widget.width / 15,
+                              fontWeight:
+                                  phone ? FontWeight.w100 : FontWeight.w400,
                               color: widget.textColor)),
                       keyboardType: TextInputType.multiline,
                       onFieldSubmitted: (value) {
@@ -135,7 +142,9 @@ class TextInputState extends State<TextInput> {
                         widget.name,
                         style: TextStyle(
                             fontFamily: "Sushi",
-                            fontSize: phone ? ScreenSize.height * 0.03 : widget.width / 12,
+                            fontSize: phone
+                                ? ScreenSize.height * 0.03
+                                : widget.width / 12,
                             fontWeight: FontWeight.bold,
                             color: widget.textColor),
                       ))

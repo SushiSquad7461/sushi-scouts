@@ -1,16 +1,16 @@
-import 'package:sushi_scouts/src/views/util/components/multiselect.dart';
-import 'package:sushi_scouts/src/views/util/components/select.dart';
-import 'package:sushi_scouts/src/views/util/components/ranking.dart';
-import 'package:sushi_scouts/src/views/util/components/text_input.dart';
+// Project imports:
+import "../views/util/components/checkbox.dart";
+import "../views/util/components/dropdown.dart";
+import "../views/util/components/increment.dart";
+import "../views/util/components/multiselect.dart";
+import "../views/util/components/number_input.dart";
+import "../views/util/components/ranking.dart";
+import "../views/util/components/select.dart";
+import "../views/util/components/text_input.dart";
 
-import '../views/util/components/checkbox.dart';
-import '../views/util/components/dropdown.dart';
-import '../views/util/components/increment.dart';
-import '../views/util/components/number_input.dart';
-
-const String CONFIG_FILE_PATH = "assets/config/";
-const List<int> AUTHORIZED_TEAMS = [7461];
-const Map COMPONENT_MAP = {
+const String configFilePath = "assets/config/";
+const List<int> authorizedTeams = [7461];
+const Map componentMap = {
   "number input": NumberInput.create,
   "dropdown": Dropdown.create,
   "checkbox": CheckboxInput.create,
@@ -21,4 +21,4 @@ const Map COMPONENT_MAP = {
   "multiselect": Multiselect.create
 };
 
-const SUPERVISE_DATABASE_NAME = "supervise-data";
+const superviseDatabaseName = "supervise-data";

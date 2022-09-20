@@ -1,21 +1,19 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:sushi_scouts/src/logic/blocs/scouting_method_bloc/scouting_method_cubit.dart';
-import 'package:sushi_scouts/src/logic/constants.dart';
-import 'package:sushi_scouts/src/logic/helpers/size/ScreenSize.dart';
-import 'package:sushi_scouts/src/logic/models/scouting_data_models/component.dart';
-import 'package:sushi_scouts/src/logic/models/scouting_data_models/page.dart';
-import 'package:sushi_scouts/src/logic/models/scouting_data_models/scouting_data.dart';
-import 'package:sushi_scouts/src/logic/models/scouting_data_models/section.dart';
-import 'package:sushi_scouts/src/views/util/footer/scouting_footer.dart';
-import 'package:sushi_scouts/src/views/util/header/header_nav.dart';
-import 'package:sushi_scouts/src/views/util/header/header_title/header_title.dart';
-import 'package:sushi_scouts/src/views/util/scouting_layout.dart';
+// Flutter imports:
+import "package:flutter/material.dart";
 
-import '../../../logic/data/Data.dart';
-import '../../../logic/data/config_file_reader.dart';
-import '../../../logic/deviceType.dart';
+// Package imports:
+import "package:flutter_bloc/flutter_bloc.dart";
+
+// Project imports:
+import "../../../logic/blocs/scouting_method_bloc/scouting_method_cubit.dart";
+import "../../../logic/data/config_file_reader.dart";
+import "../../../logic/device_type.dart";
+import "../../../logic/helpers/size/screen_size.dart";
+import "../../../logic/models/scouting_data_models/scouting_data.dart";
+import "../../util/footer/scouting_footer.dart";
+import "../../util/header/header_nav.dart";
+import "../../util/header/header_title/header_title.dart";
+import "../../util/scouting_layout.dart";
 
 class Scouting extends StatefulWidget {
   const Scouting({Key? key}) : super(key: key);
@@ -29,7 +27,7 @@ class ScoutingState extends State<Scouting> {
   @override
   Widget build(BuildContext context) {
     var isPhoneScreen = isPhone(context);
-    var colors = Theme.of(context);
+    // var colors = Theme.of(context);
 
     return Scaffold(
       resizeToAvoidBottomInset: false,
@@ -56,7 +54,10 @@ class ScoutingState extends State<Scouting> {
                   child: SizedBox(
                     width: ScreenSize.width,
                     height: ScreenSize.height * (isPhoneScreen ? 0.58 : 0.61),
-                    child: ScoutingLayout(currentScoutingData: currentScoutingData!, error: (bool b) => error=b, size: ScreenSize.get()),
+                    child: ScoutingLayout(
+                        currentScoutingData: currentScoutingData!,
+                        error: (bool b) => error = b,
+                        size: ScreenSize.get()),
                   ),
                 ),
                 if (!error)

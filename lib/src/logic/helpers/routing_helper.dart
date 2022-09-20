@@ -1,13 +1,14 @@
-import 'package:flutter/material.dart';
+// Flutter imports:
+import "package:flutter/material.dart";
 
 class RouteHelper {
-  static void pushAndRemoveUntilToScreen(double beginX, double beginY, {
-    required BuildContext ctx,
-    required Widget screen}) {
-    Navigator.pushAndRemoveUntil(ctx, createRoute(screen, beginX, beginY), (route) => false);
+  static void pushAndRemoveUntilToScreen(double beginX, double beginY,
+      {required BuildContext ctx, required Widget screen}) {
+    Navigator.pushAndRemoveUntil(
+        ctx, createRoute(screen, beginX, beginY), (route) => false);
   }
 
-    static void pushReplacement({
+  static void pushReplacement({
     required BuildContext ctx,
     required Widget screen,
   }) {
@@ -37,7 +38,8 @@ class RouteHelper {
         const end = Offset.zero;
         const curve = Curves.ease;
 
-        var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+        var tween =
+            Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
 
         return SlideTransition(
           position: animation.drive(tween),

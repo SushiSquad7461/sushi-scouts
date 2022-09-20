@@ -1,10 +1,15 @@
-import 'dart:convert';
+// Dart imports:
+import "dart:convert";
 
-import 'package:flutter/services.dart';
-import 'package:localstore/localstore.dart';
+// Flutter imports:
+import "package:flutter/services.dart";
 
-import '../helpers/Constants.dart';
-import '../models/scouting_data_models/scouting_data.dart';
+// Package imports:
+import "package:localstore/localstore.dart";
+
+// Project imports:
+import "../helpers/constants.dart";
+import "../models/scouting_data_models/scouting_data.dart";
 
 class ConfigFileReader {
   String configFileFolder;
@@ -21,7 +26,7 @@ class ConfigFileReader {
   bool defaultConfig = true;
 
   static final ConfigFileReader _reader =
-      ConfigFileReader._(CONFIG_FILE_PATH, 2022);
+      ConfigFileReader._(configFilePath, 2022);
 
   ConfigFileReader._(this.configFileFolder, this.year);
 
@@ -54,7 +59,7 @@ class ConfigFileReader {
   }
 
   Future<void> readInitalConfig() async {
-    var user = await db.collection("preferences").doc("user").get();
+    // var user = await db.collection("preferences").doc("user").get();
 
     // if (user != null && user["teamNum"] != null) {
     //   var found = await db
@@ -111,8 +116,8 @@ class ConfigFileReader {
   //   return ret;
   // }
 
-  bool extraFeatureAccess(var AUTHORIZED_TEAMS) {
-    return AUTHORIZED_TEAMS.contains(teamNum);
+  bool extraFeatureAccess(var authorizedTeams) {
+    return authorizedTeams.contains(teamNum);
   }
 
   void setCommonValue(String key, int value) {

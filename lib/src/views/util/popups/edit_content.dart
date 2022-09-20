@@ -1,15 +1,16 @@
-import 'dart:html';
+// Flutter imports:
+import "package:flutter/cupertino.dart";
 
-import 'package:flutter/cupertino.dart';
-import 'package:sushi_scouts/src/logic/helpers/size/ScreenSize.dart';
-import 'package:sushi_scouts/src/logic/models/scouting_data_models/scouting_data.dart';
-import 'package:sushi_scouts/src/views/util/scouting_layout.dart';
+// Project imports:
+import "../../../logic/helpers/size/screen_size.dart";
+import "../../../logic/models/scouting_data_models/scouting_data.dart";
+import "../scouting_layout.dart";
 
 class EditContent extends StatefulWidget {
-  ScoutingData currentScoutingData;
-  late Size size;
-  EditContent({Key? key, required this.currentScoutingData}) : super(key: key){
-    size = Size(ScreenSize.width*0.8, ScreenSize.height*0.8);
+  final ScoutingData currentScoutingData;
+  late final Size size;
+  EditContent({Key? key, required this.currentScoutingData}) : super(key: key) {
+    size = Size(ScreenSize.width * 0.8, ScreenSize.height * 0.8);
   }
 
   @override
@@ -24,7 +25,10 @@ class EditContentState extends State<EditContent> {
       height: widget.size.height,
       child: Column(
         children: [
-          ScoutingLayout(currentScoutingData: widget.currentScoutingData, error: (bool b) => b, size: widget.size)
+          ScoutingLayout(
+              currentScoutingData: widget.currentScoutingData,
+              error: (bool b) => b,
+              size: widget.size)
         ],
       ),
     );

@@ -1,6 +1,7 @@
-import 'package:flutter_bloc/flutter_bloc.dart';
+// Package imports:
+import "package:flutter_bloc/flutter_bloc.dart";
 
-part 'scouting_method_states.dart';
+part "scouting_method_states.dart";
 
 class ScoutingMethodCubit extends Cubit<ScoutingMethodStates> {
   ScoutingMethodCubit() : super(ScoutingMethodsUninitialized());

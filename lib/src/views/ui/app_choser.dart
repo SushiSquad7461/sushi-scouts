@@ -1,9 +1,14 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_device_type/flutter_device_type.dart';
-import 'package:flutter_svg/svg.dart';
-import 'package:sushi_scouts/src/logic/helpers/routing_helper.dart';
-import 'package:sushi_scouts/src/logic/helpers/size/ScreenSize.dart';
-import 'package:sushi_scouts/src/views/ui/login.dart';
+// Flutter imports:
+import "package:flutter/material.dart";
+
+// Package imports:
+import "package:flutter_device_type/flutter_device_type.dart";
+import "package:flutter_svg/svg.dart";
+
+// Project imports:
+import "../../logic/helpers/routing_helper.dart";
+import "../../logic/helpers/size/screen_size.dart";
+import "login.dart";
 
 class AppChooser extends StatelessWidget {
   const AppChooser({Key? key}) : super(key: key);
@@ -24,8 +29,8 @@ class AppChooser extends StatelessWidget {
         ),
         GestureDetector(
           onTap: () => {
-            RouteHelper.pushAndRemoveUntilToScreen(0,0,
-                ctx: context, screen: const Login(sushi_scouts: false))
+            RouteHelper.pushAndRemoveUntilToScreen(0, 0,
+                ctx: context, screen: const Login(sushiScouts: false))
           },
           child: SvgPicture.asset(
             "./assets/images/sushisuperviselogo.svg",
@@ -34,8 +39,8 @@ class AppChooser extends StatelessWidget {
         ),
         GestureDetector(
           onTap: () => {
-            RouteHelper.pushAndRemoveUntilToScreen(0,0,
-                ctx: context, screen: const Login(sushi_scouts: true))
+            RouteHelper.pushAndRemoveUntilToScreen(0, 0,
+                ctx: context, screen: const Login(sushiScouts: true))
           },
           child: SvgPicture.asset(
             "./assets/images/sushiscoutslogo.svg",

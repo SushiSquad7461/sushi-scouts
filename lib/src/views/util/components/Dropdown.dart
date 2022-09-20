@@ -1,9 +1,13 @@
-import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:sushi_scouts/src/logic/helpers/size/ScreenSize.dart';
+// Flutter imports:
+import "package:flutter/material.dart";
 
-import '../../../logic/data/Data.dart';
-import '../../../logic/deviceType.dart';
+// Package imports:
+import "package:google_fonts/google_fonts.dart";
+
+// Project imports:
+import "../../../logic/data/data.dart";
+import "../../../logic/device_type.dart";
+import "../../../logic/helpers/size/screen_size.dart";
 
 class Dropdown extends StatefulWidget {
   final String name;
@@ -13,17 +17,32 @@ class Dropdown extends StatefulWidget {
   final Color textColor;
   final double width;
   final bool setCommonValue;
-  List<String> values;
-  String currentValue = "";
-  Dropdown({Key? key, required this.name, required this.data, required this.defaultValue, required this.color, required this.width, required this.textColor, required this.values, required this.setCommonValue})
-    : super(key: key){
-      currentValue = data.setByUser ? values[double.parse(data.get()).floor()] : " ";
-      if (!this.values.contains(" ")){
-        this.values.add(" ");
-      }
+  final List<String> values;
+  Dropdown(
+      {Key? key,
+      required this.name,
+      required this.data,
+      required this.defaultValue,
+      required this.color,
+      required this.width,
+      required this.textColor,
+      required this.values,
+      required this.setCommonValue})
+      : super(key: key) {
+    if (!values.contains(" ")) {
+      values.add(" ");
     }
-  static Dropdown create(Key key, String name, Data data, List<String> values,
-      Data defaultValue, Color color, double width, Color textColor, bool setCommonValue,
+  }
+  static Dropdown create(
+      Key key,
+      String name,
+      Data data,
+      List<String> values,
+      Data defaultValue,
+      Color color,
+      double width,
+      Color textColor,
+      bool setCommonValue,
       double height) {
     return Dropdown(
       key: key,
@@ -43,6 +62,17 @@ class Dropdown extends StatefulWidget {
 }
 
 class DropdownState extends State<Dropdown> {
+  // Check my comment on checkbox.dart to see what effect this will have.
+  String _currentValue = "";
+
+  @override
+  void initState() {
+    super.initState();
+    _currentValue = widget.data.setByUser
+        ? widget.values[double.parse(widget.data.get()).floor()]
+        : " ";
+  }
+
   @override
   Widget build(BuildContext context) {
     double width = widget.width;
@@ -56,63 +86,67 @@ class DropdownState extends State<Dropdown> {
             top: width / 30,
             bottom: width / 30),
         child: SizedBox(
-          width: width* 0.8,
-          child: Column(
-            children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-              Padding(
-                padding: EdgeInsets.only(right: ScreenSize.width * (isPhoneScreen ? 0.01 : 0)),
-                child: Text(widget.name.toUpperCase(),
-                  style: GoogleFonts.mohave(
-                          fontSize: isPhoneScreen ? ScreenSize.height * 0.04 : widget.width / 8,
-                          fontWeight: isPhoneScreen ? FontWeight.w100 : FontWeight.w400,
-                          color: widget.textColor,
-                        ),
+            width: width * 0.8,
+            child: Column(children: [
+              Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+                Padding(
+                  padding: EdgeInsets.only(
+                      right: ScreenSize.width * (isPhoneScreen ? 0.01 : 0)),
+                  child: Text(
+                    widget.name.toUpperCase(),
+                    style: GoogleFonts.mohave(
+                      fontSize: isPhoneScreen
+                          ? ScreenSize.height * 0.04
+                          : widget.width / 8,
+                      fontWeight:
+                          isPhoneScreen ? FontWeight.w100 : FontWeight.w400,
+                      color: widget.textColor,
+                    ),
+                  ),
                 ),
-              ),
-              Expanded(
-                child: Align(
-                  alignment: Alignment.centerRight,
-                  child: DropdownButtonHideUnderline(
-                    child: DropdownButton<String>(
-                      isExpanded: true,
-                      value: widget.currentValue,
-                      icon: const Icon(Icons.arrow_drop_down_rounded),
-                      elevation: (width/100.0*3).floor(),
-                      dropdownColor: colors.scaffoldBackgroundColor,
-                      style: GoogleFonts.mohave(
-                        fontSize: widget.width / (isPhoneScreen ? 7 : 8),
-                        fontWeight: isPhoneScreen ? FontWeight.w100 : FontWeight.w400,
-                        color: widget.textColor,
-                      ),
-                      alignment: AlignmentDirectional.center,
-                      onChanged: (String? newValue) {
-                        if(newValue!=null){
-                          widget.data.set(widget.values.indexOf(newValue)*1.0, setByUser: newValue != " ");
-                          setState(() {
-                            widget.currentValue = newValue;
-                          });
-                          build(context);
-                        }
-                      },
-                      items: widget.values
-                          .map<DropdownMenuItem<String>>((String value) {
-                        return DropdownMenuItem<String>(
-                          value: value,
-                          child: Center(child: Text(value, overflow: TextOverflow.ellipsis,)),
-                        );
-                      }).toList(),
-                    )
-                  )
-                )
-              )
-            ]),
-            Divider(color: widget.textColor, thickness: width/50)
-            ]
-          )
-        )
-    );
+                Expanded(
+                    child: Align(
+                        alignment: Alignment.centerRight,
+                        child: DropdownButtonHideUnderline(
+                            child: DropdownButton<String>(
+                          isExpanded: true,
+                          value: _currentValue,
+                          icon: const Icon(Icons.arrow_drop_down_rounded),
+                          elevation: (width / 100.0 * 3).floor(),
+                          dropdownColor: colors.scaffoldBackgroundColor,
+                          style: GoogleFonts.mohave(
+                            fontSize: widget.width / (isPhoneScreen ? 7 : 8),
+                            fontWeight: isPhoneScreen
+                                ? FontWeight.w100
+                                : FontWeight.w400,
+                            color: widget.textColor,
+                          ),
+                          alignment: AlignmentDirectional.center,
+                          onChanged: (String? newValue) {
+                            if (newValue != null) {
+                              widget.data.set(
+                                  widget.values.indexOf(newValue) * 1.0,
+                                  setByUser: newValue != " ");
+                              setState(() {
+                                _currentValue = newValue;
+                              });
+                              build(context);
+                            }
+                          },
+                          items: widget.values
+                              .map<DropdownMenuItem<String>>((String value) {
+                            return DropdownMenuItem<String>(
+                              value: value,
+                              child: Center(
+                                  child: Text(
+                                value,
+                                overflow: TextOverflow.ellipsis,
+                              )),
+                            );
+                          }).toList(),
+                        ))))
+              ]),
+              Divider(color: widget.textColor, thickness: width / 50)
+            ])));
   }
 }

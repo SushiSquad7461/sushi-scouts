@@ -1,4 +1,5 @@
-import 'package:dio/dio.dart';
+// Package imports:
+import "package:dio/dio.dart";
 
 class ErrorHelper {
   static String handleError(Exception error) {
@@ -30,7 +31,7 @@ class ErrorHelper {
               }
               break;
             case 401:
-              errorDescription = 'Unauthorized request';
+              errorDescription = "Unauthorized request";
               break;
             case 403:
               errorDescription = error.response!.data;
@@ -45,7 +46,7 @@ class ErrorHelper {
               errorDescription = "Internal Server Error";
               break;
             case 503:
-              errorDescription = 'Service unavailable';
+              errorDescription = "Service unavailable";
               break;
             default:
               errorDescription =

@@ -1,6 +1,7 @@
-import 'package:json_annotation/json_annotation.dart';
+// Package imports:
+import "package:json_annotation/json_annotation.dart";
 
-part 'compressed_data_model.g.dart';
+part "compressed_data_model.g.dart";
 
 @JsonSerializable(explicitToJson: true)
 class CompressedDataModel {
@@ -33,7 +34,8 @@ class CompressedDataModel {
 
 @JsonSerializable(explicitToJson: true)
 class MetadataModel {
-  MetadataModel(this.name, this.configId, this.isBackup, this.teamNum, this.eventCode);
+  MetadataModel(
+      this.name, this.configId, this.isBackup, this.teamNum, this.eventCode);
   String name;
   String configId;
   bool isBackup;

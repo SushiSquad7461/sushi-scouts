@@ -1,6 +1,11 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_device_type/flutter_device_type.dart';
-import 'package:sushi_scouts/src/logic/helpers/size/ScreenSize.dart';
+// Flutter imports:
+import "package:flutter/material.dart";
+
+// Package imports:
+import "package:flutter_device_type/flutter_device_type.dart";
+
+// Project imports:
+import "../../../../logic/helpers/size/screen_size.dart";
 
 class HeaderTitleMobile extends StatelessWidget {
   const HeaderTitleMobile({Key? key}) : super(key: key);

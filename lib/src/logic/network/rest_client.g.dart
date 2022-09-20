@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'rest_client.dart';
+part of "rest_client.dart";
 
 // **************************************************************************
 // RetrofitGenerator
@@ -17,34 +17,34 @@ class _RestClient implements RestClient {
 
   @override
   Future<MatchSchedule> getMatchSchedule(eventCode, tournamentLevel) async {
-    const _extra = <String, dynamic>{};
+    const extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
-    final _headers = <String, dynamic>{};
-    final _data = <String, dynamic>{};
-    final _result = await _dio.fetch<Map<String, dynamic>>(_setStreamType<
+    final headers = <String, dynamic>{};
+    final data = <String, dynamic>{};
+    final result = await _dio.fetch<Map<String, dynamic>>(_setStreamType<
         MatchSchedule>(Options(
-            method: 'GET', headers: _headers, extra: _extra)
+            method: "GET", headers: headers, extra: extra)
         .compose(_dio.options,
-            'https://frc-api.firstinspires.org/v3.0/2020/schedule/${eventCode}?tournamentLevel=${tournamentLevel}',
-            queryParameters: queryParameters, data: _data)
+            "https://frc-api.firstinspires.org/v3.0/2020/schedule/${eventCode}?tournamentLevel=${tournamentLevel}",
+            queryParameters: queryParameters, data: data)
         .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
-    final value = MatchSchedule.fromJson(_result.data!);
+    final value = MatchSchedule.fromJson(result.data!);
     return value;
   }
 
   @override
   Future<String> getConfigFile(year, teamNum) async {
-    const _extra = <String, dynamic>{};
+    const extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
-    final _headers = <String, dynamic>{};
-    final _data = <String, dynamic>{};
-    final _result = await _dio.fetch<String>(_setStreamType<String>(Options(
-            method: 'GET', headers: _headers, extra: _extra)
+    final headers = <String, dynamic>{};
+    final data = <String, dynamic>{};
+    final result = await _dio.fetch<String>(_setStreamType<String>(Options(
+            method: "GET", headers: headers, extra: extra)
         .compose(_dio.options,
-            'https://sushi-structeres.herokuapp.com/api/getconfigfile?teamNum=${teamNum}&year=${year}',
-            queryParameters: queryParameters, data: _data)
+            "https://sushi-structeres.herokuapp.com/api/getconfigfile?teamNum=${teamNum}&year=${year}",
+            queryParameters: queryParameters, data: data)
         .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
-    final value = _result.data!;
+    final value = result.data!;
     return value;
   }
 

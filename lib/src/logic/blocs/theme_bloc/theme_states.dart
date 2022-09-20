@@ -1,4 +1,4 @@
-part of 'theme_cubit.dart';
+part of "theme_cubit.dart";
 
 abstract class ThemeStates {}
 

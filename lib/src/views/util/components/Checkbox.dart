@@ -1,8 +1,10 @@
-import 'package:flutter/material.dart';
-import 'package:sushi_scouts/src/logic/deviceType.dart';
+// Flutter imports:
+import "package:flutter/material.dart";
 
-import '../../../logic/data/Data.dart';
-import '../../../logic/helpers/size/ScreenSize.dart';
+// Project imports:
+import "../../../logic/data/data.dart";
+import "../../../logic/device_type.dart";
+import "../../../logic/helpers/size/screen_size.dart";
 
 class CheckboxInput extends StatefulWidget {
   final String name;
@@ -13,8 +15,7 @@ class CheckboxInput extends StatefulWidget {
   final double width;
   final List<String>? values;
   final bool setCommonValue;
-  bool checked = false;
-  CheckboxInput(
+  const CheckboxInput(
       {Key? key,
       required this.name,
       required this.data,
@@ -54,6 +55,11 @@ class CheckboxInput extends StatefulWidget {
 }
 
 class CheckboxState extends State<CheckboxInput> {
+  // Perhaps you guys intentionally had the box unchecked on widget render,
+  // but this code change will make it remember state on widget render. (I think)
+  // Something to just keep in mind.
+  bool _checked = false;
+
   Color getColor(Set<MaterialState> states) {
     const Set<MaterialState> interactiveStates = <MaterialState>{
       MaterialState.pressed,
@@ -88,53 +94,56 @@ class CheckboxState extends State<CheckboxInput> {
             child: Column(children: [
               GestureDetector(
                 onTap: () {
-                  widget.data.set(!widget.checked, setByUser: true);
+                  widget.data.set(!_checked, setByUser: true);
                   setState(() {
-                    widget.checked = !widget.checked;
+                    _checked = !_checked;
                   });
                 },
                 child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      if (!isPhoneScreen) Transform.scale(
-                          scale: width / 170,
-                          child: Checkbox(
-                            side: BorderSide(
-                                color: widget.color,
-                                width: width / 100,
-                                style: BorderStyle.solid),
-                            splashRadius: width / 10,
-                            checkColor: colors.scaffoldBackgroundColor,
-                            fillColor:
-                                MaterialStateProperty.resolveWith(getColor),
-                            value: widget.data.get() == "true",
-                            onChanged: (bool? value) {
-                              widget.data.set(!widget.checked, setByUser: true);
-                              setState(() {
-                                widget.checked = !widget.checked;
-                              });
-                            },
-                          )),
+                      if (!isPhoneScreen)
+                        Transform.scale(
+                            scale: width / 170,
+                            child: Checkbox(
+                              side: BorderSide(
+                                  color: widget.color,
+                                  width: width / 100,
+                                  style: BorderStyle.solid),
+                              splashRadius: width / 10,
+                              checkColor: colors.scaffoldBackgroundColor,
+                              fillColor:
+                                  MaterialStateProperty.resolveWith(getColor),
+                              value: widget.data.get() == "true",
+                              onChanged: (bool? value) {
+                                widget.data.set(!_checked, setByUser: true);
+                                setState(() {
+                                  _checked = !_checked;
+                                });
+                              },
+                            )),
                       Container(
                         decoration: isPhoneScreen
-                              ? BoxDecoration(
-                                  border: Border.all(
-                                    color: widget.checked ? widget.color : colors.scaffoldBackgroundColor,
-                                    width: ScreenSize.width * 0.01,
-                                  ),
-                                  borderRadius: BorderRadius.circular(
-                                      ScreenSize.width * 0.04),
-                                )
-                              : null,
-                          padding: isPhoneScreen
-                              ? EdgeInsets.only(
-                                  top: ScreenSize.height * 0.01,
-                                  bottom: ScreenSize.height * 0.01,
-                                  left: ScreenSize.width * 0.015,
-                                  right: ScreenSize.width * 0.015,
-                                )
-                              : null,
+                            ? BoxDecoration(
+                                border: Border.all(
+                                  color: _checked
+                                      ? widget.color
+                                      : colors.scaffoldBackgroundColor,
+                                  width: ScreenSize.width * 0.01,
+                                ),
+                                borderRadius: BorderRadius.circular(
+                                    ScreenSize.width * 0.04),
+                              )
+                            : null,
+                        padding: isPhoneScreen
+                            ? EdgeInsets.only(
+                                top: ScreenSize.height * 0.01,
+                                bottom: ScreenSize.height * 0.01,
+                                left: ScreenSize.width * 0.015,
+                                right: ScreenSize.width * 0.015,
+                              )
+                            : null,
                         child: Text(widget.name,
                             style: TextStyle(
                                 fontFamily: "Sushi",

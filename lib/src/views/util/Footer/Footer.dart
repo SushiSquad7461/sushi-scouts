@@ -1,6 +1,8 @@
-import 'package:flutter/material.dart';
+// Flutter imports:
+import "package:flutter/material.dart";
 
-import '../../../logic/helpers/size/ScreenSize.dart';
+// Project imports:
+import "../../../logic/helpers/size/screen_size.dart";
 
 class Footer extends StatelessWidget {
   final String pageTitle;
@@ -13,15 +15,16 @@ class Footer extends StatelessWidget {
     return Column(children: [
       Image.asset(
         "./assets/images/colorbar.png",
-        scale: 3860.0/ScreenSize.width,
+        scale: 3860.0 / ScreenSize.width,
       ),
       Padding(
-          padding: EdgeInsets.only(left: 0, right: 0, top: ScreenSize.height/90.0, bottom: 0),
+          padding: EdgeInsets.only(
+              left: 0, right: 0, top: ScreenSize.height / 90.0, bottom: 0),
           child: Text(
             pageTitle.toUpperCase(),
             style: TextStyle(
               fontFamily: "Sushi",
-              fontSize: ScreenSize.width/17.0,
+              fontSize: ScreenSize.width / 17.0,
               fontWeight: FontWeight.bold,
               color: colors.primaryColorDark,
             ),
