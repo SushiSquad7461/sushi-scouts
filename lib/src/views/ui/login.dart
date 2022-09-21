@@ -151,6 +151,7 @@ class _LoginState extends State<Login> {
                     : 0.9),
             child: Stack(
               fit: StackFit.expand,
+              alignment: Alignment.bottomCenter,
               children: [
                 Align(
                   alignment: Alignment(0, widget.type == LoginType.strategy ? 1.1 : 1),
@@ -169,19 +170,19 @@ class _LoginState extends State<Login> {
                             top: ScreenSize.height *
                                 (isPhoneScreen
                                     ? isPhoneScreen
-                                        ? 0
+                                        ? widget.type == LoginType.strategy ? 0.08 : widget.type == LoginType.scout ? 0.15 : 0.085 
                                         : (widget.type == LoginType.scout
                                             ? 0.32
                                             : 0.09)
                                     : 0.2),
                             left:
                                 ScreenSize.width * (isPhoneScreen ? widget.type == LoginType.strategy ? 0.15 : 0.075 : 0),
-                            bottom: ScreenSize.height *
-                                (isPhoneScreen
-                                    ? (widget.type == LoginType.scout
-                                        ? 0.12
-                                        : 0.085)
-                                    : 0),
+                            // bottom: ScreenSize.height *
+                            //     (isPhoneScreen
+                            //         ? (widget.type == LoginType.scout
+                            //             ? 0.12
+                            //             : 0.085)
+                            //         : 0),
                           ),
                           child: Container(
                               width:
