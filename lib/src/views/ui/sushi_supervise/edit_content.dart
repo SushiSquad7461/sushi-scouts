@@ -1,18 +1,20 @@
+// Flutter imports:
 import "package:flutter/material.dart";
+
+// Project imports:
+import "../../../logic/helpers/routing_helper.dart";
 import "../../../logic/helpers/size/screen_size.dart";
 import "../../../logic/models/scouting_data_models/scouting_data.dart";
 import "../../util/header/header_nav.dart";
 import "../../util/header/header_title/header_title.dart";
 import "../../util/scouting_layout.dart";
-
-import "../../../logic/helpers/routing_helper.dart";
 import "edit.dart";
 
 class EditContent extends StatefulWidget {
   final ScoutingData currentScoutingData;
-  String title;
-  Function editDB;
-  late Size size;
+  final String title;
+  final Function editDB;
+  late final Size size;
   EditContent(
       {Key? key,
       required this.currentScoutingData,

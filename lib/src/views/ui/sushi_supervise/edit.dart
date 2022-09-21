@@ -7,7 +7,6 @@ import "package:google_fonts/google_fonts.dart";
 import "package:localstore/localstore.dart";
 
 // Project imports:
-import "../../../logic/Constants.dart";
 import "../../../logic/constants.dart";
 import "../../../logic/data/config_file_reader.dart";
 import "../../../logic/device_type.dart";
