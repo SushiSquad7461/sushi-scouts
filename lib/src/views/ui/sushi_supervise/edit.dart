@@ -12,12 +12,12 @@ import "../../../logic/data/config_file_reader.dart";
 import "../../../logic/device_type.dart";
 import "../../../logic/helpers/color/hex_color.dart";
 import "../../../logic/helpers/size/screen_size.dart";
-import '../../../logic/login_type.dart';
 import "../../../logic/models/supervise_data.dart";
 import "../../util/footer/supervise_footer.dart";
 import "../../util/header/header_nav.dart";
 import "../../util/header/header_title/header_title.dart";
 import "../../util/opacityfilter.dart";
+import '../../../logic/login_type.dart';
 
 class Edit extends StatefulWidget {
   const Edit({Key? key}) : super(key: key);

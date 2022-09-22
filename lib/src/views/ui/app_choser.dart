@@ -8,8 +8,8 @@ import "package:flutter_svg/svg.dart";
 // Project imports:
 import "../../logic/helpers/routing_helper.dart";
 import "../../logic/helpers/size/screen_size.dart";
-import '../../logic/login_type.dart';
 import "login.dart";
+import '../../logic/login_type.dart';
 
 class AppChooser extends StatelessWidget {
   const AppChooser({Key? key}) : super(key: key);

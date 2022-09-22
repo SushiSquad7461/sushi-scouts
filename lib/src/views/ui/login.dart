@@ -16,12 +16,13 @@ import "../../logic/device_type.dart";
 import "../../logic/helpers/color/hex_color.dart";
 import "../../logic/helpers/routing_helper.dart";
 import "../../logic/helpers/size/screen_size.dart";
-import '../../logic/login_type.dart';
 import "../util/header/header_title/header_title.dart";
 import "../util/popups/incorrect_password.dart";
-import 'loading.dart';
 import "sushi_scouts/scouting.dart";
 import "sushi_supervise/upload.dart";
+import '../../logic/login_type.dart';
+import 'loading.dart';
+import 'sushi_strategy/robot_profiles.dart';
 
 class Login extends StatefulWidget {
   final LoginType type;
@@ -67,7 +68,7 @@ class _LoginState extends State<Login> {
           await BlocProvider.of<LoginCubit>(context)
               .loginSushiStrategy(name!, teamNum!, eventCode!);
           RouteHelper.pushAndRemoveUntilToScreen(0, 0,
-              ctx: context, screen: const Loading());
+              ctx: context, screen: const RobotProfiles());
         }
         break;
     }
@@ -187,7 +188,7 @@ class _LoginState extends State<Login> {
                           child: Container(
                               width:
                                   ScreenSize.width * (isPhoneScreen ? widget.type == LoginType.strategy ? 0.7 : 0.85 : 1),
-                              height: ScreenSize.height * 0.045,
+                              height: ScreenSize.height * 0.06,
                               decoration: BoxDecoration(
                                 color: widget.type == LoginType.supervise &&
                                         isPhoneScreen

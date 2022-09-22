@@ -81,7 +81,7 @@ class RankingState extends State<Ranking> {
           style: TextStyle(
               fontFamily: "Sushi",
               fontSize:
-                  isPhoneScreen ? ScreenSize.height * 0.04 : widget.width / 8,
+                  isPhoneScreen ? ScreenSize.height * 0.03 : widget.width / 8,
               fontWeight: FontWeight.bold,
               color: widget.textColor),
         ),
@@ -100,7 +100,7 @@ class RankingState extends State<Ranking> {
                   });
                   build(context);
                 },
-                iconSize: width / (isPhoneScreen ? 3 : 3.0),
+                iconSize: width / (isPhoneScreen ? 3.5 : 3.0),
                 icon: Icon(
                   Icons.arrow_left_rounded,
                   color: widget.color,
@@ -112,7 +112,7 @@ class RankingState extends State<Ranking> {
                 style: TextStyle(
                     fontFamily: "Sushi",
                     fontSize: isPhoneScreen
-                        ? ScreenSize.height * 0.04
+                        ? ScreenSize.height * 0.03
                         : widget.width / 8,
                     fontWeight: FontWeight.bold,
                     color: widget.textColor),

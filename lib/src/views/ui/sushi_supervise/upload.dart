@@ -17,12 +17,12 @@ import "../../../logic/data/config_file_reader.dart";
 import "../../../logic/data/decompressor.dart";
 import "../../../logic/device_type.dart";
 import "../../../logic/helpers/size/screen_size.dart";
-import '../../../logic/login_type.dart';
 import "../../../logic/models/compressed_data_model.dart";
 import "../../../logic/models/scouting_data_models/scouting_data.dart";
 import "../../util/footer/supervise_footer.dart";
 import "../../util/header/header_nav.dart";
 import "../../util/header/header_title/header_title.dart";
+import '../../../logic/login_type.dart';
 
 class Upload extends StatefulWidget {
   const Upload({Key? key}) : super(key: key);
