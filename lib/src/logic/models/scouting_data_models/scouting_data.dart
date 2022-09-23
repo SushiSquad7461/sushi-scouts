@@ -24,7 +24,7 @@ class ScoutingData {
       var values = emptyData.pages[pageName]!.getValues();
       var components = emptyData.pages[pageName]!.getComponents();
       for (int i = 0; i < values.length; i++) {
-        values[i].set(json[pageName][components[i].name]);
+        values[i].set(json[pageName][components[i].name], setByUser: true);
       }
     }
     return emptyData;
