@@ -22,9 +22,10 @@ class _HeaderNavStrategyState extends State<HeaderNavStrategy> {
 
   @override
   Widget build(BuildContext context) {
+    var colors = Theme.of(context);
     final TextStyle textStyle = GoogleFonts.mohave(
         textStyle: TextStyle(
-      color: Colors.white,
+      color: colors.primaryColor,
       fontSize: ScreenSize.height * 0.025,
     ));
 
@@ -46,7 +47,7 @@ class _HeaderNavStrategyState extends State<HeaderNavStrategy> {
             height: ScreenSize.height * 0.25,
             width: ScreenSize.width,
             decoration: BoxDecoration(
-                color: Colors.black,
+                color: colors.primaryColorDark,
                 borderRadius: BorderRadius.only(
                     bottomRight: Radius.circular(25 * ScreenSize.swu),
                     bottomLeft: Radius.circular(25 * ScreenSize.swu))),
@@ -69,7 +70,7 @@ class _HeaderNavStrategyState extends State<HeaderNavStrategy> {
             height: ScreenSize.height * 0.06,
             width: ScreenSize.width,
             decoration: BoxDecoration(
-                color: Colors.black,
+                color: colors.primaryColorDark,
                 borderRadius: BorderRadius.only(
                     bottomRight: Radius.circular(15 * ScreenSize.swu),
                     bottomLeft: Radius.circular(15 * ScreenSize.swu))),
@@ -106,17 +107,17 @@ class _HeaderNavStrategyState extends State<HeaderNavStrategy> {
                                   children: [
                                     Divider(
                                       height: ScreenSize.height * 0.007,
-                                      color: Colors.white,
+                                      color: colors.primaryColor,
                                       thickness: ScreenSize.height * 0.003,
                                     ),
                                     Divider(
                                       height: ScreenSize.height * 0.007,
-                                      color: Colors.white,
+                                      color: colors.primaryColor,
                                       thickness: ScreenSize.height * 0.003,
                                     ),
                                     Divider(
                                       height: ScreenSize.height * 0.007,
-                                      color: Colors.white,
+                                      color: colors.primaryColor,
                                       thickness: ScreenSize.height * 0.003,
                                     ),
                                   ]),

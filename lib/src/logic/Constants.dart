@@ -27,6 +27,7 @@ const Map componentMap = {
 };
 
 const superviseDatabaseName = "supervise-data";
+const stratDatabaseName = "strat-data";
 
 const Map<String, Widget> stratPages = {
   "ordinal": RobotProfiles(),

@@ -135,27 +135,33 @@ class _LoginState extends State<Login> {
       body: Column(
         children: [
           HeaderTitle(type: widget.type),
-          if (widget.type == LoginType.strategy) Container(
-            width: ScreenSize.width,
-            height: ScreenSize.height * 0.03,
-            decoration: BoxDecoration(
-              color: colors.primaryColorDark,
-                            borderRadius: BorderRadius.only(
-                                bottomRight: Radius.circular(10 * ScreenSize.swu),
-                                bottomLeft: Radius.circular(10 * ScreenSize.swu))),
-          ),
+          if (widget.type == LoginType.strategy)
+            Container(
+              width: ScreenSize.width,
+              height: ScreenSize.height * 0.03,
+              decoration: BoxDecoration(
+                  color: colors.primaryColorDark,
+                  borderRadius: BorderRadius.only(
+                      bottomRight: Radius.circular(10 * ScreenSize.swu),
+                      bottomLeft: Radius.circular(10 * ScreenSize.swu))),
+            ),
           SizedBox(
             width: ScreenSize.width,
             height: ScreenSize.height *
                 (isPhoneScreen
-                    ? (widget.type == LoginType.scout ? 0.89 : widget.type == LoginType.strategy ? 0.83 : 0.88)
+                    ? (widget.type == LoginType.scout
+                        ? 0.89
+                        : widget.type == LoginType.strategy
+                            ? 0.83
+                            : 0.88)
                     : 0.9),
             child: Stack(
               fit: StackFit.expand,
               alignment: Alignment.bottomCenter,
               children: [
                 Align(
-                  alignment: Alignment(0, widget.type == LoginType.strategy ? 1.1 : 1),
+                  alignment:
+                      Alignment(0, widget.type == LoginType.strategy ? 1.1 : 1),
                   child: Stack(
                     children: [
                       SvgPicture.asset(
@@ -171,13 +177,21 @@ class _LoginState extends State<Login> {
                             top: ScreenSize.height *
                                 (isPhoneScreen
                                     ? isPhoneScreen
-                                        ? widget.type == LoginType.strategy ? 0.08 : widget.type == LoginType.scout ? 0.15 : 0.085 
+                                        ? widget.type == LoginType.strategy
+                                            ? 0.08
+                                            : widget.type == LoginType.scout
+                                                ? 0.15
+                                                : 0.085
                                         : (widget.type == LoginType.scout
                                             ? 0.32
                                             : 0.09)
                                     : 0.2),
-                            left:
-                                ScreenSize.width * (isPhoneScreen ? widget.type == LoginType.strategy ? 0.15 : 0.075 : 0),
+                            left: ScreenSize.width *
+                                (isPhoneScreen
+                                    ? widget.type == LoginType.strategy
+                                        ? 0.15
+                                        : 0.075
+                                    : 0),
                             // bottom: ScreenSize.height *
                             //     (isPhoneScreen
                             //         ? (widget.type == LoginType.scout
@@ -186,8 +200,12 @@ class _LoginState extends State<Login> {
                             //         : 0),
                           ),
                           child: Container(
-                              width:
-                                  ScreenSize.width * (isPhoneScreen ? widget.type == LoginType.strategy ? 0.7 : 0.85 : 1),
+                              width: ScreenSize.width *
+                                  (isPhoneScreen
+                                      ? widget.type == LoginType.strategy
+                                          ? 0.7
+                                          : 0.85
+                                      : 1),
                               height: ScreenSize.height * 0.06,
                               decoration: BoxDecoration(
                                 color: widget.type == LoginType.supervise &&

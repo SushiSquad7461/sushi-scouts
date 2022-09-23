@@ -20,8 +20,9 @@ class _HeaderTitleMobileStrategyMainState
     extends State<HeaderTitleMobileStrategyMain> {
   @override
   Widget build(BuildContext context) {
+    var colors = Theme.of(context);
     return Container(
-      color: Colors.black,
+      color: colors.primaryColorDark,
       height: ScreenSize.height * 0.14,
       width: ScreenSize.width * 1,
       child: Stack(
@@ -46,7 +47,7 @@ class _HeaderTitleMobileStrategyMainState
                   Text(
                     "7461",
                     style: TextStyle(
-                      color: Colors.white,
+                      color: colors.primaryColor,
                       fontFamily: "Sushi",
                       fontSize: ScreenSize.height * 0.045,
                     ),
