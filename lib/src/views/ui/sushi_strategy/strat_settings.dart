@@ -1,52 +1,39 @@
-// Dart imports:
-import "dart:convert";
+import 'dart:convert';
 
-// Flutter imports:
-import "package:flutter/material.dart";
-import "package:flutter/services.dart";
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter/src/foundation/key.dart';
+import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:localstore/localstore.dart';
 
-// Package imports:
-import "package:cloud_firestore/cloud_firestore.dart";
-import "package:flutter_bloc/flutter_bloc.dart";
-import "package:flutter_svg/svg.dart";
-import "package:get/get.dart";
-import "package:google_fonts/google_fonts.dart";
-import "package:localstore/localstore.dart";
+import '../../../../main.dart';
+import '../../../logic/Constants.dart';
+import '../../../logic/blocs/login_bloc/login_cubit.dart';
+import '../../../logic/blocs/theme_bloc/theme_cubit.dart';
+import '../../../logic/data/config_file_reader.dart';
+import '../../../logic/device_type.dart';
+import '../../../logic/helpers/routing_helper.dart';
+import '../../../logic/helpers/size/screen_size.dart';
+import '../../../logic/network/api_repository.dart';
+import '../../util/header/header_nav_strategy.dart';
+import '../../util/header/header_title/mobile_strategy_main.dart';
+import '../app_choser.dart';
+import '../loading.dart';
 
-// Project imports:
-import "../../../main.dart";
-import "../../logic/blocs/login_bloc/login_cubit.dart";
-import "../../logic/blocs/theme_bloc/theme_cubit.dart";
-import "../../logic/constants.dart";
-import "../../logic/data/config_file_reader.dart";
-import "../../logic/device_type.dart";
-import "../../logic/helpers/routing_helper.dart";
-import "../../logic/helpers/secret/secret.dart";
-import "../../logic/helpers/secret/secret_loader.dart";
-import "../../logic/helpers/size/screen_size.dart";
-import "../../logic/models/match_schedule.dart";
-import "../../logic/network/api_repository.dart";
-import "../util/Footer/footer.dart";
-import "../util/footer/supervise_footer.dart";
-import "../util/header/header_nav.dart";
-import "../util/header/header_title/header_title.dart";
-import "app_choser.dart";
-import "loading.dart";
-import '../../logic/login_type.dart';
-
-
-class Settings extends StatefulWidget {
-  const Settings({Key? key}) : super(key: key);
+class StratSettings extends StatefulWidget {
+  const StratSettings({Key? key}) : super(key: key);
 
   @override
-  State<Settings> createState() => _SettingsState();
+  State<StratSettings> createState() => _StratSettingsState();
 }
 
-class _SettingsState extends State<Settings> {
+class _StratSettingsState extends State<StratSettings> {
   final db = Localstore.instance;
-  Secret? secrets;
   int? year;
-  bool isLoggingOut = false;
   String collectionName = "";
 
   Future<void> toggleMode(String mode) async {
@@ -59,14 +46,6 @@ class _SettingsState extends State<Settings> {
     mode == "dark"
         ? Get.changeTheme(Themes.dark)
         : Get.changeTheme(Themes.light);
-  }
-
-  Future<void> downloadMatchSchedule() async {
-    MatchSchedule? schedule = await ApiRepository().getMatchSchedule(
-        BlocProvider.of<LoginCubit>(context).state.eventCode, "qual");
-    if (schedule != null) {
-      db.collection("data").doc("schedule").set(schedule.toJson());
-    }
   }
 
   Future<void> downloadConfigFile() async {
@@ -86,66 +65,20 @@ class _SettingsState extends State<Settings> {
     }
   }
 
-  void downloadNames() {}
-
   void logOut() {
-    deleteData();
     BlocProvider.of<LoginCubit>(context).logOut();
     RouteHelper.pushAndRemoveUntilToScreen(-1, 0,
         ctx: context, screen: const AppChooser());
   }
 
-  void deleteData() {
-    var db = Localstore.instance;
-    var reader = ConfigFileReader.instance;
-    for (var screen in reader.getScoutingMethods()) {
-      db.collection("data").doc("backup$screen").delete();
-      db.collection("data").doc("current$screen").delete();
-    }
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    loadSecret();
-  }
-
-  void setLogout() {
-    setState(() {
-      isLoggingOut = true;
-    });
-  }
-
-  Future<void> loadSecret() async {
-    secrets = await SecretLoader(secretPath: "assets/secrets.json").load();
-  }
-
-  Future<void> uploadData() async {
-    final upload =
-        await Localstore.instance.collection(superviseDatabaseName).get();
-    final db = FirebaseFirestore.instance;
-
-    for (var i in upload!.keys) {
-      db.collection(collectionName).doc(i.split("/")[2]).set(upload[i]);
-    }
-  }
-
   Future<void> downloadData() async {
-    final toAdd =
-        await FirebaseFirestore.instance.collection(collectionName).get();
+    // final toAdd =
+    //     await FirebaseFirestore.instance.collection(collectionName).get();
 
-    for (var i in toAdd.docs) {
-      db.collection(superviseDatabaseName).doc(i.id).set(i.data());
-    }
-  }
-
-  Future<void> wipeData() async {
-    var db = Localstore.instance;
-    final delete = await db.collection(superviseDatabaseName).get();
-
-    for (var i in delete!.keys) {
-      await db.collection(superviseDatabaseName).doc(i.split("/")[2]).delete();
-    }
+    // for (var i in toAdd.docs) {
+    //   db.collection(stratDatabaseName).doc(i.id).set(i.data());
+    // }
+    print(collectionName);
   }
 
   @override
@@ -168,24 +101,13 @@ class _SettingsState extends State<Settings> {
     return Scaffold(
         resizeToAvoidBottomInset: false,
         body: BlocBuilder<LoginCubit, LoginStates>(builder: (context, state) {
-          bool isSupervise = state is SushiSuperviseLogin;
           collectionName = "${state.eventCode}:${ConfigFileReader.instance.id}";
-          return Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              HeaderTitle(
-               type: isSupervise ? LoginType.supervise : LoginType.scout
-              ),
-              HeaderNav(
-                currentPage: "settings",
-                isSupervise: isSupervise,
-              ),
-              SizedBox(
+          return Stack(children: [
+            Padding(
+              padding: EdgeInsets.only(top: ScreenSize.height * 0.2),
+              child: SizedBox(
                   width: ScreenSize.width,
-                  height: ScreenSize.height *
-                      (isSupervise
-                          ? (isPhoneScreen ? 0.62 : 0.63)
-                          : (isPhoneScreen ? 0.608 : 0.64)),
+                  height: ScreenSize.height * 0.8,
                   child: Stack(
                     fit: StackFit.expand,
                     children: [
@@ -236,43 +158,6 @@ class _SettingsState extends State<Settings> {
                             )
                           ],
                         ),
-                      ),
-                      Align(
-                        alignment: Alignment(0, isPhoneScreen ? -0.4 : -0.5),
-                        child: isSupervise
-                            ? Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceEvenly,
-                                children: [
-                                  Container(
-                                    decoration: boxDecoration,
-                                    child: TextButton(
-                                        onPressed: downloadData,
-                                        child: Text(
-                                          "download data",
-                                          style: textStyle,
-                                        )),
-                                  ),
-                                  Container(
-                                    decoration: boxDecoration,
-                                    child: TextButton(
-                                        onPressed: uploadData,
-                                        child: Text(
-                                          "upload data",
-                                          style: textStyle,
-                                        )),
-                                  ),
-                                ],
-                              )
-                            : Container(
-                                decoration: boxDecoration,
-                                child: TextButton(
-                                    onPressed: downloadMatchSchedule,
-                                    child: Text(
-                                      "download match schedule",
-                                      style: textStyle,
-                                    )),
-                              ),
                       ),
                       Align(
                         alignment: Alignment(0, isPhoneScreen ? 0 : -0.2),
@@ -337,27 +222,17 @@ class _SettingsState extends State<Settings> {
                         ),
                       ),
                       Align(
-                        alignment: Alignment(0, isPhoneScreen ? 0.4 : 0.01),
+                        alignment: Alignment(0, isPhoneScreen ? 0.4 : 0),
                         child: Container(
                           decoration: boxDecoration,
-                          child: isSupervise
-                              ? TextButton(
-                                  onPressed: wipeData,
-                                  child: Text(
-                                    "WIPE ALL DATA",
-                                    style: TextStyle(
-                                      fontFamily: "Sushi",
-                                      color: colors.primaryColorDark,
-                                      fontSize: ScreenSize.swu * 30,
-                                      fontWeight: FontWeight.w900,
-                                    ),
-                                  ))
-                              : TextButton(
-                                  onPressed: downloadNames,
-                                  child: Text(
-                                    "download names",
-                                    style: textStyle,
-                                  )),
+                          child: TextButton(
+                              onPressed: () {
+                                downloadData();
+                              },
+                              child: Text(
+                                "download data",
+                                style: textStyle,
+                              )),
                         ),
                       ),
                       Align(
@@ -366,7 +241,7 @@ class _SettingsState extends State<Settings> {
                           decoration: boxDecoration,
                           child: TextButton(
                               onPressed: () {
-                                setLogout();
+                                logOut();
                               },
                               child: Text(
                                 "log out",
@@ -374,49 +249,17 @@ class _SettingsState extends State<Settings> {
                               )),
                         ),
                       ),
-                      if (isLoggingOut)
-                        AlertDialog(
-                          title: const Text("Unsent data will be deleted"),
-                          content: const Text(
-                              "Please go to the QR code screen to send data to your scouting admin."),
-                          actions: [
-                            TextButton(
-                                onPressed: logOut, child: const Text("OK")),
-                            TextButton(
-                                onPressed: () => setState(() {
-                                      isLoggingOut = false;
-                                    }),
-                                child: const Text("CANCEL"))
-                          ],
-                        )
                     ],
                   )),
-              isSupervise
-                  ? const SuperviseFooter()
-                  : !isPhoneScreen
-                      ? Padding(
-                          padding: EdgeInsets.all(ScreenSize.height * 0.01),
-                          child: SizedBox(
-                              width: ScreenSize.width / 10.0, //57
-                              height: ScreenSize.width / 10.0, //59
-                              child: SvgPicture.asset(
-                                "./assets/images/${colors.scaffoldBackgroundColor == Colors.black ? "darknori" : "nori"}.svg",
-                              )),
-                        )
-                      : SizedBox(
-                          width: ScreenSize.width,
-                          height: ScreenSize.height * 0.19,
-                          child: SvgPicture.asset(
-                            colors.scaffoldBackgroundColor == Colors.white
-                                ? "./assets/images/mobilefooter.svg"
-                                : "./assets/images/mobilefooterdark.svg",
-                            width: ScreenSize.width,
-                            fit: BoxFit.cover,
-                          ),
-                        ),
-              if (!isSupervise && !isPhoneScreen) const Footer(pageTitle: ""),
-            ],
-          );
+            ),
+            const HeaderTitleMobileStrategyMain(),
+            Padding(
+              padding: EdgeInsets.only(top: ScreenSize.height * 0.14),
+              child: const HeaderNavStrategy(
+                currPage: "settings",
+              ),
+            ),
+          ]);
         }));
   }
 }

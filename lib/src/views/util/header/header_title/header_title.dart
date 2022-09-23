@@ -7,19 +7,25 @@ import "mobile.dart";
 import "mobile_supervise.dart";
 import "tablet.dart";
 import "tablet_supervise.dart";
+import '../../../../logic/login_type.dart';
+import 'mobile_strategy_login.dart';
 
 class HeaderTitle extends StatelessWidget {
-  final bool isSupervise;
-  const HeaderTitle({Key? key, this.isSupervise = false}) : super(key: key);
+  final LoginType type;
+  const HeaderTitle({Key? key, this.type = LoginType.scout}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return isPhone(context)
-        ? (!isSupervise
-            ? const HeaderTitleMobile()
-            : const HeaderTitleMobileSupervise())
-        : (isSupervise
-            ? const HeaderTitleTabletSupervise()
-            : const HeaderTitleTablet());
+    bool phone = isPhone(context);
+    switch (type) {
+      case LoginType.scout:
+        return phone ? const HeaderTitleMobile() : const HeaderTitleTablet();
+      case LoginType.supervise:
+        return phone
+            ? const HeaderTitleMobileSupervise()
+            : const HeaderTitleTabletSupervise();
+      case LoginType.strategy:
+        return const HeaderTitleMobileStrategyLogin();
+    }
   }
 }

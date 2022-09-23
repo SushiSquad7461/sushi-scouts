@@ -20,10 +20,13 @@ import "../util/header/header_title/header_title.dart";
 import "../util/popups/incorrect_password.dart";
 import "sushi_scouts/scouting.dart";
 import "sushi_supervise/upload.dart";
+import '../../logic/login_type.dart';
+import 'loading.dart';
+import 'sushi_strategy/robot_profiles.dart';
 
 class Login extends StatefulWidget {
-  final bool sushiScouts;
-  const Login({Key? key, this.sushiScouts = true}) : super(key: key);
+  final LoginType type;
+  const Login({Key? key, this.type = LoginType.scout}) : super(key: key);
 
   @override
   State<Login> createState() => _LoginState();
@@ -43,20 +46,31 @@ class _LoginState extends State<Login> {
   final reader = ConfigFileReader.instance;
 
   Future<void> nextPage(BuildContext context) async {
-    if (widget.sushiScouts) {
-      if (teamNum != null && name != null && eventCode != null) {
-        await BlocProvider.of<LoginCubit>(context)
-            .loginSushiScouts(name!, teamNum!, eventCode!);
-        RouteHelper.pushAndRemoveUntilToScreen(0, 0,
-            ctx: context, screen: const Scouting());
-      }
-    } else {
-      if ((teamNum != null && eventCode != null && password != null)) {
-        await BlocProvider.of<LoginCubit>(context)
-            .loginSushiSupervise(eventCode!, teamNum!);
-        RouteHelper.pushAndRemoveUntilToScreen(0, 0,
-            ctx: context, screen: const Upload());
-      }
+    switch (widget.type) {
+      case LoginType.scout:
+        if (teamNum != null && name != null && eventCode != null) {
+          await BlocProvider.of<LoginCubit>(context)
+              .loginSushiScouts(name!, teamNum!, eventCode!);
+          RouteHelper.pushAndRemoveUntilToScreen(0, 0,
+              ctx: context, screen: const Scouting());
+        }
+        break;
+      case LoginType.supervise:
+        if ((teamNum != null && eventCode != null && password != null)) {
+          await BlocProvider.of<LoginCubit>(context)
+              .loginSushiSupervise(eventCode!, teamNum!);
+          RouteHelper.pushAndRemoveUntilToScreen(0, 0,
+              ctx: context, screen: const Upload());
+        }
+        break;
+      case LoginType.strategy:
+        if (teamNum != null && name != null && eventCode != null) {
+          await BlocProvider.of<LoginCubit>(context)
+              .loginSushiStrategy(name!, teamNum!, eventCode!);
+          RouteHelper.pushAndRemoveUntilToScreen(0, 0,
+              ctx: context, screen: const RobotProfiles());
+        }
+        break;
     }
   }
 
@@ -76,7 +90,7 @@ class _LoginState extends State<Login> {
           eventCode = userInfo["eventCode"];
         }
 
-        if (widget.sushiScouts) {
+        if (widget.type != LoginType.strategy) {
           if (userInfo["name"] != null && userInfo["name"] != "") {
             _nameController.text = userInfo["name"];
             name = userInfo["name"];
@@ -96,35 +110,62 @@ class _LoginState extends State<Login> {
     if (kDebugMode) {
       print(ScreenSize.width);
     }
+
     var colors = Theme.of(context);
     bool isPhoneScreen = isPhone(context);
+
+    String footerAsset = "./assets/images/";
+
+    switch (widget.type) {
+      case LoginType.strategy:
+        footerAsset = "$footerAsset/stratloginfooter.svg";
+        break;
+      case LoginType.supervise:
+        footerAsset =
+            "$footerAsset/${isPhoneScreen ? "mobilesupervisefooter.svg" : colors.scaffoldBackgroundColor == Colors.black ? "loginsupervisefooterdark.svg" : "./assets/images/loginfootersupervise.svg"}";
+        break;
+      case LoginType.scout:
+        footerAsset =
+            "$footerAsset/${isPhoneScreen ? "mobile_footer.svg" : "colorbar.svg"}";
+        break;
+    }
+
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: Column(
         children: [
-          HeaderTitle(isSupervise: !widget.sushiScouts),
+          HeaderTitle(type: widget.type),
+          if (widget.type == LoginType.strategy)
+            Container(
+              width: ScreenSize.width,
+              height: ScreenSize.height * 0.03,
+              decoration: BoxDecoration(
+                  color: colors.primaryColorDark,
+                  borderRadius: BorderRadius.only(
+                      bottomRight: Radius.circular(10 * ScreenSize.swu),
+                      bottomLeft: Radius.circular(10 * ScreenSize.swu))),
+            ),
           SizedBox(
             width: ScreenSize.width,
             height: ScreenSize.height *
-                (isPhoneScreen ? (widget.sushiScouts ? 0.89 : 0.88) : 0.9),
+                (isPhoneScreen
+                    ? (widget.type == LoginType.scout
+                        ? 0.89
+                        : widget.type == LoginType.strategy
+                            ? 0.83
+                            : 0.88)
+                    : 0.9),
             child: Stack(
               fit: StackFit.expand,
+              alignment: Alignment.bottomCenter,
               children: [
                 Align(
-                  alignment: const Alignment(0, 1),
+                  alignment:
+                      Alignment(0, widget.type == LoginType.strategy ? 1.1 : 1),
                   child: Stack(
                     children: [
                       SvgPicture.asset(
-                        isPhoneScreen
-                            ? (widget.sushiScouts
-                                ? "./assets/images/mobile_footer.svg"
-                                : "./assets/images/mobilesupervisefooter.svg")
-                            : (widget.sushiScouts
-                                ? "./assets/images/colorbar.svg"
-                                : (colors.scaffoldBackgroundColor ==
-                                        Colors.black
-                                    ? "./assets/images/loginsupervisefooterdark.svg"
-                                    : "./assets/images/loginfootersupervise.svg")),
+                        footerAsset,
                         width: ScreenSize.width * 1,
                         fit: BoxFit.fitWidth,
                       ),
@@ -136,22 +177,39 @@ class _LoginState extends State<Login> {
                             top: ScreenSize.height *
                                 (isPhoneScreen
                                     ? isPhoneScreen
-                                        ? 0
-                                        : (widget.sushiScouts ? 0.32 : 0.09)
+                                        ? widget.type == LoginType.strategy
+                                            ? 0.08
+                                            : widget.type == LoginType.scout
+                                                ? 0.15
+                                                : 0.085
+                                        : (widget.type == LoginType.scout
+                                            ? 0.32
+                                            : 0.09)
                                     : 0.2),
-                            left:
-                                ScreenSize.width * (isPhoneScreen ? 0.075 : 0),
-                            bottom: ScreenSize.height *
+                            left: ScreenSize.width *
                                 (isPhoneScreen
-                                    ? (widget.sushiScouts ? 0.12 : 0.085)
+                                    ? widget.type == LoginType.strategy
+                                        ? 0.15
+                                        : 0.075
                                     : 0),
+                            // bottom: ScreenSize.height *
+                            //     (isPhoneScreen
+                            //         ? (widget.type == LoginType.scout
+                            //             ? 0.12
+                            //             : 0.085)
+                            //         : 0),
                           ),
                           child: Container(
-                              width:
-                                  ScreenSize.width * (isPhoneScreen ? 0.85 : 1),
-                              height: ScreenSize.height * 0.058,
+                              width: ScreenSize.width *
+                                  (isPhoneScreen
+                                      ? widget.type == LoginType.strategy
+                                          ? 0.7
+                                          : 0.85
+                                      : 1),
+                              height: ScreenSize.height * 0.06,
                               decoration: BoxDecoration(
-                                color: !widget.sushiScouts && isPhoneScreen
+                                color: widget.type == LoginType.supervise &&
+                                        isPhoneScreen
                                     ? HexColor("#4F4F4F")
                                     : colors.primaryColorDark,
                                 borderRadius: BorderRadius.all(Radius.circular(
@@ -159,7 +217,7 @@ class _LoginState extends State<Login> {
                               ),
                               child: TextButton(
                                 onPressed: () {
-                                  if (!widget.sushiScouts &&
+                                  if (widget.type == LoginType.supervise &&
                                       !reader.checkPassword(password ?? "")) {
                                     showDialog(
                                         context: context,
@@ -175,7 +233,7 @@ class _LoginState extends State<Login> {
                                       fontSize: 35 * ScreenSize.swu,
                                       fontFamily: "Sushi",
                                       color: colors.primaryColor,
-                                      fontWeight: widget.sushiScouts
+                                      fontWeight: widget.type == LoginType.scout
                                           ? FontWeight.bold
                                           : FontWeight.w100),
                                 ),
@@ -263,7 +321,7 @@ class _LoginState extends State<Login> {
                             })),
                   ),
                 ),
-                widget.sushiScouts
+                widget.type != LoginType.supervise
                     ? Align(
                         alignment: const Alignment(0, 0.1),
                         child: SizedBox(

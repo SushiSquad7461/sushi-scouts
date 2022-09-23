@@ -44,3 +44,20 @@ class SushiSuperviseLogin extends LoginStates {
     return _teamNum;
   }
 }
+
+class SushiStrategyLogin extends LoginStates {
+  final String _eventCode;
+  final int _teamNum;
+  final String _name;
+  SushiStrategyLogin(this._eventCode, this._teamNum, this._name);
+
+  @override
+  String get eventCode {
+    return _eventCode;
+  }
+
+  @override
+  int get teamNum {
+    return _teamNum;
+  }
+}

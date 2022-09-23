@@ -22,6 +22,7 @@ import "../../../logic/models/scouting_data_models/scouting_data.dart";
 import "../../util/footer/supervise_footer.dart";
 import "../../util/header/header_nav.dart";
 import "../../util/header/header_title/header_title.dart";
+import '../../../logic/login_type.dart';
 
 class Upload extends StatefulWidget {
   const Upload({Key? key}) : super(key: key);
@@ -98,7 +99,7 @@ class _UploadState extends State<Upload> {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           const HeaderTitle(
-            isSupervise: true,
+            type: LoginType.supervise,
           ),
           HeaderNav(
             currentPage: "upload",

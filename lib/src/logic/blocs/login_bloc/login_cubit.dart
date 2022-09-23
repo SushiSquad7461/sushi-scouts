@@ -1,4 +1,6 @@
 // Package imports:
+import 'dart:math';
+
 import "package:flutter_bloc/flutter_bloc.dart";
 import "package:localstore/localstore.dart";
 
@@ -27,6 +29,19 @@ class LoginCubit extends Cubit<LoginStates> {
         .set({"eventCode": eventCode, "teamNum": teamNum, "name": ""});
 
     emit(SushiSuperviseLogin(eventCode, teamNum));
+  }
+
+  Future<void> loginSushiStrategy(
+      String name, int teamNum, String eventCode) async {
+    var db = Localstore.instance;
+
+    await db.collection("preferences").doc("user").set({
+      "name": name,
+      "teamNum": teamNum,
+      "eventCode": eventCode,
+    });
+
+    emit(SushiStrategyLogin(eventCode, teamNum, name));
   }
 
   void logOut() {
