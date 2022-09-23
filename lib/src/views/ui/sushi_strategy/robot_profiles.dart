@@ -22,7 +22,7 @@ class _RobotProfilesState extends State<RobotProfiles> {
       body: Column(
         children: const [
           HeaderTitleMobileStrategyMain(),
-          HeaderNavStrategy(),
+          HeaderNavStrategy(currPage: "ordinal"),
         ],
       )
     );

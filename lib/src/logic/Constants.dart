@@ -1,4 +1,9 @@
 // Project imports:
+import 'package:flutter/widgets.dart';
+
+import '../views/ui/settings.dart';
+import '../views/ui/sushi_strategy/robot_profiles.dart';
+import '../views/ui/sushi_strategy/strat_settings.dart';
 import "../views/util/components/checkbox.dart";
 import "../views/util/components/dropdown.dart";
 import "../views/util/components/increment.dart";
@@ -22,3 +27,10 @@ const Map componentMap = {
 };
 
 const superviseDatabaseName = "supervise-data";
+
+const Map<String, Widget> stratPages = {
+  "ordinal": RobotProfiles(),
+  "pit": RobotProfiles(),
+  "cardinal": RobotProfiles(),
+  "settings": StratSettings(),
+};

@@ -34,6 +34,7 @@ import "app_choser.dart";
 import "loading.dart";
 import '../../logic/login_type.dart';
 
+
 class Settings extends StatefulWidget {
   const Settings({Key? key}) : super(key: key);
 
