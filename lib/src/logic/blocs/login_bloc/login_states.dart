@@ -60,4 +60,8 @@ class SushiStrategyLogin extends LoginStates {
   int get teamNum {
     return _teamNum;
   }
+
+  String get name {
+    return _name;
+  }
 }
