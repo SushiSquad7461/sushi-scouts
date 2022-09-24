@@ -4,7 +4,7 @@ import "package:flutter/material.dart";
 // Project imports:
 import "../../../logic/helpers/routing_helper.dart";
 import "../../../logic/helpers/size/screen_size.dart";
-import '../../../logic/login_type.dart';
+import "../../../logic/login_type.dart";
 import "../../../logic/models/scouting_data_models/scouting_data.dart";
 import "../../util/header/header_nav.dart";
 import "../../util/header/header_title/header_title.dart";

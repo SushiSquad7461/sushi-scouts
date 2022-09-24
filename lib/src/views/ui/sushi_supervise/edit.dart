@@ -13,12 +13,12 @@ import "../../../logic/device_type.dart";
 import "../../../logic/helpers/color/hex_color.dart";
 import "../../../logic/helpers/routing_helper.dart";
 import "../../../logic/helpers/size/screen_size.dart";
+import "../../../logic/login_type.dart";
 import "../../../logic/models/supervise_data.dart";
 import "../../util/footer/supervise_footer.dart";
 import "../../util/header/header_nav.dart";
 import "../../util/header/header_title/header_title.dart";
 import "../../util/opacityfilter.dart";
-import '../../../logic/login_type.dart';
 import "edit_content.dart";
 
 class Edit extends StatefulWidget {
@@ -116,9 +116,7 @@ class _EditState extends State<Edit> {
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
           OpacityFilter(
-            childComponent: const HeaderTitle(
-              type: LoginType.supervise
-            ),
+            childComponent: const HeaderTitle(type: LoginType.supervise),
             height: phone ? 0.12 : 0.07,
             opacityOn: (flagMode || deleteMode),
           ),

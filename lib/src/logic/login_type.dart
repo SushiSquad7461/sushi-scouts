@@ -1,5 +1,1 @@
-enum LoginType {
-  strategy,
-  supervise,
-  scout
-}
+enum LoginType { strategy, supervise, scout }

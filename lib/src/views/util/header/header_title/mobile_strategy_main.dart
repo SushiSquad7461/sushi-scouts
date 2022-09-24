@@ -25,57 +25,54 @@ class _HeaderTitleMobileStrategyMainState
       color: colors.primaryColorDark,
       height: ScreenSize.height * 0.14,
       width: ScreenSize.width * 1,
-      child: Stack(
-        alignment: Alignment.centerLeft,
-        children: [
-          SvgPicture.asset(
-            "./assets/images/stratgeymainheader.svg",
-            height: ScreenSize.height * 0.12,
+      child: Stack(alignment: Alignment.centerLeft, children: [
+        SvgPicture.asset(
+          "./assets/images/stratgeymainheader.svg",
+          height: ScreenSize.height * 0.12,
+        ),
+        Padding(
+          padding: EdgeInsets.only(
+            top: ScreenSize.height * 0.08,
+            left: ScreenSize.width * 0.55,
           ),
-          Padding(
-            padding: EdgeInsets.only(
-              top: ScreenSize.height * 0.08,
-              left: ScreenSize.width * 0.55,
-            ),
-            child: SizedBox(
-              width: ScreenSize.width * 0.35,
-              height: ScreenSize.height * 0.04,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    "7461",
+          child: SizedBox(
+            width: ScreenSize.width * 0.35,
+            height: ScreenSize.height * 0.04,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  "7461",
+                  style: TextStyle(
+                    color: colors.primaryColor,
+                    fontFamily: "Sushi",
+                    fontSize: ScreenSize.height * 0.045,
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.only(top: ScreenSize.height * 0.008),
+                  child: SvgPicture.asset(
+                    "./assets/images/uparrow.svg",
+                    height: ScreenSize.height * 0.03,
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.only(top: ScreenSize.height * 0.006),
+                  child: Text(
+                    "1",
                     style: TextStyle(
-                      color: colors.primaryColor,
+                      color: HexColor("#81F4E1"),
                       fontFamily: "Sushi",
-                      fontSize: ScreenSize.height * 0.045,
+                      fontSize: ScreenSize.height * 0.035,
                     ),
                   ),
-                  Padding(
-                    padding:  EdgeInsets.only(top: ScreenSize.height * 0.008),
-                    child: SvgPicture.asset(
-                      "./assets/images/uparrow.svg",
-                      height: ScreenSize.height * 0.03,
-                    ),
-                  ),
-                  Padding(
-                    padding:  EdgeInsets.only(top: ScreenSize.height * 0.006),
-                    child: Text(
-                      "1",
-                      style: TextStyle(
-                        color: HexColor("#81F4E1"),
-                        fontFamily: "Sushi",
-                        fontSize: ScreenSize.height * 0.035,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
+                ),
+              ],
             ),
-          )
-        ]
-      ),
+          ),
+        )
+      ]),
     );
   }
 }

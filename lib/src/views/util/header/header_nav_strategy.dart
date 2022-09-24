@@ -1,13 +1,14 @@
 // Flutter imports:
-import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:google_fonts/google_fonts.dart';
+import "package:flutter/foundation.dart";
+import "package:flutter/material.dart";
+
+// Package imports:
+import "package:google_fonts/google_fonts.dart";
 
 // Project imports:
-import '../../../logic/Constants.dart';
-import '../../../logic/helpers/routing_helper.dart';
-import '../../../logic/helpers/size/screen_size.dart';
+import "../../../logic/Constants.dart";
+import "../../../logic/helpers/routing_helper.dart";
+import "../../../logic/helpers/size/screen_size.dart";
 
 class HeaderNavStrategy extends StatefulWidget {
   final String currPage;
@@ -53,7 +54,7 @@ class _HeaderNavStrategyState extends State<HeaderNavStrategy> {
                     bottomLeft: Radius.circular(25 * ScreenSize.swu))),
             child: Padding(
               padding: EdgeInsets.only(
-                top: ScreenSize.height * 0.015,
+                  top: ScreenSize.height * 0.015,
                   bottom: ScreenSize.height * 0.015,
                   left: ScreenSize.width * 0.02),
               child: SizedBox(
@@ -85,11 +86,13 @@ class _HeaderNavStrategyState extends State<HeaderNavStrategy> {
                     height: ScreenSize.height * 0.04,
                     child: GestureDetector(
                       onTap: () {
-                              print("HELOA");
-                              setState(() {
-                                select = !select;
-                              });
-                            },
+                        if (kDebugMode) {
+                          print("HELOA");
+                        }
+                        setState(() {
+                          select = !select;
+                        });
+                      },
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
