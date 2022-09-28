@@ -126,7 +126,7 @@ class _QRScreenState extends State<QRScreen> {
 
   Future<void> back() async {
     await convertData();
-    currentScoutingData!.empty();
+    currentScoutingData!.nextMatch();
     RouteHelper.pushAndRemoveUntilToScreen(-1, 0,
         ctx: context, screen: const Scouting());
   }

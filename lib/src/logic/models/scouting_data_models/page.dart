@@ -28,12 +28,6 @@ class Screen {
     return ret;
   }
 
-  void empty() {
-    for (var section in sections) {
-      section.empty();
-    }
-  }
-
   List<Component> getComponents() {
     List<Component> components = [];
     for (Section s in sections) {

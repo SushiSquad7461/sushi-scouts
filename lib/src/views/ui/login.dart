@@ -113,7 +113,7 @@ class _LoginState extends State<Login> {
     var colors = Theme.of(context);
     bool isPhoneScreen = isPhone(context);
 
-    String footerAsset = "./assets/images/";
+    String footerAsset = "./assets/images";
 
     switch (widget.type) {
       case LoginType.strategy:
