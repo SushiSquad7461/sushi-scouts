@@ -1,11 +1,12 @@
-// Project imports:
-import 'package:localstore/localstore.dart';
+// Package imports:
+import "package:localstore/localstore.dart";
 
+// Project imports:
 import "../../data/config_file_reader.dart";
 import "../../data/data.dart";
-import '../match_schedule.dart';
 import "component.dart";
 import "page.dart";
+import "../match_schedule.dart";
 
 class ScoutingData {
   String name;
@@ -49,7 +50,7 @@ class ScoutingData {
     if (!canGoToNextPage()) {
       return false;
     }
-    if(currPage == 0) {
+    if (currPage == 0) {
       nextMatch(empty: false);
     }
     currPage += 1;
@@ -78,7 +79,7 @@ class ScoutingData {
     return pages[pageNames[currPage]];
   }
 
-  void nextMatch({bool empty = true}) async{
+  void nextMatch({bool empty = true}) async {
     currPage = 0;
     List<Data> data = getData();
     List<Component> components = getComponents();
@@ -86,7 +87,7 @@ class ScoutingData {
     var json = (await db.collection("data").doc("schedule").get());
     bool hasSchedule;
     MatchSchedule? schedule;
-    if(json != null) {
+    if (json != null) {
       hasSchedule = true;
       schedule = MatchSchedule.fromJson(json);
     } else {
@@ -97,31 +98,43 @@ class ScoutingData {
     bool isQuals = false;
     int? teamNumIndex;
 
-    for (int i = 0; i<components.length; i++) {
-      if(components[i].name == "match #") {
-        if(empty) {
+    for (int i = 0; i < components.length; i++) {
+      if (components[i].name == "match #") {
+        if (empty) {
           data[i].increment();
         }
         matchNumber = (data[i].currValue as double).floor();
-      } else if(components[i].name == "station") {
+      } else if (components[i].name == "station") {
         station = (data[i].currValue as double).floor();
-      } else if(components[i].name == "match type") {
+      } else if (components[i].name == "match type") {
         isQuals = data[i].get() == "0.0";
-      } else if(components[i].name == "team #") {
+      } else if (components[i].name == "team #") {
         teamNumIndex = i;
-      } else if(empty){
+      } else if (empty) {
         data[i].empty();
       }
     }
-    if (hasSchedule && matchNumber != null && station != null && teamNumIndex != null && isQuals) {
+    if (hasSchedule &&
+        matchNumber != null &&
+        station != null &&
+        teamNumIndex != null &&
+        isQuals) {
       int? teamNumber;
-      List<String> stations = ["Red1", "Red2", "Red3", "Blue1", "Blue2", "Blue3"];
+      List<String> stations = [
+        "Red1",
+        "Red2",
+        "Red3",
+        "Blue1",
+        "Blue2",
+        "Blue3"
+      ];
       for (Team t in schedule!.schedule[matchNumber].teams) {
-        if(t.station == stations[station]){
+        if (t.station == stations[station]) {
           teamNumber = t.number;
         }
       }
-      data[teamNumIndex].set((teamNumber??-1)*1.0, setByUser: teamNumber != null);
+      data[teamNumIndex]
+          .set((teamNumber ?? -1) * 1.0, setByUser: teamNumber != null);
     }
   }
 
