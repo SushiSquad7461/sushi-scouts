@@ -16,13 +16,12 @@ import "../../logic/device_type.dart";
 import "../../logic/helpers/color/hex_color.dart";
 import "../../logic/helpers/routing_helper.dart";
 import "../../logic/helpers/size/screen_size.dart";
+import "../../logic/login_type.dart";
 import "../util/header/header_title/header_title.dart";
 import "../util/popups/incorrect_password.dart";
 import "sushi_scouts/scouting.dart";
+import "sushi_strategy/robot_profiles.dart";
 import "sushi_supervise/upload.dart";
-import '../../logic/login_type.dart';
-import 'loading.dart';
-import 'sushi_strategy/robot_profiles.dart';
 
 class Login extends StatefulWidget {
   final LoginType type;
@@ -114,7 +113,7 @@ class _LoginState extends State<Login> {
     var colors = Theme.of(context);
     bool isPhoneScreen = isPhone(context);
 
-    String footerAsset = "./assets/images/";
+    String footerAsset = "./assets/images";
 
     switch (widget.type) {
       case LoginType.strategy:

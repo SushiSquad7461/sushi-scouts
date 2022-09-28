@@ -1,9 +1,9 @@
-// Project imports:
-import 'package:flutter/widgets.dart';
+// Flutter imports:
+import "package:flutter/widgets.dart";
 
-import '../views/ui/settings.dart';
-import '../views/ui/sushi_strategy/robot_profiles.dart';
-import '../views/ui/sushi_strategy/strat_settings.dart';
+// Project imports:
+import "../views/ui/sushi_strategy/robot_profiles.dart";
+import "../views/ui/sushi_strategy/strat_settings.dart";
 import "../views/util/components/checkbox.dart";
 import "../views/util/components/dropdown.dart";
 import "../views/util/components/increment.dart";

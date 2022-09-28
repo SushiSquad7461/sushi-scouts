@@ -53,12 +53,6 @@ class Section {
     return res;
   }
 
-  void empty() {
-    for (int i = 0; i < values.length; ++i) {
-      values[i].empty();
-    }
-  }
-
   List<String> notFilled() {
     List<String> ret = [];
     for (int i = 0; i < components.length; i++) {

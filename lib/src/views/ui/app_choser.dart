@@ -8,8 +8,8 @@ import "package:flutter_svg/svg.dart";
 // Project imports:
 import "../../logic/helpers/routing_helper.dart";
 import "../../logic/helpers/size/screen_size.dart";
+import "../../logic/login_type.dart";
 import "login.dart";
-import '../../logic/login_type.dart';
 
 class AppChooser extends StatelessWidget {
   const AppChooser({Key? key}) : super(key: key);
@@ -86,7 +86,8 @@ class AppChooser extends StatelessWidget {
             ),
             Padding(
               padding: EdgeInsets.only(bottom: ScreenSize.height * 0.02),
-              child: SvgPicture.asset("./assets/images/${colors.scaffoldBackgroundColor == Colors.white ? "choicefooter.svg" : "choocerfooterdark.svg"}",
+              child: SvgPicture.asset(
+                  "./assets/images/${colors.scaffoldBackgroundColor == Colors.white ? "choicefooter.svg" : "choocerfooterdark.svg"}",
                   width: ScreenSize.width),
             )
           ]),

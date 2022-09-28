@@ -24,16 +24,15 @@ import "../../logic/helpers/routing_helper.dart";
 import "../../logic/helpers/secret/secret.dart";
 import "../../logic/helpers/secret/secret_loader.dart";
 import "../../logic/helpers/size/screen_size.dart";
+import "../../logic/login_type.dart";
 import "../../logic/models/match_schedule.dart";
 import "../../logic/network/api_repository.dart";
-import "../util/Footer/footer.dart";
+import "../util/footer/footer.dart";
 import "../util/footer/supervise_footer.dart";
 import "../util/header/header_nav.dart";
 import "../util/header/header_title/header_title.dart";
 import "app_choser.dart";
 import "loading.dart";
-import '../../logic/login_type.dart';
-
 
 class Settings extends StatefulWidget {
   const Settings({Key? key}) : super(key: key);
@@ -174,8 +173,7 @@ class _SettingsState extends State<Settings> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               HeaderTitle(
-               type: isSupervise ? LoginType.supervise : LoginType.scout
-              ),
+                  type: isSupervise ? LoginType.supervise : LoginType.scout),
               HeaderNav(
                 currentPage: "settings",
                 isSupervise: isSupervise,
