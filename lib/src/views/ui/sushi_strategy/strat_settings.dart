@@ -72,13 +72,12 @@ class _StratSettingsState extends State<StratSettings> {
   }
 
   Future<void> downloadData() async {
-    // final toAdd =
-    //     await FirebaseFirestore.instance.collection(collectionName).get();
+    final toAdd =
+        await FirebaseFirestore.instance.collection(collectionName).get();
 
-    // for (var i in toAdd.docs) {
-    //   db.collection(stratDatabaseName).doc(i.id).set(i.data());
-    // }
-    print(collectionName);
+    for (var i in toAdd.docs) {
+      db.collection(stratDatabaseName).doc(i.id).set(i.data());
+    }
   }
 
   @override

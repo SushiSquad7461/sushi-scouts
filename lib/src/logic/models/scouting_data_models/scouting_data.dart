@@ -1,4 +1,6 @@
 // Project imports:
+import 'package:morphable_shape/preset_shape_map.dart';
+
 import "../../data/config_file_reader.dart";
 import "../../data/data.dart";
 import "component.dart";
@@ -19,7 +21,7 @@ class ScoutingData {
 
   factory ScoutingData.fromJson(Map<String, dynamic> json) {
     var reader = ConfigFileReader.instance;
-    var emptyData = reader.getScoutingData(json["name"]);
+    var emptyData = reader.generateNewScoutingData(json["name"]);
     for (String pageName in emptyData.pages.keys) {
       var values = emptyData.pages[pageName]!.getValues();
       var components = emptyData.pages[pageName]!.getComponents();
@@ -133,5 +135,66 @@ class ScoutingData {
       componentCount += 1;
     }
     return "INVALID COMPONENT NAME";
+  }
+
+  String getCertainDataByName(String componentName) {
+    for (final pageName in pages.keys) {
+      List<Component> components = pages[pageName]!.getComponents();
+      List<Data> values = pages[pageName]!.getValues();
+      int componentCount = 0;
+
+      for (var i in components) {
+        if (i.name == componentName) {
+          if (i.component == "multiselect") {
+            String ret = "";
+            Map<String, bool> selected = decodeMultiSelectData(
+                int.parse(values[componentCount].getSimplified()), i.values!);
+
+            for (final option in selected.keys) {
+              if (selected[option]!) {
+                ret += "$option . ";
+              }
+            }
+
+            return ret;
+          }
+
+          return i.values == null || i.values!.isEmpty
+              ? values[componentCount].getSimplified()
+              : i.values![int.parse(values[componentCount].getSimplified()) +
+                  (i.component == "select" ? 1 : 0)];
+        }
+        componentCount += 1;
+      }
+    }
+    return "INVALID COMPONENT NAME";
+  }
+
+  Map<String, bool> decodeMultiSelectData(int res, List<String> oldValues) {
+    int index = 1;
+    Map<String, bool> checked = {};
+
+    List<String> values = List.from(oldValues);
+
+    values.remove(values[0]);
+    values.remove(values[0]);
+
+    if (values[0] == "l") {
+      values.remove(values[0]);
+      while (values[0] != "c") {
+        values.remove(values[0]);
+      }
+    }
+
+    values.remove(values[0]);
+
+    print(values);
+
+    for (int i = 0; i < values.length; i++) {
+      checked[values[i]] = (index & res) != 0;
+      index *= 2;
+    }
+
+    return checked;
   }
 }
