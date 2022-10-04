@@ -17,6 +17,7 @@ class ConfigFileReader {
   int? teamNum;
   Map<String, dynamic>? parsedFile;
   Map<String, dynamic>? supervise;
+  Map<String, dynamic>? strat;
   Map<String, ScoutingData> data = {};
   Map<String, int> commonValues = {};
   String? password;
@@ -41,6 +42,7 @@ class ConfigFileReader {
       password = parsedFile!["password"];
       _version = parsedFile!["version"];
       supervise = parsedFile!["supervise"];
+      strat = parsedFile!["strat"];
       parsedFile = parsedFile!["scouting"];
       defaultConfig = true;
       return;
