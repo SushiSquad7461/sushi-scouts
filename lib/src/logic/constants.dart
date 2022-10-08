@@ -2,6 +2,7 @@
 import "package:flutter/widgets.dart";
 
 // Project imports:
+import '../views/ui/sushi_strategy/carindal_export.dart';
 import "../views/ui/sushi_strategy/robot_profiles.dart";
 import "../views/ui/sushi_strategy/strat_settings.dart";
 import "../views/util/components/checkbox.dart";
@@ -32,6 +33,6 @@ const stratDatabaseName = "strat-data";
 const Map<String, Widget> stratPages = {
   "ordinal": RobotProfiles(),
   "pit": RobotProfiles(),
-  "cardinal": RobotProfiles(),
+  "cardinal": CardinalExport(),
   "settings": StratSettings(),
 };

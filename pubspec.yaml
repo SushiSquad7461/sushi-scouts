@@ -50,6 +50,8 @@ dependencies:
   dio: ^4.0.6
   retrofit: ^3.0.1+1
   morphable_shape: ^1.6.4
+  csv: ^5.0.1
+  url_launcher: ^6.1.6
 
 dev_dependencies:
   flutter_test:
