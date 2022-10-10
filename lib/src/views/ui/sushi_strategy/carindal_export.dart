@@ -12,6 +12,7 @@ import '../../../logic/Constants.dart';
 import '../../../logic/data/config_file_reader.dart';
 import '../../../logic/helpers/size/screen_size.dart';
 import '../../../logic/models/scouting_data_models/component.dart';
+import '../../../logic/models/scouting_data_models/page.dart';
 import '../../../logic/models/supervise_data.dart';
 import '../../util/header/header_nav_strategy.dart';
 import '../../util/header/header_title/mobile_strategy_main.dart';
@@ -65,8 +66,13 @@ class _CardinalExportState extends State<CardinalExport> {
         .generateNewScoutingData(method)
         .getComponents();
 
-    for (final i in components) {
-      exportData[0].add(i.name);
+    Map<String, Screen> pages =
+        ConfigFileReader.instance.generateNewScoutingData(method).pages;
+
+    for (final page in pages.keys) {
+      for (final i in pages[page]!.getComponents()) {
+        exportData[0].add(page + i.name);
+      }
     }
 
     for (final i in robotMap.values) {
@@ -76,8 +82,14 @@ class _CardinalExportState extends State<CardinalExport> {
         i.teamNum.toString()
       ];
 
-      for (final component in components) {
-        addData.add(i.data.getCertainDataByName(component.name));
+      // for (final component in components) {
+      //   addData.add(i.data.getCertainDataByName(component.name));
+      // }
+
+      for (final page in pages.keys) {
+        for (final component in pages[page]!.getComponents()) {
+          addData.add(i.data.getCertainData(page, component.name));
+        }
       }
 
       exportData.add(addData);
