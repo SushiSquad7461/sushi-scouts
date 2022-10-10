@@ -1,21 +1,19 @@
-import 'dart:convert';
+// Flutter imports:
+import "package:flutter/material.dart";
+import "package:flutter/services.dart";
 
-import 'package:csv/csv.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:localstore/localstore.dart';
-import 'package:url_launcher/url_launcher.dart';
+// Package imports:
+import "package:csv/csv.dart";
+import "package:localstore/localstore.dart";
 
-import '../../../logic/Constants.dart';
-import '../../../logic/data/config_file_reader.dart';
-import '../../../logic/helpers/size/screen_size.dart';
-import '../../../logic/models/scouting_data_models/component.dart';
-import '../../../logic/models/scouting_data_models/page.dart';
-import '../../../logic/models/supervise_data.dart';
-import '../../util/header/header_nav_strategy.dart';
-import '../../util/header/header_title/mobile_strategy_main.dart';
+// Project imports:
+import "../../../logic/Constants.dart";
+import "../../../logic/data/config_file_reader.dart";
+import "../../../logic/helpers/size/screen_size.dart";
+import "../../../logic/models/scouting_data_models/page.dart";
+import "../../../logic/models/supervise_data.dart";
+import "../../util/header/header_nav_strategy.dart";
+import "../../util/header/header_title/mobile_strategy_main.dart";
 
 class CardinalExport extends StatefulWidget {
   const CardinalExport({Key? key}) : super(key: key);
@@ -42,10 +40,7 @@ class _CardinalExportState extends State<CardinalExport> {
           for (var name in scoutingData.keys) {
             final toAdd = SuperviseData.fromJson(scoutingData[name]);
             if (toAdd.methodName == method && toAdd.deleted == false) {
-              print(toAdd.data.stringfy());
               String id = "${toAdd.display1}:${toAdd.display2}";
-              print(id);
-
               if (robotMap.containsKey(id)) {
               } else {
                 robotMap[id] = toAdd;
@@ -61,10 +56,6 @@ class _CardinalExportState extends State<CardinalExport> {
     List<List<String>> exportData = [];
 
     exportData.add(["name", "flagged", "team num"]);
-
-    List<Component> components = ConfigFileReader.instance
-        .generateNewScoutingData(method)
-        .getComponents();
 
     Map<String, Screen> pages =
         ConfigFileReader.instance.generateNewScoutingData(method).pages;

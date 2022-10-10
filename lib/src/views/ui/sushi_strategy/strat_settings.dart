@@ -2,12 +2,11 @@
 import "dart:convert";
 
 // Flutter imports:
-import 'package:cloud_firestore/cloud_firestore.dart';
-import "package:flutter/foundation.dart";
 import "package:flutter/material.dart";
 import "package:flutter/services.dart";
 
 // Package imports:
+import "package:cloud_firestore/cloud_firestore.dart";
 import "package:flutter_bloc/flutter_bloc.dart";
 import "package:get/get.dart";
 import "package:google_fonts/google_fonts.dart";
@@ -15,7 +14,7 @@ import "package:localstore/localstore.dart";
 
 // Project imports:
 import "../../../../main.dart";
-import '../../../logic/Constants.dart';
+import "../../../logic/Constants.dart";
 import "../../../logic/blocs/login_bloc/login_cubit.dart";
 import "../../../logic/blocs/theme_bloc/theme_cubit.dart";
 import "../../../logic/data/config_file_reader.dart";

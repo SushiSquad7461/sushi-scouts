@@ -2,13 +2,11 @@
 import "package:localstore/localstore.dart";
 
 // Project imports:
-import 'package:morphable_shape/preset_shape_map.dart';
-
 import "../../data/config_file_reader.dart";
 import "../../data/data.dart";
+import "../match_schedule.dart";
 import "component.dart";
 import "page.dart";
-import "../match_schedule.dart";
 
 class ScoutingData {
   String name;
@@ -246,8 +244,6 @@ class ScoutingData {
     }
 
     values.remove(values[0]);
-
-    print(values);
 
     for (int i = 0; i < values.length; i++) {
       checked[values[i]] = (index & res) != 0;

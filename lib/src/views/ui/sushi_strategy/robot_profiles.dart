@@ -1,22 +1,19 @@
 // Flutter imports:
-import 'dart:io';
+import "package:flutter/material.dart";
 
-import 'package:flutter/gestures.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:localstore/localstore.dart';
+// Package imports:
+import "package:google_fonts/google_fonts.dart";
+import "package:localstore/localstore.dart";
 
 // Project imports:
-import '../../../logic/constants.dart';
-import '../../../logic/data/config_file_reader.dart';
-import '../../../logic/helpers/color/hex_color.dart';
-import '../../../logic/helpers/size/screen_size.dart';
-import '../../../logic/models/scouting_data_models/scouting_data.dart';
-import '../../../logic/models/supervise_data.dart';
-import '../../util/header/header_nav_strategy.dart';
-import '../../util/header/header_title/mobile_strategy_main.dart';
+import "../../../logic/constants.dart";
+import "../../../logic/data/config_file_reader.dart";
+import "../../../logic/helpers/color/hex_color.dart";
+import "../../../logic/helpers/size/screen_size.dart";
+import "../../../logic/models/scouting_data_models/scouting_data.dart";
+import "../../../logic/models/supervise_data.dart";
+import "../../util/header/header_nav_strategy.dart";
+import "../../util/header/header_title/mobile_strategy_main.dart";
 
 class RobotProfiles extends StatefulWidget {
   const RobotProfiles({Key? key}) : super(key: key);
@@ -161,7 +158,8 @@ class _RobotProfilesState extends State<RobotProfiles> {
       if (i.component == "text input") {
         ret.add(Text(
           data.getCertainDataByName(i.name),
-          style: GoogleFonts.mohave(textStyle: TextStyle(
+          style: GoogleFonts.mohave(
+              textStyle: TextStyle(
             fontSize: ScreenSize.height * 0.02,
             color: Colors.black,
           )),
@@ -233,7 +231,6 @@ class _RobotProfilesState extends State<RobotProfiles> {
                               color: Colors.white,
                               borderRadius: BorderRadius.all(
                                   Radius.circular(40 * ScreenSize.swu))),
-                         
                         ),
                       ),
                       Padding(
@@ -251,11 +248,11 @@ class _RobotProfilesState extends State<RobotProfiles> {
                                     color: Colors.white,
                                     borderRadius: BorderRadius.all(
                                       Radius.circular(15 * ScreenSize.swu),
-                                    )
-                                ),
+                                    )),
                                 child: Center(
-                                  child: getPicture(selected![index], picIndex)),
-                                )
+                                    child:
+                                        getPicture(selected![index], picIndex)),
+                              )
                             ],
                           ),
                         ),
@@ -289,7 +286,7 @@ class _RobotProfilesState extends State<RobotProfiles> {
                                     bottom: ScreenSize.height * 0.01),
                                 child: Icon(
                                   const IconData(0xf57b,
-                                      fontFamily: 'MaterialIcons',
+                                      fontFamily: "MaterialIcons",
                                       matchTextDirection: true),
                                   size: ScreenSize.height * 0.08,
                                   color: Colors.black,
@@ -310,7 +307,7 @@ class _RobotProfilesState extends State<RobotProfiles> {
                                     bottom: ScreenSize.height * 0.01),
                                 child: Icon(
                                   const IconData(0xf57d,
-                                      fontFamily: 'MaterialIcons',
+                                      fontFamily: "MaterialIcons",
                                       matchTextDirection: true),
                                   size: ScreenSize.height * 0.08,
                                   color: Colors.black,
