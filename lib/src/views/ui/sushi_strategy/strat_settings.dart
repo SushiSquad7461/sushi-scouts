@@ -14,9 +14,10 @@ import "package:localstore/localstore.dart";
 
 // Project imports:
 import "../../../../main.dart";
-import "../../../logic/Constants.dart";
+import "../../../logic/Constants.dart" as Constants;
 import "../../../logic/blocs/login_bloc/login_cubit.dart";
 import "../../../logic/blocs/theme_bloc/theme_cubit.dart";
+import '../../../logic/constants.dart';
 import "../../../logic/data/config_file_reader.dart";
 import "../../../logic/device_type.dart";
 import "../../../logic/helpers/routing_helper.dart";
@@ -72,6 +73,16 @@ class _StratSettingsState extends State<StratSettings> {
     BlocProvider.of<LoginCubit>(context).logOut();
     RouteHelper.pushAndRemoveUntilToScreen(-1, 0,
         ctx: context, screen: const AppChooser());
+  }
+
+  Future<void> deleteData() async {
+    final collection = await db.collection(stratDatabaseName).get();
+
+    if (collection != null) {
+      for (final i in collection.keys) {
+        await db.collection(stratDatabaseName).doc(i.split("/")[2]).delete();
+      }
+    }
   }
 
   Future<void> downloadData() async {
@@ -233,6 +244,20 @@ class _StratSettingsState extends State<StratSettings> {
                               },
                               child: Text(
                                 "download data",
+                                style: textStyle,
+                              )),
+                        ),
+                      ),
+                      Align(
+                        alignment: Alignment(0, isPhoneScreen ? -0.4 : -0.8),
+                        child: Container(
+                          decoration: boxDecoration,
+                          child: TextButton(
+                              onPressed: () {
+                                deleteData();
+                              },
+                              child: Text(
+                                "WIPE ALL DATA",
                                 style: textStyle,
                               )),
                         ),
