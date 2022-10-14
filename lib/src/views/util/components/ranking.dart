@@ -71,7 +71,20 @@ class RankingState extends State<Ranking> {
   @override
   Widget build(BuildContext context) {
     double width = widget.width / (isPhone(context) ? 1.4 : 1.6);
-    widget.data.set(widget.values!.toString(), setByUser: true);
+
+    if (widget.data.get() != "") {
+      List<String> newVals =
+          widget.data.get().split("[")[1].split("]")[0].split(", ");
+
+      for (int i = 0; i < widget.values!.length; ++i) {
+        widget.values![i] = newVals[i];
+      }
+
+      widget.data.set(widget.data.get(), setByUser: true);
+    } else {
+      widget.data.set(widget.values!.toString(), setByUser: true); 
+    }
+
     bool isPhoneScreen = isPhone(context);
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
