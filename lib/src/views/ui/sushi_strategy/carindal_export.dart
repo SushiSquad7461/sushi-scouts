@@ -26,7 +26,7 @@ class _CardinalExportState extends State<CardinalExport> {
   final method = "cardinal";
   final db = Localstore.instance;
   final reader = ConfigFileReader.instance;
-  Map<String, SuperviseData> robotMap = {};
+  Map<String, List<SuperviseData>> robotMap = {};
 
   @override
   void initState() {
@@ -42,8 +42,9 @@ class _CardinalExportState extends State<CardinalExport> {
             if (toAdd.methodName == method && toAdd.deleted == false) {
               String id = "${toAdd.display1}:${toAdd.display2}";
               if (robotMap.containsKey(id)) {
+                robotMap[id]!.add(toAdd);
               } else {
-                robotMap[id] = toAdd;
+                robotMap[id] = [toAdd];
               }
             }
           }
@@ -68,9 +69,9 @@ class _CardinalExportState extends State<CardinalExport> {
 
     for (final i in robotMap.values) {
       List<String> addData = [
-        i.name,
-        i.flagged.toString(),
-        i.teamNum.toString()
+        i[0].name,
+        i[0].flagged.toString(),
+        i[0].teamNum.toString()
       ];
 
       // for (final component in components) {
@@ -79,7 +80,7 @@ class _CardinalExportState extends State<CardinalExport> {
 
       for (final page in pages.keys) {
         for (final component in pages[page]!.getComponents()) {
-          addData.add(i.data.getCertainData(page, component.name));
+          addData.add(i[0].data.getCertainData(page, component.name));
         }
       }
 
