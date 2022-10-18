@@ -1,10 +1,15 @@
 // Flutter imports:
+import 'dart:convert';
+import 'dart:io';
+import 'dart:typed_data';
+
 import "package:flutter/material.dart";
 import "package:flutter/services.dart";
 
 // Package imports:
 import "package:csv/csv.dart";
 import "package:localstore/localstore.dart";
+import 'package:path_provider/path_provider.dart';
 
 // Project imports:
 import "../../../logic/Constants.dart";
@@ -89,7 +94,78 @@ class _CardinalExportState extends State<CardinalExport> {
 
     String csvData = const ListToCsvConverter().convert(exportData);
 
-    await Clipboard.setData(ClipboardData(text: csvData));
+    //this csv variable holds entire csv data
+    //Now Convert or encode this csv string into utf8
+    final bytes = utf8.encode(csvData);
+
+    print(await getDownloadPath());
+
+    // Create a new file. You can create any kind of file like txt, doc , json etc.
+    File file = await File("${await getDownloadPath()}/Toastguyz.json").create();
+
+    String fileContent = json.encode({
+      "Website": {
+        "Name": "Toastguyz",
+        "Description": "Programming Tutorials2",
+      },
+    });
+
+// You can write to file using writeAsString. This method takes string argument
+// To write to text file we can use like file.writeAsString("Toastguyz file content");
+    await file.writeAsString(fileContent);
+
+    // await Clipboard.setData(ClipboardData(text: csvData));
+
+    print(bytes);
+
+    // Uint8List data = Uint8List.fromList(bytes);
+
+    // // storage permission ask
+    // var status = await Permission.storage.status;
+    // if (!status.isGranted) {
+    //   await Permission.storage.request();
+    // }
+    // // the downloads folder path
+    // Directory tempDir = await DownloadsPathProvider.downloadsDirectory;
+    // String tempPath = tempDir.path;
+    // var filePath = tempPath + '/bob.csv';
+    //
+
+    // the data
+    // var bytes2 = ByteData.view(data.buffer);
+    // final buffer = bytes2.buffer;
+    // // save the data in the path
+    // File(filePath).writeAsBytes(
+    //     buffer.asUint8List(data.offsetInBytes, data.lengthInBytes));
+
+    // final taskId = await FlutterDownloader.enqueue(
+    //   // url: "data:text/plain;charset=UTF-8,$csvData",
+    //   url: "https://en.wikipedia.org/wiki/Hurricane_Julia_(2022)#/media/File:Julia_2022-10-09_0710Z.jpg",
+    //   saveInPublicStorage: true,
+    //   savedDir: (await getDownloadPath())!,
+    //   showNotification:
+    //       true, // show download progress in status bar (for Android)
+    //   openFileFromNotification:
+    //       true, // click on notification to open downloaded file (for Android)
+    // );
+  }
+
+  Future<String?> getDownloadPath() async {
+    Directory? directory;
+    try {
+      if (Platform.isIOS) {
+        directory = await getApplicationDocumentsDirectory();
+      } else {
+        directory = Directory('/storage/emulated/0/Download');
+        // Put file in global download folder, if for an unknown reason it didn't exist, we fallback
+        // ignore: avoid_slow_async_io
+        if (!await directory.exists())
+          directory = await getExternalStorageDirectory();
+      }
+    } catch (err, stack) {
+      print("Cannot get download folder path");
+    }
+    return directory?.path;
   }
 
   @override
