@@ -94,6 +94,41 @@ class _EditState extends State<Edit> {
         .set(data[key]!.toJson());
   }
 
+  List<Widget> getListView() {
+    List<Widget> ret = [];
+
+    List<String> keys = data.keys.toList();
+    keys.sort(((a, b) {
+      return int.parse(a.split(" - ")[1]).compareTo(int.parse(b.split(" - ")[1]));
+    }));
+
+    for (var i in keys) {
+      if ((currState == "ALL" || currState == data[i]!.methodName) &&
+          (deleteMode || !data[i]!.deleted)) {
+        ret.add(Padding(
+          padding: EdgeInsets.only(left: ScreenSize.width * 0.02),
+          child: GestureDetector(
+            onTap: () => updateData(i),
+            child: Text(
+              "${data[i]!.methodName[0].toUpperCase()} - ${data[i]!.display1} - ${data[i]!.display2}",
+              style: GoogleFonts.mohave(
+                  textStyle: TextStyle(
+                      fontSize: ScreenSize.width * 0.06,
+                      fontWeight: FontWeight.bold),
+                  color: (data[i]!.flagged)
+                      ? HexColor("#56CBF9")
+                      : (data[i]!.deleted)
+                          ? HexColor("#FCD6F6")
+                          : Colors.black),
+            ),
+          ),
+        ));
+      }
+    }
+
+    return ret;
+  }
+
   @override
   Widget build(BuildContext context) {
     var colors = Theme.of(context);
@@ -254,32 +289,8 @@ class _EditState extends State<Edit> {
                           width: ScreenSize.width * 0.01,
                         )),
                     child: ListView(
-                      children: [
-                        for (var i in data.keys)
-                          if ((currState == "ALL" ||
-                                  currState == data[i]!.methodName) &&
-                              (deleteMode || !data[i]!.deleted))
-                            Padding(
-                              padding: EdgeInsets.only(
-                                  left: ScreenSize.width * 0.02),
-                              child: GestureDetector(
-                                onTap: () => updateData(i),
-                                child: Text(
-                                  "${data[i]!.methodName[0].toUpperCase()} - ${data[i]!.display1} - ${data[i]!.display2}",
-                                  style: GoogleFonts.mohave(
-                                      textStyle: TextStyle(
-                                          fontSize: ScreenSize.width * 0.06,
-                                          fontWeight: FontWeight.bold),
-                                      color: (data[i]!.flagged)
-                                          ? HexColor("#56CBF9")
-                                          : (data[i]!.deleted)
-                                              ? HexColor("#FCD6F6")
-                                              : Colors.black),
-                                ),
-                              ),
-                            )
-                      ],
-                    ),
+                        padding: EdgeInsets.only(top: ScreenSize.height * 0.02),
+                        children: getListView()),
                   ),
                 )
               ],
