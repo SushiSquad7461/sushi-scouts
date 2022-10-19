@@ -11,6 +11,7 @@ import "package:flutter/services.dart";
 import "package:csv/csv.dart";
 import "package:localstore/localstore.dart";
 import 'package:path_provider/path_provider.dart';
+import 'package:statistics/statistics.dart';
 
 // Project imports:
 import "../../../logic/Constants.dart";
@@ -69,7 +70,7 @@ class _CardinalExportState extends State<CardinalExport> {
 
     for (final page in pages.keys) {
       for (final i in pages[page]!.getComponents()) {
-        exportData[0].add(page + i.name);
+        exportData[0].add("$page:${i.name}");
       }
     }
 
@@ -80,9 +81,45 @@ class _CardinalExportState extends State<CardinalExport> {
         i[0].teamNum.toString()
       ];
 
+      if (kDebugMode) {
+        print(i.length);
+      }
+
       for (final page in pages.keys) {
         for (final component in pages[page]!.getComponents()) {
-          addData.add(i[0].data.getCertainData(page, component.name));
+          String data = "";
+          if ((component.values != null && component.values!.isNotEmpty) ||
+              ["string", "bool"].contains(component.type)) {
+            Map<String, num> dataFrequency = {};
+
+            for (final j in i) {
+              String dataPoint = j.data.getCertainData(page, component.name);
+
+              if (dataFrequency.containsKey(dataPoint)) {
+                dataFrequency[dataPoint] = dataFrequency[dataPoint]! + 1;
+              } else {
+                dataFrequency[dataPoint] = 1;
+              }
+            }
+
+            for (final val in dataFrequency.keys) {
+              if (dataFrequency[data] == null ||
+                  dataFrequency[val]! > dataFrequency[data]!) {
+                data = val;
+              }
+            }
+          } else {
+            List<int> dataList = [];
+
+            for (final j in i) {
+              dataList
+                  .add(int.parse(j.data.getCertainData(page, component.name)));
+            }
+
+            data = dataList.statistics.center.toString();
+          }
+
+          addData.add(data);
         }
       }
 
@@ -92,7 +129,8 @@ class _CardinalExportState extends State<CardinalExport> {
     String csvData = const ListToCsvConverter().convert(exportData);
 
     // Create a new file. You can create any kind of file like txt, doc , json etc.
-    File file = await File("${await getDownloadPath()}/ScoutingData.csv").create();
+    File file =
+        await File("${await getDownloadPath()}/ScoutingData.csv").create();
 
     // You can write to file using writeAsString. This method takes string argument
     await file.writeAsString(csvData);

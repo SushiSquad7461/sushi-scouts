@@ -86,9 +86,6 @@ class _HeaderNavStrategyState extends State<HeaderNavStrategy> {
                     height: ScreenSize.height * 0.04,
                     child: GestureDetector(
                       onTap: () {
-                        if (kDebugMode) {
-                          print("HELOA");
-                        }
                         setState(() {
                           select = !select;
                         });

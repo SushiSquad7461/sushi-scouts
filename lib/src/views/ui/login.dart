@@ -106,10 +106,6 @@ class _LoginState extends State<Login> {
 
   @override
   Widget build(BuildContext context) {
-    if (kDebugMode) {
-      print(ScreenSize.width);
-    }
-
     var colors = Theme.of(context);
     bool isPhoneScreen = isPhone(context);
 

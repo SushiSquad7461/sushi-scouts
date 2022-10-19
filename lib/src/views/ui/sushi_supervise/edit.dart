@@ -49,17 +49,12 @@ class _EditState extends State<Edit> {
   Future<void> refreshData() async {
     final newData =
         await Localstore.instance.collection(superviseDatabaseName).get();
-    if (kDebugMode) {
-      print(newData);
-    }
+
     if (newData != null) {
       setState(() {
         for (var name in newData.keys) {
           data.addAll(
               {name.split("/")[2]: SuperviseData.fromJson(newData[name])});
-        }
-        if (kDebugMode) {
-          print(data);
         }
       });
     }

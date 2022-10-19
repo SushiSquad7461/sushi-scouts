@@ -52,6 +52,7 @@ dependencies:
   morphable_shape: ^1.6.4
   csv: ^5.0.1
   url_launcher: ^6.1.6
+  statistics: ^1.0.23
 
 dev_dependencies:
   flutter_test:
