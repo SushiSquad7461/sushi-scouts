@@ -11,7 +11,7 @@ import "package:flutter/services.dart";
 import "package:csv/csv.dart";
 import "package:localstore/localstore.dart";
 import 'package:path_provider/path_provider.dart';
-import 'package:statistics/statistics.dart';
+import "package:statistics/statistics.dart";
 
 // Project imports:
 import "../../../logic/Constants.dart";
