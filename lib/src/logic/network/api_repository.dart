@@ -25,7 +25,27 @@ class ApiRepository {
     dio.options.headers["If-Modified-Since"] = "";
     _restClient = RestClient(dio, baseUrl: "");
     try {
-      return await _restClient!.getMatchSchedule(event, tournamentLevel);
+      return await _restClient!
+          .getMatchSchedule(event, tournamentLevel, DateTime.now().year);
+    } catch (error) {
+      log(ErrorHelper.handleError(error as Exception));
+      return null;
+    }
+  }
+
+  Future<int?> getRank(String event, int teamNum) async {
+    final dio = Dio();
+    Secret secrets =
+        await SecretLoader(secretPath: "assets/secrets.json").load();
+    dio.options.headers["Authorization"] =
+        'Basic ${base64.encode(utf8.encode("${secrets.getApiKey("tbaUsername")}:${secrets.getApiKey("tbaPassword")}"))}';
+    dio.options.headers["If-Modified-Since"] = "";
+    _restClient = RestClient(dio, baseUrl: "");
+    try {
+      String data =
+          await _restClient!.getRanking(event, teamNum, DateTime.now().year);
+      Map<String, dynamic> parsed = json.decode(data);
+      return parsed["Rankings"][0]["rank"];
     } catch (error) {
       log(ErrorHelper.handleError(error as Exception));
       return null;
