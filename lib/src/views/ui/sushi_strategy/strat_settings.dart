@@ -92,6 +92,14 @@ class _StratSettingsState extends State<StratSettings> {
     for (var i in toAdd.docs) {
       db.collection(stratDatabaseName).doc(i.id).set(i.data());
     }
+
+    String rank = (await ApiRepository()
+        .getRank(
+            BlocProvider.of<LoginCubit>(context).state.eventCode.toUpperCase(),
+            BlocProvider.of<LoginCubit>(context).state.teamNum))
+        .toString();
+
+    db.collection("frcapi").doc("rank").set({"rank": rank});
   }
 
   @override

@@ -274,7 +274,7 @@ class _LoginState extends State<Login> {
                         FilteringTextInputFormatter.digitsOnly
                       ],
                       onChanged: (String? val) => setState(() {
-                        teamNum = (val != null ? int.parse(val) : val) as int?;
+                        teamNum = (val != null && val != "" ? int.parse(val) : null);
                       }),
                     ),
                   ),
