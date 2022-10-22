@@ -83,6 +83,18 @@ class _ScoutingFooterState extends State<ScoutingFooter> {
                       fit: BoxFit.fitWidth,
                     ),
                   ),
+                  Align(
+                    alignment: const Alignment(1, 0.6),
+                    child: IconButton(
+                      icon: Icon(Icons.qr_code_2_rounded,
+                        color: colors.backgroundColor),
+                      onPressed: () {
+                        RouteHelper.pushAndRemoveUntilToScreen(1, 0,
+                                      ctx: context, screen: QRScreen(hasNewData: false));
+                      },
+                      iconSize: ScreenSize.swu * 60,
+                    )
+                  ),
                   Padding(
                     padding: EdgeInsets.only(
                         top: ScreenSize.height * 0.1,
