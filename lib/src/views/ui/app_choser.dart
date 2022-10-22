@@ -6,6 +6,7 @@ import "package:flutter_device_type/flutter_device_type.dart";
 import "package:flutter_svg/svg.dart";
 
 // Project imports:
+import '../../logic/helpers/color/hex_color.dart';
 import "../../logic/helpers/routing_helper.dart";
 import "../../logic/helpers/size/screen_size.dart";
 import "../../logic/login_type.dart";
@@ -25,17 +26,91 @@ class AppChooser extends StatelessWidget {
           children: [
             Padding(
               padding: EdgeInsets.only(
-                top: ScreenSize.height * (Device.get().hasNotch ? 0.04 : 0.02),
-                left: ScreenSize.width * 0.05,
+                top: ScreenSize.height * (Device.get().hasNotch ? 0.045 : 0.02),
+                left: ScreenSize.width * 0.03,
               ),
-              child: Text(
-                "SUSHI SQUAD____\nSCOUTING____\nINITIATIVE____",
-                style: TextStyle(
-                  fontSize: ScreenSize.height * 0.05,
-                  fontFamily: "Sushi",
-                  decoration: TextDecoration.underline,
-                  decorationThickness: ScreenSize.width * 0.005,
-                  color: colors.primaryColorDark,
+              child: SizedBox(
+                height: ScreenSize.height * 0.25,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          "SUSHI SQUAD",
+                          style: TextStyle(
+                            fontSize: ScreenSize.height * 0.045,
+                            fontFamily: "Sushi",
+                            color: colors.primaryColorDark,
+                          ),
+                        ),
+                        SizedBox(
+                          width: ScreenSize.width * 0.75,
+                          child: Divider(
+                            height: 1,
+                            thickness: ScreenSize.height * 0.008,
+                            color: HexColor("#FF89AF"),
+                          ),
+                        ),
+                      ],
+                    ),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          "SCOUTING",
+                          style: TextStyle(
+                            fontSize: ScreenSize.height * 0.045,
+                            fontFamily: "Sushi",
+                            color: colors.primaryColorDark,
+                          ),
+                        ),
+                        SizedBox(
+                          width: ScreenSize.width * 0.65,
+                          child: Divider(
+                            height: 1,
+                            thickness: ScreenSize.height * 0.008,
+                            color: HexColor("#56CBF9"),
+                          ),
+                        ),
+                      ],
+                    ),
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              "INITIATIVE",
+                              style: TextStyle(
+                                fontSize: ScreenSize.height * 0.045,
+                                fontFamily: "Sushi",
+                                color: colors.primaryColorDark,
+                              ),
+                            ),
+                            SizedBox(
+                              width: ScreenSize.width * 0.55,
+                              child: Divider(
+                                height: 1,
+                                thickness: ScreenSize.height * 0.008,
+                                color: HexColor("#81F4E1"),
+                              ),
+                            ),
+                          ],
+                        ),
+                       SizedBox(
+                         width: ScreenSize.width * 0.3,
+                         child: SvgPicture.asset(
+                          "./assets/images/glitchnori${colors.scaffoldBackgroundColor == Colors.white ? "" : "dark"}.svg",
+                      ),
+                       ), 
+                      ],
+                    ),
+                  ],
                 ),
               ),
             ),
@@ -62,7 +137,7 @@ class AppChooser extends StatelessWidget {
                 },
                 child: SvgPicture.asset(
                   "./assets/images/scoutslogo${colors.scaffoldBackgroundColor == Colors.white ? "" : "dark"}.svg",
-                  width: ScreenSize.width * 0.75,
+                  width: ScreenSize.width * 0.85,
                 ),
               ),
             ),
@@ -77,8 +152,8 @@ class AppChooser extends StatelessWidget {
                           screen: const Login(type: LoginType.strategy))
                     },
                     child: SvgPicture.asset(
-                      "./assets/images/stratchoice.svg",
-                      width: ScreenSize.width * 0.7,
+                      "./assets/images/stratchoice${colors.scaffoldBackgroundColor == Colors.white ? "" : "dark"}.svg",
+                      width: ScreenSize.width * 0.75,
                     ),
                   ),
                 ),
