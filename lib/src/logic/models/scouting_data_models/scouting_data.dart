@@ -95,8 +95,10 @@ class ScoutingData {
     }
     int? matchNumber;
     int? station;
+    int? side;
     bool isQuals = false;
     int? teamNumIndex;
+    List<int?> robotNumberIndices = List<int?>.filled(3, null); 
 
     for (int i = 0; i < components.length; i++) {
       if (components[i].name == "match #") {
@@ -110,31 +112,55 @@ class ScoutingData {
         isQuals = data[i].get() == "0.0";
       } else if (components[i].name == "team #") {
         teamNumIndex = i;
+      } else if (components[i].name == "robot #1") {
+        robotNumberIndices[0] = i;
+      } else if (components[i].name == "robot #2") {
+        robotNumberIndices[1] = i;
+      } else if (components[i].name == "robot #3") {
+        robotNumberIndices[2] = i;
+      } else if (components[i].name == "side") {
+        side = i;
       } else if (empty) {
         data[i].empty();
       }
     }
     if (hasSchedule &&
         matchNumber != null &&
-        station != null &&
-        teamNumIndex != null &&
         isQuals) {
-      int? teamNumber;
       List<String> stations = [
-        "Red1",
-        "Red2",
-        "Red3",
-        "Blue1",
-        "Blue2",
-        "Blue3"
+          "Red1",
+          "Red2",
+          "Red3",
+          "Blue1",
+          "Blue2",
+          "Blue3"
       ];
-      for (Team t in schedule!.schedule[matchNumber].teams) {
-        if (t.station == stations[station]) {
-          teamNumber = t.number;
+      if (station != null && teamNumIndex != null) {
+        int? teamNumber;
+        for (Team t in schedule!.schedule[matchNumber-1].teams) {
+          if (t.station == stations[station]) {
+            teamNumber = t.number;
+          }
+        }
+        data[teamNumIndex]
+            .set((teamNumber ?? -1) * 1.0, setByUser: teamNumber != null);
+      }
+      if (side != null) {
+        int num = 1;
+        for( int? robotNumberIndex in robotNumberIndices) {
+          int? robotNumber;
+          if ( robotNumberIndex != null) {
+            for (Team t in schedule!.schedule[matchNumber-1].teams) {
+              if (t.station == "${side == 0 ? "Red" : "Blue"}$num") {
+                robotNumber = t.number;
+              }
+            }
+            data[robotNumberIndex]
+            .set((robotNumber ?? -1) * 1.0, setByUser: robotNumber != null);
+          }
+          num++;
         }
       }
-      data[teamNumIndex]
-          .set((teamNumber ?? -1) * 1.0, setByUser: teamNumber != null);
     }
   }
 
