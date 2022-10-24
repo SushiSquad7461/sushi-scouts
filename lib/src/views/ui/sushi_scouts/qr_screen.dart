@@ -26,8 +26,9 @@ import "scouting.dart";
 class QRScreen extends StatefulWidget {
   final db = Localstore.instance;
   final fileReader = ConfigFileReader.instance;
+  final bool hasNewData;
 
-  QRScreen({Key? key}) : super(key: key);
+  QRScreen({Key? key, this.hasNewData = true}) : super(key: key);
 
   @override
   State<QRScreen> createState() => _QRScreenState();
@@ -43,7 +44,7 @@ class _QRScreenState extends State<QRScreen> {
   String currPage = "";
 
   Future<void> convertData() async {
-    if (!dataConverted) {
+    if (!dataConverted && widget.hasNewData) {
       var unprocessedData =
           await widget.db.collection("data").doc("current$currPage").get();
       Compressor compressor =
@@ -126,7 +127,9 @@ class _QRScreenState extends State<QRScreen> {
 
   Future<void> back() async {
     await convertData();
-    currentScoutingData!.nextMatch();
+    if(widget.hasNewData) {
+      currentScoutingData!.nextMatch();
+    }    
     RouteHelper.pushAndRemoveUntilToScreen(-1, 0,
         ctx: context, screen: const Scouting());
   }
