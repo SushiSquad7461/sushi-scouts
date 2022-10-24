@@ -3,6 +3,7 @@ import "package:flutter/material.dart";
 
 // Package imports:
 import "package:firebase_core/firebase_core.dart";
+import 'package:flutter/services.dart';
 import "package:flutter_bloc/flutter_bloc.dart";
 import "package:get/get.dart";
 
@@ -22,21 +23,6 @@ Future<void> main() async {
   );
 
   runApp(const Wrapper());
-}
-
-class Themes {
-  static ThemeData light = ThemeData(
-    brightness: Brightness.light,
-    primaryColor: Colors.white,
-    primaryColorDark: Colors.black,
-    scaffoldBackgroundColor: Colors.white,
-  );
-
-  static ThemeData dark = ThemeData(
-    primaryColor: Colors.black,
-    primaryColorDark: Colors.white,
-    scaffoldBackgroundColor: Colors.black,
-  );
 }
 
 class Wrapper extends StatelessWidget {
@@ -77,6 +63,7 @@ class _SushiScoutsState extends State<SushiScouts> {
   Widget build(BuildContext context) {
     ScreenSize.setHeight(MediaQuery.of(context).size.height);
     ScreenSize.setWidth(MediaQuery.of(context).size.width);
+
     return MultiBlocProvider(
       providers: providers,
       child: GestureDetector(onTap: () {
@@ -85,9 +72,15 @@ class _SushiScoutsState extends State<SushiScouts> {
           currentFocus.unfocus();
         }
       }, child: BlocBuilder<ThemeCubit, ThemeStates>(builder: (context, state) {
+
+        SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.dark.copyWith(
+          statusBarColor: state is DarkMode ? Colors.white : Colors.black, // Color for Android
+          statusBarBrightness: state is DarkMode ? Brightness.dark : Brightness.light // Dark == white status bar -- for IOS.
+        ));
+
         return MaterialApp(
           debugShowCheckedModeBanner: false,
-          theme: state is DarkMode ? darkTheme : lightTheme,
+          theme: state is DarkMode ? Themes.dark : Themes.light,
           home: const Loading(),
           navigatorKey: SushiScouts.navigatorKey,
         );
