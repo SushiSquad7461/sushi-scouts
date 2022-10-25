@@ -6,6 +6,7 @@ import "package:flutter_device_type/flutter_device_type.dart";
 import "package:flutter_svg/svg.dart";
 
 // Project imports:
+import '../../logic/device_type.dart';
 import '../../logic/helpers/color/hex_color.dart';
 import "../../logic/helpers/routing_helper.dart";
 import "../../logic/helpers/size/screen_size.dart";
@@ -18,6 +19,8 @@ class AppChooser extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var colors = Theme.of(context);
+    var phone = isPhone(context);
+
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: Column(
@@ -102,12 +105,12 @@ class AppChooser extends StatelessWidget {
                             ),
                           ],
                         ),
-                       SizedBox(
-                         width: ScreenSize.width * 0.3,
-                         child: SvgPicture.asset(
-                          "./assets/images/glitchnori${colors.scaffoldBackgroundColor == Colors.white ? "" : "dark"}.svg",
-                      ),
-                       ), 
+                        SizedBox(
+                          width: ScreenSize.width * 0.3,
+                          child: SvgPicture.asset(
+                            "./assets/images/glitchnori${colors.scaffoldBackgroundColor == Colors.white ? "" : "dark"}.svg",
+                          ),
+                        ),
                       ],
                     ),
                   ],
@@ -124,7 +127,7 @@ class AppChooser extends StatelessWidget {
                 },
                 child: SvgPicture.asset(
                   "./assets/images/${colors.scaffoldBackgroundColor == Colors.white ? "superviselogo" : "superviselogodark"}.svg",
-                  width: ScreenSize.width * 0.75,
+                  width: ScreenSize.width * (phone ? 0.75 : 0.6),
                 ),
               ),
             ),
@@ -137,7 +140,7 @@ class AppChooser extends StatelessWidget {
                 },
                 child: SvgPicture.asset(
                   "./assets/images/scoutslogo${colors.scaffoldBackgroundColor == Colors.white ? "" : "dark"}.svg",
-                  width: ScreenSize.width * 0.85,
+                  width: ScreenSize.width * (phone ? 0.85 : 0.7),
                 ),
               ),
             ),
@@ -153,7 +156,7 @@ class AppChooser extends StatelessWidget {
                     },
                     child: SvgPicture.asset(
                       "./assets/images/stratchoice${colors.scaffoldBackgroundColor == Colors.white ? "" : "dark"}.svg",
-                      width: ScreenSize.width * 0.75,
+                      width: ScreenSize.width * (phone ? 0.75 : 0.6),
                     ),
                   ),
                 ),
