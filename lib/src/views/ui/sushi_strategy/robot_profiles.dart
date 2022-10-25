@@ -1,5 +1,9 @@
 // Flutter imports:
+import 'dart:convert';
+
 import "package:flutter/material.dart";
+import 'package:flutter_svg/parser.dart';
+import 'package:flutter_svg/svg.dart';
 
 // Package imports:
 import "package:google_fonts/google_fonts.dart";
@@ -31,6 +35,7 @@ class _RobotProfilesState extends State<RobotProfiles> {
   Map<String, List<ScoutingData>> profiles = {};
   final TextEditingController search = TextEditingController();
   String searchQuery = "";
+  List<String> picUrls = [];
 
   @override
   void initState() {
@@ -39,7 +44,6 @@ class _RobotProfilesState extends State<RobotProfiles> {
     search.addListener(() => setState(() {
           searchQuery = search.text;
         }));
-
 
     (() async {
       final scoutingData = await db.collection(stratDatabaseName).get();
@@ -70,24 +74,35 @@ class _RobotProfilesState extends State<RobotProfiles> {
     final textStyle = GoogleFonts.mohave(
         textStyle: TextStyle(
       fontSize: ScreenSize.height * 0.05,
-      color: colors.primaryColorDark, 
+      color: colors.primaryColorDark,
     ));
 
     List<Widget> ret = [];
 
     for (final i in profiles.values) {
-      if ((selected == null && i[0].getCertainDataByName(reader.strat!["profile"]["identifier"]).contains(searchQuery)) || (selected != null &&
-          i[0].getCertainDataByName(reader.strat!["profile"]["identifier"]) ==
-              selected![index].getCertainDataByName(
-                  reader.strat!["profile"]["identifier"]))) {
+      String identifier =
+          i[0].getCertainDataByName(reader.strat!["profile"]["identifier"]);
+      if ((selected == null && identifier.contains(searchQuery)) ||
+          (selected != null &&
+              identifier ==
+                  selected![index].getCertainDataByName(
+                      reader.strat!["profile"]["identifier"]))) {
         ret.add(Padding(
           padding: EdgeInsets.only(bottom: ScreenSize.height * 0.01),
           child: GestureDetector(
-            onTap: () => setState(() {
-              selected = selected != null ? null : i;
-              index = 0;
-              picIndex = 0;
-            }),
+            onTap: () async {
+              List<String> newPicUrls = (await db
+                  .collection("frcapi")
+                  .doc("$identifier images")
+                  .get())!["imageList"];
+
+              setState(() {
+                selected = selected != null ? null : i;
+                index = 0;
+                picIndex = 0;
+                picUrls = newPicUrls;
+              });
+            },
             child: SizedBox(
               width: ScreenSize.width * 0.8,
               child: Column(
@@ -119,6 +134,15 @@ class _RobotProfilesState extends State<RobotProfiles> {
     List<Widget> ret = [];
     var colors = Theme.of(context);
 
+    List<Color> underLineColors = [
+      HexColor("#FF729F"),
+      HexColor("#81F4E1"),
+      HexColor("#56CBF9"),
+      HexColor("#FCD6F6"),
+      colors.primaryColor
+    ];
+    int underlineIndex = 0;
+
     for (final i in version.getComponents()) {
       if (i.component != "text input" &&
           i.component != "ranking" &&
@@ -132,18 +156,26 @@ class _RobotProfilesState extends State<RobotProfiles> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                Text(
-                  i.name.toUpperCase(),
-                  style: TextStyle(
-                    color: colors.primaryColor,
-                    fontFamily: "Sushi",
-                    fontSize: ScreenSize.height * 0.02,
+                Container(
+                  decoration: BoxDecoration(
+                      border: Border(
+                          bottom: BorderSide(
+                    color: underLineColors[underlineIndex],
+                    width: ScreenSize.height * 0.002, // Underline thickness
+                  ))),
+                  child: Text(
+                    i.name.toUpperCase(),
+                    style: TextStyle(
+                      color: colors.primaryColor,
+                      fontFamily: "Sushi",
+                      fontSize: ScreenSize.height * 0.02,
+                    ),
                   ),
                 ),
                 Padding(
                   padding: EdgeInsets.only(left: ScreenSize.width * 0.05),
                   child: Text(
-                    version.getCertainDataByName(i.name),
+                    version.getCertainDataByName(i.name).toLowerCase(),
                     style: TextStyle(
                       color: colors.primaryColor,
                       fontFamily: "Sushi",
@@ -155,6 +187,12 @@ class _RobotProfilesState extends State<RobotProfiles> {
             ),
           ),
         ));
+
+        underlineIndex += 1;
+
+        if (underlineIndex >= underLineColors.length) {
+          underlineIndex = 0;
+        }
       }
     }
 
@@ -164,6 +202,10 @@ class _RobotProfilesState extends State<RobotProfiles> {
   Widget getPicture(ScoutingData data, int index) {
     List<Widget> ret = [];
     var colors = Theme.of(context);
+
+    for (final i in picUrls) {
+      ret.add(Image.network("$i.jpeg", width: ScreenSize.width * 0.8,));
+    }
 
     for (final i in data.getComponents()) {
       if (i.component == "text input") {
@@ -229,108 +271,135 @@ class _RobotProfilesState extends State<RobotProfiles> {
                     height: ScreenSize.height * 0.72,
                     width: ScreenSize.width,
                     decoration: BoxDecoration(
-                        color: colors.scaffoldBackgroundColor == Colors.black ? HexColor("#D0D0D0") : HexColor("#4F4F4F"),
+                        color: colors.primaryColorDark,
                         borderRadius: BorderRadius.only(
                             topLeft: Radius.circular(15 * ScreenSize.swu),
                             topRight: Radius.circular(15 * ScreenSize.swu))),
-                    child: Column(children: [
-                      Padding(
-                        padding:
-                            EdgeInsets.only(top: ScreenSize.height * 0.012),
-                        child: Container(
-                          width: ScreenSize.width * 0.4,
-                          height: ScreenSize.height * 0.006,
-                          decoration: BoxDecoration(
-                              color: colors.primaryColor,
-                              borderRadius: BorderRadius.all(
-                                  Radius.circular(40 * ScreenSize.swu))),
+                    child: Stack(alignment: Alignment.bottomRight, children: [
+                      SvgPicture.asset("./assets/images/pitfooterstrat.svg"),
+                      Column(children: [
+                        Padding(
+                          padding:
+                              EdgeInsets.only(top: ScreenSize.height * 0.012),
+                          child: Container(
+                            width: ScreenSize.width * 0.4,
+                            height: ScreenSize.height * 0.006,
+                            decoration: BoxDecoration(
+                                color: colors.primaryColor,
+                                borderRadius: BorderRadius.all(
+                                    Radius.circular(40 * ScreenSize.swu))),
+                          ),
                         ),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.only(top: ScreenSize.height * 0.02),
-                        child: SizedBox(
-                          width: ScreenSize.width,
-                          height: ScreenSize.height * 0.25,
+                        Padding(
+                          padding:
+                              EdgeInsets.only(top: ScreenSize.height * 0.02),
+                          child: SizedBox(
+                            width: ScreenSize.width,
+                            height: ScreenSize.height * 0.25,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              children: [
+                                GestureDetector(
+                                  onTap: () => setState(() {
+                                    picIndex -= 1;
+                                  }), 
+                                  child: Icon(
+                                      const IconData(0xf57b,
+                                          fontFamily: "MaterialIcons",
+                                          matchTextDirection: true),
+                                      size: ScreenSize.width * 0.1,
+                                      color: colors.primaryColor,
+                                  ),
+                                ),
+                                Container(
+                                  width: ScreenSize.width * 0.8,
+                                  height: ScreenSize.height * 0.24,
+                                  decoration: BoxDecoration(
+                                      color: colors.primaryColor,
+                                      borderRadius: BorderRadius.all(
+                                        Radius.circular(15 * ScreenSize.swu),
+                                      )),
+                                  child: Center(
+                                      child: getPicture(
+                                          selected![index], picIndex)),
+                                ),
+                                GestureDetector(
+                                  onTap: () => setState(() {
+                                    picIndex += 1;
+                                  }),
+                                  child: Icon(
+                                      const IconData(0xf57d,
+                                          fontFamily: "MaterialIcons",
+                                          matchTextDirection: true),
+                                      size: ScreenSize.width * 0.1,
+                                      color: colors.primaryColor,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.only(
+                              top: ScreenSize.height * 0.01,
+                              left: ScreenSize.width * 0.05,
+                              right: ScreenSize.width * 0.05),
+                          child: SizedBox(
+                            width: ScreenSize.width * 0.9,
+                            height: ScreenSize.height * 0.36,
+                            child: ListView(
+                              padding: EdgeInsets.zero,
+                              children: getRobotInfo(),
+                            ),
+                          ),
+                        ),
+                        SizedBox(
+                          width: ScreenSize.width * 0.95,
+                          height: ScreenSize.height * 0.06,
                           child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            crossAxisAlignment: CrossAxisAlignment.end,
                             children: [
-                              Container(
-                                width: ScreenSize.width * 0.8,
-                                height: ScreenSize.height * 0.24,
-                                decoration: BoxDecoration(
+                              GestureDetector(
+                                onTap: () =>
+                                    setState(() => index -= index > 0 ? 1 : 0),
+                                child: Padding(
+                                  padding: EdgeInsets.only(
+                                      bottom: ScreenSize.height * 0.01),
+                                  child: Icon(
+                                    const IconData(0xf57b,
+                                        fontFamily: "MaterialIcons",
+                                        matchTextDirection: true),
+                                    size: ScreenSize.height * 0.08,
                                     color: colors.primaryColor,
-                                    borderRadius: BorderRadius.all(
-                                      Radius.circular(15 * ScreenSize.swu),
-                                    )),
-                                child: Center(
-                                    child:
-                                        getPicture(selected![index], picIndex)),
-                              )
+                                  ),
+                                ),
+                              ),
+                              Text(
+                                  "DAY ${selected![index].getCertainDataByName(reader.strat!["profile"]["version"])}",
+                                  style: TextStyle(
+                                      fontSize: ScreenSize.height * 0.035,
+                                      fontFamily: "Sushi",
+                                      color: colors.primaryColor)),
+                              GestureDetector(
+                                onTap: () => setState(() => index +=
+                                    index < selected!.length - 1 ? 1 : 0),
+                                child: Padding(
+                                  padding: EdgeInsets.only(
+                                      bottom: ScreenSize.height * 0.01),
+                                  child: Icon(
+                                    const IconData(0xf57d,
+                                        fontFamily: "MaterialIcons",
+                                        matchTextDirection: true),
+                                    size: ScreenSize.height * 0.08,
+                                    color: colors.primaryColor,
+                                  ),
+                                ),
+                              ),
                             ],
                           ),
-                        ),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.only(
-                            top: ScreenSize.height * 0.01,
-                            left: ScreenSize.width * 0.05,
-                            right: ScreenSize.width * 0.05),
-                        child: SizedBox(
-                          width: ScreenSize.width * 0.9,
-                          height: ScreenSize.height * 0.36,
-                          child: ListView(
-                            padding: EdgeInsets.zero,
-                            children: getRobotInfo(),
-                          ),
-                        ),
-                      ),
-                      SizedBox(
-                        width: ScreenSize.width * 0.95,
-                        height: ScreenSize.height * 0.06,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          crossAxisAlignment: CrossAxisAlignment.end,
-                          children: [
-                            GestureDetector(
-                              onTap: () =>
-                                  setState(() => index -= index > 0 ? 1 : 0),
-                              child: Padding(
-                                padding: EdgeInsets.only(
-                                    bottom: ScreenSize.height * 0.01),
-                                child: Icon(
-                                  const IconData(0xf57b,
-                                      fontFamily: "MaterialIcons",
-                                      matchTextDirection: true),
-                                  size: ScreenSize.height * 0.08,
-                                  color: colors.primaryColorDark,
-                                ),
-                              ),
-                            ),
-                            Text(
-                                "DAY ${selected![index].getCertainDataByName(reader.strat!["profile"]["version"])}",
-                                style: TextStyle(
-                                  fontSize: ScreenSize.height * 0.035,
-                                  fontFamily: "Sushi",
-                                  color: colors.primaryColorDark
-                                )),
-                            GestureDetector(
-                              onTap: () => setState(() => index +=
-                                  index < selected!.length - 1 ? 1 : 0),
-                              child: Padding(
-                                padding: EdgeInsets.only(
-                                    bottom: ScreenSize.height * 0.01),
-                                child: Icon(
-                                  const IconData(0xf57d,
-                                      fontFamily: "MaterialIcons",
-                                      matchTextDirection: true),
-                                  size: ScreenSize.height * 0.08,
-                                  color: colors.primaryColorDark,
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      )
+                        )
+                      ]),
                     ]),
                   ),
                 ),

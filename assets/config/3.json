@@ -1,6 +1,6 @@
 {
     "teamNumber": 7461,
-    "version" : 4,
+    "version" : 3,
     "password" : "7461",
     "strat": {
         "profile": {
@@ -221,64 +221,6 @@
                         ]
                     }
                 ]
-            },
-            "notes" : { 
-                "footer": "notes",
-                "sections" : [
-                    {
-                        "properties":{
-                            "title":"",
-                            "color": "#ff76a2",
-                            "rows": 2,
-                            "textColor": "#000000",
-                            "darkColor": "#ff",
-                            "darkTextColor": "#ffffff",
-                            "componentsInRow": [1,1]
-                        },
-                        "components":[
-                            {
-                                "name" : "disabled",
-                                "type" : "bool",
-                                "component" : "checkbox",
-                                "required" : true,
-                                "timestamp": false,
-                                "isCommonValue" : false,
-                                "setCommonValue" : false
-                            },
-                            {
-                                "name" : "failed climb",
-                                "type" : "bool",
-                                "component" : "checkbox",
-                                "required" : true,
-                                "timestamp": false,
-                                "isCommonValue" : false,
-                                "setCommonValue" : false
-                            }
-                        ]
-                    },
-                    {
-                        "properties":{
-                            "title":"",
-                            "color": "#ff76a2",
-                            "rows": 1,
-                            "textColor": "#000000",
-                            "darkColor": "#ff",
-                            "darkTextColor": "#ffffff",
-                            "componentsInRow": [1]
-                        }, 
-                        "components":[
-                            {
-                                "name" : "notes",
-                                "type" : "string",
-                                "component" : "text input",
-                                "required" : true,
-                                "timestamp": false,
-                                "isCommonValue" : false,
-                                "setCommonValue" : false
-                            }
-                        ]
-                    }
-                ]
             }
         },
         "ordinal":{
@@ -408,6 +350,29 @@
                         "components":[
                             {
                                 "name" : "driving",
+                                "type" : "string",
+                                "component" : "ranking",
+                                "values" : ["robot #1", "robot #2", "robot #3"],
+                                "required" : true,
+                                "timestamp": false,
+                                "isCommonValue" : true,
+                                "setCommonValue" : false
+                            }
+                        ]
+                    },
+                    {
+                        "properties":{
+                            "title":"Offense",
+                            "color": "#63cff9",
+                            "rows": 1,
+                            "textColor": "#000000",
+                            "darkColor": "#81F4E1",
+                            "darkTextColor": "#ffffff",
+                            "componentsInRow": [1]
+                        },
+                        "components":[
+                            {
+                                "name" : "offense",
                                 "type" : "string",
                                 "component" : "ranking",
                                 "values" : ["robot #1", "robot #2", "robot #3"],

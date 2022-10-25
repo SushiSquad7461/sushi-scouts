@@ -105,6 +105,20 @@ class _StratSettingsState extends State<StratSettings> {
         .set({"rank": rank == "null" ? "1" : rank});
   }
 
+  Future<void> getImage() async {
+    List<int>? teamNums = await ApiRepository().getTeamNums("WAMAP");
+
+    if (teamNums != null) {
+      for (final i in teamNums) {
+      print("$i images");
+        db
+            .collection("frcapi")
+            .doc("$i images")
+            .set({"imageList": await ApiRepository().getImage(i) ?? "[]"});
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     var colors = Theme.of(context);
@@ -184,7 +198,7 @@ class _StratSettingsState extends State<StratSettings> {
                         ),
                       ),
                       Align(
-                        alignment: Alignment(0, isPhoneScreen ? 0 : -0.2),
+                        alignment: Alignment(0, isPhoneScreen ? -0.1 : -0.3),
                         child: Container(
                           decoration: boxDecoration,
                           width: ScreenSize.width * 0.47,
@@ -246,7 +260,7 @@ class _StratSettingsState extends State<StratSettings> {
                         ),
                       ),
                       Align(
-                        alignment: Alignment(0, isPhoneScreen ? 0.4 : 0),
+                        alignment: Alignment(0, isPhoneScreen ? 0.2 : -0.3),
                         child: Container(
                           decoration: boxDecoration,
                           child: TextButton(
@@ -260,7 +274,21 @@ class _StratSettingsState extends State<StratSettings> {
                         ),
                       ),
                       Align(
-                        alignment: Alignment(0, isPhoneScreen ? -0.4 : -0.8),
+                        alignment: Alignment(0, isPhoneScreen ? 0.5 : 0.1),
+                        child: Container(
+                          decoration: boxDecoration,
+                          child: TextButton(
+                              onPressed: () {
+                                getImage();
+                              },
+                              child: Text(
+                                "get robot images",
+                                style: textStyle,
+                              )),
+                        ),
+                      ),
+                      Align(
+                        alignment: Alignment(0, isPhoneScreen ? -0.5 : -0.9),
                         child: Container(
                           decoration: boxDecoration,
                           child: TextButton(

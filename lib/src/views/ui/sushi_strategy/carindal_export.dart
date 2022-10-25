@@ -159,6 +159,8 @@ class _CardinalExportState extends State<CardinalExport> {
 
   @override
   Widget build(BuildContext context) {
+    var colors = Theme.of(context);
+
     return Scaffold(
         resizeToAvoidBottomInset: false,
         body: Stack(
@@ -167,9 +169,9 @@ class _CardinalExportState extends State<CardinalExport> {
             Center(
               child: Container(
                 decoration: BoxDecoration(
-                    color: Colors.white,
+                    color: colors.primaryColor,
                     border: Border.all(
-                        color: Colors.black, width: ScreenSize.width * 0.005),
+                        color: colors.primaryColorDark, width: ScreenSize.width * 0.005),
                     borderRadius:
                         BorderRadius.all(Radius.circular(20 * ScreenSize.swu))),
                 child: Padding(
@@ -180,7 +182,7 @@ class _CardinalExportState extends State<CardinalExport> {
                         "export data",
                         style: TextStyle(
                           fontFamily: "Sushi",
-                          color: Colors.black,
+                          color: colors.primaryColorDark,
                           fontSize: ScreenSize.swu * 30,
                         ),
                       )),
