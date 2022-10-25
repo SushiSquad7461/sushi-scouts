@@ -7,12 +7,14 @@ import "package:google_fonts/google_fonts.dart";
 
 // Project imports:
 import "../../../logic/Constants.dart";
+import '../../../logic/helpers/color/hex_color.dart';
 import "../../../logic/helpers/routing_helper.dart";
 import "../../../logic/helpers/size/screen_size.dart";
 
 class HeaderNavStrategy extends StatefulWidget {
   final String currPage;
-  const HeaderNavStrategy({Key? key, required this.currPage}) : super(key: key);
+  final TextEditingController? val;
+  const HeaderNavStrategy({Key? key, required this.currPage, this.val}) : super(key: key);
 
   @override
   State<HeaderNavStrategy> createState() => _HeaderNavStrategyState();
@@ -126,9 +128,56 @@ class _HeaderNavStrategyState extends State<HeaderNavStrategy> {
                         ],
                       ),
                     ),
-                  )
+                  ),
+                  if (widget.val != null) SizedBox(
+                    height: ScreenSize.height * 0.03,
+                    width: ScreenSize.width * 0.4,
+                    child: Center(
+                      child: SizedBox(
+                        width: ScreenSize.width * 0.3,
+                        height: ScreenSize.height * 0.024,
+                        child: TextFormField(
+                          controller: widget.val,
+                          decoration: InputDecoration(
+                            enabledBorder: UnderlineInputBorder(
+                              borderSide: BorderSide(
+                                  width: ScreenSize.height * 0.003,
+                                  color: HexColor("#4F4F4F")),
+                            ),
+                            focusedBorder: UnderlineInputBorder(
+                                borderSide: BorderSide(
+                                    width: ScreenSize.height * 0.003,
+                                color: HexColor("#4F4F4F")),
+                          ),
+                          hintText: "SEARCH",
+                          hintStyle: TextStyle(color: HexColor("#4F4F4F")),
+                          isDense: true,
+                          contentPadding: EdgeInsets.symmetric(
+                              vertical: ScreenSize.height * 0.005),
+                        ),
+                        textAlign: TextAlign.center,
+                        style: GoogleFonts.mohave(
+                            textStyle: TextStyle(
+                          fontSize: ScreenSize.width * 0.04,
+                          color: HexColor("#4F4F4F"),
+                        ),
+                        // keyboardType: TextInputType.number,
+                        // inputFormatters: <TextInputFormatter>[
+                        //   FilteringTextInputFormatter.digitsOnly
+                        // ],
+                        // onChanged: (String? val) => setState(() {
+                        //   teamNum = (val != null && val != ""
+                        //       ? int.parse(val)
+                        //       : null);
+                        // })
+                          ),
+                      ),
+                    ),
+                  ),
+                  ),
                 ],
               ),
-            ));
+            )
+          );
   }
 }

@@ -98,7 +98,7 @@ class ScoutingData {
     int? side;
     bool isQuals = false;
     int? teamNumIndex;
-    List<int?> robotNumberIndices = List<int?>.filled(3, null); 
+    List<int?> robotNumberIndices = List<int?>.filled(3, null);
 
     for (int i = 0; i < components.length; i++) {
       if (components[i].name == "match #") {
@@ -124,20 +124,18 @@ class ScoutingData {
         data[i].empty();
       }
     }
-    if (hasSchedule &&
-        matchNumber != null &&
-        isQuals) {
+    if (hasSchedule && matchNumber != null && isQuals) {
       List<String> stations = [
-          "Red1",
-          "Red2",
-          "Red3",
-          "Blue1",
-          "Blue2",
-          "Blue3"
+        "Red1",
+        "Red2",
+        "Red3",
+        "Blue1",
+        "Blue2",
+        "Blue3"
       ];
       if (station != null && teamNumIndex != null) {
         int? teamNumber;
-        for (Team t in schedule!.schedule[matchNumber-1].teams) {
+        for (Team t in schedule!.schedule[matchNumber - 1].teams) {
           if (t.station == stations[station]) {
             teamNumber = t.number;
           }
@@ -147,16 +145,16 @@ class ScoutingData {
       }
       if (side != null) {
         int num = 1;
-        for( int? robotNumberIndex in robotNumberIndices) {
+        for (int? robotNumberIndex in robotNumberIndices) {
           int? robotNumber;
-          if ( robotNumberIndex != null) {
-            for (Team t in schedule!.schedule[matchNumber-1].teams) {
+          if (robotNumberIndex != null) {
+            for (Team t in schedule!.schedule[matchNumber - 1].teams) {
               if (t.station == "${side == 0 ? "Red" : "Blue"}$num") {
                 robotNumber = t.number;
               }
             }
             data[robotNumberIndex]
-            .set((robotNumber ?? -1) * 1.0, setByUser: robotNumber != null);
+                .set((robotNumber ?? -1) * 1.0, setByUser: robotNumber != null);
           }
           num++;
         }

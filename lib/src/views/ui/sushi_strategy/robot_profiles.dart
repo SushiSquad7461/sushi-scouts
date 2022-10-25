@@ -29,10 +29,17 @@ class _RobotProfilesState extends State<RobotProfiles> {
   int index = 0;
   int picIndex = 0;
   Map<String, List<ScoutingData>> profiles = {};
+  final TextEditingController search = TextEditingController();
+  String searchQuery = "";
 
   @override
   void initState() {
     super.initState();
+
+    search.addListener(() => setState(() {
+          searchQuery = search.text;
+        }));
+
 
     (() async {
       final scoutingData = await db.collection(stratDatabaseName).get();
@@ -67,10 +74,10 @@ class _RobotProfilesState extends State<RobotProfiles> {
     List<Widget> ret = [];
 
     for (final i in profiles.values) {
-      if (selected == null ||
+      if ((selected == null && i[0].getCertainDataByName(reader.strat!["profile"]["identifier"]).contains(searchQuery)) || (selected != null &&
           i[0].getCertainDataByName(reader.strat!["profile"]["identifier"]) ==
               selected![index].getCertainDataByName(
-                  reader.strat!["profile"]["identifier"])) {
+                  reader.strat!["profile"]["identifier"]))) {
         ret.add(Padding(
           padding: EdgeInsets.only(bottom: ScreenSize.height * 0.01),
           child: GestureDetector(
@@ -324,7 +331,7 @@ class _RobotProfilesState extends State<RobotProfiles> {
             const HeaderTitleMobileStrategyMain(),
             Padding(
               padding: EdgeInsets.only(top: ScreenSize.height * 0.14),
-              child: const HeaderNavStrategy(currPage: "pit"),
+              child: HeaderNavStrategy(currPage: "pit", val: search),
             ),
           ],
         ));
