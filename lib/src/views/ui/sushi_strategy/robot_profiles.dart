@@ -1,4 +1,6 @@
 // Flutter imports:
+import 'dart:convert';
+
 import "package:flutter/material.dart";
 import 'package:flutter_svg/parser.dart';
 import 'package:flutter_svg/svg.dart';
@@ -33,6 +35,7 @@ class _RobotProfilesState extends State<RobotProfiles> {
   Map<String, List<ScoutingData>> profiles = {};
   final TextEditingController search = TextEditingController();
   String searchQuery = "";
+  List<String> picUrls = [];
 
   @override
   void initState() {
@@ -77,23 +80,29 @@ class _RobotProfilesState extends State<RobotProfiles> {
     List<Widget> ret = [];
 
     for (final i in profiles.values) {
-      if ((selected == null &&
-              i[0]
-                  .getCertainDataByName(reader.strat!["profile"]["identifier"])
-                  .contains(searchQuery)) ||
+      String identifier =
+          i[0].getCertainDataByName(reader.strat!["profile"]["identifier"]);
+      if ((selected == null && identifier.contains(searchQuery)) ||
           (selected != null &&
-              i[0].getCertainDataByName(
-                      reader.strat!["profile"]["identifier"]) ==
+              identifier ==
                   selected![index].getCertainDataByName(
                       reader.strat!["profile"]["identifier"]))) {
         ret.add(Padding(
           padding: EdgeInsets.only(bottom: ScreenSize.height * 0.01),
           child: GestureDetector(
-            onTap: () => setState(() {
-              selected = selected != null ? null : i;
-              index = 0;
-              picIndex = 0;
-            }),
+            onTap: () async {
+              List<String> newPicUrls = (await db
+                  .collection("frcapi")
+                  .doc("$identifier images")
+                  .get())!["imageList"];
+
+              setState(() {
+                selected = selected != null ? null : i;
+                index = 0;
+                picIndex = 0;
+                picUrls = newPicUrls;
+              });
+            },
             child: SizedBox(
               width: ScreenSize.width * 0.8,
               child: Column(
@@ -194,6 +203,10 @@ class _RobotProfilesState extends State<RobotProfiles> {
     List<Widget> ret = [];
     var colors = Theme.of(context);
 
+    for (final i in picUrls) {
+      ret.add(Image.network("$i.jpeg", width: ScreenSize.width * 0.8,));
+    }
+
     for (final i in data.getComponents()) {
       if (i.component == "text input") {
         ret.add(Text(
@@ -262,111 +275,132 @@ class _RobotProfilesState extends State<RobotProfiles> {
                         borderRadius: BorderRadius.only(
                             topLeft: Radius.circular(15 * ScreenSize.swu),
                             topRight: Radius.circular(15 * ScreenSize.swu))),
-                    child: Stack(
-                      alignment: Alignment.bottomRight,
-                      children: [
-                        SvgPicture.asset("./assets/images/pitfooterstrat.svg"),
-                        Column(children: [
-                          Padding(
-                            padding:
-                                EdgeInsets.only(top: ScreenSize.height * 0.012),
-                            child: Container(
-                              width: ScreenSize.width * 0.4,
-                              height: ScreenSize.height * 0.006,
-                              decoration: BoxDecoration(
-                                  color: colors.primaryColor,
-                                  borderRadius: BorderRadius.all(
-                                      Radius.circular(40 * ScreenSize.swu))),
-                            ),
+                    child: Stack(alignment: Alignment.bottomRight, children: [
+                      SvgPicture.asset("./assets/images/pitfooterstrat.svg"),
+                      Column(children: [
+                        Padding(
+                          padding:
+                              EdgeInsets.only(top: ScreenSize.height * 0.012),
+                          child: Container(
+                            width: ScreenSize.width * 0.4,
+                            height: ScreenSize.height * 0.006,
+                            decoration: BoxDecoration(
+                                color: colors.primaryColor,
+                                borderRadius: BorderRadius.all(
+                                    Radius.circular(40 * ScreenSize.swu))),
                           ),
-                          Padding(
-                            padding: EdgeInsets.only(top: ScreenSize.height * 0.02),
-                            child: SizedBox(
-                              width: ScreenSize.width,
-                              height: ScreenSize.height * 0.25,
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                                children: [
-                                  Container(
-                                    width: ScreenSize.width * 0.8,
-                                    height: ScreenSize.height * 0.24,
-                                    decoration: BoxDecoration(
-                                        color: colors.primaryColor,
-                                        borderRadius: BorderRadius.all(
-                                          Radius.circular(15 * ScreenSize.swu),
-                                        )),
-                                    child: Center(
-                                        child:
-                                            getPicture(selected![index], picIndex)),
-                                  )
-                                ],
-                              ),
-                            ),
-                          ),
-                          Padding(
-                            padding: EdgeInsets.only(
-                                top: ScreenSize.height * 0.01,
-                                left: ScreenSize.width * 0.05,
-                                right: ScreenSize.width * 0.05),
-                            child: SizedBox(
-                              width: ScreenSize.width * 0.9,
-                              height: ScreenSize.height * 0.36,
-                              child: ListView(
-                                padding: EdgeInsets.zero,
-                                children: getRobotInfo(),
-                              ),
-                            ),
-                          ),
-                          SizedBox(
-                            width: ScreenSize.width * 0.95,
-                            height: ScreenSize.height * 0.06,
+                        ),
+                        Padding(
+                          padding:
+                              EdgeInsets.only(top: ScreenSize.height * 0.02),
+                          child: SizedBox(
+                            width: ScreenSize.width,
+                            height: ScreenSize.height * 0.25,
                             child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              crossAxisAlignment: CrossAxisAlignment.end,
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
                               children: [
                                 GestureDetector(
-                                  onTap: () =>
-                                      setState(() => index -= index > 0 ? 1 : 0),
-                                  child: Padding(
-                                    padding: EdgeInsets.only(
-                                        bottom: ScreenSize.height * 0.01),
-                                    child: Icon(
+                                  onTap: () => setState(() {
+                                    picIndex -= 1;
+                                  }), 
+                                  child: Icon(
                                       const IconData(0xf57b,
                                           fontFamily: "MaterialIcons",
                                           matchTextDirection: true),
-                                      size: ScreenSize.height * 0.08,
+                                      size: ScreenSize.width * 0.1,
                                       color: colors.primaryColor,
-                                    ),
                                   ),
                                 ),
-                                Text(
-                                    "DAY ${selected![index].getCertainDataByName(reader.strat!["profile"]["version"])}",
-                                    style: TextStyle(
-                                        fontSize: ScreenSize.height * 0.035,
-                                        fontFamily: "Sushi",
-                                        color: colors.primaryColor)),
+                                Container(
+                                  width: ScreenSize.width * 0.8,
+                                  height: ScreenSize.height * 0.24,
+                                  decoration: BoxDecoration(
+                                      color: colors.primaryColor,
+                                      borderRadius: BorderRadius.all(
+                                        Radius.circular(15 * ScreenSize.swu),
+                                      )),
+                                  child: Center(
+                                      child: getPicture(
+                                          selected![index], picIndex)),
+                                ),
                                 GestureDetector(
-                                  onTap: () => setState(() => index +=
-                                      index < selected!.length - 1 ? 1 : 0),
-                                  child: Padding(
-                                    padding: EdgeInsets.only(
-                                        bottom: ScreenSize.height * 0.01),
-                                    child: Icon(
+                                  onTap: () => setState(() {
+                                    picIndex += 1;
+                                  }),
+                                  child: Icon(
                                       const IconData(0xf57d,
                                           fontFamily: "MaterialIcons",
                                           matchTextDirection: true),
-                                      size: ScreenSize.height * 0.08,
+                                      size: ScreenSize.width * 0.1,
                                       color: colors.primaryColor,
-                                    ),
                                   ),
                                 ),
                               ],
                             ),
-                          )
-                        ]
+                          ),
                         ),
-                      ]
-                    ),
+                        Padding(
+                          padding: EdgeInsets.only(
+                              top: ScreenSize.height * 0.01,
+                              left: ScreenSize.width * 0.05,
+                              right: ScreenSize.width * 0.05),
+                          child: SizedBox(
+                            width: ScreenSize.width * 0.9,
+                            height: ScreenSize.height * 0.36,
+                            child: ListView(
+                              padding: EdgeInsets.zero,
+                              children: getRobotInfo(),
+                            ),
+                          ),
+                        ),
+                        SizedBox(
+                          width: ScreenSize.width * 0.95,
+                          height: ScreenSize.height * 0.06,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            crossAxisAlignment: CrossAxisAlignment.end,
+                            children: [
+                              GestureDetector(
+                                onTap: () =>
+                                    setState(() => index -= index > 0 ? 1 : 0),
+                                child: Padding(
+                                  padding: EdgeInsets.only(
+                                      bottom: ScreenSize.height * 0.01),
+                                  child: Icon(
+                                    const IconData(0xf57b,
+                                        fontFamily: "MaterialIcons",
+                                        matchTextDirection: true),
+                                    size: ScreenSize.height * 0.08,
+                                    color: colors.primaryColor,
+                                  ),
+                                ),
+                              ),
+                              Text(
+                                  "DAY ${selected![index].getCertainDataByName(reader.strat!["profile"]["version"])}",
+                                  style: TextStyle(
+                                      fontSize: ScreenSize.height * 0.035,
+                                      fontFamily: "Sushi",
+                                      color: colors.primaryColor)),
+                              GestureDetector(
+                                onTap: () => setState(() => index +=
+                                    index < selected!.length - 1 ? 1 : 0),
+                                child: Padding(
+                                  padding: EdgeInsets.only(
+                                      bottom: ScreenSize.height * 0.01),
+                                  child: Icon(
+                                    const IconData(0xf57d,
+                                        fontFamily: "MaterialIcons",
+                                        matchTextDirection: true),
+                                    size: ScreenSize.height * 0.08,
+                                    color: colors.primaryColor,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        )
+                      ]),
+                    ]),
                   ),
                 ),
               ),

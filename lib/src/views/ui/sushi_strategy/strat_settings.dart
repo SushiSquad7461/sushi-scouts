@@ -110,7 +110,11 @@ class _StratSettingsState extends State<StratSettings> {
 
     if (teamNums != null) {
       for (final i in teamNums) {
-        print(await ApiRepository().getImage(i));
+      print("$i images");
+        db
+            .collection("frcapi")
+            .doc("$i images")
+            .set({"imageList": await ApiRepository().getImage(i) ?? "[]"});
       }
     }
   }
