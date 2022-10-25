@@ -95,6 +95,7 @@ class _EditState extends State<Edit> {
   }
 
   List<Widget> getListView() {
+    var colors = Theme.of(context);
     List<Widget> ret = [];
 
     List<String> keys = data.keys.toList();
@@ -119,7 +120,7 @@ class _EditState extends State<Edit> {
                       ? HexColor("#56CBF9")
                       : (data[i]!.deleted)
                           ? HexColor("#FCD6F6")
-                          : Colors.black),
+                          : colors.primaryColorDark),
             ),
           ),
         ));
@@ -141,7 +142,7 @@ class _EditState extends State<Edit> {
 
     return Scaffold(
       backgroundColor:
-          (flagMode || deleteMode) ? HexColor("808080") : Colors.white,
+          (flagMode || deleteMode) ? HexColor("808080") : colors.primaryColor,
       body: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
@@ -182,8 +183,8 @@ class _EditState extends State<Edit> {
                               child: DropdownButtonHideUnderline(
                                 child: DropdownButton<String>(
                                   value: currState,
-                                  icon: const Icon(Icons.tune_rounded,
-                                      color: Colors.black),
+                                  icon: Icon(Icons.tune_rounded,
+                                      color: colors.primaryColorDark),
                                   iconSize: ScreenSize.width * 0.05,
                                   elevation: (ScreenSize.width * 0.2).floor(),
                                   dropdownColor: colors.scaffoldBackgroundColor,
@@ -216,14 +217,14 @@ class _EditState extends State<Edit> {
                                 width: ScreenSize.width * 0.25,
                                 height: ScreenSize.height * 0.01,
                                 child: Divider(
-                                    color: Colors.black,
+                                    color: colors.primaryColorDark,
                                     thickness: ScreenSize.height * 0.005))
                           ],
                         ),
                       ),
                       Container(
                         decoration: BoxDecoration(
-                            color: Colors.white,
+                            color: colors.primaryColor,
                             border: Border.all(
                                 color: flagMode
                                     ? HexColor("#56CBF9")
@@ -249,7 +250,7 @@ class _EditState extends State<Edit> {
                       ),
                       Container(
                         decoration: BoxDecoration(
-                            color: Colors.white,
+                            color: colors.primaryColor,
                             border: Border.all(
                                 color: deleteMode
                                     ? HexColor("#FCD6F6")
@@ -281,11 +282,11 @@ class _EditState extends State<Edit> {
                   width: ScreenSize.width * 0.82,
                   child: Container(
                     decoration: BoxDecoration(
-                        color: Colors.white,
+                        color: colors.primaryColor,
                         borderRadius:
                             BorderRadius.circular(ScreenSize.width * 0.03),
                         border: Border.all(
-                          color: Colors.black,
+                          color: colors.primaryColorDark,
                           width: ScreenSize.width * 0.01,
                         )),
                     child: ListView(

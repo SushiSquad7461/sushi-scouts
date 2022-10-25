@@ -55,7 +55,7 @@ class _HeaderTitleMobileStrategyMainState
       width: ScreenSize.width * 1,
       child: Stack(alignment: Alignment.centerLeft, children: [
         SvgPicture.asset(
-          "./assets/images/stratgeymainheader.svg",
+          "./assets/images/stratgeymainheader${colors.scaffoldBackgroundColor == Colors.black ? "dark" : ""}.svg",
           height: ScreenSize.height * 0.12,
         ),
         Padding(
@@ -81,7 +81,7 @@ class _HeaderTitleMobileStrategyMainState
                 Padding(
                   padding: EdgeInsets.only(top: ScreenSize.height * 0.008),
                   child: SvgPicture.asset(
-                    "./assets/images/uparrow.svg",
+                    "./assets/images/uparrow${colors.scaffoldBackgroundColor == Colors.black ? "dark" : ""}.svg",
                     height: ScreenSize.height * 0.03,
                   ),
                 ),
@@ -90,7 +90,7 @@ class _HeaderTitleMobileStrategyMainState
                   child: Text(
                     rank,
                     style: TextStyle(
-                      color: HexColor("#81F4E1"),
+                      color: colors.scaffoldBackgroundColor == Colors.black ? HexColor("#56CBF9") : HexColor("#81F4E1"),
                       fontFamily: "Sushi",
                       fontSize: ScreenSize.height * 0.035,
                     ),

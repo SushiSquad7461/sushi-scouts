@@ -125,7 +125,7 @@ class HeaderNav extends StatelessWidget {
                                                 : ScreenSize.width * 0.05,
                                             color: (currentPage == screen)
                                                 ? colors.primaryColor
-                                                : HexColor("#4F4F4F")),
+                                                : colors.scaffoldBackgroundColor == Colors.black ? HexColor("#D0D0D0") : HexColor("#4F4F4F")),
                                       )
                                     : Container(
                                         decoration: ((currentPage == screen)
@@ -136,7 +136,7 @@ class HeaderNav extends StatelessWidget {
                                                                 Colors.white
                                                             ? "#FF729F"
                                                             : "#81F4E1")
-                                                        : "#56CBF9"),
+                                                        :  "#56CBF9"),
                                                     width: 5 * ScreenSize.shu),
                                                 borderRadius: BorderRadius.all(
                                                     Radius.circular(

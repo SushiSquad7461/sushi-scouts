@@ -32,6 +32,8 @@ class EditContent extends StatefulWidget {
 class EditContentState extends State<EditContent> {
   @override
   Widget build(BuildContext context) {
+    var colors = Theme.of(context);
+
     return Scaffold(
         resizeToAvoidBottomInset: false,
         body: Column(mainAxisAlignment: MainAxisAlignment.start, children: [
@@ -66,8 +68,8 @@ class EditContentState extends State<EditContent> {
                         child: Icon(
                           Icons.arrow_left_rounded,
                           color: widget.currentScoutingData.canGoToPrevPage()
-                              ? Colors.black
-                              : Colors.white,
+                              ? colors.primaryColorDark
+                              : colors.primaryColor,
                           semanticLabel: "Back Arrow",
                         ),
                       ),
@@ -81,7 +83,7 @@ class EditContentState extends State<EditContent> {
                       child: Container(
                         decoration: BoxDecoration(
                             border: Border.all(
-                                color: Colors.black, width: ScreenSize.swu * 5),
+                                color: colors.primaryColorDark, width: ScreenSize.swu * 5),
                             borderRadius: BorderRadius.all(
                                 Radius.circular(ScreenSize.swu * 10))),
                         child: Text(
@@ -89,7 +91,7 @@ class EditContentState extends State<EditContent> {
                           style: TextStyle(
                               fontSize: 40 * ScreenSize.swu,
                               fontFamily: "Sushi",
-                              color: Colors.black,
+                              color: colors.primaryColorDark,
                               fontWeight: FontWeight.bold),
                         ),
                       ),
@@ -103,8 +105,8 @@ class EditContentState extends State<EditContent> {
                         child: Icon(
                           Icons.arrow_right_rounded,
                           color: widget.currentScoutingData.canGoToNextPage()
-                              ? Colors.black
-                              : Colors.white,
+                              ? colors.primaryColorDark
+                              : colors.primaryColor,
                           semanticLabel: "Forward Arrow",
                         ),
                       ),

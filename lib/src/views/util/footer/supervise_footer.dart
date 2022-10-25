@@ -21,7 +21,7 @@ class SuperviseFooter extends StatelessWidget {
         children: [
           Image.asset(
             phone
-                ? "./assets/images/supervisefootermain.png"
+                ? "./assets/images/supervisefootermain${ colors.scaffoldBackgroundColor == Colors.black ? "dark" : ""}.png"
                 : colors.scaffoldBackgroundColor == Colors.black
                     ? "./assets/images/supervisefooterdark.png"
                     : "./assets/images/supervisefooter.png",

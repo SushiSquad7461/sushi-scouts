@@ -66,9 +66,11 @@ class _RobotProfilesState extends State<RobotProfiles> {
   }
 
   List<Widget> getRobotNumList() {
+    var colors = Theme.of(context);
     final textStyle = GoogleFonts.mohave(
         textStyle: TextStyle(
       fontSize: ScreenSize.height * 0.05,
+      color: colors.primaryColorDark, 
     ));
 
     List<Widget> ret = [];
@@ -98,7 +100,7 @@ class _RobotProfilesState extends State<RobotProfiles> {
                   ),
                   Divider(
                     height: ScreenSize.height * 0.007,
-                    color: Colors.black,
+                    color: colors.primaryColorDark,
                     thickness: ScreenSize.height * 0.003,
                   ),
                 ],
@@ -115,6 +117,7 @@ class _RobotProfilesState extends State<RobotProfiles> {
   List<Widget> getRobotInfo() {
     ScoutingData version = selected![index];
     List<Widget> ret = [];
+    var colors = Theme.of(context);
 
     for (final i in version.getComponents()) {
       if (i.component != "text input" &&
@@ -132,7 +135,7 @@ class _RobotProfilesState extends State<RobotProfiles> {
                 Text(
                   i.name.toUpperCase(),
                   style: TextStyle(
-                    color: Colors.white,
+                    color: colors.primaryColor,
                     fontFamily: "Sushi",
                     fontSize: ScreenSize.height * 0.02,
                   ),
@@ -142,7 +145,7 @@ class _RobotProfilesState extends State<RobotProfiles> {
                   child: Text(
                     version.getCertainDataByName(i.name),
                     style: TextStyle(
-                      color: Colors.white,
+                      color: colors.primaryColor,
                       fontFamily: "Sushi",
                       fontSize: ScreenSize.height * 0.015,
                     ),
@@ -160,6 +163,7 @@ class _RobotProfilesState extends State<RobotProfiles> {
 
   Widget getPicture(ScoutingData data, int index) {
     List<Widget> ret = [];
+    var colors = Theme.of(context);
 
     for (final i in data.getComponents()) {
       if (i.component == "text input") {
@@ -168,7 +172,7 @@ class _RobotProfilesState extends State<RobotProfiles> {
           style: GoogleFonts.mohave(
               textStyle: TextStyle(
             fontSize: ScreenSize.height * 0.02,
-            color: Colors.black,
+            color: colors.primaryColorDark,
           )),
         ));
       }
@@ -185,6 +189,8 @@ class _RobotProfilesState extends State<RobotProfiles> {
 
   @override
   Widget build(BuildContext context) {
+    var colors = Theme.of(context);
+
     return Scaffold(
         resizeToAvoidBottomInset: false,
         body: Stack(
@@ -223,7 +229,7 @@ class _RobotProfilesState extends State<RobotProfiles> {
                     height: ScreenSize.height * 0.72,
                     width: ScreenSize.width,
                     decoration: BoxDecoration(
-                        color: HexColor("#4F4F4F"),
+                        color: colors.scaffoldBackgroundColor == Colors.black ? HexColor("#D0D0D0") : HexColor("#4F4F4F"),
                         borderRadius: BorderRadius.only(
                             topLeft: Radius.circular(15 * ScreenSize.swu),
                             topRight: Radius.circular(15 * ScreenSize.swu))),
@@ -235,7 +241,7 @@ class _RobotProfilesState extends State<RobotProfiles> {
                           width: ScreenSize.width * 0.4,
                           height: ScreenSize.height * 0.006,
                           decoration: BoxDecoration(
-                              color: Colors.white,
+                              color: colors.primaryColor,
                               borderRadius: BorderRadius.all(
                                   Radius.circular(40 * ScreenSize.swu))),
                         ),
@@ -252,7 +258,7 @@ class _RobotProfilesState extends State<RobotProfiles> {
                                 width: ScreenSize.width * 0.8,
                                 height: ScreenSize.height * 0.24,
                                 decoration: BoxDecoration(
-                                    color: Colors.white,
+                                    color: colors.primaryColor,
                                     borderRadius: BorderRadius.all(
                                       Radius.circular(15 * ScreenSize.swu),
                                     )),
@@ -296,7 +302,7 @@ class _RobotProfilesState extends State<RobotProfiles> {
                                       fontFamily: "MaterialIcons",
                                       matchTextDirection: true),
                                   size: ScreenSize.height * 0.08,
-                                  color: Colors.black,
+                                  color: colors.primaryColorDark,
                                 ),
                               ),
                             ),
@@ -305,6 +311,7 @@ class _RobotProfilesState extends State<RobotProfiles> {
                                 style: TextStyle(
                                   fontSize: ScreenSize.height * 0.035,
                                   fontFamily: "Sushi",
+                                  color: colors.primaryColorDark
                                 )),
                             GestureDetector(
                               onTap: () => setState(() => index +=
@@ -317,7 +324,7 @@ class _RobotProfilesState extends State<RobotProfiles> {
                                       fontFamily: "MaterialIcons",
                                       matchTextDirection: true),
                                   size: ScreenSize.height * 0.08,
-                                  color: Colors.black,
+                                  color: colors.primaryColorDark,
                                 ),
                               ),
                             ),

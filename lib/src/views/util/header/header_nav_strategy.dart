@@ -142,15 +142,15 @@ class _HeaderNavStrategyState extends State<HeaderNavStrategy> {
                             enabledBorder: UnderlineInputBorder(
                               borderSide: BorderSide(
                                   width: ScreenSize.height * 0.003,
-                                  color: HexColor("#4F4F4F")),
+                                  color: colors.scaffoldBackgroundColor == Colors.black ? Colors.black : HexColor("#4F4F4F")),
                             ),
                             focusedBorder: UnderlineInputBorder(
                                 borderSide: BorderSide(
                                     width: ScreenSize.height * 0.003,
-                                color: HexColor("#4F4F4F")),
+                                color: colors.scaffoldBackgroundColor == Colors.black ? Colors.black : HexColor("#4F4F4F")),
                           ),
                           hintText: "SEARCH",
-                          hintStyle: TextStyle(color: HexColor("#4F4F4F")),
+                          hintStyle: TextStyle(color: colors.scaffoldBackgroundColor == Colors.black ? Colors.black : HexColor("#4F4F4F")),
                           isDense: true,
                           contentPadding: EdgeInsets.symmetric(
                               vertical: ScreenSize.height * 0.005),
@@ -159,17 +159,8 @@ class _HeaderNavStrategyState extends State<HeaderNavStrategy> {
                         style: GoogleFonts.mohave(
                             textStyle: TextStyle(
                           fontSize: ScreenSize.width * 0.04,
-                          color: HexColor("#4F4F4F"),
+                          color: colors.scaffoldBackgroundColor == Colors.black ? Colors.black : HexColor("#4F4F4F"),
                         ),
-                        // keyboardType: TextInputType.number,
-                        // inputFormatters: <TextInputFormatter>[
-                        //   FilteringTextInputFormatter.digitsOnly
-                        // ],
-                        // onChanged: (String? val) => setState(() {
-                        //   teamNum = (val != null && val != ""
-                        //       ? int.parse(val)
-                        //       : null);
-                        // })
                           ),
                       ),
                     ),

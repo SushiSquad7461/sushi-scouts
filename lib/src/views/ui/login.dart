@@ -113,11 +113,11 @@ class _LoginState extends State<Login> {
 
     switch (widget.type) {
       case LoginType.strategy:
-        footerAsset = "$footerAsset/stratloginfooter.svg";
+        footerAsset = "$footerAsset/stratloginfooter${colors.scaffoldBackgroundColor == Colors.black ? "dark" : ""}.svg";
         break;
       case LoginType.supervise:
         footerAsset =
-            "$footerAsset/${isPhoneScreen ? "mobilesupervisefooter.svg" : colors.scaffoldBackgroundColor == Colors.black ? "loginsupervisefooterdark.svg" : "./assets/images/loginfootersupervise.svg"}";
+            "$footerAsset/${isPhoneScreen ? "mobilesupervisefooter${colors.scaffoldBackgroundColor == Colors.black ? "dark" : ""}.svg" : colors.scaffoldBackgroundColor == Colors.black ? "loginsupervisefooterdark.svg" : "./assets/images/loginfootersupervise.svg"}";
         break;
       case LoginType.scout:
         footerAsset =
@@ -205,7 +205,7 @@ class _LoginState extends State<Login> {
                               decoration: BoxDecoration(
                                 color: widget.type == LoginType.supervise &&
                                         isPhoneScreen
-                                    ? HexColor("#4F4F4F")
+                                    ? colors.scaffoldBackgroundColor == Colors.black ? HexColor("#D0D0D0") : HexColor("#4F4F4F")
                                     : colors.primaryColorDark,
                                 borderRadius: BorderRadius.all(Radius.circular(
                                     ScreenSize.swu * (isPhoneScreen ? 20 : 0))),
