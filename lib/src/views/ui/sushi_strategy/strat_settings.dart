@@ -123,6 +123,13 @@ class _StratSettingsState extends State<StratSettings> {
         .doc("rank")
         .set({"rank": rank == "null" ? "1" : rank});
 
+    Map<String, String>? teamNames = await ApiRepository().getTeamName(
+        BlocProvider.of<LoginCubit>(context).state.eventCode.toUpperCase());
+
+    if (teamNames != null) {
+      db.collection("frcapi").doc("name").set(teamNames);
+    }
+
     turnOffLoading();
   }
 
@@ -166,7 +173,8 @@ class _StratSettingsState extends State<StratSettings> {
 
   Future<void> getImage() async {
     turnOnLoading();
-    List<int>? teamNums = await ApiRepository().getTeamNums("WAMAP");
+    List<int>? teamNums = await ApiRepository().getTeamNums(
+        BlocProvider.of<LoginCubit>(context).state.eventCode.toUpperCase());
 
     if (teamNums != null) {
       for (final i in teamNums) {

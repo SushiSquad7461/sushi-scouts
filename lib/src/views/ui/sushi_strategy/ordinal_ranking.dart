@@ -21,12 +21,27 @@ class OrdinalRanking extends StatefulWidget {
 
 class _OrdinalRankingState extends State<OrdinalRanking> {
   Map<String, Map<String, double>> ranking = {};
+  Map<String, String> robotNames = {};
   String selectedRanking = "";
 
   @override
   void initState() {
     super.initState();
     updateRanking();
+    getNames();
+  }
+
+  Future<void> getNames() async {
+    Map<String, String>? newRobotNames = await Localstore.instance
+        .collection("frcapi")
+        .doc("name")
+        .get() as Map<String, String>?;
+
+    if (newRobotNames != null) {
+      setState(() {
+        robotNames = newRobotNames;
+      });
+    } 
   }
 
   Future<void> updateRanking() async {
@@ -61,80 +76,84 @@ class _OrdinalRankingState extends State<OrdinalRanking> {
       for (int i = rankedCategory.keys.length - 1; i >= 0; --i) {
         String robotName = rankedCategory.keys.toList()[i];
 
-        ret.add(
-          Padding(
-            padding: EdgeInsets.only(bottom: ScreenSize.height * 0.02),
-            child: Container(
-              width: ScreenSize.width * 0.6,
-              height: ScreenSize.height * 0.13,
-              decoration: BoxDecoration(
-                color: Colors.black,
-                borderRadius: BorderRadius.all(Radius.circular(15 * ScreenSize.swu)),
-              ),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Padding(
-                    padding: EdgeInsets.only(left: ScreenSize.width * 0.03, right: ScreenSize.width * 0.02),
-                    child: SizedBox(
-                      width: ScreenSize.width * 0.08,
-                      height: ScreenSize.width * 0.08,
-                      child: Stack(
-                        children: [
-                          SvgPicture.asset("./assets/images/upwardarrowwhite.svg", width: ScreenSize.width * 0.08,),
-                          Center(
-                            child: Text(
-                              rank.toString(),
-                              style: GoogleFonts.mohave(
-                                  fontSize: ScreenSize.height * 0.03,
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.bold
-                                ),
-                            ),
-                          ),
-                        ]
-                      ),
-                    ),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.only(top: ScreenSize.height * 0.01),
-                    child: SizedBox(
-                      height: ScreenSize.height * 0.10,
-                      width: ScreenSize.width * 0.3,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            robotName,
-                            style: GoogleFonts.mohave(
-                              fontSize: ScreenSize.height * 0.06,
-                              height: 1,
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          Text(
-                            "SUSSY SQUAD",
-                            style: GoogleFonts.mohave(
-                              fontSize: ScreenSize.height * 0.02,
-                              height: 1,
-                              color: Colors.white,
-                            ),
-                          )
-                        ],
-                      ),
-                    ),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.only(left: ScreenSize.width * 0.1),
-                    child: SvgPicture.asset("./assets/images/rankingtile.svg", height: ScreenSize.height * 0.13,),
-                  )
-                ],
-              ),
+        ret.add(Padding(
+          padding: EdgeInsets.only(bottom: ScreenSize.height * 0.02),
+          child: Container(
+            width: ScreenSize.width * 0.6,
+            height: ScreenSize.height * 0.13,
+            decoration: BoxDecoration(
+              color: Colors.black,
+              borderRadius:
+                  BorderRadius.all(Radius.circular(15 * ScreenSize.swu)),
             ),
-          )
-        );
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Padding(
+                  padding: EdgeInsets.only(
+                      left: ScreenSize.width * 0.03,
+                      right: ScreenSize.width * 0.02),
+                  child: SizedBox(
+                    width: ScreenSize.width * 0.08,
+                    height: ScreenSize.width * 0.08,
+                    child: Stack(children: [
+                      SvgPicture.asset(
+                        "./assets/images/upwardarrowwhite.svg",
+                        width: ScreenSize.width * 0.08,
+                      ),
+                      Center(
+                        child: Text(
+                          rank.toString(),
+                          style: GoogleFonts.mohave(
+                              fontSize: ScreenSize.height * 0.03,
+                              color: Colors.black,
+                              fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                    ]),
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.only(top: ScreenSize.height * 0.01),
+                  child: SizedBox(
+                    height: ScreenSize.height * 0.10,
+                    width: ScreenSize.width * 0.3,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          robotName,
+                          style: GoogleFonts.mohave(
+                            fontSize: ScreenSize.height * 0.06,
+                            height: 1,
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        Text(
+                          robotNames[robotName] != null ? robotNames[robotName]!.toUpperCase() : "SUSSY SQUAD",
+                          style: GoogleFonts.mohave(
+                            fontSize: ScreenSize.height * 0.02,
+                            height: 1,
+                            color: Colors.white,
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.only(left: ScreenSize.width * 0.1),
+                  child: SvgPicture.asset(
+                    "./assets/images/rankingtile.svg",
+                    height: ScreenSize.height * 0.13,
+                  ),
+                )
+              ],
+            ),
+          ),
+        ));
 
         rank += 1;
       }
@@ -189,7 +208,9 @@ class _OrdinalRankingState extends State<OrdinalRanking> {
                       width: ScreenSize.width,
                       height: ScreenSize.height * 0.74,
                       child: ListView(
-                        padding: EdgeInsets.only(left: ScreenSize.width * 0.02, right: ScreenSize.width * 0.02),
+                        padding: EdgeInsets.only(
+                            left: ScreenSize.width * 0.02,
+                            right: ScreenSize.width * 0.02),
                         children: getRankingList(),
                       ),
                     )
