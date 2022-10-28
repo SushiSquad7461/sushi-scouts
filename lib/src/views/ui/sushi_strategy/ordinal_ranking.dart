@@ -41,7 +41,7 @@ class _OrdinalRankingState extends State<OrdinalRanking> {
       setState(() {
         robotNames = newRobotNames;
       });
-    } 
+    }
   }
 
   Future<void> updateRanking() async {
@@ -66,6 +66,7 @@ class _OrdinalRankingState extends State<OrdinalRanking> {
 
   List<Widget> getRankingList() {
     List<Widget> ret = [];
+    var colors = Theme.of(context);
 
     if (ranking[selectedRanking] != null) {
       Map<String, double> rankedCategory = Map.fromEntries(
@@ -82,7 +83,7 @@ class _OrdinalRankingState extends State<OrdinalRanking> {
             width: ScreenSize.width * 0.6,
             height: ScreenSize.height * 0.13,
             decoration: BoxDecoration(
-              color: Colors.black,
+              color: colors.primaryColorDark,
               borderRadius:
                   BorderRadius.all(Radius.circular(15 * ScreenSize.swu)),
             ),
@@ -98,7 +99,7 @@ class _OrdinalRankingState extends State<OrdinalRanking> {
                     height: ScreenSize.width * 0.08,
                     child: Stack(children: [
                       SvgPicture.asset(
-                        "./assets/images/upwardarrowwhite.svg",
+                        "./assets/images/upwardarrow${colors.backgroundColor == Colors.white ? "white" : "dark"}.svg",
                         width: ScreenSize.width * 0.08,
                       ),
                       Center(
@@ -106,7 +107,7 @@ class _OrdinalRankingState extends State<OrdinalRanking> {
                           rank.toString(),
                           style: GoogleFonts.mohave(
                               fontSize: ScreenSize.height * 0.03,
-                              color: Colors.black,
+                              color: colors.primaryColorDark,
                               fontWeight: FontWeight.bold),
                         ),
                       ),
@@ -127,16 +128,18 @@ class _OrdinalRankingState extends State<OrdinalRanking> {
                           style: GoogleFonts.mohave(
                             fontSize: ScreenSize.height * 0.06,
                             height: 1,
-                            color: Colors.white,
+                            color: colors.primaryColor,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
                         Text(
-                          robotNames[robotName] != null ? robotNames[robotName]!.toUpperCase() : "SUSSY SQUAD",
+                          robotNames[robotName] != null
+                              ? robotNames[robotName]!.toUpperCase()
+                              : "SUSSY SQUAD",
                           style: GoogleFonts.mohave(
                             fontSize: ScreenSize.height * 0.02,
                             height: 1,
-                            color: Colors.white,
+                            color: colors.primaryColor,
                           ),
                         )
                       ],
@@ -197,7 +200,7 @@ class _OrdinalRankingState extends State<OrdinalRanking> {
                                         fontSize: ScreenSize.height * 0.023,
                                         fontWeight: FontWeight.bold,
                                         color: selectedRanking == i
-                                            ? Colors.black
+                                            ? colors.primaryColorDark
                                             : HexColor("#4F4F4F"))),
                               ),
                             )
