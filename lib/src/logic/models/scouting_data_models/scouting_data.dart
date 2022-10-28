@@ -80,6 +80,7 @@ class ScoutingData {
   }
 
   void nextMatch({bool empty = true}) async {
+    var reader = ConfigFileReader.instance;
     currPage = 0;
     List<Data> data = getData();
     List<Component> components = getComponents();
@@ -138,6 +139,7 @@ class ScoutingData {
         for (Team t in schedule!.schedule[matchNumber - 1].teams) {
           if (t.station == stations[station]) {
             teamNumber = t.number;
+            // reader.setCommonValue("team #", t.number);
           }
         }
         data[teamNumIndex]
@@ -151,6 +153,7 @@ class ScoutingData {
             for (Team t in schedule!.schedule[matchNumber - 1].teams) {
               if (t.station == "${side == 0 ? "Red" : "Blue"}$num") {
                 robotNumber = t.number;
+                reader.setCommonValue("robot #$num", robotNumber);
               }
             }
             data[robotNumberIndex]
