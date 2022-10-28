@@ -3,6 +3,7 @@ import "package:flutter/widgets.dart";
 
 // Project imports:
 import "../views/ui/sushi_strategy/carindal_export.dart";
+import '../views/ui/sushi_strategy/ordinal_ranking.dart';
 import "../views/ui/sushi_strategy/robot_profiles.dart";
 import "../views/ui/sushi_strategy/strat_settings.dart";
 import "../views/util/components/checkbox.dart";
@@ -29,9 +30,10 @@ const Map componentMap = {
 
 const superviseDatabaseName = "supervise-data";
 const stratDatabaseName = "strat-data";
+const ordinalRankDatabaseName = "ordinal-ranking";
 
 const Map<String, Widget> stratPages = {
-  "ordinal": RobotProfiles(),
+  "ordinal": OrdinalRanking(),
   "pit": RobotProfiles(),
   "cardinal": CardinalExport(),
   "settings": StratSettings(),

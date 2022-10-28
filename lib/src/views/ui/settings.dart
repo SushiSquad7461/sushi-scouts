@@ -14,7 +14,6 @@ import "package:google_fonts/google_fonts.dart";
 import "package:localstore/localstore.dart";
 
 // Project imports:
-import "../../../main.dart";
 import "../../logic/blocs/login_bloc/login_cubit.dart";
 import "../../logic/blocs/theme_bloc/theme_cubit.dart";
 import "../../logic/constants.dart";
@@ -31,7 +30,8 @@ import "../util/footer/footer.dart";
 import "../util/footer/supervise_footer.dart";
 import "../util/header/header_nav.dart";
 import "../util/header/header_title/header_title.dart";
-import '../util/themes.dart';
+import '../util/sushiloading.dart';
+import "../util/themes.dart";
 import "app_choser.dart";
 import "loading.dart";
 
@@ -44,10 +44,12 @@ class Settings extends StatefulWidget {
 
 class _SettingsState extends State<Settings> {
   final db = Localstore.instance;
+
   Secret? secrets;
   int? year;
   bool isLoggingOut = false;
   String collectionName = "";
+  bool loading = false;
 
   Future<void> toggleMode(String mode) async {
     BlocProvider.of<ThemeCubit>(context)
@@ -62,11 +64,13 @@ class _SettingsState extends State<Settings> {
   }
 
   Future<void> downloadMatchSchedule() async {
+    turnOnLoading();
     MatchSchedule? schedule = await ApiRepository().getMatchSchedule(
         BlocProvider.of<LoginCubit>(context).state.eventCode, "qual");
     if (schedule != null) {
       db.collection("data").doc("schedule").set(schedule.toJson());
     }
+    turnOffLoading();
   }
 
   Future<void> downloadConfigFile() async {
@@ -121,31 +125,59 @@ class _SettingsState extends State<Settings> {
   }
 
   Future<void> uploadData() async {
+    turnOnLoading();
     final upload =
         await Localstore.instance.collection(superviseDatabaseName).get();
     final db = FirebaseFirestore.instance;
 
-    for (var i in upload!.keys) {
-      db.collection(collectionName).doc(i.split("/")[2]).set(upload[i]);
+    if (upload != null) {
+      for (var i in upload.keys) {
+        db.collection(collectionName).doc(i.split("/")[2]).set(upload[i]);
+      }
     }
+
+    turnOffLoading();
   }
 
   Future<void> downloadData() async {
+    turnOnLoading();
     final toAdd =
         await FirebaseFirestore.instance.collection(collectionName).get();
 
     for (var i in toAdd.docs) {
       db.collection(superviseDatabaseName).doc(i.id).set(i.data());
     }
+
+    turnOffLoading();
   }
 
   Future<void> wipeData() async {
+    turnOnLoading();
     var db = Localstore.instance;
     final delete = await db.collection(superviseDatabaseName).get();
 
-    for (var i in delete!.keys) {
-      await db.collection(superviseDatabaseName).doc(i.split("/")[2]).delete();
+    if (delete != null) {
+      for (var i in delete.keys) {
+        await db
+            .collection(superviseDatabaseName)
+            .doc(i.split("/")[2])
+            .delete();
+      }
     }
+
+    turnOffLoading();
+  }
+
+  void turnOnLoading() {
+    setState(() {
+      loading = true;
+    });
+  }
+
+  void turnOffLoading() {
+    setState(() {
+      loading = false;
+    });
   }
 
   @override
@@ -179,217 +211,237 @@ class _SettingsState extends State<Settings> {
                 currentPage: "settings",
                 isSupervise: isSupervise,
               ),
-              SizedBox(
-                  width: ScreenSize.width,
-                  height: ScreenSize.height *
-                      (isSupervise
-                          ? (isPhoneScreen ? 0.62 : 0.63)
-                          : (isPhoneScreen ? 0.608 : 0.64)),
-                  child: Stack(
-                    fit: StackFit.expand,
-                    children: [
-                      Align(
-                        alignment: const Alignment(0, -0.8),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            Container(
-                              decoration: BoxDecoration(
-                                  color: Colors.black,
-                                  borderRadius: BorderRadius.all(
-                                      Radius.circular(20 * ScreenSize.swu))),
-                              child: Padding(
-                                padding:
-                                    EdgeInsets.all(ScreenSize.width * 0.02),
-                                child: TextButton(
-                                    onPressed: () => toggleMode("dark"),
-                                    child: Text(
-                                      "DARK MODE",
-                                      style: TextStyle(
-                                        fontFamily: "Sushi",
-                                        color: Colors.white,
-                                        fontSize: ScreenSize.swu * 30,
-                                      ),
-                                    )),
-                              ),
+              loading
+                  ? SizedBox(
+                      width: ScreenSize.width,
+                      height: ScreenSize.height *
+                          (isSupervise
+                              ? (isPhoneScreen ? 0.62 : 0.63)
+                              : (isPhoneScreen ? 0.608 : 0.64)),
+                      child: const SushiLoading())
+                  : SizedBox(
+                      width: ScreenSize.width,
+                      height: ScreenSize.height *
+                          (isSupervise
+                              ? (isPhoneScreen ? 0.62 : 0.63)
+                              : (isPhoneScreen ? 0.608 : 0.64)),
+                      child: Stack(
+                        fit: StackFit.expand,
+                        children: [
+                          Align(
+                            alignment: const Alignment(0, -0.8),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: [
+                                Container(
+                                  decoration: BoxDecoration(
+                                      color: Colors.black,
+                                      borderRadius: BorderRadius.all(
+                                          Radius.circular(
+                                              20 * ScreenSize.swu))),
+                                  child: Padding(
+                                    padding:
+                                        EdgeInsets.all(ScreenSize.width * 0.02),
+                                    child: TextButton(
+                                        onPressed: () => toggleMode("dark"),
+                                        child: Text(
+                                          "DARK MODE",
+                                          style: TextStyle(
+                                            fontFamily: "Sushi",
+                                            color: Colors.white,
+                                            fontSize: ScreenSize.swu * 30,
+                                          ),
+                                        )),
+                                  ),
+                                ),
+                                Container(
+                                  decoration: BoxDecoration(
+                                      color: Colors.white,
+                                      borderRadius: BorderRadius.all(
+                                          Radius.circular(
+                                              20 * ScreenSize.swu))),
+                                  child: Padding(
+                                    padding:
+                                        EdgeInsets.all(ScreenSize.width * 0.02),
+                                    child: TextButton(
+                                        onPressed: () => toggleMode("light"),
+                                        child: Text(
+                                          "light mode",
+                                          style: TextStyle(
+                                            fontFamily: "Sushi",
+                                            color: Colors.black,
+                                            fontSize: ScreenSize.swu * 30,
+                                          ),
+                                        )),
+                                  ),
+                                )
+                              ],
                             ),
-                            Container(
-                              decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius: BorderRadius.all(
-                                      Radius.circular(20 * ScreenSize.swu))),
-                              child: Padding(
-                                padding:
-                                    EdgeInsets.all(ScreenSize.width * 0.02),
-                                child: TextButton(
-                                    onPressed: () => toggleMode("light"),
-                                    child: Text(
-                                      "light mode",
-                                      style: TextStyle(
-                                        fontFamily: "Sushi",
-                                        color: Colors.black,
-                                        fontSize: ScreenSize.swu * 30,
+                          ),
+                          Align(
+                            alignment:
+                                Alignment(0, isPhoneScreen ? -0.4 : -0.5),
+                            child: isSupervise
+                                ? Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceEvenly,
+                                    children: [
+                                      Container(
+                                        decoration: boxDecoration,
+                                        child: TextButton(
+                                            onPressed: downloadData,
+                                            child: Text(
+                                              "download data",
+                                              style: textStyle,
+                                            )),
                                       ),
-                                    )),
-                              ),
-                            )
-                          ],
-                        ),
-                      ),
-                      Align(
-                        alignment: Alignment(0, isPhoneScreen ? -0.4 : -0.5),
-                        child: isSupervise
-                            ? Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceEvenly,
-                                children: [
-                                  Container(
+                                      Container(
+                                        decoration: boxDecoration,
+                                        child: TextButton(
+                                            onPressed: uploadData,
+                                            child: Text(
+                                              "upload data",
+                                              style: textStyle,
+                                            )),
+                                      ),
+                                    ],
+                                  )
+                                : Container(
                                     decoration: boxDecoration,
                                     child: TextButton(
-                                        onPressed: downloadData,
+                                        onPressed: downloadMatchSchedule,
                                         child: Text(
-                                          "download data",
+                                          "download match schedule",
                                           style: textStyle,
                                         )),
                                   ),
-                                  Container(
-                                    decoration: boxDecoration,
-                                    child: TextButton(
-                                        onPressed: uploadData,
-                                        child: Text(
-                                          "upload data",
-                                          style: textStyle,
-                                        )),
-                                  ),
-                                ],
-                              )
-                            : Container(
-                                decoration: boxDecoration,
-                                child: TextButton(
-                                    onPressed: downloadMatchSchedule,
-                                    child: Text(
-                                      "download match schedule",
-                                      style: textStyle,
-                                    )),
-                              ),
-                      ),
-                      Align(
-                        alignment: Alignment(0, isPhoneScreen ? 0 : -0.2),
-                        child: Container(
-                          decoration: boxDecoration,
-                          width: ScreenSize.width * 0.47,
-                          child: TextButton(
-                              onPressed: downloadConfigFile,
-                              child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceEvenly,
-                                  children: [
-                                    SizedBox(
-                                      width: ScreenSize.width * 0.15,
-                                      height: ScreenSize.height * 0.04,
-                                      child: TextFormField(
-                                        decoration: InputDecoration(
-                                          enabledBorder: UnderlineInputBorder(
-                                            borderSide: BorderSide(
-                                                width:
-                                                    ScreenSize.height * 0.003,
-                                                color: colors.primaryColorDark),
+                          ),
+                          Align(
+                            alignment: Alignment(0, isPhoneScreen ? 0 : -0.2),
+                            child: Container(
+                              decoration: boxDecoration,
+                              width: ScreenSize.width * 0.47,
+                              child: TextButton(
+                                  onPressed: downloadConfigFile,
+                                  child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceEvenly,
+                                      children: [
+                                        SizedBox(
+                                          width: ScreenSize.width * 0.15,
+                                          height: ScreenSize.height * 0.04,
+                                          child: TextFormField(
+                                            decoration: InputDecoration(
+                                              enabledBorder:
+                                                  UnderlineInputBorder(
+                                                borderSide: BorderSide(
+                                                    width: ScreenSize.height *
+                                                        0.003,
+                                                    color: colors
+                                                        .primaryColorDark),
+                                              ),
+                                              focusedBorder:
+                                                  UnderlineInputBorder(
+                                                borderSide: BorderSide(
+                                                    width: ScreenSize.height *
+                                                        0.003,
+                                                    color: colors
+                                                        .primaryColorDark),
+                                              ),
+                                              hintText: "YEAR",
+                                              hintStyle: TextStyle(
+                                                  color:
+                                                      colors.primaryColorDark),
+                                              isDense: true,
+                                              contentPadding:
+                                                  EdgeInsets.symmetric(
+                                                      vertical:
+                                                          ScreenSize.height *
+                                                              0.005),
+                                            ),
+                                            textAlign: TextAlign.center,
+                                            style: GoogleFonts.mohave(
+                                                textStyle: TextStyle(
+                                              fontSize: ScreenSize.width * 0.05,
+                                              color: colors.primaryColorDark,
+                                              fontWeight: FontWeight.w500,
+                                            )),
+                                            keyboardType: TextInputType.number,
+                                            inputFormatters: <
+                                                TextInputFormatter>[
+                                              FilteringTextInputFormatter
+                                                  .digitsOnly
+                                            ],
+                                            onChanged: (String? val) =>
+                                                setState(() {
+                                              year = (val != null
+                                                  ? int.parse(val)
+                                                  : val) as int?;
+                                            }),
                                           ),
-                                          focusedBorder: UnderlineInputBorder(
-                                            borderSide: BorderSide(
-                                                width:
-                                                    ScreenSize.height * 0.003,
-                                                color: colors.primaryColorDark),
-                                          ),
-                                          hintText: "YEAR",
-                                          hintStyle: TextStyle(
-                                              color: colors.primaryColorDark),
-                                          isDense: true,
-                                          contentPadding: EdgeInsets.symmetric(
-                                              vertical:
-                                                  ScreenSize.height * 0.005),
                                         ),
-                                        textAlign: TextAlign.center,
-                                        style: GoogleFonts.mohave(
-                                            textStyle: TextStyle(
-                                          fontSize: ScreenSize.width * 0.05,
+                                        Text(
+                                          "config file",
+                                          style: textStyle,
+                                        ),
+                                      ])),
+                            ),
+                          ),
+                          Align(
+                            alignment: Alignment(0, isPhoneScreen ? 0.4 : 0.01),
+                            child: Container(
+                              decoration: boxDecoration,
+                              child: isSupervise
+                                  ? TextButton(
+                                      onPressed: wipeData,
+                                      child: Text(
+                                        "WIPE ALL DATA",
+                                        style: TextStyle(
+                                          fontFamily: "Sushi",
                                           color: colors.primaryColorDark,
-                                          fontWeight: FontWeight.w500,
-                                        )),
-                                        keyboardType: TextInputType.number,
-                                        inputFormatters: <TextInputFormatter>[
-                                          FilteringTextInputFormatter.digitsOnly
-                                        ],
-                                        onChanged: (String? val) =>
-                                            setState(() {
-                                          year = (val != null
-                                              ? int.parse(val)
-                                              : val) as int?;
-                                        }),
-                                      ),
-                                    ),
-                                    Text(
-                                      "config file",
-                                      style: textStyle,
-                                    ),
-                                  ])),
-                        ),
-                      ),
-                      Align(
-                        alignment: Alignment(0, isPhoneScreen ? 0.4 : 0.01),
-                        child: Container(
-                          decoration: boxDecoration,
-                          child: isSupervise
-                              ? TextButton(
-                                  onPressed: wipeData,
+                                          fontSize: ScreenSize.swu * 30,
+                                          fontWeight: FontWeight.w900,
+                                        ),
+                                      ))
+                                  : TextButton(
+                                      onPressed: downloadNames,
+                                      child: Text(
+                                        "download names",
+                                        style: textStyle,
+                                      )),
+                            ),
+                          ),
+                          Align(
+                            alignment: Alignment(0, isPhoneScreen ? 0.8 : 0.4),
+                            child: Container(
+                              decoration: boxDecoration,
+                              child: TextButton(
+                                  onPressed: () {
+                                    setLogout();
+                                  },
                                   child: Text(
-                                    "WIPE ALL DATA",
-                                    style: TextStyle(
-                                      fontFamily: "Sushi",
-                                      color: colors.primaryColorDark,
-                                      fontSize: ScreenSize.swu * 30,
-                                      fontWeight: FontWeight.w900,
-                                    ),
-                                  ))
-                              : TextButton(
-                                  onPressed: downloadNames,
-                                  child: Text(
-                                    "download names",
+                                    "log out",
                                     style: textStyle,
                                   )),
-                        ),
-                      ),
-                      Align(
-                        alignment: Alignment(0, isPhoneScreen ? 0.8 : 0.4),
-                        child: Container(
-                          decoration: boxDecoration,
-                          child: TextButton(
-                              onPressed: () {
-                                setLogout();
-                              },
-                              child: Text(
-                                "log out",
-                                style: textStyle,
-                              )),
-                        ),
-                      ),
-                      if (isLoggingOut)
-                        AlertDialog(
-                          title: const Text("Unsent data will be deleted"),
-                          content: const Text(
-                              "Please go to the QR code screen to send data to your scouting admin."),
-                          actions: [
-                            TextButton(
-                                onPressed: logOut, child: const Text("OK")),
-                            TextButton(
-                                onPressed: () => setState(() {
-                                      isLoggingOut = false;
-                                    }),
-                                child: const Text("CANCEL"))
-                          ],
-                        )
-                    ],
-                  )),
+                            ),
+                          ),
+                          if (isLoggingOut)
+                            AlertDialog(
+                              title: const Text("Unsent data will be deleted"),
+                              content: const Text(
+                                  "Please go to the QR code screen to send data to your scouting admin."),
+                              actions: [
+                                TextButton(
+                                    onPressed: logOut, child: const Text("OK")),
+                                TextButton(
+                                    onPressed: () => setState(() {
+                                          isLoggingOut = false;
+                                        }),
+                                    child: const Text("CANCEL"))
+                              ],
+                            )
+                        ],
+                      )),
               isSupervise
                   ? const SuperviseFooter()
                   : !isPhoneScreen
