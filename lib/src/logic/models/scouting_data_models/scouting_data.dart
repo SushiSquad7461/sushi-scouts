@@ -241,6 +241,8 @@ class ScoutingData {
             }
 
             return ret;
+          } else if (i.component == "ranking") {
+            return values[componentCount].getSimplified();
           }
 
           return i.values == null || i.values!.isEmpty

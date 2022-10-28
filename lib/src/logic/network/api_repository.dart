@@ -78,6 +78,32 @@ class ApiRepository {
     }
   }
 
+  Future<Map<String, String>?> getTeamName(String event) async {
+    final dio = Dio();
+    Secret secrets =
+        await SecretLoader(secretPath: "assets/secrets.json").load();
+    dio.options.headers["Authorization"] =
+        'Basic ${base64.encode(utf8.encode("${secrets.getApiKey("tbaUsername")}:${secrets.getApiKey("tbaPassword")}"))}';
+    dio.options.headers["If-Modified-Since"] = "";
+    _restClient = RestClient(dio, baseUrl: "");
+
+    try {
+      String data = await _restClient!.getTeams(DateTime.now().year, event);
+      Map<String, dynamic> parsed = json.decode(data);
+
+      Map<String, String> teamNames = {};
+
+      for (final i in parsed["teams"]) {
+        teamNames[i["teamNumber"].toString()] = i["nameShort"];
+      }
+
+      return teamNames;
+    } catch (error) {
+      log(ErrorHelper.handleError(error as Exception));
+      return null;
+    }
+  }
+
   Future<List<String>?> getImage(int teamNum) async {
     final dio = Dio();
 

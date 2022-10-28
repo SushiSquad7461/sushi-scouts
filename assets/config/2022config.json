@@ -7,6 +7,9 @@
             "method-name": "pit",
             "identifier": "team #",
             "version": "day #"
+        },
+        "ranking": {
+            "method-name": "ordinal"
         }
     },
     "supervise": {
