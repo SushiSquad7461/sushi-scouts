@@ -19,6 +19,7 @@ import "../../logic/helpers/size/screen_size.dart";
 import "../../logic/login_type.dart";
 import "../util/header/header_title/header_title.dart";
 import "../util/popups/incorrect_password.dart";
+import 'app_choser.dart';
 import "sushi_scouts/scouting.dart";
 import "sushi_strategy/robot_profiles.dart";
 import "sushi_supervise/upload.dart";
@@ -113,7 +114,8 @@ class _LoginState extends State<Login> {
 
     switch (widget.type) {
       case LoginType.strategy:
-        footerAsset = "$footerAsset/stratloginfooter${colors.scaffoldBackgroundColor == Colors.black ? "dark" : ""}.svg";
+        footerAsset =
+            "$footerAsset/stratloginfooter${colors.scaffoldBackgroundColor == Colors.black ? "dark" : ""}.svg";
         break;
       case LoginType.supervise:
         footerAsset =
@@ -205,7 +207,10 @@ class _LoginState extends State<Login> {
                               decoration: BoxDecoration(
                                 color: widget.type == LoginType.supervise &&
                                         isPhoneScreen
-                                    ? colors.scaffoldBackgroundColor == Colors.black ? HexColor("#D0D0D0") : HexColor("#4F4F4F")
+                                    ? colors.scaffoldBackgroundColor ==
+                                            Colors.black
+                                        ? HexColor("#D0D0D0")
+                                        : HexColor("#4F4F4F")
                                     : colors.primaryColorDark,
                                 borderRadius: BorderRadius.all(Radius.circular(
                                     ScreenSize.swu * (isPhoneScreen ? 20 : 0))),
@@ -274,7 +279,8 @@ class _LoginState extends State<Login> {
                         FilteringTextInputFormatter.digitsOnly
                       ],
                       onChanged: (String? val) => setState(() {
-                        teamNum = (val != null && val != "" ? int.parse(val) : null);
+                        teamNum =
+                            (val != null && val != "" ? int.parse(val) : null);
                       }),
                     ),
                   ),
@@ -392,6 +398,19 @@ class _LoginState extends State<Login> {
                                   })),
                         ),
                       ),
+                Align(
+                    // HOME button
+                    alignment: const Alignment(0, 0.5),
+                    child: IconButton(
+                      icon: Icon(
+                        Icons.home,
+                        size: ScreenSize.swu * 50,
+                      ),
+                      onPressed: () {
+                        RouteHelper.pushAndRemoveUntilToScreen(0, 0,
+                            screen: const AppChooser(), ctx: context);
+                      },
+                    )),
               ],
             ),
           ),
