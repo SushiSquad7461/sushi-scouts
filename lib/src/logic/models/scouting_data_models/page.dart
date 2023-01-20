@@ -51,7 +51,9 @@ class Screen {
   int getComponentsPerRow(int currRow) {
     int ret = 0;
     for (Section i in sections) {
-      ret += i.componentsPerColumn[currRow];
+      if (i.componentsPerColumn.length > currRow) {
+        ret += i.componentsPerColumn[currRow];
+      }
     }
     return ret;
   }

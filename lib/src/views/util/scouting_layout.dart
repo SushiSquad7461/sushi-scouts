@@ -33,19 +33,20 @@ class ScoutingLayout extends StatelessWidget {
 
   Widget _buildSection(double width, Section section, int currColumn,
       double height, BuildContext context) {
-    try {
+    print('a');
+    //try {
       double scaledWidth = (width > 500 ? 500 : width);
       var reader = ConfigFileReader.instance;
       List<Widget> builtComponents = [];
 
       int startComponent = 0;
-      for (var i = 0; i < currColumn; ++i) {
+      for (var i = 0; i < currColumn; i++) {
         startComponent += section.componentsPerColumn[i];
       }
 
       for (var i = startComponent;
           i < startComponent + section.componentsPerColumn[currColumn];
-          ++i) {
+          i++) {
         Component currComponent = section.components[i];
         List<String>? valueNames = currComponent.values;
         List<String>? values;
@@ -112,15 +113,15 @@ class ScoutingLayout extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: builtComponents),
       );
-    } catch (e) {
-      rethrow;
-    }
+    //} catch (e) {
+      //rethrow;
+    //}
   }
 
   //builds the body of the screen
   @override
   Widget build(BuildContext context) {
-    try {
+    //try {
       List<Widget> builtSections = [];
 
       double height = isPhone(context) ? 0.58 : 0.61;
@@ -174,9 +175,10 @@ class ScoutingLayout extends StatelessWidget {
         ));
       }
       return Column(children: builtSections);
-    } catch (e) {
-      error(true);
-      return const Center(child: Text("Error in Config File "));
-    }
+    //} catch (e) {
+      //error(true);
+      //print(e);
+      //return const Center(child: Text("Error in Config File "));
+    //}
   }
 }

@@ -1,6 +1,6 @@
 {
     "teamNumber": 7461,
-    "version" : 5,
+    "version" : 6,
     "password" : "7461",
     "strat": {
         "profile": {
@@ -114,11 +114,38 @@
                             "darkColor": "#81F4E1",
                             "darkTextColor": "#ffffff",
                             "textColor" : "#000000",
-                            "componentsInRow": [1, 1]
+                            "componentsInRow": [3, 2]
                         },
                         "components":[
                             {
-                                "name" : "No Show",
+                                "name" : "L3",
+                                "type" : "number",
+                                "component" : "increment",
+                                "required" : true,
+                                "timestamp": false,
+                                "isCommonValue" : false,
+                                "setCommonValue" : false
+                            },
+                            {
+                                "name" : "L2",
+                                "type" : "number",
+                                "component" : "increment",
+                                "required" : true,
+                                "timestamp": false,
+                                "isCommonValue" : false,
+                                "setCommonValue" : false
+                            },
+                            {
+                                "name" : "L1",
+                                "type" : "number",
+                                "component" : "increment",
+                                "required" : true,
+                                "timestamp": false,
+                                "isCommonValue" : false,
+                                "setCommonValue" : false
+                            },
+                            {
+                                "name" : "Docked",
                                 "type" : "bool",
                                 "component" : "checkbox",
                                 "required" : true,
@@ -127,7 +154,7 @@
                                 "setCommonValue" : false
                             },
                             {
-                                "name" : "Tarmac",
+                                "name" : "Engaged",
                                 "type" : "bool",
                                 "component" : "checkbox",
                                 "required" : true,
@@ -141,42 +168,25 @@
                         "properties":{
                             "title":"",
                             "color":"#63cff9",
-                            "rows":2,
+                            "rows": 1,
                             "textColor":"#000000",
                             "darkColor": "#FCD6F6",
                             "darkTextColor": "#ffffff",
-                            "componentsInRow": [2, 1]
+                            "componentsInRow": [1]
                         },
                         "components":[
                             {
-                                "name" : "Low Hub",
-                                "type" : "number",
-                                "component" : "increment",
+                                "name" : "Left Community",
+                                "type" : "bool",
+                                "component" : "checkbox",
                                 "required" : true,
                                 "timestamp": true,
-                                "isCommonValue" : false,
-                                "setCommonValue" : false
-                            },
-                            {
-                                "name" : "High Hub",
-                                "type" : "number",
-                                "component" : "increment",
-                                "required" : true,
-                                "timestamp": true,
-                                "isCommonValue" : false,
-                                "setCommonValue" : false
-                            },
-                            {
-                                "name" : "HP",
-                                "type" : "number",
-                                "component" : "increment",
-                                "required" : true,
-                                "timestamp": false,
                                 "isCommonValue" : false,
                                 "setCommonValue" : false
                             }
                         ]
                     }
+                    
                 ]
             },
             "teleop" : { 
