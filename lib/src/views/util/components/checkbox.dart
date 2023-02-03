@@ -109,7 +109,7 @@ class CheckboxState extends State<CheckboxInput> {
                             child: Checkbox(
                               side: BorderSide(
                                   color: widget.color,
-                                  width: width / 100,
+                                  width: ScreenSize.width / 100,
                                   style: BorderStyle.solid),
                               splashRadius: width / 10,
                               checkColor: colors.scaffoldBackgroundColor,

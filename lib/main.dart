@@ -72,11 +72,14 @@ class _SushiScoutsState extends State<SushiScouts> {
           currentFocus.unfocus();
         }
       }, child: BlocBuilder<ThemeCubit, ThemeStates>(builder: (context, state) {
-
         SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.dark.copyWith(
-          statusBarColor: state is DarkMode ? Colors.white : Colors.black, // Color for Android
-          statusBarBrightness: state is DarkMode ? Brightness.dark : Brightness.light // Dark == white status bar -- for IOS.
-        ));
+            statusBarColor: state is DarkMode
+                ? Colors.white
+                : Colors.black, // Color for Android
+            statusBarBrightness: state is DarkMode
+                ? Brightness.dark
+                : Brightness.light // Dark == white status bar -- for IOS.
+            ));
 
         return MaterialApp(
           debugShowCheckedModeBanner: false,

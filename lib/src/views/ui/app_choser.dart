@@ -132,6 +132,9 @@ class AppChooser extends StatelessWidget {
               ),
             ),
             SizedBox(
+              height: 3,
+            ),
+            SizedBox(
               width: ScreenSize.width,
               child: GestureDetector(
                 onTap: () => {
@@ -140,7 +143,7 @@ class AppChooser extends StatelessWidget {
                 },
                 child: SvgPicture.asset(
                   "./assets/images/scoutslogo${colors.scaffoldBackgroundColor == Colors.white ? "" : "dark"}.svg",
-                  width: ScreenSize.width * (phone ? 0.85 : 0.7),
+                  width: ScreenSize.width * 0.8 * (phone ? 0.85 : 0.7),
                 ),
               ),
             ),
@@ -156,7 +159,7 @@ class AppChooser extends StatelessWidget {
                     },
                     child: SvgPicture.asset(
                       "./assets/images/stratchoice${colors.scaffoldBackgroundColor == Colors.white ? "" : "dark"}.svg",
-                      width: ScreenSize.width * (phone ? 0.75 : 0.6),
+                      width: ScreenSize.width * 0.9 * (phone ? 0.75 : 0.6),
                     ),
                   ),
                 ),

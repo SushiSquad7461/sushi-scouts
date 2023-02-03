@@ -398,24 +398,35 @@ class _LoginState extends State<Login> {
                                   })),
                         ),
                       ),
-                Align(
-                    // HOME button
-                    alignment: const Alignment(0, 0.5),
-                    child: IconButton(
-                      icon: Icon(
-                        Icons.home,
-                        size: ScreenSize.swu * 50,
-                      ),
-                      onPressed: () {
-                        RouteHelper.pushAndRemoveUntilToScreen(0, 0,
-                            screen: const AppChooser(), ctx: context);
-                      },
-                    )),
+                const ReturnButton(),
               ],
             ),
           ),
         ],
       ),
     );
+  }
+}
+
+class ReturnButton extends StatelessWidget {
+  const ReturnButton({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Align(
+        // HOME button
+        alignment: const Alignment(0, 0.5),
+        child: IconButton(
+          icon: Icon(
+            Icons.home,
+            size: ScreenSize.swu * 50,
+          ),
+          onPressed: () {
+            RouteHelper.pushAndRemoveUntilToScreen(0, 0,
+                screen: const AppChooser(), ctx: context);
+          },
+        ));
   }
 }

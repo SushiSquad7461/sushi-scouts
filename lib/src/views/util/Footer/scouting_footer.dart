@@ -1,9 +1,13 @@
 // Flutter imports:
+import "dart:io";
+import "dart:math";
+
 import "package:flutter/material.dart";
 
 // Package imports:
 import "package:flutter_bloc/flutter_bloc.dart";
 import "package:flutter_svg/svg.dart";
+import "package:get/get.dart";
 
 // Project imports:
 import "../../../logic/blocs/scouting_method_bloc/scouting_method_cubit.dart";
@@ -11,7 +15,10 @@ import "../../../logic/data/config_file_reader.dart";
 import "../../../logic/device_type.dart";
 import "../../../logic/helpers/routing_helper.dart";
 import "../../../logic/helpers/size/screen_size.dart";
+import "../../../logic/login_type.dart";
 import "../../../logic/models/scouting_data_models/scouting_data.dart";
+import "../../ui/app_choser.dart";
+import "../../ui/login.dart";
 import "../../ui/sushi_scouts/qr_screen.dart";
 import "../popups/required_content.dart";
 import "footer.dart";
@@ -84,17 +91,17 @@ class _ScoutingFooterState extends State<ScoutingFooter> {
                     ),
                   ),
                   Align(
-                    alignment: const Alignment(1, 0.6),
-                    child: IconButton(
-                      icon: Icon(Icons.qr_code_2_rounded,
-                        color: colors.backgroundColor),
-                      onPressed: () {
-                        RouteHelper.pushAndRemoveUntilToScreen(1, 0,
-                                      ctx: context, screen: QRScreen(hasNewData: false));
-                      },
-                      iconSize: ScreenSize.swu * 60,
-                    )
-                  ),
+                      alignment: const Alignment(1, 0.6),
+                      child: IconButton(
+                        icon: Icon(Icons.qr_code_2_rounded,
+                            color: colors.backgroundColor),
+                        onPressed: () {
+                          RouteHelper.pushAndRemoveUntilToScreen(1, 0,
+                              ctx: context,
+                              screen: QRScreen(hasNewData: false));
+                        },
+                        iconSize: ScreenSize.swu * 60,
+                      )),
                   Padding(
                     padding: EdgeInsets.only(
                         top: ScreenSize.height * 0.1,
@@ -106,13 +113,18 @@ class _ScoutingFooterState extends State<ScoutingFooter> {
                         children: [
                           IconButton(
                             padding: const EdgeInsets.all(0),
-                            onPressed: moveToPreviousPage,
+                            onPressed: () {
+                              currentScoutingData!.currPage != 0
+                                  ? moveToPreviousPage()
+                                  : RouteHelper.pushAndRemoveUntilToScreen(1, 0,
+                                      ctx: context,
+                                      screen:
+                                          const Login(type: LoginType.scout));
+                            },
                             iconSize: ScreenSize.width / 6.0,
                             icon: Icon(
                               Icons.arrow_left_rounded,
-                              color: prevPage
-                                  ? colors.scaffoldBackgroundColor
-                                  : colors.primaryColorDark,
+                              color: colors.scaffoldBackgroundColor,
                               semanticLabel: "Back Arrow",
                             ),
                           ),
@@ -182,7 +194,13 @@ class _ScoutingFooterState extends State<ScoutingFooter> {
                   children: [
                     IconButton(
                       padding: const EdgeInsets.all(0),
-                      onPressed: moveToPreviousPage,
+                      onPressed: () {
+                        currentScoutingData!.currPage != 0
+                            ? moveToPreviousPage
+                            : RouteHelper.pushAndRemoveUntilToScreen(1, 0,
+                                ctx: context,
+                                screen: const Login(type: LoginType.scout));
+                      },
                       iconSize: ScreenSize.width / 6.0,
                       icon: Icon(
                         Icons.arrow_left_rounded,
