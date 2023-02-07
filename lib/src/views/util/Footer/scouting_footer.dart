@@ -12,10 +12,10 @@ import "package:get/get.dart";
 // Project imports:
 import "../../../logic/blocs/scouting_method_bloc/scouting_method_cubit.dart";
 import "../../../logic/data/config_file_reader.dart";
-import "../../../logic/device_type.dart";
+import '../../../logic/types/device_type.dart';
 import "../../../logic/helpers/routing_helper.dart";
 import "../../../logic/helpers/size/screen_size.dart";
-import "../../../logic/login_type.dart";
+import '../../../logic/types/login_type.dart';
 import "../../../logic/models/scouting_data_models/scouting_data.dart";
 import "../../ui/app_choser.dart";
 import "../../ui/login.dart";

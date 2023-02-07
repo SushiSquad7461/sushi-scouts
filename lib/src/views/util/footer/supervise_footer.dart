@@ -2,7 +2,7 @@
 import "package:flutter/material.dart";
 
 // Project imports:
-import "../../../logic/device_type.dart";
+import '../../../logic/types/device_type.dart';
 import "../../../logic/helpers/size/screen_size.dart";
 
 class SuperviseFooter extends StatelessWidget {

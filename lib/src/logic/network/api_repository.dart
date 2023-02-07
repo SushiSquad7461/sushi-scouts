@@ -4,6 +4,7 @@ import "dart:developer";
 
 // Package imports:
 import "package:dio/dio.dart";
+import 'package:flutter/gestures.dart';
 
 // Project imports:
 import "../helpers/error_helper.dart";
@@ -12,18 +13,35 @@ import "../helpers/secret/secret_loader.dart";
 import "../models/match_schedule.dart";
 import "rest_client.dart";
 
-class ApiRepository {
+/*
+ * Functions that wrap api calls.
+ */
+class structures {
   RestClient? _restClient;
+  late Secret secrets;
 
-  Future<MatchSchedule?> getMatchSchedule(
-      String event, String tournamentLevel) async {
+  structures() {
+    SecretLoader(secretPath: "assets/secrets.json")
+        .load()
+        .then((value) => secrets = value);
+  }
+
+  /*
+   * Gets dio object for using tba, sets Authorization and If-Modified-Since headers.
+   */
+  Dio _getTbaDioObject() {
     final dio = Dio();
-    Secret secrets =
-        await SecretLoader(secretPath: "assets/secrets.json").load();
     dio.options.headers["Authorization"] =
         'Basic ${base64.encode(utf8.encode("${secrets.getApiKey("tbaUsername")}:${secrets.getApiKey("tbaPassword")}"))}';
     dio.options.headers["If-Modified-Since"] = "";
+    return dio;
+  }
+
+  Future<MatchSchedule?> getMatchSchedule(
+      String event, String tournamentLevel) async {
+    final dio = _getTbaDioObject();
     _restClient = RestClient(dio, baseUrl: "");
+
     try {
       return await _restClient!
           .getMatchSchedule(event, tournamentLevel, DateTime.now().year);
@@ -34,17 +52,14 @@ class ApiRepository {
   }
 
   Future<int?> getRank(String event, int teamNum) async {
-    final dio = Dio();
-    Secret secrets =
-        await SecretLoader(secretPath: "assets/secrets.json").load();
-    dio.options.headers["Authorization"] =
-        'Basic ${base64.encode(utf8.encode("${secrets.getApiKey("tbaUsername")}:${secrets.getApiKey("tbaPassword")}"))}';
-    dio.options.headers["If-Modified-Since"] = "";
+    final dio = _getTbaDioObject();
     _restClient = RestClient(dio, baseUrl: "");
+
     try {
       String data =
           await _restClient!.getRanking(event, teamNum, DateTime.now().year);
       Map<String, dynamic> parsed = json.decode(data);
+
       return parsed["Rankings"][0]["rank"];
     } catch (error) {
       log(ErrorHelper.handleError(error as Exception));
@@ -52,13 +67,11 @@ class ApiRepository {
     }
   }
 
+  /*
+   * Gets all of the team numbers that are going to an event
+   */
   Future<List<int>?> getTeamNums(String event) async {
-    final dio = Dio();
-    Secret secrets =
-        await SecretLoader(secretPath: "assets/secrets.json").load();
-    dio.options.headers["Authorization"] =
-        'Basic ${base64.encode(utf8.encode("${secrets.getApiKey("tbaUsername")}:${secrets.getApiKey("tbaPassword")}"))}';
-    dio.options.headers["If-Modified-Since"] = "";
+    final dio = _getTbaDioObject();
     _restClient = RestClient(dio, baseUrl: "");
 
     try {
@@ -78,13 +91,11 @@ class ApiRepository {
     }
   }
 
+  /*
+   * Get a map of teamNumbers to teamNames based on event name
+   */
   Future<Map<String, String>?> getTeamName(String event) async {
-    final dio = Dio();
-    Secret secrets =
-        await SecretLoader(secretPath: "assets/secrets.json").load();
-    dio.options.headers["Authorization"] =
-        'Basic ${base64.encode(utf8.encode("${secrets.getApiKey("tbaUsername")}:${secrets.getApiKey("tbaPassword")}"))}';
-    dio.options.headers["If-Modified-Since"] = "";
+    final dio = _getTbaDioObject();
     _restClient = RestClient(dio, baseUrl: "");
 
     try {
@@ -104,13 +115,13 @@ class ApiRepository {
     }
   }
 
+  /*
+   * Gets a url of images for a certain team number.
+   */
   Future<List<String>?> getImage(int teamNum) async {
     final dio = Dio();
 
-    Secret secrets =
-        await SecretLoader(secretPath: "assets/secrets.json").load();
-
-    dio.options.headers["X-TBA-Auth-Key"] = ((secrets.getApiKey("tbaReadKey")));
+    dio.options.headers["X-TBA-Auth-Key"] = secrets.getApiKey("tbaReadKey");
     dio.options.headers["accept"] = "application/json";
     dio.options.headers["User-Agent"] = "frcScouter";
     dio.options.headers["If-Modified-Since"] = "";
@@ -131,12 +142,14 @@ class ApiRepository {
 
       return ret;
     } catch (error) {
-      print(error);
       log(ErrorHelper.handleError(error as Exception));
       return null;
     }
   }
 
+  /*
+   * Get config file for sushi structures api. 
+   */
   Future<String?> getConfigFile(int year, int teamNum) async {
     final dio = Dio();
     _restClient = RestClient(dio, baseUrl: "");

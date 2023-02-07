@@ -8,7 +8,7 @@ import "package:google_fonts/google_fonts.dart";
 import "../../logic/constants.dart";
 import "../../logic/data/config_file_reader.dart";
 import "../../logic/data/data.dart";
-import "../../logic/device_type.dart";
+import '../../logic/types/device_type.dart';
 import "../../logic/models/scouting_data_models/component.dart";
 import "../../logic/models/scouting_data_models/page.dart";
 import "../../logic/models/scouting_data_models/scouting_data.dart";

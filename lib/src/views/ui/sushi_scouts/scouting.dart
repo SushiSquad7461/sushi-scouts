@@ -7,7 +7,7 @@ import "package:flutter_bloc/flutter_bloc.dart";
 // Project imports:
 import "../../../logic/blocs/scouting_method_bloc/scouting_method_cubit.dart";
 import "../../../logic/data/config_file_reader.dart";
-import "../../../logic/device_type.dart";
+import '../../../logic/types/device_type.dart';
 import "../../../logic/helpers/size/screen_size.dart";
 import "../../../logic/models/scouting_data_models/scouting_data.dart";
 import "../../util/footer/scouting_footer.dart";

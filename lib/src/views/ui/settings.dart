@@ -18,12 +18,12 @@ import "../../logic/blocs/login_bloc/login_cubit.dart";
 import "../../logic/blocs/theme_bloc/theme_cubit.dart";
 import "../../logic/constants.dart";
 import "../../logic/data/config_file_reader.dart";
-import "../../logic/device_type.dart";
+import '../../logic/types/device_type.dart';
 import "../../logic/helpers/routing_helper.dart";
 import "../../logic/helpers/secret/secret.dart";
 import "../../logic/helpers/secret/secret_loader.dart";
 import "../../logic/helpers/size/screen_size.dart";
-import "../../logic/login_type.dart";
+import '../../logic/types/login_type.dart';
 import "../../logic/models/match_schedule.dart";
 import "../../logic/network/api_repository.dart";
 import "../util/footer/footer.dart";
@@ -65,7 +65,7 @@ class _SettingsState extends State<Settings> {
 
   Future<void> downloadMatchSchedule() async {
     turnOnLoading();
-    MatchSchedule? schedule = await ApiRepository().getMatchSchedule(
+    MatchSchedule? schedule = await structures().getMatchSchedule(
         BlocProvider.of<LoginCubit>(context).state.eventCode, "qual");
     if (schedule != null) {
       db.collection("data").doc("schedule").set(schedule.toJson());
@@ -78,7 +78,7 @@ class _SettingsState extends State<Settings> {
     int teamNum = BlocProvider.of<LoginCubit>(context).state.teamNum;
 
     String? configFile =
-        await ApiRepository().getConfigFile(configYear, teamNum);
+        await structures().getConfigFile(configYear, teamNum);
     if (configFile != null) {
       var parsedFile =
           await json.decode((await json.decode(configFile))["config"]);

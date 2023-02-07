@@ -20,7 +20,7 @@ import "../../../logic/blocs/login_bloc/login_cubit.dart";
 import "../../../logic/blocs/theme_bloc/theme_cubit.dart";
 import '../../../logic/constants.dart';
 import "../../../logic/data/config_file_reader.dart";
-import "../../../logic/device_type.dart";
+import '../../../logic/types/device_type.dart';
 import "../../../logic/helpers/routing_helper.dart";
 import "../../../logic/helpers/size/screen_size.dart";
 import '../../../logic/models/scouting_data_models/component.dart';
@@ -65,7 +65,7 @@ class _StratSettingsState extends State<StratSettings> {
     int teamNum = BlocProvider.of<LoginCubit>(context).state.teamNum;
 
     String? configFile =
-        await ApiRepository().getConfigFile(configYear, teamNum);
+        await structures().getConfigFile(configYear, teamNum);
     if (configFile != null) {
       var parsedFile =
           await json.decode((await json.decode(configFile))["config"]);
@@ -113,7 +113,7 @@ class _StratSettingsState extends State<StratSettings> {
 
     await generateOrdinalRankings(ordinalList);
 
-    String rank = (await ApiRepository().getRank(
+    String rank = (await structures().getRank(
             BlocProvider.of<LoginCubit>(context).state.eventCode.toUpperCase(),
             BlocProvider.of<LoginCubit>(context).state.teamNum))
         .toString();
@@ -123,7 +123,7 @@ class _StratSettingsState extends State<StratSettings> {
         .doc("rank")
         .set({"rank": rank == "null" ? "1" : rank});
 
-    Map<String, String>? teamNames = await ApiRepository().getTeamName(
+    Map<String, String>? teamNames = await structures().getTeamName(
         BlocProvider.of<LoginCubit>(context).state.eventCode.toUpperCase());
 
     if (teamNames != null) {
@@ -173,7 +173,7 @@ class _StratSettingsState extends State<StratSettings> {
 
   Future<void> getImage() async {
     turnOnLoading();
-    List<int>? teamNums = await ApiRepository().getTeamNums(
+    List<int>? teamNums = await structures().getTeamNums(
         BlocProvider.of<LoginCubit>(context).state.eventCode.toUpperCase());
 
     if (teamNums != null) {
@@ -182,7 +182,7 @@ class _StratSettingsState extends State<StratSettings> {
         db
             .collection("frcapi")
             .doc("$i images")
-            .set({"imageList": await ApiRepository().getImage(i) ?? "[]"});
+            .set({"imageList": await structures().getImage(i) ?? "[]"});
       }
     }
     turnOffLoading();

@@ -2,8 +2,8 @@
 import "package:flutter/material.dart";
 
 // Project imports:
-import "../../../../logic/device_type.dart";
-import "../../../../logic/login_type.dart";
+import '../../../../logic/types/device_type.dart';
+import '../../../../logic/types/login_type.dart';
 import "mobile.dart";
 import "mobile_strategy_login.dart";
 import "mobile_supervise.dart";

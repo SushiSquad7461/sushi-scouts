@@ -8,10 +8,13 @@ import "../match_schedule.dart";
 import "component.dart";
 import "page.dart";
 
+/// ScoutingData class stores scouting data for one collection cycle
 class ScoutingData {
   String name;
   Map<String, Screen> pages = {};
   List<String> pageNames = [];
+
+  // Indicates which page of the scouting data we are on
   int currPage = 0;
 
   ScoutingData(Map<String, dynamic> config, {required this.name}) {
@@ -22,16 +25,22 @@ class ScoutingData {
   }
 
   factory ScoutingData.fromJson(Map<String, dynamic> json) {
-    var reader = ConfigFileReader.instance;
-    var emptyData = reader.generateNewScoutingData(json["name"]);
-    for (String pageName in emptyData.pages.keys) {
-      var values = emptyData.pages[pageName]!.getValues();
-      var components = emptyData.pages[pageName]!.getComponents();
+    final reader = ConfigFileReader.instance;
+
+    // Generate new scouting data based on scouting method
+    final newData = reader.generateNewScoutingData(json["name"]);
+
+    for (String pageName in newData.pages.keys) {
+      var values = newData.pages[pageName]!.getValues();
+      var components = newData.pages[pageName]!.getComponents();
+
       for (int i = 0; i < values.length; i++) {
+        // Set the value of data based on json
         values[i].set(json[pageName][components[i].name], setByUser: true);
       }
     }
-    return emptyData;
+
+    return newData;
   }
 
   List<String> notFilled() {
@@ -50,10 +59,13 @@ class ScoutingData {
     if (!canGoToNextPage()) {
       return false;
     }
+
     if (currPage == 0) {
       nextMatch(empty: false);
     }
+
     currPage += 1;
+
     return true;
   }
 
@@ -72,6 +84,7 @@ class ScoutingData {
       ret += i.toJson().toString();
       ret += "\n";
     }
+
     return ret;
   }
 
@@ -79,21 +92,28 @@ class ScoutingData {
     return pages[pageNames[currPage]];
   }
 
+  /*
+   * Resets data for the next match
+   */
   void nextMatch({bool empty = true}) async {
     var reader = ConfigFileReader.instance;
     currPage = 0;
     List<Data> data = getData();
     List<Component> components = getComponents();
+
     Localstore db = Localstore.instance;
     var json = (await db.collection("data").doc("schedule").get());
+
     bool hasSchedule;
     MatchSchedule? schedule;
+
     if (json != null) {
       hasSchedule = true;
       schedule = MatchSchedule.fromJson(json);
     } else {
       hasSchedule = false;
     }
+
     int? matchNumber;
     int? station;
     int? side;
@@ -167,37 +187,45 @@ class ScoutingData {
 
   List<Data> getData() {
     List<Data> data = [];
+
     for (Screen p in pages.values) {
       for (Data d in p.getValues()) {
         data.add(d);
       }
     }
+
     return data;
   }
 
   Map<String, dynamic> toJson() {
     Map<String, dynamic> json = {};
     json["name"] = name;
+
     for (int i = 0; i < pages.values.length; i++) {
       var p = pages.values.toList()[i];
       Map<String, dynamic> screenJson = {};
       List<Data> data = p.getValues();
       List<String> names = p.getComponents().map((e) => e.name).toList();
+
       for (int i = 0; i < data.length; i++) {
         screenJson[names[i]] = data[i].currValue;
       }
+
       json[pages.keys.toList()[i]] = screenJson;
     }
+
     return json;
   }
 
   List<Component> getComponents() {
     List<Component> components = [];
+
     for (Screen p in pages.values) {
       for (Component c in p.getComponents()) {
         components.add(c);
       }
     }
+
     return components;
   }
 
@@ -218,6 +246,7 @@ class ScoutingData {
       }
       componentCount += 1;
     }
+
     return "INVALID COMPONENT NAME";
   }
 
