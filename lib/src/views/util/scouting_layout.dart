@@ -33,8 +33,6 @@ class ScoutingLayout extends StatelessWidget {
 
   Widget _buildSection(double width, Section section, int currColumn,
       double height, BuildContext context) {
-    print('a');
-    //try {
       double scaledWidth = (width > 500 ? 500 : width);
       var reader = ConfigFileReader.instance;
       List<Widget> builtComponents = [];
@@ -175,10 +173,5 @@ class ScoutingLayout extends StatelessWidget {
         ));
       }
       return Column(children: builtSections);
-    //} catch (e) {
-      //error(true);
-      //print(e);
-      //return const Center(child: Text("Error in Config File "));
-    //}
   }
 }

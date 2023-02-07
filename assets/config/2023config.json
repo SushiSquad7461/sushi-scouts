@@ -1,7 +1,7 @@
 {
     "teamNumber": 7461,
-    "version" : 6,
-    "password" : "7461",
+    "version" : 1,
+    "password" : "temaki",
     "strat": {
         "profile": {
             "method-name": "pit",
@@ -114,7 +114,7 @@
                             "darkColor": "#81F4E1",
                             "darkTextColor": "#ffffff",
                             "textColor" : "#000000",
-                            "componentsInRow": [3, 2]
+                            "componentsInRow": [3, 3]
                         },
                         "components":[
                             {
@@ -161,32 +161,18 @@
                                 "timestamp": false,
                                 "isCommonValue" : false,
                                 "setCommonValue" : false
-                            }
-                        ]
-                    },
-                    {
-                        "properties":{
-                            "title":"",
-                            "color":"#63cff9",
-                            "rows": 1,
-                            "textColor":"#000000",
-                            "darkColor": "#FCD6F6",
-                            "darkTextColor": "#ffffff",
-                            "componentsInRow": [1]
-                        },
-                        "components":[
+                            },
                             {
-                                "name" : "Left Community",
+                                "name" : "Left Com.",
                                 "type" : "bool",
                                 "component" : "checkbox",
                                 "required" : true,
-                                "timestamp": true,
+                                "timestamp": false,
                                 "isCommonValue" : false,
                                 "setCommonValue" : false
                             }
                         ]
                     }
-                    
                 ]
             },
             "teleop" : { 
