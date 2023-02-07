@@ -196,213 +196,219 @@ class _LoginState extends State<Login> {
                             //             : 0.085)
                             //         : 0),
                           ),
-                          child: Container(
-                              width: ScreenSize.width *
-                                  (isPhoneScreen
-                                      ? widget.type == LoginType.strategy
-                                          ? 0.7
-                                          : 0.85
-                                      : 1),
-                              height: ScreenSize.height * 0.06,
-                              decoration: BoxDecoration(
-                                color: widget.type == LoginType.supervise &&
-                                        isPhoneScreen
-                                    ? colors.scaffoldBackgroundColor ==
-                                            Colors.black
-                                        ? HexColor("#D0D0D0")
-                                        : HexColor("#4F4F4F")
-                                    : colors.primaryColorDark,
-                                borderRadius: BorderRadius.all(Radius.circular(
-                                    ScreenSize.swu * (isPhoneScreen ? 20 : 0))),
-                              ),
-                              child: TextButton(
-                                onPressed: () {
-                                  if (widget.type == LoginType.supervise &&
-                                      !reader.checkPassword(password ?? "")) {
-                                    showDialog(
-                                        context: context,
-                                        builder: (context) =>
-                                            const IncorrectPassword());
-                                  } else {
-                                    nextPage(context);
-                                  }
-                                },
-                                child: Text(
-                                  "GO",
-                                  style: TextStyle(
-                                      fontSize: 35 * ScreenSize.swu,
-                                      fontFamily: "Sushi",
-                                      color: colors.primaryColor,
-                                      fontWeight: widget.type == LoginType.scout
-                                          ? FontWeight.bold
-                                          : FontWeight.w100),
-                                ),
-                              )),
+                          child: goButton(isPhoneScreen, colors),
                         ),
                     ],
                   ),
                 ),
-                Align(
-                  alignment: const Alignment(0, -0.9),
-                  child: SizedBox(
-                    width: ScreenSize.width * 0.75,
-                    height: ScreenSize.height * 0.07,
-                    child: TextFormField(
-                      controller: _teamNumController,
-                      decoration: InputDecoration(
-                        enabledBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(
-                              width: ScreenSize.height *
-                                  (isPhoneScreen ? 0.004 : 0.006),
-                              color: colors.primaryColorDark),
-                        ),
-                        focusedBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(
-                              width: ScreenSize.height *
-                                  (isPhoneScreen ? 0.004 : 0.006),
-                              color: colors.primaryColorDark),
-                        ),
-                        hintText: "TEAM #",
-                        hintStyle: TextStyle(color: colors.primaryColorDark),
-                        isDense: true,
-                        contentPadding: EdgeInsets.symmetric(
-                            vertical: ScreenSize.height * 0.005),
-                      ),
-                      textAlign: TextAlign.center,
-                      style: GoogleFonts.mohave(
-                          textStyle: TextStyle(
-                        fontSize: ScreenSize.width * 0.07,
-                        color: colors.primaryColorDark,
-                      )),
-                      keyboardType: TextInputType.number,
-                      inputFormatters: <TextInputFormatter>[
-                        FilteringTextInputFormatter.digitsOnly
-                      ],
-                      onChanged: (String? val) => setState(() {
-                        teamNum =
-                            (val != null && val != "" ? int.parse(val) : null);
-                      }),
-                    ),
-                  ),
-                ),
-                Align(
-                  alignment: const Alignment(0, -0.4),
-                  child: SizedBox(
-                    width: ScreenSize.width * 0.75,
-                    height: ScreenSize.height * 0.07,
-                    child: TextFormField(
-                        controller: _eventCodeController,
-                        decoration: InputDecoration(
-                          enabledBorder: UnderlineInputBorder(
-                            borderSide: BorderSide(
-                                width: ScreenSize.height *
-                                    (isPhoneScreen ? 0.004 : 0.006),
-                                color: colors.primaryColorDark),
-                          ),
-                          focusedBorder: UnderlineInputBorder(
-                            borderSide: BorderSide(
-                                width: ScreenSize.height *
-                                    (isPhoneScreen ? 0.004 : 0.006),
-                                color: colors.primaryColorDark),
-                          ),
-                          hintText: "EVENT CODE",
-                          hintStyle: TextStyle(color: colors.primaryColorDark),
-                          isDense: true,
-                          contentPadding: EdgeInsets.symmetric(
-                              vertical: ScreenSize.height * 0.005),
-                        ),
-                        textAlign: TextAlign.center,
-                        style: GoogleFonts.mohave(
-                            textStyle: TextStyle(
-                          fontSize: ScreenSize.width * 0.07,
-                          color: colors.primaryColorDark,
-                        )),
-                        onChanged: (String? val) => setState(() {
-                              eventCode = val;
-                            })),
-                  ),
-                ),
+                teamNumberBox(isPhoneScreen, colors),
+                eventCodeBox(isPhoneScreen, colors),
                 widget.type != LoginType.supervise
-                    ? Align(
-                        alignment: const Alignment(0, 0.1),
-                        child: SizedBox(
-                          width: ScreenSize.width * 0.75,
-                          height: ScreenSize.height * 0.07,
-                          child: TextFormField(
-                              controller: _nameController,
-                              decoration: InputDecoration(
-                                enabledBorder: UnderlineInputBorder(
-                                  borderSide: BorderSide(
-                                      width: ScreenSize.height *
-                                          (isPhoneScreen ? 0.004 : 0.006),
-                                      color: colors.primaryColorDark),
-                                ),
-                                focusedBorder: UnderlineInputBorder(
-                                  borderSide: BorderSide(
-                                      width: ScreenSize.height *
-                                          (isPhoneScreen ? 0.004 : 0.006),
-                                      color: colors.primaryColorDark),
-                                ),
-                                hintText: "NAME",
-                                hintStyle:
-                                    TextStyle(color: colors.primaryColorDark),
-                                isDense: true,
-                                contentPadding: EdgeInsets.symmetric(
-                                    vertical: ScreenSize.height * 0.005),
-                              ),
-                              textAlign: TextAlign.center,
-                              style: GoogleFonts.mohave(
-                                  textStyle: TextStyle(
-                                fontSize: ScreenSize.width * 0.07,
-                                color: colors.primaryColorDark,
-                              )),
-                              onChanged: (String? val) => setState(() {
-                                    name = val;
-                                  })),
-                        ),
-                      )
-                    : Align(
-                        alignment: const Alignment(0, 0.2),
-                        child: SizedBox(
-                          width: ScreenSize.width * 0.75,
-                          height: ScreenSize.height * 0.07,
-                          child: TextFormField(
-                              decoration: InputDecoration(
-                                enabledBorder: UnderlineInputBorder(
-                                  borderSide: BorderSide(
-                                      width: ScreenSize.height *
-                                          (isPhoneScreen ? 0.004 : 0.006),
-                                      color: colors.primaryColorDark),
-                                ),
-                                focusedBorder: UnderlineInputBorder(
-                                  borderSide: BorderSide(
-                                      width: ScreenSize.height *
-                                          (isPhoneScreen ? 0.004 : 0.006),
-                                      color: colors.primaryColorDark),
-                                ),
-                                hintText: "PASSWORD",
-                                hintStyle:
-                                    TextStyle(color: colors.primaryColorDark),
-                                isDense: true,
-                                contentPadding: EdgeInsets.symmetric(
-                                    vertical: ScreenSize.height * 0.005),
-                              ),
-                              textAlign: TextAlign.center,
-                              style: GoogleFonts.mohave(
-                                  textStyle: TextStyle(
-                                fontSize: ScreenSize.width * 0.07,
-                                color: colors.primaryColorDark,
-                              )),
-                              onChanged: (String? val) => setState(() {
-                                    password = val;
-                                  })),
-                        ),
-                      ),
+                    ? nameBox(isPhoneScreen, colors)
+                    : passwordBox(isPhoneScreen, colors),
                 const ReturnButton(),
               ],
             ),
           ),
         ],
+      ),
+    );
+  }
+
+  Container goButton(bool isPhoneScreen, ThemeData colors) {
+    return Container(
+        width: ScreenSize.width *
+            (isPhoneScreen
+                ? widget.type == LoginType.strategy
+                    ? 0.7
+                    : 0.85
+                : 1),
+        height: ScreenSize.height * 0.06,
+        decoration: BoxDecoration(
+          color: widget.type == LoginType.supervise && isPhoneScreen
+              ? colors.scaffoldBackgroundColor == Colors.black
+                  ? HexColor("#D0D0D0")
+                  : HexColor("#4F4F4F")
+              : colors.primaryColorDark,
+          borderRadius: BorderRadius.all(
+              Radius.circular(ScreenSize.swu * (isPhoneScreen ? 20 : 0))),
+        ),
+        child: TextButton(
+          onPressed: () {
+            if (widget.type == LoginType.supervise &&
+                !reader.checkPassword(password ?? "")) {
+              showDialog(
+                  context: context,
+                  builder: (context) => const IncorrectPassword());
+            } else {
+              nextPage(context);
+            }
+          },
+          child: Text(
+            "GO",
+            style: TextStyle(
+                fontSize: 35 * ScreenSize.swu,
+                fontFamily: "Sushi",
+                color: colors.primaryColor,
+                fontWeight: widget.type == LoginType.scout
+                    ? FontWeight.bold
+                    : FontWeight.w100),
+          ),
+        ));
+  }
+
+  Widget teamNumberBox(bool isPhoneScreen, ThemeData colors) {
+    return Align(
+      alignment: const Alignment(0, -0.9),
+      child: SizedBox(
+        width: ScreenSize.width * 0.75,
+        height: ScreenSize.height * 0.07,
+        child: TextFormField(
+          controller: _teamNumController,
+          decoration: InputDecoration(
+            enabledBorder: UnderlineInputBorder(
+              borderSide: BorderSide(
+                  width: ScreenSize.height * (isPhoneScreen ? 0.004 : 0.006),
+                  color: colors.primaryColorDark),
+            ),
+            focusedBorder: UnderlineInputBorder(
+              borderSide: BorderSide(
+                  width: ScreenSize.height * (isPhoneScreen ? 0.004 : 0.006),
+                  color: colors.primaryColorDark),
+            ),
+            hintText: "TEAM #",
+            hintStyle: TextStyle(color: colors.primaryColorDark),
+            isDense: true,
+            contentPadding:
+                EdgeInsets.symmetric(vertical: ScreenSize.height * 0.005),
+          ),
+          textAlign: TextAlign.center,
+          style: GoogleFonts.mohave(
+              textStyle: TextStyle(
+            fontSize: ScreenSize.width * 0.07,
+            color: colors.primaryColorDark,
+          )),
+          keyboardType: TextInputType.number,
+          inputFormatters: <TextInputFormatter>[
+            FilteringTextInputFormatter.digitsOnly
+          ],
+          onChanged: (String? val) => setState(() {
+            teamNum = (val != null && val != "" ? int.parse(val) : null);
+          }),
+        ),
+      ),
+    );
+  }
+
+  Align eventCodeBox(bool isPhoneScreen, ThemeData colors) {
+    return Align(
+      alignment: const Alignment(0, -0.4),
+      child: SizedBox(
+        width: ScreenSize.width * 0.75,
+        height: ScreenSize.height * 0.07,
+        child: TextFormField(
+            controller: _eventCodeController,
+            decoration: InputDecoration(
+              enabledBorder: UnderlineInputBorder(
+                borderSide: BorderSide(
+                    width: ScreenSize.height * (isPhoneScreen ? 0.004 : 0.006),
+                    color: colors.primaryColorDark),
+              ),
+              focusedBorder: UnderlineInputBorder(
+                borderSide: BorderSide(
+                    width: ScreenSize.height * (isPhoneScreen ? 0.004 : 0.006),
+                    color: colors.primaryColorDark),
+              ),
+              hintText: "EVENT CODE",
+              hintStyle: TextStyle(color: colors.primaryColorDark),
+              isDense: true,
+              contentPadding:
+                  EdgeInsets.symmetric(vertical: ScreenSize.height * 0.005),
+            ),
+            textAlign: TextAlign.center,
+            style: GoogleFonts.mohave(
+                textStyle: TextStyle(
+              fontSize: ScreenSize.width * 0.07,
+              color: colors.primaryColorDark,
+            )),
+            onChanged: (String? val) => setState(() {
+                  eventCode = val;
+                })),
+      ),
+    );
+  }
+
+  Align passwordBox(bool isPhoneScreen, ThemeData colors) {
+    return Align(
+      alignment: const Alignment(0, 0.2),
+      child: SizedBox(
+        width: ScreenSize.width * 0.75,
+        height: ScreenSize.height * 0.07,
+        child: TextFormField(
+            decoration: InputDecoration(
+              enabledBorder: UnderlineInputBorder(
+                borderSide: BorderSide(
+                    width: ScreenSize.height * (isPhoneScreen ? 0.004 : 0.006),
+                    color: colors.primaryColorDark),
+              ),
+              focusedBorder: UnderlineInputBorder(
+                borderSide: BorderSide(
+                    width: ScreenSize.height * (isPhoneScreen ? 0.004 : 0.006),
+                    color: colors.primaryColorDark),
+              ),
+              hintText: "PASSWORD",
+              hintStyle: TextStyle(color: colors.primaryColorDark),
+              isDense: true,
+              contentPadding:
+                  EdgeInsets.symmetric(vertical: ScreenSize.height * 0.005),
+            ),
+            textAlign: TextAlign.center,
+            style: GoogleFonts.mohave(
+                textStyle: TextStyle(
+              fontSize: ScreenSize.width * 0.07,
+              color: colors.primaryColorDark,
+            )),
+            onChanged: (String? val) => setState(() {
+                  password = val;
+                })),
+      ),
+    );
+  }
+
+  Align nameBox(bool isPhoneScreen, ThemeData colors) {
+    return Align(
+      alignment: const Alignment(0, 0.1),
+      child: SizedBox(
+        width: ScreenSize.width * 0.75,
+        height: ScreenSize.height * 0.07,
+        child: TextFormField(
+            controller: _nameController,
+            decoration: InputDecoration(
+              enabledBorder: UnderlineInputBorder(
+                borderSide: BorderSide(
+                    width: ScreenSize.height * (isPhoneScreen ? 0.004 : 0.006),
+                    color: colors.primaryColorDark),
+              ),
+              focusedBorder: UnderlineInputBorder(
+                borderSide: BorderSide(
+                    width: ScreenSize.height * (isPhoneScreen ? 0.004 : 0.006),
+                    color: colors.primaryColorDark),
+              ),
+              hintText: "NAME",
+              hintStyle: TextStyle(color: colors.primaryColorDark),
+              isDense: true,
+              contentPadding:
+                  EdgeInsets.symmetric(vertical: ScreenSize.height * 0.005),
+            ),
+            textAlign: TextAlign.center,
+            style: GoogleFonts.mohave(
+                textStyle: TextStyle(
+              fontSize: ScreenSize.width * 0.07,
+              color: colors.primaryColorDark,
+            )),
+            onChanged: (String? val) => setState(() {
+                  name = val;
+                })),
       ),
     );
   }
@@ -417,11 +423,12 @@ class ReturnButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Align(
         // HOME button
-        alignment: const Alignment(0, 0.5),
+        alignment: new Alignment(0, 0.5),
         child: IconButton(
+          padding: EdgeInsets.zero,
           icon: Icon(
             Icons.home,
-            size: ScreenSize.swu * 50,
+            size: ScreenSize.swu * 75,
           ),
           onPressed: () {
             RouteHelper.pushAndRemoveUntilToScreen(0, 0,

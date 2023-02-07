@@ -166,6 +166,7 @@ class _ScoutingFooterState extends State<ScoutingFooter> {
                             onPressed: () {
                               List<String> notFilled =
                                   currentScoutingData!.notFilled();
+                              ;
                               if (notFilled.isEmpty) {
                                 moveToNextPage();
                               } else {
