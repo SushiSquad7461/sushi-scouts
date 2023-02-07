@@ -186,37 +186,109 @@
                             "textColor":"#000000",
                             "darkColor": "#FCD6F6",
                             "darkTextColor": "#ffffff",
-                            "componentsInRow": [2, 1]
+                            "componentsInRow": [3, 3]
                         },
                         "components":[
                             {
-                                "name" : "Low Hub",
+                                "name" : "L3 cube",
                                 "type" : "number",
                                 "component" : "increment",
-                                "required" : true,
-                                "timestamp": true,
-                                "isCommonValue" : false,
-                                "setCommonValue" : false
-                            },
-                            {
-                                "name" : "High Hub",
-                                "type" : "number",
-                                "component" : "increment",
-                                "required" : true,
-                                "timestamp": true,
-                                "isCommonValue" : false,
-                                "setCommonValue" : false
-                            },
-                            {
-                                "name" : "Climb Level",
-                                "type" : "number",
-                                "component" : "select",
-                                "values" : ["c", "No Climb", "Low Climb", "Mid Climb", "High Climb", "Traversal"],
                                 "required" : true,
                                 "timestamp": false,
                                 "isCommonValue" : false,
                                 "setCommonValue" : false
-                            }  
+                            },
+                            {
+                                "name" : "L2 cube",
+                                "type" : "number",
+                                "component" : "increment",
+                                "required" : true,
+                                "timestamp": false,
+                                "isCommonValue" : false,
+                                "setCommonValue" : false
+                            },
+                            {
+                                "name" : "L1 cube",
+                                "type" : "number",
+                                "component" : "increment",
+                                "required" : true,
+                                "timestamp": false,
+                                "isCommonValue" : false,
+                                "setCommonValue" : false
+                            },
+                            {
+                                "name" : "L3 cone",
+                                "type" : "number",
+                                "component" : "increment",
+                                "required" : true,
+                                "timestamp": false,
+                                "isCommonValue" : false,
+                                "setCommonValue" : false
+                            },
+                            {
+                                "name" : "L2 cone",
+                                "type" : "number",
+                                "component" : "increment",
+                                "required" : true,
+                                "timestamp": false,
+                                "isCommonValue" : false,
+                                "setCommonValue" : false
+                            },
+                            {
+                                "name" : "L1 cone",
+                                "type" : "number",
+                                "component" : "increment",
+                                "required" : true,
+                                "timestamp": false,
+                                "isCommonValue" : false,
+                                "setCommonValue" : false
+                            }
+                        ]
+                    }
+                ]
+            },
+            "charge" : { 
+                "footer": "charge",
+                "sections": [
+                    {
+                        "properties":{
+                            "title":"",
+                            "color": "#81f4e1",
+                            "rows": 2,
+                            "textColor":"#000000",
+                            "darkColor": "#FCD6F6",
+                            "darkTextColor": "#ffffff",
+                            "componentsInRow": [2, 1]
+                        },
+                        "components":[
+                            {
+                                "name" : "Many Robot",
+                                "type" : "bool",
+                                "component" : "checkbox",
+                                "required" : true,
+                                "timestamp": false,
+                                "isCommonValue" : false,
+                                "setCommonValue" : false
+                            },
+                            {
+                                "name" : "Balance Time",
+                                "type" : "number",
+                                "component" : "increment",
+                                "required" : true,
+                                "timestamp": false,
+                                "isCommonValue" : false,
+                                "setCommonValue" : false
+                            },
+                            {
+                                "name": "charge station",
+                                "type": "number",
+                                "component": "select",
+                                "values" : ["c", "On Station", "Balanced", "No Attempt", "Failed"],
+                                "required" : true,
+                                "timestamp": false,
+                                "isCommonValue" : false,
+                                "setCommonValue" : false
+                            }
                         ]
                     }
                 ]
@@ -245,7 +317,7 @@
                                 "setCommonValue" : false
                             },
                             {
-                                "name" : "failed climb",
+                                "name" : "defense",
                                 "type" : "bool",
                                 "component" : "checkbox",
                                 "required" : true,
@@ -416,6 +488,29 @@
                                 "setCommonValue" : false
                             }
                         ]
+                    },
+                    {
+                        "properties":{
+                            "title":"Flow",
+                            "color": "#56CBF9",
+                            "rows": 1,
+                            "textColor": "#000000",
+                            "darkColor": "#81F4E1",
+                            "darkTextColor": "#ffffff",
+                            "componentsInRow": [1]
+                        },
+                        "components":[
+                            {
+                                "name" : "flow",
+                                "type" : "string",
+                                "component" : "ranking",
+                                "values" : ["robot #1", "robot #2", "robot #3"],
+                                "required" : true,
+                                "timestamp": false,
+                                "isCommonValue" : true,
+                                "setCommonValue" : false
+                            }
+                        ]
                     }
                 ]
             }
@@ -497,7 +592,7 @@
                                 "name" : "drivetrain",
                                 "type" : "number",
                                 "component" : "select",
-                                "values" : ["r", "Swerve", "Tank"],
+                                "values" : ["r", "Swerve", "Tank", "Mecanum"],
                                 "required" : true,
                                 "timestamp": false,
                                 "isCommonValue" : false,
@@ -530,7 +625,7 @@
                     },
                     {
                         "properties":{
-                            "title":"Teleop",
+                            "title":"Balance",
                             "color": "#56cbf9",
                             "rows": 1,
                             "textColor": "#000000",
@@ -540,10 +635,10 @@
                         },
                         "components":[
                             {
-                                "name" : "teleop",
+                                "name" : "balance",
                                 "type" : "number",
                                 "component" : "select",
-                                "values" : ["r", "High Hub", "Low Hub"],
+                                "values" : ["r", "Manual", "Auto", "None"],
                                 "required" : true,
                                 "timestamp": false,
                                 "isCommonValue" : false,
@@ -553,7 +648,7 @@
                     },
                     {
                         "properties":{
-                            "title":"Climb",
+                            "title":"Placement",
                             "color": "#ff76a2",
                             "rows": 1,
                             "textColor": "#000000",
@@ -563,10 +658,10 @@
                         },
                         "components":[
                             {
-                                "name" : "climb",
+                                "name" : "placement",
                                 "type" : "number",
                                 "component" : "multiselect",
-                                "values" : ["#o", "5", "l", "2", "2", "1", "c", "Traversal", "Low", "High", "No Climb", "Mid"],
+                                "values" : ["#o", "5", "l", "2", "2", "1", "c", "L1 cubes", "L2 cubes", "L3 cubes", "L1 cone", "L2 cone"],
                                 "required" : true,
                                 "timestamp": false,
                                 "isCommonValue" : false,
