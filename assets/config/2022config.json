@@ -1,0 +1,636 @@
+{
+    "teamNumber": 7461,
+    "version" : 5,
+    "password" : "7461",
+    "strat": {
+        "profile": {
+            "method-name": "pit",
+            "identifier": "team #",
+            "version": "day #"
+        },
+        "ranking": {
+            "method-name": "ordinal"
+        }
+    },
+    "supervise": {
+        "cardinal": {
+            "first" : {
+                "page": "pregame",
+                "name": "match #"
+            },
+            "second" : {
+                "page": "pregame",
+                "name": "station"
+            }
+        },
+        "ordinal": {
+            "first" : {
+                "page": "pregame",
+                "name": "match #"
+            },
+            "second" : {
+                "page": "pregame",
+                "name": "side"
+            }
+        },
+        "pit": {
+            "first" : {
+                "page": "page 1",
+                "name": "team #"
+            },
+            "second" : {
+                "page": "page 1",
+                "name": "day #"
+            }
+        }
+    },
+    "scouting": {
+        "cardinal":{
+            "pregame" : {
+                "footer": "info",
+                "sections" : [
+                    {
+                        "properties":{
+                            "title":"",
+                            "color": "#ff76a2",
+                            "rows": 2,
+                            "textColor": "#000000",
+                            "darkColor": "#81F4E1",
+                            "darkTextColor": "#ffffff",
+                            "componentsInRow": [3, 1]
+                        },
+                        "components":[
+                            {
+                                "name" : "match #",
+                                "type" : "number",
+                                "component" : "number input",
+                                "required" : true,
+                                "timestamp": false,
+                                "isCommonValue" : false,
+                                "setCommonValue" : false
+                            },
+                            {
+                                "name" : "station",
+                                "type" : "number",
+                                "component" : "dropdown",
+                                "values" : ["R1", "R2", "R3", "B1", "B2", "B3"],
+                                "required" : true,
+                                "timestamp": false,
+                                "isCommonValue" : false,
+                                "setCommonValue" : true
+                            },
+                            {
+                                "name" : "team #",
+                                "type" : "number",
+                                "component" : "number input",
+                                "required" : true,
+                                "timestamp": false,
+                                "isCommonValue" : false,
+                                "setCommonValue" : false,
+                                "autofillType" : "singleTeamNumber"
+                            },
+                            {
+                                "name": "match type",
+                                "type": "number",
+                                "component": "select",
+                                "values" : ["c", "Quals", "Elims", "Prac"],
+                                "required" : true,
+                                "timestamp": false,
+                                "isCommonValue" : false,
+                                "setCommonValue" : false
+                            }
+                        ]
+                    }
+                ]
+            },
+            "auto" : {
+                "footer": "auto",
+                "sections": [
+                    {
+                        "properties":{
+                            "title":"",
+                            "color" : "#FF729F",
+                            "rows" : 2,
+                            "darkColor": "#81F4E1",
+                            "darkTextColor": "#ffffff",
+                            "textColor" : "#000000",
+                            "componentsInRow": [1, 1]
+                        },
+                        "components":[
+                            {
+                                "name" : "No Show",
+                                "type" : "bool",
+                                "component" : "checkbox",
+                                "required" : true,
+                                "timestamp": false,
+                                "isCommonValue" : false,
+                                "setCommonValue" : false
+                            },
+                            {
+                                "name" : "Tarmac",
+                                "type" : "bool",
+                                "component" : "checkbox",
+                                "required" : true,
+                                "timestamp": false,
+                                "isCommonValue" : false,
+                                "setCommonValue" : false
+                            }
+                        ]
+                    },
+                    {
+                        "properties":{
+                            "title":"",
+                            "color":"#63cff9",
+                            "rows":2,
+                            "textColor":"#000000",
+                            "darkColor": "#FCD6F6",
+                            "darkTextColor": "#ffffff",
+                            "componentsInRow": [2, 1]
+                        },
+                        "components":[
+                            {
+                                "name" : "Low Hub",
+                                "type" : "number",
+                                "component" : "increment",
+                                "required" : true,
+                                "timestamp": true,
+                                "isCommonValue" : false,
+                                "setCommonValue" : false
+                            },
+                            {
+                                "name" : "High Hub",
+                                "type" : "number",
+                                "component" : "increment",
+                                "required" : true,
+                                "timestamp": true,
+                                "isCommonValue" : false,
+                                "setCommonValue" : false
+                            },
+                            {
+                                "name" : "HP",
+                                "type" : "number",
+                                "component" : "increment",
+                                "required" : true,
+                                "timestamp": false,
+                                "isCommonValue" : false,
+                                "setCommonValue" : false
+                            }
+                        ]
+                    }
+                ]
+            },
+            "teleop" : { 
+                "footer": "teleop",
+                "sections": [
+                    {
+                        "properties":{
+                            "title":"",
+                            "color": "#81f4e1",
+                            "rows": 2,
+                            "textColor":"#000000",
+                            "darkColor": "#FCD6F6",
+                            "darkTextColor": "#ffffff",
+                            "componentsInRow": [2, 1]
+                        },
+                        "components":[
+                            {
+                                "name" : "Low Hub",
+                                "type" : "number",
+                                "component" : "increment",
+                                "required" : true,
+                                "timestamp": true,
+                                "isCommonValue" : false,
+                                "setCommonValue" : false
+                            },
+                            {
+                                "name" : "High Hub",
+                                "type" : "number",
+                                "component" : "increment",
+                                "required" : true,
+                                "timestamp": true,
+                                "isCommonValue" : false,
+                                "setCommonValue" : false
+                            },
+                            {
+                                "name" : "Climb Level",
+                                "type" : "number",
+                                "component" : "select",
+                                "values" : ["c", "No Climb", "Low Climb", "Mid Climb", "High Climb", "Traversal"],
+                                "required" : true,
+                                "timestamp": false,
+                                "isCommonValue" : false,
+                                "setCommonValue" : false
+                            }  
+                        ]
+                    }
+                ]
+            },
+            "notes" : { 
+                "footer": "notes",
+                "sections" : [
+                    {
+                        "properties":{
+                            "title":"",
+                            "color": "#ff76a2",
+                            "rows": 2,
+                            "textColor": "#000000",
+                            "darkColor": "#ff",
+                            "darkTextColor": "#ffffff",
+                            "componentsInRow": [1,1]
+                        },
+                        "components":[
+                            {
+                                "name" : "disabled",
+                                "type" : "bool",
+                                "component" : "checkbox",
+                                "required" : true,
+                                "timestamp": false,
+                                "isCommonValue" : false,
+                                "setCommonValue" : false
+                            },
+                            {
+                                "name" : "failed climb",
+                                "type" : "bool",
+                                "component" : "checkbox",
+                                "required" : true,
+                                "timestamp": false,
+                                "isCommonValue" : false,
+                                "setCommonValue" : false
+                            }
+                        ]
+                    },
+                    {
+                        "properties":{
+                            "title":"",
+                            "color": "#ff76a2",
+                            "rows": 1,
+                            "textColor": "#000000",
+                            "darkColor": "#ff",
+                            "darkTextColor": "#ffffff",
+                            "componentsInRow": [1]
+                        }, 
+                        "components":[
+                            {
+                                "name" : "notes",
+                                "type" : "string",
+                                "component" : "text input",
+                                "required" : true,
+                                "timestamp": false,
+                                "isCommonValue" : false,
+                                "setCommonValue" : false
+                            }
+                        ]
+                    }
+                ]
+            }
+        },
+        "ordinal":{
+            "pregame" : {
+                "footer": "info",
+                "sections" : [
+                    {
+                        "properties":{
+                            "title":"",
+                            "color": "#ff76a2",
+                            "rows": 2,
+                            "textColor": "#000000",
+                            "darkColor": "#81F4E1",
+                            "darkTextColor": "#ffffff",
+                            "componentsInRow": [2, 1]
+                        },
+                        "components":[
+                            {
+                                "name" : "match #",
+                                "type" : "number",
+                                "component" : "number input",
+                                "required" : true,
+                                "timestamp": false,
+                                "isCommonValue" : false,
+                                "setCommonValue" : false
+                            },
+                            {
+                                "name" : "robot #1",
+                                "type" : "number",
+                                "component" : "number input",
+                                "required" : true,
+                                "timestamp": false,
+                                "isCommonValue" : false,
+                                "setCommonValue" : true
+                            },
+                            {
+                                "name": "match type",
+                                "type": "number",
+                                "component": "select",
+                                "values" : ["c", "Quals", "Elims", "Prac"],
+                                "required" : true,
+                                "timestamp": false,
+                                "isCommonValue" : false,
+                                "setCommonValue" : false
+                            }
+                        ]
+                    },
+                    {
+                        "properties":{
+                            "title":"",
+                            "color": "#63cff9",
+                            "rows": 2,
+                            "textColor": "#000000",
+                            "darkColor": "#FF729F",
+                            "darkTextColor": "#ffffff",
+                            "componentsInRow": [2, 1]
+                        },
+                        "components":[
+                            {
+                                "name" : "robot #2",
+                                "type" : "number",
+                                "component" : "number input",
+                                "required" : true,
+                                "timestamp": false,
+                                "isCommonValue" : false,
+                                "setCommonValue" : true
+                            },
+                            {
+                                "name" : "robot #3",
+                                "type" : "number",
+                                "component" : "number input",
+                                "required" : true,
+                                "timestamp": false,
+                                "isCommonValue" : false,
+                                "setCommonValue" : true
+                            },
+                            {
+                                "name": "side",
+                                "type": "number",
+                                "component": "select",
+                                "values" : ["c", "Red", "Blue"],
+                                "required" : true,
+                                "timestamp": false,
+                                "isCommonValue" : false,
+                                "setCommonValue" : false
+                            }
+                        ]
+                    }
+                ]
+            },
+            "ordinal" : {
+                "footer": "ordinal",
+                "sections" : [
+                    {
+                        "properties":{
+                            "title":"Defense",
+                            "color": "#ff76a2",
+                            "rows": 1,
+                            "textColor": "#000000",
+                            "darkColor": "#FF729F",
+                            "darkTextColor": "#ffffff",
+                            "componentsInRow": [1]
+                        },
+                        "components":[
+                            {
+                                "name" : "defence",
+                                "type" : "string",
+                                "component" : "ranking",
+                                "values" : ["robot #1", "robot #2", "robot #3"],
+                                "required" : true,
+                                "timestamp": false,
+                                "isCommonValue" : true,
+                                "setCommonValue" : false
+                            }
+                        ]
+                    },
+                    {
+                        "properties":{
+                            "title":"Driving",
+                            "color": "#81f4e1",
+                            "rows": 1,
+                            "textColor": "#000000",
+                            "darkColor": "#56CBF9",
+                            "darkTextColor": "#ffffff",
+                            "componentsInRow": [1]
+                        },
+                        "components":[
+                            {
+                                "name" : "driving",
+                                "type" : "string",
+                                "component" : "ranking",
+                                "values" : ["robot #1", "robot #2", "robot #3"],
+                                "required" : true,
+                                "timestamp": false,
+                                "isCommonValue" : true,
+                                "setCommonValue" : false
+                            }
+                        ]
+                    }
+                ]
+            }
+        },
+        "pit":{
+            "page 1" : {
+                "footer": " ",
+                "sections" : [
+                    {
+                        "properties":{
+                            "title":"",
+                            "color": "#ff76a2",
+                            "rows": 2,
+                            "textColor": "#000000",
+                            "darkColor": "#ff",
+                            "darkTextColor": "#ffffff",
+                            "componentsInRow": [1,1]
+                        },
+                        "components":[
+                            {
+                                "name" : "team #",
+                                "type" : "number",
+                                "component" : "number input",
+                                "required" : true,
+                                "timestamp": false,
+                                "isCommonValue" : false,
+                                "setCommonValue" : false
+                            },
+                            {
+                                "name" : "day #",
+                                "type" : "number",
+                                "component" : "number input",
+                                "required" : true,
+                                "timestamp": false,
+                                "isCommonValue" : false,
+                                "setCommonValue" : false
+                            }
+                        ]
+                    },
+                    {
+                        "properties":{
+                            "title":"",
+                            "color": "#ff76a2",
+                            "rows": 1,
+                            "textColor": "#000000",
+                            "darkColor": "#ff",
+                            "darkTextColor": "#ffffff",
+                            "componentsInRow": [1]
+                        }, 
+                        "components":[
+                            {
+                                "name" : "Notes",
+                                "type" : "string",
+                                "component" : "text input",
+                                "required" : true,
+                                "timestamp": false,
+                                "isCommonValue" : false,
+                                "setCommonValue" : false
+                            }
+                        ]
+                    }
+                ]
+            },
+            "page 2" : {
+                "footer": " ",
+                "sections" : [
+                    {
+                        "properties":{
+                            "title":"Drivetrain",
+                            "color": "#fcd6f6",
+                            "rows": 1,
+                            "textColor": "#000000",
+                            "darkColor": "#FCD6F6",
+                            "darkTextColor": "#ffffff",
+                            "componentsInRow": [1]
+                        },
+                        "components":[
+                            {
+                                "name" : "drivetrain",
+                                "type" : "number",
+                                "component" : "select",
+                                "values" : ["r", "Swerve", "Tank"],
+                                "required" : true,
+                                "timestamp": false,
+                                "isCommonValue" : false,
+                                "setCommonValue" : false
+                            }
+                        ]
+                    },
+                    {
+                        "properties":{
+                            "title":"Auto",
+                            "color": "#81f4e1",
+                            "rows": 1,
+                            "textColor": "#000000",
+                            "darkColor": "#81F4E1",
+                            "darkTextColor": "#ffffff",
+                            "componentsInRow": [1]
+                        },
+                        "components":[
+                            {
+                                "name" : "auto",
+                                "type" : "number",
+                                "component" : "multiselect",
+                                "values" : ["#o", "6", "l", "2", "2", "2", "c", "1 ball", "4 balls", "2 balls", "5 balls", "3 balls", "6 balls"],
+                                "required" : true,
+                                "timestamp": false,
+                                "isCommonValue" : false,
+                                "setCommonValue" : false
+                            }
+                        ]
+                    },
+                    {
+                        "properties":{
+                            "title":"Teleop",
+                            "color": "#56cbf9",
+                            "rows": 1,
+                            "textColor": "#000000",
+                            "darkColor": "#56CBF9",
+                            "darkTextColor": "#ffffff",
+                            "componentsInRow": [1]
+                        },
+                        "components":[
+                            {
+                                "name" : "teleop",
+                                "type" : "number",
+                                "component" : "select",
+                                "values" : ["r", "High Hub", "Low Hub"],
+                                "required" : true,
+                                "timestamp": false,
+                                "isCommonValue" : false,
+                                "setCommonValue" : false
+                            }
+                        ]
+                    },
+                    {
+                        "properties":{
+                            "title":"Climb",
+                            "color": "#ff76a2",
+                            "rows": 1,
+                            "textColor": "#000000",
+                            "darkColor": "#FF729F",
+                            "darkTextColor": "#ffffff",
+                            "componentsInRow": [1]
+                        },
+                        "components":[
+                            {
+                                "name" : "climb",
+                                "type" : "number",
+                                "component" : "multiselect",
+                                "values" : ["#o", "5", "l", "2", "2", "1", "c", "Traversal", "Low", "High", "No Climb", "Mid"],
+                                "required" : true,
+                                "timestamp": false,
+                                "isCommonValue" : false,
+                                "setCommonValue" : false
+                            }
+                        ]
+                    }
+                ]
+            },
+            "page 3" : {
+                "footer": " ",
+                "sections" : [
+                    {
+                        "properties":{
+                            "title":"Preference",
+                            "color": "#ff76a2",
+                            "rows": 1,
+                            "textColor": "#000000",
+                            "darkColor": "#81F4E1",
+                            "darkTextColor": "#ffffff",
+                            "componentsInRow": [1]
+                        },
+                        "components":[
+                            {
+                                "name" : "preference",
+                                "type" : "number",
+                                "component" : "select",
+                                "values" : ["r", "Offense", "Defense"],
+                                "required" : true,
+                                "timestamp": false,
+                                "isCommonValue" : false,
+                                "setCommonValue" : false
+                            }
+                        ]
+                    },
+                    {
+                        "properties":{
+                            "title":"Problem",
+                            "color": "#56cbf9",
+                            "rows": 1,
+                            "textColor": "#000000",
+                            "darkColor": "#FCD6F6",
+                            "darkTextColor": "#ffffff",
+                            "componentsInRow": [1]
+                        }, 
+                        "components":[
+                            {
+                                "name" : "problems",
+                                "type" : "number",
+                                "component" : "multiselect",
+                                "values" : ["#o", "7", "l", "3", "2", "2", "c", "Climb", "Prog", "Shooter", "Intake", "DT", "Hopper", "Electric"],
+                                "required" : true,
+                                "timestamp": false,
+                                "isCommonValue" : false,
+                                "setCommonValue" : false
+                            }
+                        ]
+                    }
+                ]
+            }
+        }
+    }
+}
