@@ -423,7 +423,7 @@ class ReturnButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Align(
         // HOME button
-        alignment: new Alignment(0, 0.5),
+        alignment: const Alignment(0, 0.5),
         child: IconButton(
           padding: EdgeInsets.zero,
           icon: Icon(
