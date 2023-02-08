@@ -8,7 +8,7 @@ import "package:google_fonts/google_fonts.dart";
 // Project imports:
 import "../../../logic/blocs/scouting_method_bloc/scouting_method_cubit.dart";
 import "../../../logic/data/config_file_reader.dart";
-import "../../../logic/device_type.dart";
+import '../../../logic/types/device_type.dart';
 import "../../../logic/helpers/color/hex_color.dart";
 import "../../../logic/helpers/routing_helper.dart";
 import "../../../logic/helpers/size/screen_size.dart";

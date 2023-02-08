@@ -6,11 +6,11 @@ import "package:flutter_device_type/flutter_device_type.dart";
 import "package:flutter_svg/svg.dart";
 
 // Project imports:
-import '../../logic/device_type.dart';
+import '../../logic/types/device_type.dart';
 import '../../logic/helpers/color/hex_color.dart';
 import "../../logic/helpers/routing_helper.dart";
 import "../../logic/helpers/size/screen_size.dart";
-import "../../logic/login_type.dart";
+import '../../logic/types/login_type.dart';
 import "login.dart";
 
 class AppChooser extends StatelessWidget {

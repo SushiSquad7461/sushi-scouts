@@ -15,7 +15,7 @@ import "../../../logic/blocs/login_bloc/login_cubit.dart";
 import "../../../logic/blocs/scouting_method_bloc/scouting_method_cubit.dart";
 import "../../../logic/data/compressor.dart";
 import "../../../logic/data/config_file_reader.dart";
-import "../../../logic/device_type.dart";
+import '../../../logic/types/device_type.dart';
 import "../../../logic/helpers/routing_helper.dart";
 import "../../../logic/helpers/size/screen_size.dart";
 import "../../../logic/models/compressed_data_model.dart";
