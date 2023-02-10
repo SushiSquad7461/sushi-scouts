@@ -53,6 +53,8 @@ class _EditState extends State<Edit> {
     if (newData != null) {
       setState(() {
         for (var name in newData.keys) {
+          print(newData[name].runtimeType);
+          print(newData[name]["data"]);
           data.addAll(
               {name.split("/")[2]: SuperviseData.fromJson(newData[name])});
         }
@@ -100,7 +102,8 @@ class _EditState extends State<Edit> {
 
     List<String> keys = data.keys.toList();
     keys.sort(((a, b) {
-      return int.parse(a.split(" - ")[1]).compareTo(int.parse(b.split(" - ")[1]));
+      return int.parse(a.split(" - ")[1])
+          .compareTo(int.parse(b.split(" - ")[1]));
     }));
 
     for (var i in keys) {

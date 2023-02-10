@@ -58,6 +58,7 @@ class _UploadState extends State<Upload> {
   Future<void> upload() async {
     var db = Localstore.instance;
     for (ScoutingData i in toAdd) {
+      print(i.toJson());
       await db
           .collection(superviseDatabaseName)
           .doc(
