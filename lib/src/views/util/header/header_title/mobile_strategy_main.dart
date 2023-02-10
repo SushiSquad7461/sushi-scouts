@@ -39,10 +39,13 @@ class _HeaderTitleMobileStrategyMainState
   }
 
   Future<void> updateTeamNum() async {
-    String newRank = (await db.collection("frcapi").doc("rank").get())!["rank"];
-    setState(() {
-      rank = newRank;
-    });
+    var dataBaseRank = await db.collection("frcapi").doc("rank").get();
+    if (dataBaseRank != null) {
+      String newRank = dataBaseRank["rank"];
+      setState(() {
+        rank = newRank;
+      });
+    }
   }
 
   @override
@@ -90,7 +93,9 @@ class _HeaderTitleMobileStrategyMainState
                   child: Text(
                     rank,
                     style: TextStyle(
-                      color: colors.scaffoldBackgroundColor == Colors.black ? HexColor("#56CBF9") : HexColor("#81F4E1"),
+                      color: colors.scaffoldBackgroundColor == Colors.black
+                          ? HexColor("#56CBF9")
+                          : HexColor("#81F4E1"),
                       fontFamily: "Sushi",
                       fontSize: ScreenSize.height * 0.035,
                     ),

@@ -10,7 +10,6 @@ import "package:flutter/services.dart";
 import "package:cloud_firestore/cloud_firestore.dart";
 import "package:flutter_bloc/flutter_bloc.dart";
 import "package:get/get.dart";
-import "package:google_fonts/google_fonts.dart";
 import "package:localstore/localstore.dart";
 
 // Project imports:
@@ -328,13 +327,13 @@ class _StratSettingsState extends State<StratSettings> {
                                                                 0.005),
                                               ),
                                               textAlign: TextAlign.center,
-                                              style: GoogleFonts.mohave(
-                                                  textStyle: TextStyle(
+                                              style: TextStyle(
+                                                fontFamily: "Mohave",
                                                 fontSize:
                                                     ScreenSize.width * 0.05,
                                                 color: colors.primaryColorDark,
                                                 fontWeight: FontWeight.w500,
-                                              )),
+                                              ),
                                               keyboardType:
                                                   TextInputType.number,
                                               inputFormatters: <

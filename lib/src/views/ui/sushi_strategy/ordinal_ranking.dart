@@ -3,7 +3,6 @@ import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_svg/parser.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:localstore/localstore.dart';
 
 import '../../../logic/constants.dart';
@@ -105,7 +104,8 @@ class _OrdinalRankingState extends State<OrdinalRanking> {
                       Center(
                         child: Text(
                           rank.toString(),
-                          style: GoogleFonts.mohave(
+                          style: TextStyle(
+                              fontFamily: "Mohave",
                               fontSize: ScreenSize.height * 0.03,
                               color: colors.primaryColorDark,
                               fontWeight: FontWeight.bold),
@@ -125,7 +125,8 @@ class _OrdinalRankingState extends State<OrdinalRanking> {
                       children: [
                         Text(
                           robotName,
-                          style: GoogleFonts.mohave(
+                          style: TextStyle(
+                            fontFamily: "Mohave",
                             fontSize: ScreenSize.height * 0.06,
                             height: 1,
                             color: colors.primaryColor,
@@ -136,7 +137,8 @@ class _OrdinalRankingState extends State<OrdinalRanking> {
                           robotNames[robotName] != null
                               ? robotNames[robotName]!.toUpperCase()
                               : "SUSSY SQUAD",
-                          style: GoogleFonts.mohave(
+                          style: TextStyle(
+                            fontFamily: "Mohave",
                             fontSize: ScreenSize.height * 0.02,
                             height: 1,
                             color: colors.primaryColor,
@@ -195,15 +197,14 @@ class _OrdinalRankingState extends State<OrdinalRanking> {
                               }),
                               child: Text(
                                 i.toUpperCase(),
-                                style: GoogleFonts.mohave(
-                                    textStyle: TextStyle(
+                                style: TextStyle(
+                                  fontFamily: "Mohave",
                                         fontSize: ScreenSize.height * 0.023,
                                         fontWeight: FontWeight.bold,
                                         color: selectedRanking == i
                                             ? colors.primaryColorDark
                                             : HexColor("#4F4F4F"))),
                               ),
-                            )
                         ],
                       ),
                     ),
