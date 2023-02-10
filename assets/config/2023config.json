@@ -262,7 +262,7 @@
                         },
                         "components":[
                             {
-                                "name" : "Many Robot",
+                                "name" : "Multiple Robots\n On Station",
                                 "type" : "bool",
                                 "component" : "checkbox",
                                 "required" : true,
@@ -592,7 +592,7 @@
                                 "name" : "drivetrain",
                                 "type" : "number",
                                 "component" : "select",
-                                "values" : ["r", "Swerve", "Tank", "Mecanum"],
+                                "values" : ["r", "Swerve", "Tank", "Mec."],
                                 "required" : true,
                                 "timestamp": false,
                                 "isCommonValue" : false,
@@ -615,7 +615,7 @@
                                 "name" : "auto",
                                 "type" : "number",
                                 "component" : "multiselect",
-                                "values" : ["#o", "6", "l", "2", "2", "2", "c", "1 ball", "4 balls", "2 balls", "5 balls", "3 balls", "6 balls"],
+                                "values" : ["#o", "6", "l", "2", "2", "2", "c", "1 piece", "2 piece", "3 piece", "balance", "1b piece", "2b piece"],
                                 "required" : true,
                                 "timestamp": false,
                                 "isCommonValue" : false,
@@ -648,7 +648,7 @@
                     },
                     {
                         "properties":{
-                            "title":"Placement",
+                            "title":"Placement Cube",
                             "color": "#ff76a2",
                             "rows": 1,
                             "textColor": "#000000",
@@ -661,7 +661,7 @@
                                 "name" : "placement",
                                 "type" : "number",
                                 "component" : "multiselect",
-                                "values" : ["#o", "5", "l", "2", "2", "1", "c", "L1 cubes", "L2 cubes", "L3 cubes", "L1 cone", "L2 cone"],
+                                "values" : ["#o", "3", "l", "1", "1", "1", "c", "L1", "L2", "L3"],
                                 "required" : true,
                                 "timestamp": false,
                                 "isCommonValue" : false,
@@ -674,6 +674,29 @@
             "page 3" : {
                 "footer": " ",
                 "sections" : [
+                    {
+                        "properties":{
+                            "title":"Placement Cone",
+                            "color": "#ff76a2",
+                            "rows": 1,
+                            "textColor": "#000000",
+                            "darkColor": "#FF729F",
+                            "darkTextColor": "#ffffff",
+                            "componentsInRow": [1]
+                        },
+                        "components":[
+                            {
+                                "name" : "placement",
+                                "type" : "number",
+                                "component" : "multiselect",
+                                "values" : ["#o", "3", "l", "1", "1", "1", "c", "L1", "L2", "L3"],
+                                "required" : true,
+                                "timestamp": false,
+                                "isCommonValue" : false,
+                                "setCommonValue" : false
+                            }
+                        ]
+                    },
                     {
                         "properties":{
                             "title":"Preference",
