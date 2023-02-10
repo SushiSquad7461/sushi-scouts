@@ -7,7 +7,6 @@ import "package:flutter/material.dart";
 
 // Package imports:
 import "package:flutter_svg/svg.dart";
-import "package:google_fonts/google_fonts.dart";
 import "package:localstore/localstore.dart";
 import "package:qr_code_scanner/qr_code_scanner.dart";
 
@@ -86,12 +85,12 @@ class _UploadState extends State<Upload> {
   Widget build(BuildContext context) {
     var colors = Theme.of(context);
 
-    final fontStyle = GoogleFonts.mohave(
-        textStyle: TextStyle(
+    final fontStyle = TextStyle(
+      fontFamily: "Mohave",
       fontSize: 50 * ScreenSize.swu,
       fontWeight: FontWeight.w700,
       color: colors.primaryColorDark,
-    ));
+    );
 
     var phone = isPhone(context);
 

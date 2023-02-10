@@ -6,7 +6,6 @@ import 'package:flutter_svg/parser.dart';
 import 'package:flutter_svg/svg.dart';
 
 // Package imports:
-import "package:google_fonts/google_fonts.dart";
 import "package:localstore/localstore.dart";
 
 // Project imports:
@@ -71,11 +70,11 @@ class _RobotProfilesState extends State<RobotProfiles> {
 
   List<Widget> getRobotNumList() {
     var colors = Theme.of(context);
-    final textStyle = GoogleFonts.mohave(
-        textStyle: TextStyle(
+    final textStyle = TextStyle(
+      fontFamily: "Mohave",
       fontSize: ScreenSize.height * 0.05,
       color: colors.primaryColorDark,
-    ));
+    );
 
     List<Widget> ret = [];
 
@@ -91,10 +90,11 @@ class _RobotProfilesState extends State<RobotProfiles> {
           padding: EdgeInsets.only(bottom: ScreenSize.height * 0.01),
           child: GestureDetector(
             onTap: () async {
-              List<String> newPicUrls = (await db
+              var databaseList = (await db
                   .collection("frcapi")
                   .doc("$identifier images")
-                  .get())!["imageList"];
+                  .get());
+              List<String> newPicUrls = databaseList == null ? [] : databaseList["imageList"];
 
               setState(() {
                 selected = selected != null ? null : i;
@@ -204,18 +204,21 @@ class _RobotProfilesState extends State<RobotProfiles> {
     var colors = Theme.of(context);
 
     for (final i in picUrls) {
-      ret.add(Image.network("$i.jpeg", width: ScreenSize.width * 0.8,));
+      ret.add(Image.network(
+        "$i.jpeg",
+        width: ScreenSize.width * 0.8,
+      ));
     }
 
     for (final i in data.getComponents()) {
       if (i.component == "text input") {
         ret.add(Text(
           data.getCertainDataByName(i.name),
-          style: GoogleFonts.mohave(
-              textStyle: TextStyle(
+          style:  TextStyle(
+            fontFamily: "Mohave",
             fontSize: ScreenSize.height * 0.02,
             color: colors.primaryColorDark,
-          )),
+          ),
         ));
       }
     }
@@ -302,13 +305,13 @@ class _RobotProfilesState extends State<RobotProfiles> {
                                 GestureDetector(
                                   onTap: () => setState(() {
                                     picIndex -= 1;
-                                  }), 
+                                  }),
                                   child: Icon(
-                                      const IconData(0xf57b,
-                                          fontFamily: "MaterialIcons",
-                                          matchTextDirection: true),
-                                      size: ScreenSize.width * 0.1,
-                                      color: colors.primaryColor,
+                                    const IconData(0xf57b,
+                                        fontFamily: "MaterialIcons",
+                                        matchTextDirection: true),
+                                    size: ScreenSize.width * 0.1,
+                                    color: colors.primaryColor,
                                   ),
                                 ),
                                 Container(
@@ -328,11 +331,11 @@ class _RobotProfilesState extends State<RobotProfiles> {
                                     picIndex += 1;
                                   }),
                                   child: Icon(
-                                      const IconData(0xf57d,
-                                          fontFamily: "MaterialIcons",
-                                          matchTextDirection: true),
-                                      size: ScreenSize.width * 0.1,
-                                      color: colors.primaryColor,
+                                    const IconData(0xf57d,
+                                        fontFamily: "MaterialIcons",
+                                        matchTextDirection: true),
+                                    size: ScreenSize.width * 0.1,
+                                    color: colors.primaryColor,
                                   ),
                                 ),
                               ],

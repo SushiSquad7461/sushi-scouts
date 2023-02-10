@@ -1,9 +1,6 @@
 // Flutter imports:
 import "package:flutter/material.dart";
 
-// Package imports:
-import "package:google_fonts/google_fonts.dart";
-
 // Project imports:
 import "../../logic/constants.dart";
 import "../../logic/data/config_file_reader.dart";
@@ -137,7 +134,8 @@ class ScoutingLayout extends StatelessWidget {
               height: size.height * 0.035,
               child: Text(
                 i.title,
-                style: GoogleFonts.mohave(
+                style: TextStyle(
+                    fontFamily: "Mohave",
                     color: i.getTextColor(
                         Theme.of(context).scaffoldBackgroundColor ==
                             Colors.black),

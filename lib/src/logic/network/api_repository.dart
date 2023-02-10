@@ -29,7 +29,8 @@ class structures {
   /*
    * Gets dio object for using tba, sets Authorization and If-Modified-Since headers.
    */
-  Dio _getTbaDioObject() {
+  Future<Dio> _getTbaDioObject() async {
+    Secret secrets = await SecretLoader(secretPath: "assets/secrets.json").load();
     final dio = Dio();
     dio.options.headers["Authorization"] =
         'Basic ${base64.encode(utf8.encode("${secrets.getApiKey("tbaUsername")}:${secrets.getApiKey("tbaPassword")}"))}';
@@ -39,7 +40,7 @@ class structures {
 
   Future<MatchSchedule?> getMatchSchedule(
       String event, String tournamentLevel) async {
-    final dio = _getTbaDioObject();
+    final dio = await _getTbaDioObject();
     _restClient = RestClient(dio, baseUrl: "");
 
     try {
@@ -52,7 +53,7 @@ class structures {
   }
 
   Future<int?> getRank(String event, int teamNum) async {
-    final dio = _getTbaDioObject();
+    final dio = await _getTbaDioObject();
     _restClient = RestClient(dio, baseUrl: "");
 
     try {
@@ -71,7 +72,7 @@ class structures {
    * Gets all of the team numbers that are going to an event
    */
   Future<List<int>?> getTeamNums(String event) async {
-    final dio = _getTbaDioObject();
+    final dio = await _getTbaDioObject();
     _restClient = RestClient(dio, baseUrl: "");
 
     try {
@@ -95,7 +96,7 @@ class structures {
    * Get a map of teamNumbers to teamNames based on event name
    */
   Future<Map<String, String>?> getTeamName(String event) async {
-    final dio = _getTbaDioObject();
+    final dio = await _getTbaDioObject();
     _restClient = RestClient(dio, baseUrl: "");
 
     try {

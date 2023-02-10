@@ -6,7 +6,6 @@ import "package:flutter/services.dart";
 // Package imports:
 import "package:flutter_bloc/flutter_bloc.dart";
 import "package:flutter_svg/svg.dart";
-import "package:google_fonts/google_fonts.dart";
 import "package:localstore/localstore.dart";
 
 // Project imports:
@@ -283,11 +282,12 @@ class _LoginState extends State<Login> {
                 EdgeInsets.symmetric(vertical: ScreenSize.height * 0.005),
           ),
           textAlign: TextAlign.center,
-          style: GoogleFonts.mohave(
-              textStyle: TextStyle(
+          style: 
+              TextStyle(
             fontSize: ScreenSize.width * 0.07,
             color: colors.primaryColorDark,
-          )),
+            fontFamily: "Mohave",
+          ),
           keyboardType: TextInputType.number,
           inputFormatters: <TextInputFormatter>[
             FilteringTextInputFormatter.digitsOnly
@@ -326,11 +326,11 @@ class _LoginState extends State<Login> {
                   EdgeInsets.symmetric(vertical: ScreenSize.height * 0.005),
             ),
             textAlign: TextAlign.center,
-            style: GoogleFonts.mohave(
-                textStyle: TextStyle(
+            style: TextStyle(
               fontSize: ScreenSize.width * 0.07,
               color: colors.primaryColorDark,
-            )),
+              fontFamily: "Mohave"
+            ),
             onChanged: (String? val) => setState(() {
                   eventCode = val;
                 })),
@@ -363,11 +363,11 @@ class _LoginState extends State<Login> {
                   EdgeInsets.symmetric(vertical: ScreenSize.height * 0.005),
             ),
             textAlign: TextAlign.center,
-            style: GoogleFonts.mohave(
-                textStyle: TextStyle(
+            style: TextStyle(
               fontSize: ScreenSize.width * 0.07,
               color: colors.primaryColorDark,
-            )),
+              fontFamily: "Mohave"
+            ),
             onChanged: (String? val) => setState(() {
                   password = val;
                 })),
@@ -401,11 +401,11 @@ class _LoginState extends State<Login> {
                   EdgeInsets.symmetric(vertical: ScreenSize.height * 0.005),
             ),
             textAlign: TextAlign.center,
-            style: GoogleFonts.mohave(
-                textStyle: TextStyle(
+            style: TextStyle(
               fontSize: ScreenSize.width * 0.07,
               color: colors.primaryColorDark,
-            )),
+              fontFamily: "Mohave"
+            ),
             onChanged: (String? val) => setState(() {
                   name = val;
                 })),

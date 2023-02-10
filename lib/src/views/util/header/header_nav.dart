@@ -3,7 +3,6 @@ import "package:flutter/material.dart";
 
 // Package imports:
 import "package:flutter_bloc/flutter_bloc.dart";
-import "package:google_fonts/google_fonts.dart";
 
 // Project imports:
 import "../../../logic/blocs/scouting_method_bloc/scouting_method_cubit.dart";
@@ -73,6 +72,7 @@ class HeaderNav extends StatelessWidget {
   Widget build(BuildContext context) {
     var colors = Theme.of(context);
     final TextStyle pageStyle = TextStyle(
+      fontFamily: "Mohave",
       fontSize: 25 * ScreenSize.swu,
       fontWeight: FontWeight.w700,
       color: colors.primaryColorDark,
@@ -119,7 +119,8 @@ class HeaderNav extends StatelessWidget {
                                 child: isPhoneScreen
                                     ? Text(
                                         screen.toUpperCase(),
-                                        style: GoogleFonts.mohave(
+                                        style: TextStyle(
+                                            fontFamily: "Mohave",
                                             fontSize: isPhoneScreen
                                                 ? ScreenSize.height * 0.023
                                                 : ScreenSize.width * 0.05,
@@ -156,9 +157,12 @@ class HeaderNav extends StatelessWidget {
                                                 bottom: 2 * ScreenSize.swu),
                                             child: Text(
                                               screen.toUpperCase(),
-                                              style: GoogleFonts.mohave(
-                                                  textStyle: pageStyle),
-                                            )))))
+                                              style: pageStyle
+                                            )
+                                        )
+                                    )
+                            )
+                        )
                     ]),
                 isPhoneScreen
                     ? Divider(

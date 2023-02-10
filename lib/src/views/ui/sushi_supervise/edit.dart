@@ -3,7 +3,6 @@ import "package:flutter/foundation.dart";
 import "package:flutter/material.dart";
 
 // Package imports:
-import "package:google_fonts/google_fonts.dart";
 import "package:localstore/localstore.dart";
 
 // Project imports:
@@ -53,8 +52,6 @@ class _EditState extends State<Edit> {
     if (newData != null) {
       setState(() {
         for (var name in newData.keys) {
-          print(newData[name].runtimeType);
-          print(newData[name]["data"]);
           data.addAll(
               {name.split("/")[2]: SuperviseData.fromJson(newData[name])});
         }
@@ -115,15 +112,16 @@ class _EditState extends State<Edit> {
             onTap: () => updateData(i),
             child: Text(
               "${data[i]!.methodName[0].toUpperCase()} - ${data[i]!.display1} - ${data[i]!.display2}",
-              style: GoogleFonts.mohave(
-                  textStyle: TextStyle(
-                      fontSize: ScreenSize.width * 0.06,
-                      fontWeight: FontWeight.bold),
-                  color: (data[i]!.flagged)
-                      ? HexColor("#56CBF9")
-                      : (data[i]!.deleted)
-                          ? HexColor("#FCD6F6")
-                          : colors.primaryColorDark),
+              style: TextStyle(
+                fontFamily: "Mohave",
+                fontSize: ScreenSize.width * 0.06,
+                fontWeight: FontWeight.bold,
+                color: (data[i]!.flagged)
+                  ? HexColor("#56CBF9")
+                  : (data[i]!.deleted)
+                      ? HexColor("#FCD6F6")
+                      : colors.primaryColorDark,
+              ),
             ),
           ),
         ));
@@ -191,7 +189,8 @@ class _EditState extends State<Edit> {
                                   iconSize: ScreenSize.width * 0.05,
                                   elevation: (ScreenSize.width * 0.2).floor(),
                                   dropdownColor: colors.scaffoldBackgroundColor,
-                                  style: GoogleFonts.mohave(
+                                  style: TextStyle(
+                                    fontFamily: "Mohave",
                                     fontSize: ScreenSize.swu * 32,
                                     fontWeight: FontWeight.bold,
                                     color: colors.primaryColorDark,
