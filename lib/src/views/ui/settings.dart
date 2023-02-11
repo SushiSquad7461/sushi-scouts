@@ -44,6 +44,7 @@ class Settings extends StatefulWidget {
 class _SettingsState extends State<Settings> {
   final db = Localstore.instance;
 
+  String? configID = ConfigFileReader.instance.id;
   Secret? secrets;
   int? year;
   bool isLoggingOut = false;
@@ -76,8 +77,7 @@ class _SettingsState extends State<Settings> {
     int configYear = year ?? DateTime.now().year;
     int teamNum = BlocProvider.of<LoginCubit>(context).state.teamNum;
 
-    String? configFile =
-        await structures().getConfigFile(configYear, teamNum);
+    String? configFile = await structures().getConfigFile(configYear, teamNum);
     if (configFile != null) {
       var parsedFile =
           await json.decode((await json.decode(configFile))["config"]);
@@ -228,6 +228,13 @@ class _SettingsState extends State<Settings> {
                         fit: StackFit.expand,
                         children: [
                           Align(
+                            alignment: const Alignment(0, -0.95),
+                            child: Text(
+                              configID ?? "no config id",
+                              style: textStyle,
+                            ),
+                          ),
+                          Align(
                             alignment: const Alignment(0, -0.8),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -360,11 +367,11 @@ class _SettingsState extends State<Settings> {
                                             ),
                                             textAlign: TextAlign.center,
                                             style: TextStyle(
-                                              fontSize: ScreenSize.width * 0.05,
-                                              color: colors.primaryColorDark,
-                                              fontWeight: FontWeight.w500,
-                                              fontFamily: "Mohave"
-                                            ),
+                                                fontSize:
+                                                    ScreenSize.width * 0.05,
+                                                color: colors.primaryColorDark,
+                                                fontWeight: FontWeight.w500,
+                                                fontFamily: "Mohave"),
                                             keyboardType: TextInputType.number,
                                             inputFormatters: <
                                                 TextInputFormatter>[
