@@ -45,6 +45,7 @@ class Settings extends StatefulWidget {
 class _SettingsState extends State<Settings> {
   final db = Localstore.instance;
 
+  String? configID = ConfigFileReader.instance.id;
   Secret? secrets;
   int? year;
   bool isLoggingOut = false;
@@ -220,6 +221,13 @@ class _SettingsState extends State<Settings> {
                       child: Stack(
                         fit: StackFit.expand,
                         children: [
+                          Align(
+                            alignment: const Alignment(0, -0.95),
+                            child: Text(
+                              configID ?? "no config id",
+                              style: textStyle,
+                            ),
+                          ),
                           Align(
                             alignment: const Alignment(0, -0.8),
                             child: Row(
