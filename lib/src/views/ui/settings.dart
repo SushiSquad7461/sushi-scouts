@@ -17,6 +17,7 @@ import "../../logic/blocs/login_bloc/login_cubit.dart";
 import "../../logic/blocs/theme_bloc/theme_cubit.dart";
 import "../../logic/constants.dart";
 import "../../logic/data/config_file_reader.dart";
+import '../../logic/helpers/style/text_style.dart';
 import '../../logic/types/device_type.dart';
 import "../../logic/helpers/routing_helper.dart";
 import "../../logic/helpers/secret/secret.dart";
@@ -76,8 +77,7 @@ class _SettingsState extends State<Settings> {
     int configYear = year ?? DateTime.now().year;
     int teamNum = BlocProvider.of<LoginCubit>(context).state.teamNum;
 
-    String? configFile =
-        await structures().getConfigFile(configYear, teamNum);
+    String? configFile = await structures().getConfigFile(configYear, teamNum);
     if (configFile != null) {
       var parsedFile =
           await json.decode((await json.decode(configFile))["config"]);
@@ -182,13 +182,6 @@ class _SettingsState extends State<Settings> {
   @override
   Widget build(BuildContext context) {
     var colors = Theme.of(context);
-
-    TextStyle textStyle = TextStyle(
-      fontFamily: "Sushi",
-      color: colors.primaryColorDark,
-      fontSize: ScreenSize.swu * 30,
-    );
-
     var isPhoneScreen = isPhone(context);
 
     BoxDecoration boxDecoration = BoxDecoration(
@@ -245,11 +238,7 @@ class _SettingsState extends State<Settings> {
                                         onPressed: () => toggleMode("dark"),
                                         child: Text(
                                           "DARK MODE",
-                                          style: TextStyle(
-                                            fontFamily: "Sushi",
-                                            color: Colors.white,
-                                            fontSize: ScreenSize.swu * 30,
-                                          ),
+                                          style: TextStyles.getButtonColoredText(Colors.white) 
                                         )),
                                   ),
                                 ),
@@ -266,11 +255,7 @@ class _SettingsState extends State<Settings> {
                                         onPressed: () => toggleMode("light"),
                                         child: Text(
                                           "light mode",
-                                          style: TextStyle(
-                                            fontFamily: "Sushi",
-                                            color: Colors.black,
-                                            fontSize: ScreenSize.swu * 30,
-                                          ),
+                                          style: TextStyles.getButtonColoredText(Colors.black) 
                                         )),
                                   ),
                                 )
@@ -291,7 +276,7 @@ class _SettingsState extends State<Settings> {
                                             onPressed: downloadData,
                                             child: Text(
                                               "download data",
-                                              style: textStyle,
+                                              style: TextStyles.getButtonText(context),
                                             )),
                                       ),
                                       Container(
@@ -300,7 +285,7 @@ class _SettingsState extends State<Settings> {
                                             onPressed: uploadData,
                                             child: Text(
                                               "upload data",
-                                              style: textStyle,
+                                              style: TextStyles.getButtonText(context),
                                             )),
                                       ),
                                     ],
@@ -311,7 +296,7 @@ class _SettingsState extends State<Settings> {
                                         onPressed: downloadMatchSchedule,
                                         child: Text(
                                           "download match schedule",
-                                          style: textStyle,
+                                          style: TextStyles.getButtonText(context),
                                         )),
                                   ),
                           ),
@@ -360,11 +345,11 @@ class _SettingsState extends State<Settings> {
                                             ),
                                             textAlign: TextAlign.center,
                                             style: TextStyle(
-                                              fontSize: ScreenSize.width * 0.05,
-                                              color: colors.primaryColorDark,
-                                              fontWeight: FontWeight.w500,
-                                              fontFamily: "Mohave"
-                                            ),
+                                                fontSize:
+                                                    ScreenSize.width * 0.05,
+                                                color: colors.primaryColorDark,
+                                                fontWeight: FontWeight.w500,
+                                                fontFamily: "Mohave"),
                                             keyboardType: TextInputType.number,
                                             inputFormatters: <
                                                 TextInputFormatter>[
@@ -381,7 +366,7 @@ class _SettingsState extends State<Settings> {
                                         ),
                                         Text(
                                           "config file",
-                                          style: textStyle,
+                                          style: TextStyles.getButtonText(context),
                                         ),
                                       ])),
                             ),
@@ -395,18 +380,13 @@ class _SettingsState extends State<Settings> {
                                       onPressed: wipeData,
                                       child: Text(
                                         "WIPE ALL DATA",
-                                        style: TextStyle(
-                                          fontFamily: "Sushi",
-                                          color: colors.primaryColorDark,
-                                          fontSize: ScreenSize.swu * 30,
-                                          fontWeight: FontWeight.w900,
-                                        ),
+                                        style: TextStyles.getButtonWeightedText(context, FontWeight.w900)
                                       ))
                                   : TextButton(
                                       onPressed: downloadNames,
                                       child: Text(
                                         "download names",
-                                        style: textStyle,
+                                        style: TextStyles.getButtonText(context),
                                       )),
                             ),
                           ),
@@ -420,7 +400,7 @@ class _SettingsState extends State<Settings> {
                                   },
                                   child: Text(
                                     "log out",
-                                    style: textStyle,
+                                    style: TextStyles.getButtonText(context),
                                   )),
                             ),
                           ),
