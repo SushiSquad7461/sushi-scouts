@@ -8,7 +8,7 @@ import "package:flutter_bloc/flutter_bloc.dart";
 import "package:get/get.dart";
 
 // Project imports:
-import "firebase_options.dart";
+import '../firebase_options.dart';
 import "provider.dart";
 import "src/logic/blocs/theme_bloc/theme_cubit.dart";
 import "src/logic/helpers/size/screen_size.dart";
