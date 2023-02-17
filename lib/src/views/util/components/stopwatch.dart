@@ -1,11 +1,13 @@
 // Flutter imports:
+import 'dart:async';
+
 import "package:flutter/material.dart";
 import "package:flutter/services.dart";
 
 // Project imports:
 import "../../../logic/data/data.dart";
 
-class Increment extends StatefulWidget {
+class StopwatchC extends StatefulWidget {
   final String name;
   final Data data;
   final Data defaultValue;
@@ -14,7 +16,8 @@ class Increment extends StatefulWidget {
   final double width;
   final List<String>? values;
   final bool setCommonValue;
-  Increment(
+
+  StopwatchC(
       {Key? key,
       required this.name,
       required this.data,
@@ -29,7 +32,7 @@ class Increment extends StatefulWidget {
     data.set(val == -1.0 ? 0.0 : val, setByUser: true);
   }
 
-  static Increment create(
+  static StopwatchC create(
       Key key,
       String name,
       Data data,
@@ -40,7 +43,7 @@ class Increment extends StatefulWidget {
       Color textColor,
       bool setCommonValue,
       double height) {
-    return Increment(
+    return StopwatchC(
       key: key,
       name: name,
       data: data,
@@ -54,11 +57,40 @@ class Increment extends StatefulWidget {
   }
 
   @override
-  IncrementState createState() => IncrementState();
+  StopwatchState createState() => StopwatchState();
 }
 
-class IncrementState extends State<Increment> {
-  int _value = 0;
+class StopwatchState extends State<StopwatchC> {
+  static const int updateTime = 30; // milliseconds
+  Timer? _timer;
+  var _value = 0;
+  late Stopwatch stopwatch;
+
+  @override
+  void initState() {
+    super.initState();
+    stopwatch = Stopwatch();
+    _timer = Timer.periodic(const Duration(milliseconds: 30), (timer) {
+      setState(() {});
+    });
+  }
+
+  //stops stopwatch if its running, if its not resets
+  void stop() {
+    //stop or reset
+    stopwatch.isRunning ? stopwatch.stop() : stopwatch.reset();
+    setState(() {
+      _value = stopwatch.elapsed.inSeconds;
+    });
+    widget.data.set(stopwatch.elapsed.inSeconds.toDouble(), setByUser: true);
+  }
+
+  void start() {
+    stopwatch.start();
+    setState(() {
+      _value = stopwatch.elapsed.inSeconds;
+    });
+  }
 
   final TextEditingController _controller = TextEditingController();
   Color getColor(Set<MaterialState> states) {
@@ -76,14 +108,17 @@ class IncrementState extends State<Increment> {
   @override
   void dispose() {
     _controller.dispose();
+    _timer?.cancel();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    double width = widget.width;
     _value = double.parse(widget.data.get()).round();
-    _controller.text = (_value).toString();
+    _controller.text = stopwatch.isRunning
+        ? stopwatch.elapsed.inSeconds.toString()
+        : _value.toString();
+    double width = widget.width;
     return Padding(
         padding: EdgeInsets.only(
             left: width / 60,
@@ -107,20 +142,15 @@ class IncrementState extends State<Increment> {
                   IconButton(
                     padding: const EdgeInsets.all(0),
                     onPressed: () {
-                      if (_value > 0) {
-                        _controller.text = (_value - 1).toString();
-                        widget.data.decrement();
-                        setState(() {
-                          _value--;
-                        });
-                        build(context);
-                      }
+                      stop();
                     },
-                    iconSize: width / 3.0,
+                    iconSize: width / 4.0,
                     icon: Icon(
-                      Icons.arrow_left_rounded,
-                      color: widget.color,
-                      semanticLabel: "Back Arrow",
+                      Icons.timer_off_outlined,
+                      color: stopwatch.isRunning
+                          ? widget.color
+                          : Color.fromARGB(213, 252, 119, 183),
+                      semanticLabel: "Stop Stopwatch",
                     ),
                   ),
                   TextFormField(
@@ -152,17 +182,13 @@ class IncrementState extends State<Increment> {
                   IconButton(
                     padding: const EdgeInsets.all(0),
                     onPressed: () {
-                      _controller.text = (_value + 1).toString();
-                      widget.data.increment();
-                      setState(() {
-                        _value++;
-                      });
+                      start();
                     },
-                    iconSize: width / 3.0,
+                    iconSize: width / 4.0,
                     icon: Icon(
-                      Icons.arrow_right_rounded,
+                      Icons.timer_outlined,
                       color: widget.color,
-                      semanticLabel: "Forward Arrow",
+                      semanticLabel: "Start / Resume Stopwatch",
                     ),
                   ),
                 ],

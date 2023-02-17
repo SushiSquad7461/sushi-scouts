@@ -273,7 +273,7 @@
                             {
                                 "name" : "Balance Time",
                                 "type" : "number",
-                                "component" : "increment",
+                                "component" : "stopwatch",
                                 "required" : true,
                                 "timestamp": false,
                                 "isCommonValue" : false,
