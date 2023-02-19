@@ -225,7 +225,7 @@ class _SettingsState extends State<Settings> {
                             alignment: const Alignment(0, -0.95),
                             child: Text(
                               configID ?? "no config id",
-                              style: textStyle,
+                              style: TextStyles.getButtonText(context),
                             ),
                           ),
                           Align(
