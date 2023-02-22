@@ -225,11 +225,7 @@ class _SettingsState extends State<Settings> {
                             alignment: const Alignment(0, -0.95),
                             child: Text(
                               configID ?? "no config id",
-                              style: TextStyle(
-                                  fontSize: ScreenSize.width * 0.05,
-                                  color: colors.primaryColorDark,
-                                  fontWeight: FontWeight.w500,
-                                  fontFamily: "Mohave"),
+                              style: TextStyles.getButtonText(context),
                             ),
                           ),
                           Align(
