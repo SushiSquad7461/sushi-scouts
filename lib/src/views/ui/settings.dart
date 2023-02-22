@@ -225,7 +225,11 @@ class _SettingsState extends State<Settings> {
                             alignment: const Alignment(0, -0.95),
                             child: Text(
                               configID ?? "no config id",
-                              style: textStyle,
+                              style: TextStyle(
+                                  fontSize: ScreenSize.width * 0.05,
+                                  color: colors.primaryColorDark,
+                                  fontWeight: FontWeight.w500,
+                                  fontFamily: "Mohave"),
                             ),
                           ),
                           Align(
@@ -244,10 +248,10 @@ class _SettingsState extends State<Settings> {
                                         EdgeInsets.all(ScreenSize.width * 0.02),
                                     child: TextButton(
                                         onPressed: () => toggleMode("dark"),
-                                        child: Text(
-                                          "DARK MODE",
-                                          style: TextStyles.getButtonColoredText(Colors.white) 
-                                        )),
+                                        child: Text("DARK MODE",
+                                            style:
+                                                TextStyles.getButtonColoredText(
+                                                    Colors.white))),
                                   ),
                                 ),
                                 Container(
@@ -261,10 +265,10 @@ class _SettingsState extends State<Settings> {
                                         EdgeInsets.all(ScreenSize.width * 0.02),
                                     child: TextButton(
                                         onPressed: () => toggleMode("light"),
-                                        child: Text(
-                                          "light mode",
-                                          style: TextStyles.getButtonColoredText(Colors.black) 
-                                        )),
+                                        child: Text("light mode",
+                                            style:
+                                                TextStyles.getButtonColoredText(
+                                                    Colors.black))),
                                   ),
                                 )
                               ],
@@ -284,7 +288,8 @@ class _SettingsState extends State<Settings> {
                                             onPressed: downloadData,
                                             child: Text(
                                               "download data",
-                                              style: TextStyles.getButtonText(context),
+                                              style: TextStyles.getButtonText(
+                                                  context),
                                             )),
                                       ),
                                       Container(
@@ -293,7 +298,8 @@ class _SettingsState extends State<Settings> {
                                             onPressed: uploadData,
                                             child: Text(
                                               "upload data",
-                                              style: TextStyles.getButtonText(context),
+                                              style: TextStyles.getButtonText(
+                                                  context),
                                             )),
                                       ),
                                     ],
@@ -304,7 +310,8 @@ class _SettingsState extends State<Settings> {
                                         onPressed: downloadMatchSchedule,
                                         child: Text(
                                           "download match schedule",
-                                          style: TextStyles.getButtonText(context),
+                                          style:
+                                              TextStyles.getButtonText(context),
                                         )),
                                   ),
                           ),
@@ -374,7 +381,8 @@ class _SettingsState extends State<Settings> {
                                         ),
                                         Text(
                                           "config file",
-                                          style: TextStyles.getButtonText(context),
+                                          style:
+                                              TextStyles.getButtonText(context),
                                         ),
                                       ])),
                             ),
@@ -386,15 +394,16 @@ class _SettingsState extends State<Settings> {
                               child: isSupervise
                                   ? TextButton(
                                       onPressed: wipeData,
-                                      child: Text(
-                                        "WIPE ALL DATA",
-                                        style: TextStyles.getButtonWeightedText(context, FontWeight.w900)
-                                      ))
+                                      child: Text("WIPE ALL DATA",
+                                          style:
+                                              TextStyles.getButtonWeightedText(
+                                                  context, FontWeight.w900)))
                                   : TextButton(
                                       onPressed: downloadNames,
                                       child: Text(
                                         "download names",
-                                        style: TextStyles.getButtonText(context),
+                                        style:
+                                            TextStyles.getButtonText(context),
                                       )),
                             ),
                           ),
