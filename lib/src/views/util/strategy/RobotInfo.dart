@@ -13,21 +13,22 @@ import '../../../logic/helpers/color/hex_color.dart';
 import '../../../logic/helpers/size/screen_size.dart';
 import '../../../logic/models/scouting_data_models/scouting_data.dart';
 
-class RobotDisplayIcon extends StatefulWidget {
+class RobotInfo extends StatefulWidget {
   final List<ScoutingData> selected;
   final Function exit;
-  const RobotDisplayIcon({Key? key, required this.exit, required this.selected})
+  const RobotInfo({Key? key, required this.exit, required this.selected})
       : super(key: key);
 
   @override
-  State<RobotDisplayIcon> createState() => _RobotDisplayIconState();
+  State<RobotInfo> createState() => _RobotInfoState();
 }
 
-class _RobotDisplayIconState extends State<RobotDisplayIcon> {
+class _RobotInfoState extends State<RobotInfo> {
   int index = 0;
   int picIndex = 0;
   List<String> picList = [];
   List<Widget> widgetPicList = [];
+  Widget selectedPic = const Text("");
 
   final db = Localstore.instance;
   final reader = ConfigFileReader.instance;
@@ -56,11 +57,28 @@ class _RobotDisplayIconState extends State<RobotDisplayIcon> {
         ));
       }
     }
+
+    setPic(0);
+  }
+
+  void setPic(int newIndex) {
+    setState(() {
+      if (newIndex < 0) {
+        newIndex = 0;
+      }
+
+      if (newIndex > widgetPicList.length - 1) {
+        newIndex = widgetPicList.length - 1;
+      }
+
+      picIndex = newIndex;
+      selectedPic = widgetPicList[newIndex];
+    });
   }
 
   Future<void> getPicList() async {
-    String identifier = widget.selected[index] 
-      .getCertainDataByName(reader.strat!["profile"]["identifier"]);
+    String identifier = widget.selected[index]
+        .getCertainDataByName(reader.strat!["profile"]["identifier"]);
 
     var databaseList =
         (await db.collection("frcapi").doc("$identifier images").get());
@@ -70,8 +88,8 @@ class _RobotDisplayIconState extends State<RobotDisplayIcon> {
     generateWidgetPicList();
   }
 
-    List<Widget> getRobotInfo() {
-    ScoutingData version = widget.selected![index];
+  List<Widget> getRobotInfo() {
+    ScoutingData version = widget.selected[index];
     List<Widget> ret = [];
     var colors = Theme.of(context);
 
@@ -185,13 +203,7 @@ class _RobotDisplayIconState extends State<RobotDisplayIcon> {
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
                       GestureDetector(
-                        onTap: () => setState(() {
-                          picIndex -= 1;
-
-                          if (picIndex < 0) {
-                            picIndex = 0;
-                          }
-                        }),
+                        onTap: () => {setPic(picIndex - 1)},
                         child: Icon(
                           const IconData(0xf57b,
                               fontFamily: "MaterialIcons",
@@ -201,25 +213,18 @@ class _RobotDisplayIconState extends State<RobotDisplayIcon> {
                         ),
                       ),
                       Container(
-                        width: ScreenSize.width * 0.8,
-                        height: ScreenSize.height * 0.24,
-                        decoration: BoxDecoration(
-                            color: colors.primaryColor,
-                            borderRadius: BorderRadius.all(
-                              Radius.circular(15 * ScreenSize.swu),
-                            )),
-                        child: Center(
-                            child: widgetPicList[picIndex]
-                        ),
-                      ),
+                          width: ScreenSize.width * 0.8,
+                          height: ScreenSize.height * 0.24,
+                          decoration: BoxDecoration(
+                              color: colors.primaryColor,
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(15 * ScreenSize.swu),
+                              )),
+                          child: Center(
+                            child: selectedPic,
+                          )),
                       GestureDetector(
-                        onTap: () => setState(() {
-                          picIndex += 1;
-
-                          if (picIndex > widgetPicList.length-1) {
-                            picIndex = widgetPicList.length-1;
-                          }
-                        }),
+                        onTap: () => {setPic(picIndex + 1)},
                         child: Icon(
                           const IconData(0xf57d,
                               fontFamily: "MaterialIcons",
@@ -268,14 +273,14 @@ class _RobotDisplayIconState extends State<RobotDisplayIcon> {
                       ),
                     ),
                     Text(
-                        "DAY ${widget.selected![index].getCertainDataByName(reader.strat!["profile"]["version"])}",
+                        "DAY ${widget.selected[index].getCertainDataByName(reader.strat!["profile"]["version"])}",
                         style: TextStyle(
                             fontSize: ScreenSize.height * 0.035,
                             fontFamily: "Sushi",
                             color: colors.primaryColor)),
                     GestureDetector(
-                      onTap: () => setState(
-                          () => index += index < widget.selected!.length - 1 ? 1 : 0),
+                      onTap: () => setState(() =>
+                          index += index < widget.selected.length - 1 ? 1 : 0),
                       child: Padding(
                         padding:
                             EdgeInsets.only(bottom: ScreenSize.height * 0.01),
