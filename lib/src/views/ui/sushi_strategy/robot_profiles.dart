@@ -17,6 +17,7 @@ import "../../../logic/models/scouting_data_models/scouting_data.dart";
 import "../../../logic/models/supervise_data.dart";
 import "../../util/header/header_nav_strategy.dart";
 import "../../util/header/header_title/mobile_strategy_main.dart";
+import '../../util/strategy/RobotDisplayIcon.dart';
 
 class RobotProfiles extends StatefulWidget {
   const RobotProfiles({Key? key}) : super(key: key);
@@ -81,11 +82,13 @@ class _RobotProfilesState extends State<RobotProfiles> {
     for (final i in profiles.values) {
       String identifier =
           i[0].getCertainDataByName(reader.strat!["profile"]["identifier"]);
-      if ((selected == null && identifier.contains(searchQuery)) ||
-          (selected != null &&
+
+      bool currentlySelected = selected != null &&
               identifier ==
                   selected![index].getCertainDataByName(
-                      reader.strat!["profile"]["identifier"]))) {
+                      reader.strat!["profile"]["identifier"]);
+
+      if ((selected == null && identifier.contains(searchQuery)) || currentlySelected) {
         ret.add(Padding(
           padding: EdgeInsets.only(bottom: ScreenSize.height * 0.01),
           child: GestureDetector(
@@ -103,26 +106,17 @@ class _RobotProfilesState extends State<RobotProfiles> {
                 picUrls = newPicUrls;
               });
             },
-            child: SizedBox(
+            child: currentlySelected ?
+            SizedBox(
               width: ScreenSize.width * 0.8,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    i[0].getCertainDataByName(
-                        reader.strat!["profile"]["identifier"]),
-                    style: textStyle,
-                  ),
-                  Divider(
-                    height: ScreenSize.height * 0.007,
-                    color: colors.primaryColorDark,
-                    thickness: ScreenSize.height * 0.003,
-                  ),
-                ],
+              child: Text(
+                i[0].getCertainDataByName(
+                    reader.strat!["profile"]["identifier"]),
+                style: textStyle,
               ),
-            ),
+            ) : RobotDisplayIcon(teamNum: i[0].getCertainDataByName(reader.strat!["profile"]["identifier"])
           ),
-        ));
+        )));
       }
     }
 
@@ -244,12 +238,12 @@ class _RobotProfilesState extends State<RobotProfiles> {
               padding: EdgeInsets.only(top: ScreenSize.height * 0.2),
               child: SizedBox(
                 width: ScreenSize.width,
-                height: ScreenSize.height * 0.8,
+                height: ScreenSize.height * 0.9,
                 child: Stack(children: [
                   Padding(
                     padding: EdgeInsets.only(
-                        left: ScreenSize.width * 0.05,
-                        right: ScreenSize.width * 0.15,
+                        left: ScreenSize.width * 0.04,
+                        right: ScreenSize.width * 0.04,
                         top: ScreenSize.height * 0.02),
                     child: ListView(
                       padding: EdgeInsets.zero,
