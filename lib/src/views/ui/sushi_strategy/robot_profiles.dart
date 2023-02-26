@@ -85,30 +85,33 @@ class _RobotProfilesState extends State<RobotProfiles> {
           i[0].getCertainDataByName(reader.strat!["profile"]["identifier"]);
 
       bool currentlySelected = selected != null &&
-              identifier ==
-                  selected![0].getCertainDataByName(
-                      reader.strat!["profile"]["identifier"]);
+          identifier ==
+              selected![0]
+                  .getCertainDataByName(reader.strat!["profile"]["identifier"]);
 
-      if ((selected == null && identifier.contains(searchQuery)) || currentlySelected) {
+      if ((selected == null && identifier.contains(searchQuery)) ||
+          currentlySelected) {
         ret.add(Padding(
-          padding: EdgeInsets.only(bottom: ScreenSize.height * 0.01),
-          child: GestureDetector(
-            onTap: () async {
-              setState(() {
-                selected = selected != null ? null : i;
-              });
-            },
-            child: currentlySelected ?
-            SizedBox(
-              width: ScreenSize.width * 0.8,
-              child: Text(
-                i[0].getCertainDataByName(
-                    reader.strat!["profile"]["identifier"]),
-                style: textStyle,
-              ),
-            ) : RobotDisplayIcon(teamNum: i[0].getCertainDataByName(reader.strat!["profile"]["identifier"])
-          ),
-        )));
+            padding: EdgeInsets.only(bottom: ScreenSize.height * 0.01),
+            child: GestureDetector(
+              onTap: () async {
+                setState(() {
+                  selected = selected != null ? null : i;
+                });
+              },
+              child: currentlySelected
+                  ? SizedBox(
+                      width: ScreenSize.width * 0.8,
+                      child: Text(
+                        i[0].getCertainDataByName(
+                            reader.strat!["profile"]["identifier"]),
+                        style: textStyle,
+                      ),
+                    )
+                  : RobotDisplayIcon(
+                      teamNum: i[0].getCertainDataByName(
+                          reader.strat!["profile"]["identifier"])),
+            )));
       }
     }
 
@@ -149,7 +152,11 @@ class _RobotProfilesState extends State<RobotProfiles> {
               ),
             ),
             if (selected != null)
-              RobotInfo(exit: exit, selected: selected!,), 
+              RobotInfo(
+                exit: exit,
+                selected: selected!,
+                versionName: reader.strat!["profile"]["version"]
+              ),
             const HeaderTitleMobileStrategyMain(),
             Padding(
               padding: EdgeInsets.only(top: ScreenSize.height * 0.14),

@@ -63,8 +63,7 @@ class _StratSettingsState extends State<StratSettings> {
     int configYear = year ?? DateTime.now().year;
     int teamNum = BlocProvider.of<LoginCubit>(context).state.teamNum;
 
-    String? configFile =
-        await structures().getConfigFile(configYear, teamNum);
+    String? configFile = await structures().getConfigFile(configYear, teamNum);
     if (configFile != null) {
       var parsedFile =
           await json.decode((await json.decode(configFile))["config"]);

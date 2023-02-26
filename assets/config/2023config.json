@@ -8,6 +8,10 @@
             "identifier": "team #",
             "version": "day #"
         },
+        "cardinal": {
+            "identifier": "team #",
+            "version": "match #"
+        },
         "ranking": {
             "method-name": "ordinal"
         }

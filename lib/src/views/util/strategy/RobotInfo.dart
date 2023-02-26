@@ -16,7 +16,8 @@ import '../../../logic/models/scouting_data_models/scouting_data.dart';
 class RobotInfo extends StatefulWidget {
   final List<ScoutingData> selected;
   final Function exit;
-  const RobotInfo({Key? key, required this.exit, required this.selected})
+  final String versionName;
+  const RobotInfo({Key? key, required this.exit, required this.selected, required this.versionName})
       : super(key: key);
 
   @override
@@ -273,7 +274,7 @@ class _RobotInfoState extends State<RobotInfo> {
                       ),
                     ),
                     Text(
-                        "DAY ${widget.selected[index].getCertainDataByName(reader.strat!["profile"]["version"])}",
+                        "${widget.versionName.toUpperCase().replaceAll("#", "")} ${widget.selected[index].getCertainDataByName(widget.versionName)}",
                         style: TextStyle(
                             fontSize: ScreenSize.height * 0.035,
                             fontFamily: "Sushi",
