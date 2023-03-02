@@ -2,6 +2,8 @@
 import "package:flutter_bloc/flutter_bloc.dart";
 import "package:localstore/localstore.dart";
 
+import '../../constants.dart';
+
 part "theme_states.dart";
 
 class ThemeCubit extends Cubit<ThemeStates> {
@@ -17,7 +19,7 @@ class ThemeCubit extends Cubit<ThemeStates> {
 
   Future<void> setMode() async {
     var db = Localstore.instance;
-    final data = await db.collection("preferences").doc("mode").get();
+    final data = await db.collection(preferenceDatabaseName).doc("mode").get();
 
     if (data != null) {
       data["mode"] == "dark" ? emit(DarkMode()) : emit(LightMode());

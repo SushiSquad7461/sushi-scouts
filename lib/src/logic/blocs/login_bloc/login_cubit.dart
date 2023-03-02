@@ -4,6 +4,8 @@
 import "package:flutter_bloc/flutter_bloc.dart";
 import "package:localstore/localstore.dart";
 
+import '../../constants.dart';
+
 part "login_states.dart";
 
 class LoginCubit extends Cubit<LoginStates> {
@@ -12,7 +14,7 @@ class LoginCubit extends Cubit<LoginStates> {
   Future<void> loginSushiScouts(
       String name, int teamNum, String eventCode) async {
     var db = Localstore.instance;
-    await db.collection("preferences").doc("user").set({
+    await db.collection(preferenceDatabaseName).doc("user").set({
       "name": name,
       "teamNum": teamNum,
       "eventCode": eventCode,
@@ -35,7 +37,7 @@ class LoginCubit extends Cubit<LoginStates> {
       String name, int teamNum, String eventCode) async {
     var db = Localstore.instance;
 
-    await db.collection("preferences").doc("user").set({
+    await db.collection(preferenceDatabaseName).doc("user").set({
       "name": name,
       "teamNum": teamNum,
       "eventCode": eventCode,

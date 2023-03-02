@@ -50,7 +50,7 @@ class _StratSettingsState extends State<StratSettings> {
   Future<void> toggleMode(String mode) async {
     BlocProvider.of<ThemeCubit>(context)
         .switchTheme(isDarkMode: mode == "dark" ? true : false);
-    db.collection("preferences").doc("mode").set({
+    db.collection(preferenceDatabaseName).doc("mode").set({
       "mode": mode,
     });
 
@@ -125,7 +125,7 @@ class _StratSettingsState extends State<StratSettings> {
         BlocProvider.of<LoginCubit>(context).state.eventCode.toUpperCase());
 
     if (teamNames != null) {
-      db.collection("frcapi").doc("name").set(teamNames);
+      db.collection(frcApiDatabaseName).doc("name").set(teamNames);
     }
 
     turnOffLoading();

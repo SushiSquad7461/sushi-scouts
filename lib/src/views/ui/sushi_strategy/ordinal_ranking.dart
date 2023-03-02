@@ -33,7 +33,7 @@ class _OrdinalRankingState extends State<OrdinalRanking> {
 
   Future<void> getNames() async {
     Map<String, dynamic>? newRobotNames =
-        await Localstore.instance.collection("frcapi").doc("name").get();
+        await Localstore.instance.collection(frcApiDatabaseName).doc("name").get();
 
     if (newRobotNames != null) {
       setState(() {

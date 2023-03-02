@@ -8,6 +8,7 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:localstore/localstore.dart';
 
+import '../../../logic/constants.dart';
 import '../../../logic/data/config_file_reader.dart';
 import '../../../logic/helpers/color/hex_color.dart';
 import '../../../logic/helpers/size/screen_size.dart';
@@ -82,7 +83,7 @@ class _RobotInfoState extends State<RobotInfo> {
         .getCertainDataByName(reader.strat!["profile"]["identifier"]);
 
     var databaseList =
-        (await db.collection("frcapi").doc("$identifier images").get());
+        (await db.collection(frcApiDatabaseName).doc("$identifier images").get());
 
     picList = databaseList == null ? [] : databaseList["imageList"];
 

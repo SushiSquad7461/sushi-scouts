@@ -33,6 +33,9 @@ const Map componentMap = {
 const superviseDatabaseName = "supervise-data";
 const stratDatabaseName = "strat-data";
 const ordinalRankDatabaseName = "ordinal-ranking";
+const preferenceDatabaseName = "preferences";
+const frcApiDatabaseName = "frcapi";
+const scoutingDataDatabaseName = "data";
 
 const Map<String, Widget> stratPages = {
   "ordinal": OrdinalRanking(),

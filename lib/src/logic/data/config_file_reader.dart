@@ -61,7 +61,7 @@ class ConfigFileReader {
   }
 
   Future<void> readInitalConfig() async {
-    // var user = await db.collection("preferences").doc("user").get();
+    // var user = await db.collection(preferenceDatabaseName).doc("user").get();
 
     // if (user != null && user["teamNum"] != null) {
     //   var found = await db

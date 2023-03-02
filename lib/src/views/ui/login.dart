@@ -10,6 +10,7 @@ import "package:localstore/localstore.dart";
 
 // Project imports:
 import "../../logic/blocs/login_bloc/login_cubit.dart";
+import '../../logic/constants.dart';
 import "../../logic/data/config_file_reader.dart";
 import '../../logic/types/device_type.dart';
 import "../../logic/helpers/color/hex_color.dart";
@@ -80,7 +81,7 @@ class _LoginState extends State<Login> {
   }
 
   Future<void> getSavedInfo() async {
-    var userInfo = await db.collection("preferences").doc("user").get();
+    var userInfo = await db.collection(preferenceDatabaseName).doc("user").get();
 
     if (userInfo != null) {
       setState(() {

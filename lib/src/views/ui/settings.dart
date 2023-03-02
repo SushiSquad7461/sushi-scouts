@@ -55,7 +55,7 @@ class _SettingsState extends State<Settings> {
   Future<void> toggleMode(String mode) async {
     BlocProvider.of<ThemeCubit>(context)
         .switchTheme(isDarkMode: mode == "dark" ? true : false);
-    db.collection("preferences").doc("mode").set({
+    db.collection(preferenceDatabaseName).doc("mode").set({
       "mode": mode,
     });
 
@@ -69,7 +69,7 @@ class _SettingsState extends State<Settings> {
     MatchSchedule? schedule = await structures().getMatchSchedule(
         BlocProvider.of<LoginCubit>(context).state.eventCode, "qual");
     if (schedule != null) {
-      db.collection("data").doc("schedule").set(schedule.toJson());
+      db.collection(scoutingDataDatabaseName).doc("schedule").set(schedule.toJson());
     }
     turnOffLoading();
   }
@@ -103,8 +103,8 @@ class _SettingsState extends State<Settings> {
     var db = Localstore.instance;
     var reader = ConfigFileReader.instance;
     for (var screen in reader.getScoutingMethods()) {
-      db.collection("data").doc("backup$screen").delete();
-      db.collection("data").doc("current$screen").delete();
+      db.collection(scoutingDataDatabaseName).doc("backup$screen").delete();
+      db.collection(scoutingDataDatabaseName).doc("current$screen").delete();
     }
   }
 
