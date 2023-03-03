@@ -1,6 +1,6 @@
 {
     "teamNumber": 7461,
-    "version" : 1,
+    "version" : 2,
     "password" : "temaki",
     "strat": {
         "profile": {
@@ -306,7 +306,7 @@
                             "color": "#ff76a2",
                             "rows": 2,
                             "textColor": "#000000",
-                            "darkColor": "#ff",
+                            "darkColor": "#FCD6F6",
                             "darkTextColor": "#ffffff",
                             "componentsInRow": [1,1]
                         },
@@ -545,6 +545,37 @@
                             },
                             {
                                 "name" : "day #",
+                                "type" : "number",
+                                "component" : "number input",
+                                "required" : true,
+                                "timestamp": false,
+                                "isCommonValue" : false,
+                                "setCommonValue" : false
+                            }
+                        ]
+                    },
+                    {
+                        "properties":{
+                            "title":"",
+                            "color": "#ff76a2",
+                            "rows": 2,
+                            "textColor": "#000000",
+                            "darkColor": "#ff",
+                            "darkTextColor": "#ffffff",
+                            "componentsInRow": [1,1]
+                        },
+                        "components":[
+                            {
+                                "name" : "dt length",
+                                "type" : "number",
+                                "component" : "number input",
+                                "required" : true,
+                                "timestamp": false,
+                                "isCommonValue" : false,
+                                "setCommonValue" : false
+                            },
+                            {
+                                "name" : "dt width",
                                 "type" : "number",
                                 "component" : "number input",
                                 "required" : true,
