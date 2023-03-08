@@ -2,6 +2,7 @@
 
 // Package imports:
 import "package:flutter_bloc/flutter_bloc.dart";
+import "package:get/get.dart";
 import "package:localstore/localstore.dart";
 
 import '../../constants.dart';

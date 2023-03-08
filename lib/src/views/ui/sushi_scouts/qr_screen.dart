@@ -89,7 +89,14 @@ class _QRScreenState extends State<QRScreen> {
     dataConverted = true;
   }
 
+  Future<int?> getStringLength() async {
+    return stringifiedData?.length;
+  }
+
+
+
   Future<void> getData() async {
+    
     await convertData();
     final compressedData = await widget.db
         .collection("data")
@@ -128,9 +135,9 @@ class _QRScreenState extends State<QRScreen> {
 
   Future<void> back() async {
     await convertData();
-    if(widget.hasNewData) {
+    if (widget.hasNewData) {
       currentScoutingData!.nextMatch();
-    }    
+    }
     RouteHelper.pushAndRemoveUntilToScreen(-1, 0,
         ctx: context, screen: const Scouting());
   }

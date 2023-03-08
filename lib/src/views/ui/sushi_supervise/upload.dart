@@ -203,7 +203,7 @@ class _UploadState extends State<Upload> {
                                                   (phone ? 0.78 : 0.58),
                                               child: Center(
                                                   child: Text(
-                                                "CODE - ${eventCode.toUpperCase()}",
+                                                "CODE - ${eventCode.toUpperCase().trim()}",
                                                 style: fontStyle,
                                               )))),
                                       Padding(

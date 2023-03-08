@@ -34,6 +34,7 @@ import '../util/sushiloading.dart';
 import "../util/themes.dart";
 import "app_choser.dart";
 import "loading.dart";
+import "../../views/ui/sushi_scouts/qr_screen.dart";
 
 class Settings extends StatefulWidget {
   const Settings({Key? key}) : super(key: key);
@@ -179,6 +180,10 @@ class _SettingsState extends State<Settings> {
       loading = false;
     });
   }
+  
+  void barLength() {
+    
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -190,6 +195,8 @@ class _SettingsState extends State<Settings> {
             color: colors.primaryColorDark, width: 4 * ScreenSize.shu),
         borderRadius: BorderRadius.all(Radius.circular(25 * ScreenSize.swu)));
 
+    ;
+
     return Scaffold(
         resizeToAvoidBottomInset: false,
         body: BlocBuilder<LoginCubit, LoginStates>(builder: (context, state) {
@@ -197,12 +204,29 @@ class _SettingsState extends State<Settings> {
           collectionName = "${state.eventCode}:${ConfigFileReader.instance.id}";
           return Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               HeaderTitle(
                   type: isSupervise ? LoginType.supervise : LoginType.scout),
               HeaderNav(
                 currentPage: "settings",
                 isSupervise: isSupervise,
+              ),
+              Container(
+                width: ScreenSize.width,
+                height: 10.0,
+                child: Container(
+                  decoration: new BoxDecoration(
+                    color: Colors.black,
+                    shape: BoxShape.rectangle,
+                    borderRadius: BorderRadius.all(Radius.circular(8.0)),
+                  ),
+                ),
+                // decoration: new BoxDecoration(
+                //   color: Colors.black,
+                //   shape: BoxShape.circle,
+                //   border: Border.all(width: 5.0, color: Colors.white),
+                // ),
               ),
               loading
                   ? SizedBox(
