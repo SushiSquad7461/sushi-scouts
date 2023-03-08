@@ -1,4 +1,6 @@
 // Flutter imports:
+import "dart:html";
+
 import "package:flutter/foundation.dart";
 import "package:flutter/material.dart";
 import "package:flutter/services.dart";
@@ -332,7 +334,7 @@ class _LoginState extends State<Login> {
               color: colors.primaryColorDark,
             )),
             onChanged: (String? val) => setState(() {
-                  eventCode = val;
+                  eventCode = val?.toUpperCase().trim();
                 })),
       ),
     );
