@@ -376,6 +376,7 @@ class _LoginState extends State<Login> {
     );
   }
 
+  
   Align nameBox(bool isPhoneScreen, ThemeData colors) {
     return Align(
       alignment: const Alignment(0, 0.1),
