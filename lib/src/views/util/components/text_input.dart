@@ -1,12 +1,9 @@
 // Flutter imports:
 import "package:flutter/material.dart";
 
-// Package imports:
-import "package:google_fonts/google_fonts.dart";
-
 // Project imports:
 import "../../../logic/data/data.dart";
-import "../../../logic/device_type.dart";
+import '../../../logic/types/device_type.dart';
 import "../../../logic/helpers/size/screen_size.dart";
 
 class TextInput extends StatefulWidget {
@@ -122,14 +119,14 @@ class TextInputState extends State<TextInput> {
                             maxWidth: widget.width * 0.95,
                             maxHeight: widget.width * 0.56),
                       ),
-                      style: GoogleFonts.mohave(
-                          textStyle: TextStyle(
+                      style: TextStyle(
+                        fontFamily: "Mohave",
                               fontSize: phone
                                   ? ScreenSize.height * 0.03
                                   : widget.width / 15,
                               fontWeight:
                                   phone ? FontWeight.w100 : FontWeight.w400,
-                              color: widget.textColor)),
+                              color: widget.textColor),
                       keyboardType: TextInputType.multiline,
                       onFieldSubmitted: (value) {
                         widget.data.set(double.parse(value), setByUser: true);

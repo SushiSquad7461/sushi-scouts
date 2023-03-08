@@ -1,12 +1,9 @@
 // Flutter imports:
 import "package:flutter/material.dart";
 
-// Package imports:
-import "package:google_fonts/google_fonts.dart";
-
 // Project imports:
 import "../../../logic/data/data.dart";
-import "../../../logic/device_type.dart";
+import '../../../logic/types/device_type.dart';
 import "../../../logic/helpers/size/screen_size.dart";
 
 class Dropdown extends StatefulWidget {
@@ -94,7 +91,8 @@ class DropdownState extends State<Dropdown> {
                       right: ScreenSize.width * (isPhoneScreen ? 0.01 : 0)),
                   child: Text(
                     widget.name.toUpperCase(),
-                    style: GoogleFonts.mohave(
+                    style: TextStyle(
+                      fontFamily: "Mohave",
                       fontSize: isPhoneScreen
                           ? ScreenSize.height * 0.04
                           : widget.width / 8,
@@ -114,7 +112,8 @@ class DropdownState extends State<Dropdown> {
                           icon: const Icon(Icons.arrow_drop_down_rounded),
                           elevation: (width / 100.0 * 3).floor(),
                           dropdownColor: colors.scaffoldBackgroundColor,
-                          style: GoogleFonts.mohave(
+                          style: TextStyle(
+                            fontFamily: "Mohave",
                             fontSize: widget.width / (isPhoneScreen ? 7 : 8),
                             fontWeight: isPhoneScreen
                                 ? FontWeight.w100

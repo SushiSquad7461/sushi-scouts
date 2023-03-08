@@ -2,13 +2,10 @@
 import "package:flutter/material.dart";
 import "package:flutter/services.dart";
 
-// Package imports:
-import "package:google_fonts/google_fonts.dart";
-
 // Project imports:
 import "../../../logic/data/config_file_reader.dart";
 import "../../../logic/data/data.dart";
-import "../../../logic/device_type.dart";
+import '../../../logic/types/device_type.dart';
 import "../../../logic/helpers/size/screen_size.dart";
 
 class NumberInput extends StatefulWidget {
@@ -122,15 +119,15 @@ class NumberInputState extends State<NumberInput> {
                               ),
                             ),
                             cursorHeight: ScreenSize.height * 0.041,
-                            style: GoogleFonts.mohave(
-                                textStyle: TextStyle(
+                            style: TextStyle(
+                              fontFamily: "Mohave",
                                     fontSize: isPhoneScreen
                                         ? ScreenSize.height * 0.04
                                         : widget.width / 8,
                                     fontWeight: isPhoneScreen
                                         ? FontWeight.w100
                                         : FontWeight.w400,
-                                    color: widget.textColor)),
+                                    color: widget.textColor),
                             textAlign: TextAlign.left,
                             keyboardType: TextInputType.number,
                             inputFormatters: <TextInputFormatter>[

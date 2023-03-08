@@ -30,7 +30,7 @@ class HeaderTitleMobile extends StatelessWidget {
                   fit: BoxFit.cover,
                   child: Image.asset(
                     colors.scaffoldBackgroundColor == Colors.black
-                        ? "./assets/images/header_title_mobile.png"
+                        ? "./assets/images/header_title_mobile_dark.png"
                         : "./assets/images/header_title_mobile.png",
                     // scale: ScreenSize.width / 12,
                   ),

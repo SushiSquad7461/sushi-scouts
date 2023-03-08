@@ -2,9 +2,6 @@
 import "package:flutter/foundation.dart";
 import "package:flutter/material.dart";
 
-// Package imports:
-import "package:google_fonts/google_fonts.dart";
-
 // Project imports:
 import "../../../logic/Constants.dart";
 import '../../../logic/helpers/color/hex_color.dart';
@@ -26,11 +23,11 @@ class _HeaderNavStrategyState extends State<HeaderNavStrategy> {
   @override
   Widget build(BuildContext context) {
     var colors = Theme.of(context);
-    final TextStyle textStyle = GoogleFonts.mohave(
-        textStyle: TextStyle(
+    final TextStyle textStyle = TextStyle(
+      fontFamily: "Mohave",
       color: colors.primaryColor,
       fontSize: ScreenSize.height * 0.025,
-    ));
+    );
 
     List<Widget> text = [];
 
@@ -156,11 +153,10 @@ class _HeaderNavStrategyState extends State<HeaderNavStrategy> {
                               vertical: ScreenSize.height * 0.005),
                         ),
                         textAlign: TextAlign.center,
-                        style: GoogleFonts.mohave(
-                            textStyle: TextStyle(
+                        style: TextStyle(
+                          fontFamily: "Mohave",
                           fontSize: ScreenSize.width * 0.04,
                           color: colors.scaffoldBackgroundColor == Colors.black ? Colors.black : HexColor("#4F4F4F"),
-                        ),
                           ),
                       ),
                     ),

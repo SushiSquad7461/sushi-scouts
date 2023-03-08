@@ -10,7 +10,6 @@ import "package:cloud_firestore/cloud_firestore.dart";
 import "package:flutter_bloc/flutter_bloc.dart";
 import "package:flutter_svg/svg.dart";
 import "package:get/get.dart";
-import "package:google_fonts/google_fonts.dart";
 import "package:localstore/localstore.dart";
 
 // Project imports:
@@ -18,12 +17,13 @@ import "../../logic/blocs/login_bloc/login_cubit.dart";
 import "../../logic/blocs/theme_bloc/theme_cubit.dart";
 import "../../logic/constants.dart";
 import "../../logic/data/config_file_reader.dart";
-import "../../logic/device_type.dart";
+import '../../logic/helpers/style/text_style.dart';
+import '../../logic/types/device_type.dart';
 import "../../logic/helpers/routing_helper.dart";
 import "../../logic/helpers/secret/secret.dart";
 import "../../logic/helpers/secret/secret_loader.dart";
 import "../../logic/helpers/size/screen_size.dart";
-import "../../logic/login_type.dart";
+import '../../logic/types/login_type.dart';
 import "../../logic/models/match_schedule.dart";
 import "../../logic/network/api_repository.dart";
 import "../util/footer/footer.dart";
@@ -46,6 +46,7 @@ class Settings extends StatefulWidget {
 class _SettingsState extends State<Settings> {
   final db = Localstore.instance;
 
+  String? configID = ConfigFileReader.instance.id;
   Secret? secrets;
   int? year;
   bool isLoggingOut = false;
@@ -55,7 +56,7 @@ class _SettingsState extends State<Settings> {
   Future<void> toggleMode(String mode) async {
     BlocProvider.of<ThemeCubit>(context)
         .switchTheme(isDarkMode: mode == "dark" ? true : false);
-    db.collection("preferences").doc("mode").set({
+    db.collection(preferenceDatabaseName).doc("mode").set({
       "mode": mode,
     });
 
@@ -66,10 +67,10 @@ class _SettingsState extends State<Settings> {
 
   Future<void> downloadMatchSchedule() async {
     turnOnLoading();
-    MatchSchedule? schedule = await ApiRepository().getMatchSchedule(
+    MatchSchedule? schedule = await structures().getMatchSchedule(
         BlocProvider.of<LoginCubit>(context).state.eventCode, "qual");
     if (schedule != null) {
-      db.collection("data").doc("schedule").set(schedule.toJson());
+      db.collection(scoutingDataDatabaseName).doc("schedule").set(schedule.toJson());
     }
     turnOffLoading();
   }
@@ -78,8 +79,7 @@ class _SettingsState extends State<Settings> {
     int configYear = year ?? DateTime.now().year;
     int teamNum = BlocProvider.of<LoginCubit>(context).state.teamNum;
 
-    String? configFile =
-        await ApiRepository().getConfigFile(configYear, teamNum);
+    String? configFile = await structures().getConfigFile(configYear, teamNum);
     if (configFile != null) {
       var parsedFile =
           await json.decode((await json.decode(configFile))["config"]);
@@ -104,8 +104,8 @@ class _SettingsState extends State<Settings> {
     var db = Localstore.instance;
     var reader = ConfigFileReader.instance;
     for (var screen in reader.getScoutingMethods()) {
-      db.collection("data").doc("backup$screen").delete();
-      db.collection("data").doc("current$screen").delete();
+      db.collection(scoutingDataDatabaseName).doc("backup$screen").delete();
+      db.collection(scoutingDataDatabaseName).doc("current$screen").delete();
     }
   }
 
@@ -188,13 +188,6 @@ class _SettingsState extends State<Settings> {
   @override
   Widget build(BuildContext context) {
     var colors = Theme.of(context);
-
-    TextStyle textStyle = TextStyle(
-      fontFamily: "Sushi",
-      color: colors.primaryColorDark,
-      fontSize: ScreenSize.swu * 30,
-    );
-
     var isPhoneScreen = isPhone(context);
 
     BoxDecoration boxDecoration = BoxDecoration(
@@ -253,6 +246,13 @@ class _SettingsState extends State<Settings> {
                         fit: StackFit.expand,
                         children: [
                           Align(
+                            alignment: const Alignment(0, -0.95),
+                            child: Text(
+                              configID ?? "no config id",
+                              style: TextStyles.getButtonText(context),
+                            ),
+                          ),
+                          Align(
                             alignment: const Alignment(0, -0.8),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -268,14 +268,10 @@ class _SettingsState extends State<Settings> {
                                         EdgeInsets.all(ScreenSize.width * 0.02),
                                     child: TextButton(
                                         onPressed: () => toggleMode("dark"),
-                                        child: Text(
-                                          "DARK weewoo",
-                                          style: TextStyle(
-                                            fontFamily: "Sushi",
-                                            color: Colors.white,
-                                            fontSize: ScreenSize.swu * 30,
-                                          ),
-                                        )),
+                                        child: Text("DARK MODE",
+                                            style:
+                                                TextStyles.getButtonColoredText(
+                                                    Colors.white))),
                                   ),
                                 ),
                                 Container(
@@ -289,14 +285,10 @@ class _SettingsState extends State<Settings> {
                                         EdgeInsets.all(ScreenSize.width * 0.02),
                                     child: TextButton(
                                         onPressed: () => toggleMode("light"),
-                                        child: Text(
-                                          "light mode",
-                                          style: TextStyle(
-                                            fontFamily: "Sushi",
-                                            color: Colors.black,
-                                            fontSize: ScreenSize.swu * 30,
-                                          ),
-                                        )),
+                                        child: Text("light mode",
+                                            style:
+                                                TextStyles.getButtonColoredText(
+                                                    Colors.black))),
                                   ),
                                 )
                               ],
@@ -316,7 +308,8 @@ class _SettingsState extends State<Settings> {
                                             onPressed: downloadData,
                                             child: Text(
                                               "download data",
-                                              style: textStyle,
+                                              style: TextStyles.getButtonText(
+                                                  context),
                                             )),
                                       ),
                                       Container(
@@ -325,7 +318,8 @@ class _SettingsState extends State<Settings> {
                                             onPressed: uploadData,
                                             child: Text(
                                               "upload data",
-                                              style: textStyle,
+                                              style: TextStyles.getButtonText(
+                                                  context),
                                             )),
                                       ),
                                     ],
@@ -336,7 +330,8 @@ class _SettingsState extends State<Settings> {
                                         onPressed: downloadMatchSchedule,
                                         child: Text(
                                           "download match schedule",
-                                          style: textStyle,
+                                          style:
+                                              TextStyles.getButtonText(context),
                                         )),
                                   ),
                           ),
@@ -384,12 +379,12 @@ class _SettingsState extends State<Settings> {
                                                               0.005),
                                             ),
                                             textAlign: TextAlign.center,
-                                            style: GoogleFonts.mohave(
-                                                textStyle: TextStyle(
-                                              fontSize: ScreenSize.width * 0.05,
-                                              color: colors.primaryColorDark,
-                                              fontWeight: FontWeight.w500,
-                                            )),
+                                            style: TextStyle(
+                                                fontSize:
+                                                    ScreenSize.width * 0.05,
+                                                color: colors.primaryColorDark,
+                                                fontWeight: FontWeight.w500,
+                                                fontFamily: "Mohave"),
                                             keyboardType: TextInputType.number,
                                             inputFormatters: <
                                                 TextInputFormatter>[
@@ -406,7 +401,8 @@ class _SettingsState extends State<Settings> {
                                         ),
                                         Text(
                                           "config file",
-                                          style: textStyle,
+                                          style:
+                                              TextStyles.getButtonText(context),
                                         ),
                                       ])),
                             ),
@@ -418,20 +414,16 @@ class _SettingsState extends State<Settings> {
                               child: isSupervise
                                   ? TextButton(
                                       onPressed: wipeData,
-                                      child: Text(
-                                        "WIPE ALL DATA",
-                                        style: TextStyle(
-                                          fontFamily: "Sushi",
-                                          color: colors.primaryColorDark,
-                                          fontSize: ScreenSize.swu * 30,
-                                          fontWeight: FontWeight.w900,
-                                        ),
-                                      ))
+                                      child: Text("WIPE ALL DATA",
+                                          style:
+                                              TextStyles.getButtonWeightedText(
+                                                  context, FontWeight.w900)))
                                   : TextButton(
                                       onPressed: downloadNames,
                                       child: Text(
                                         "download names",
-                                        style: textStyle,
+                                        style:
+                                            TextStyles.getButtonText(context),
                                       )),
                             ),
                           ),
@@ -445,7 +437,7 @@ class _SettingsState extends State<Settings> {
                                   },
                                   child: Text(
                                     "log out",
-                                    style: textStyle,
+                                    style: TextStyles.getButtonText(context),
                                   )),
                             ),
                           ),

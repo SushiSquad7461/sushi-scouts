@@ -7,7 +7,6 @@ import "package:flutter/material.dart";
 
 // Package imports:
 import "package:flutter_svg/svg.dart";
-import "package:google_fonts/google_fonts.dart";
 import "package:localstore/localstore.dart";
 import "package:qr_code_scanner/qr_code_scanner.dart";
 
@@ -15,9 +14,9 @@ import "package:qr_code_scanner/qr_code_scanner.dart";
 import "../../../logic/constants.dart";
 import "../../../logic/data/config_file_reader.dart";
 import "../../../logic/data/decompressor.dart";
-import "../../../logic/device_type.dart";
+import '../../../logic/types/device_type.dart';
 import "../../../logic/helpers/size/screen_size.dart";
-import "../../../logic/login_type.dart";
+import '../../../logic/types/login_type.dart';
 import "../../../logic/models/compressed_data_model.dart";
 import "../../../logic/models/scouting_data_models/scouting_data.dart";
 import "../../util/footer/supervise_footer.dart";
@@ -85,12 +84,12 @@ class _UploadState extends State<Upload> {
   Widget build(BuildContext context) {
     var colors = Theme.of(context);
 
-    final fontStyle = GoogleFonts.mohave(
-        textStyle: TextStyle(
+    final fontStyle = TextStyle(
+      fontFamily: "Mohave",
       fontSize: 50 * ScreenSize.swu,
       fontWeight: FontWeight.w700,
       color: colors.primaryColorDark,
-    ));
+    );
 
     var phone = isPhone(context);
 

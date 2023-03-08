@@ -162,7 +162,7 @@ class IncrementState extends State<Increment> {
                     icon: Icon(
                       Icons.arrow_right_rounded,
                       color: widget.color,
-                      semanticLabel: "Back Arrow",
+                      semanticLabel: "Forward Arrow",
                     ),
                   ),
                 ],

@@ -6,11 +6,12 @@ import "package:flutter_device_type/flutter_device_type.dart";
 import "package:flutter_svg/svg.dart";
 
 // Project imports:
-import '../../logic/device_type.dart';
+import '../../logic/helpers/asset_helper.dart';
+import '../../logic/types/device_type.dart';
 import '../../logic/helpers/color/hex_color.dart';
 import "../../logic/helpers/routing_helper.dart";
 import "../../logic/helpers/size/screen_size.dart";
-import "../../logic/login_type.dart";
+import '../../logic/types/login_type.dart';
 import "login.dart";
 
 class AppChooser extends StatelessWidget {
@@ -108,7 +109,7 @@ class AppChooser extends StatelessWidget {
                         SizedBox(
                           width: ScreenSize.width * 0.3,
                           child: SvgPicture.asset(
-                            "./assets/images/glitchnori${colors.scaffoldBackgroundColor == Colors.white ? "" : "dark"}.svg",
+                            getImagePath("glitnori", context, "svg")
                           ),
                         ),
                       ],
@@ -126,7 +127,7 @@ class AppChooser extends StatelessWidget {
                       screen: const Login(type: LoginType.supervise))
                 },
                 child: SvgPicture.asset(
-                  "./assets/images/${colors.scaffoldBackgroundColor == Colors.white ? "superviselogo" : "superviselogodark"}.svg",
+                  getImagePath("superviselogo", context, "svg"),
                   width: ScreenSize.width * (phone ? 0.75 : 0.6),
                 ),
               ),
@@ -142,7 +143,7 @@ class AppChooser extends StatelessWidget {
                       ctx: context, screen: const Login(type: LoginType.scout))
                 },
                 child: SvgPicture.asset(
-                  "./assets/images/scoutslogo${colors.scaffoldBackgroundColor == Colors.white ? "" : "dark"}.svg",
+                  getImagePath("scoutslogo", context, "svg"),
                   width: ScreenSize.width * 0.8 * (phone ? 0.85 : 0.7),
                 ),
               ),
@@ -158,7 +159,7 @@ class AppChooser extends StatelessWidget {
                           screen: const Login(type: LoginType.strategy))
                     },
                     child: SvgPicture.asset(
-                      "./assets/images/stratchoice${colors.scaffoldBackgroundColor == Colors.white ? "" : "dark"}.svg",
+                      getImagePath("stratchoice", context, "svg"),
                       width: ScreenSize.width * 0.9 * (phone ? 0.75 : 0.6),
                     ),
                   ),
@@ -168,8 +169,7 @@ class AppChooser extends StatelessWidget {
             Padding(
               padding: EdgeInsets.only(bottom: ScreenSize.height * 0.02),
               child: SvgPicture.asset(
-                  "./assets/images/${colors.scaffoldBackgroundColor == Colors.white ? "choicefooter.svg" : "choocerfooterdark.svg"}",
-                  width: ScreenSize.width),
+                  "./assets/images/${colors.scaffoldBackgroundColor == Colors.white ? "choicefooter.svg" : "choocerfooterdark.svg"}",                  width: ScreenSize.width),
             )
           ]),
     );

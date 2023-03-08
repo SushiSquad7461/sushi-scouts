@@ -27,10 +27,13 @@ class Section {
 
   factory Section.fromJson(Map<String, dynamic> json) {
     Map<String, dynamic> properties = json["properties"];
+
     List<Component> components = (json["components"] as List<dynamic>)
         .map((e) => Component.fromJson(e))
         .toList();
+
     List<Data> values = components.map((e) => Data.fromComponent(e)).toList();
+
     return Section(
         properties["title"],
         HexColor(properties["color"]),
@@ -42,24 +45,29 @@ class Section {
             .toList(),
         HexColor(properties["darkColor"]),
         HexColor(properties["darkTextColor"]),
-        values);
+        values
+    );
   }
 
   Map<String, dynamic> toJson() {
     Map<String, dynamic> res = {};
+
     for (int i = 0; i < components.length; i++) {
       res[components[i].name] = values[i].get();
     }
+
     return res;
   }
 
   List<String> notFilled() {
     List<String> ret = [];
+
     for (int i = 0; i < components.length; i++) {
       if (components[i].required && !values[i].setByUser) {
         ret.add(components[i].name);
       }
     }
+
     return ret;
   }
 
