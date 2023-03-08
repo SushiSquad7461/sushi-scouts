@@ -212,22 +212,6 @@ class _SettingsState extends State<Settings> {
                 currentPage: "settings",
                 isSupervise: isSupervise,
               ),
-              Container(
-                width: ScreenSize.width,
-                height: 10.0,
-                child: Container(
-                  decoration: new BoxDecoration(
-                    color: Colors.black,
-                    shape: BoxShape.rectangle,
-                    borderRadius: BorderRadius.all(Radius.circular(8.0)),
-                  ),
-                ),
-                // decoration: new BoxDecoration(
-                //   color: Colors.black,
-                //   shape: BoxShape.circle,
-                //   border: Border.all(width: 5.0, color: Colors.white),
-                // ),
-              ),
               loading
                   ? SizedBox(
                       width: ScreenSize.width,
@@ -246,10 +230,24 @@ class _SettingsState extends State<Settings> {
                         fit: StackFit.expand,
                         children: [
                           Align(
-                            alignment: const Alignment(0, -0.95),
+                            alignment: const Alignment(0, -1),
                             child: Text(
-                              configID ?? "no config id",
+                              collectionName, 
                               style: TextStyles.getButtonText(context),
+                            ),
+                          ),
+                          Align(
+                            alignment: const Alignment(0, -0.9),
+                            child: SizedBox(
+                              width: ScreenSize.width * 0.9,
+                              height: 10.0,
+                              child: Container(
+                                decoration: const BoxDecoration(
+                                  color: Colors.black,
+                                  shape: BoxShape.rectangle,
+                                  borderRadius: BorderRadius.all(Radius.circular(8.0)),
+                                ),
+                              ),
                             ),
                           ),
                           Align(

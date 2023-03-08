@@ -109,7 +109,7 @@ class AppChooser extends StatelessWidget {
                         SizedBox(
                           width: ScreenSize.width * 0.3,
                           child: SvgPicture.asset(
-                            getImagePath("glitnori", context, "svg")
+                            getImagePath("glitchnori", context, "svg")
                           ),
                         ),
                       ],
