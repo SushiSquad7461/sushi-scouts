@@ -124,7 +124,7 @@ class _LoginState extends State<Login> {
         break;
       case LoginType.scout:
         footerAsset =
-            "$footerAsset/${isPhoneScreen ? "mobile_footer.svg" : "colorbar.svg"}";
+            "$footerAsset/mobile_footer.svg";
         break;
     }
 
@@ -190,12 +190,6 @@ class _LoginState extends State<Login> {
                                         ? 0.15
                                         : 0.075
                                     : 0),
-                            // bottom: ScreenSize.height *
-                            //     (isPhoneScreen
-                            //         ? (widget.type == LoginType.scout
-                            //             ? 0.12
-                            //             : 0.085)
-                            //         : 0),
                           ),
                           child: goButton(isPhoneScreen, colors),
                         ),

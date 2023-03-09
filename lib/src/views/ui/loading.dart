@@ -36,7 +36,7 @@ class LoadingState extends State<Loading> with TickerProviderStateMixin {
   late Timer _timer;
 
   LoadingState() {
-    _timer = Timer(const Duration(milliseconds: 5200), () {
+    _timer = Timer(const Duration(milliseconds: 2000), () {
       RouteHelper.pushReplacement(ctx: context, screen: const AppChooser());
     });
   }

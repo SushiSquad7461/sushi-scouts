@@ -16,7 +16,7 @@ class HeaderTitleTablet extends StatelessWidget {
           padding: EdgeInsets.only(
               left: 20 * ScreenSize.swu,
               right: 20 * ScreenSize.swu,
-              top: 0,
+              top: 0.02 * ScreenSize.height,
               bottom: 0),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
