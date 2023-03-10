@@ -9,6 +9,7 @@ import 'package:localstore/localstore.dart';
 // Project imports:
 import '../../../../logic/blocs/login_bloc/login_cubit.dart';
 import '../../../../logic/blocs/theme_bloc/theme_cubit.dart';
+import '../../../../logic/constants.dart';
 import "../../../../logic/helpers/color/hex_color.dart";
 import "../../../../logic/helpers/size/screen_size.dart";
 import '../../../../logic/network/api_repository.dart';
@@ -39,7 +40,7 @@ class _HeaderTitleMobileStrategyMainState
   }
 
   Future<void> updateTeamNum() async {
-    var dataBaseRank = await db.collection("frcapi").doc("rank").get();
+    var dataBaseRank = await db.collection(frcApiDatabaseName).doc("rank").get();
     if (dataBaseRank != null) {
       String newRank = dataBaseRank["rank"];
       setState(() {

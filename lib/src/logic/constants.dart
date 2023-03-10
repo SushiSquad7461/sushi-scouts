@@ -33,6 +33,21 @@ const Map componentMap = {
 const superviseDatabaseName = "supervise-data";
 const stratDatabaseName = "strat-data";
 const ordinalRankDatabaseName = "ordinal-ranking";
+const preferenceDatabaseName = "preferences";
+const frcApiDatabaseName = "frcapi";
+const scoutingDataDatabaseName = "data";
+const configFileData = "config";
+
+const int minTimestampDifference = 1000; // In milliseconds
+
+const List<String> databaseCollections = [
+  superviseDatabaseName,
+  stratDatabaseName,
+  ordinalRankDatabaseName,
+  preferenceDatabaseName,
+  frcApiDatabaseName,
+  scoutingDataDatabaseName
+];
 
 const Map<String, Widget> stratPages = {
   "ordinal": OrdinalRanking(),

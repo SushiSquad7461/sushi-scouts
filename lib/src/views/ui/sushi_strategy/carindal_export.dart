@@ -18,9 +18,12 @@ import "../../../logic/Constants.dart";
 import "../../../logic/data/config_file_reader.dart";
 import "../../../logic/helpers/size/screen_size.dart";
 import "../../../logic/models/scouting_data_models/page.dart";
+import '../../../logic/models/scouting_data_models/scouting_data.dart';
 import "../../../logic/models/supervise_data.dart";
 import "../../util/header/header_nav_strategy.dart";
 import "../../util/header/header_title/mobile_strategy_main.dart";
+import '../../util/strategy/RobotDisplayIcon.dart';
+import '../../util/strategy/RobotInfo.dart';
 
 class CardinalExport extends StatefulWidget {
   const CardinalExport({Key? key}) : super(key: key);
@@ -34,6 +37,9 @@ class _CardinalExportState extends State<CardinalExport> {
   final db = Localstore.instance;
   final reader = ConfigFileReader.instance;
   Map<String, List<SuperviseData>> robotMap = {};
+  Map<String, List<ScoutingData>> robotMapScouting = {};
+
+  List<ScoutingData>? selected;
 
   @override
   void initState() {
@@ -50,8 +56,10 @@ class _CardinalExportState extends State<CardinalExport> {
               String id = "${toAdd.display1}:${toAdd.display2}";
               if (robotMap.containsKey(id)) {
                 robotMap[id]!.add(toAdd);
+                robotMapScouting[id]!.add(toAdd.data);
               } else {
                 robotMap[id] = [toAdd];
+                robotMapScouting[id] = [toAdd.data];
               }
             }
           }
@@ -157,6 +165,57 @@ class _CardinalExportState extends State<CardinalExport> {
     return directory?.path;
   }
 
+  void exit() {
+    setState(() {
+      selected = null;
+    });
+  }
+
+  List<Widget> getRobotNumList() {
+    List<Widget> ret = [];
+    var colors = Theme.of(context);
+    final textStyle = TextStyle(
+      fontFamily: "Mohave",
+      fontSize: ScreenSize.height * 0.05,
+      color: colors.primaryColorDark,
+    );
+
+    for (final i in robotMapScouting.values) {
+      String identifier =
+          i[0].getCertainDataByName(reader.strat!["profile"]["identifier"]);
+
+      bool currentlySelected = selected != null &&
+          identifier ==
+              selected![0]
+                  .getCertainDataByName(reader.strat!["profile"]["identifier"]);
+
+      if (selected == null || currentlySelected) {
+        ret.add(Padding(
+            padding: EdgeInsets.only(bottom: ScreenSize.height * 0.01),
+            child: GestureDetector(
+              onTap: () async {
+                setState(() {
+                  selected = selected != null ? null : i;
+                });
+              },
+              child: currentlySelected
+                  ? SizedBox(
+                      width: ScreenSize.width * 0.8,
+                      child: Text(
+                        i[0].getCertainDataByName(
+                            reader.strat!["profile"]["identifier"]),
+                        style: textStyle,
+                      ),
+                    )
+                  : RobotDisplayIcon(
+                      teamNum: i[0].getCertainDataByName(
+                          reader.strat!["profile"]["identifier"])),
+            )));
+      }
+    }
+    return ret;
+  }
+
   @override
   Widget build(BuildContext context) {
     var colors = Theme.of(context);
@@ -166,29 +225,57 @@ class _CardinalExportState extends State<CardinalExport> {
         body: Stack(
           children: [
             const HeaderTitleMobileStrategyMain(),
-            Center(
-              child: Container(
-                decoration: BoxDecoration(
-                    color: colors.primaryColor,
-                    border: Border.all(
-                        color: colors.primaryColorDark, width: ScreenSize.width * 0.005),
-                    borderRadius:
-                        BorderRadius.all(Radius.circular(20 * ScreenSize.swu))),
+            Padding(
+              padding: EdgeInsets.only(
+                  top: ScreenSize.height * 0.2, left: ScreenSize.width * 0.0),
+              child: SizedBox(
+                width: ScreenSize.width * 1,
+                height: ScreenSize.height * 0.7,
                 child: Padding(
-                  padding: EdgeInsets.all(ScreenSize.width * 0.02),
-                  child: TextButton(
-                      onPressed: export,
-                      child: Text(
-                        "export data",
-                        style: TextStyle(
-                          fontFamily: "Sushi",
-                          color: colors.primaryColorDark,
-                          fontSize: ScreenSize.swu * 30,
-                        ),
-                      )),
+                  padding: EdgeInsets.only(
+                      left: ScreenSize.width * 0.04,
+                      right: ScreenSize.width * 0.04,
+                      top: ScreenSize.height * 0.02),
+                  child: ListView(
+                    padding: EdgeInsets.zero,
+                    children: getRobotNumList(),
+                  ),
                 ),
               ),
             ),
+            if (selected != null)
+              RobotInfo(
+                exit: exit,
+                selected: selected!,
+                versionName: reader.strat!["cardinal"]["version"]
+              ),
+            if (selected == null)
+              Padding(
+                padding: EdgeInsets.only(top: ScreenSize.height * 0.9),
+                child: Center(
+                  child: Container(
+                    height: ScreenSize.height * 0.05,
+                    width: ScreenSize.width * 0.5,
+                    decoration: BoxDecoration(
+                        color: colors.primaryColor,
+                        border: Border.all(
+                            color: colors.primaryColorDark,
+                            width: ScreenSize.width * 0.005),
+                        borderRadius: BorderRadius.all(
+                            Radius.circular(20 * ScreenSize.swu))),
+                    child: TextButton(
+                        onPressed: export,
+                        child: Text(
+                          "download data",
+                          style: TextStyle(
+                            fontFamily: "Sushi",
+                            color: colors.primaryColorDark,
+                            fontSize: ScreenSize.swu * 30,
+                          ),
+                        )),
+                  ),
+                ),
+              ),
             Padding(
               padding: EdgeInsets.only(top: ScreenSize.height * 0.14),
               child: const HeaderNavStrategy(currPage: "cardinal"),

@@ -34,6 +34,7 @@ import '../util/sushiloading.dart';
 import "../util/themes.dart";
 import "app_choser.dart";
 import "loading.dart";
+import "../../views/ui/sushi_scouts/qr_screen.dart";
 
 class Settings extends StatefulWidget {
   const Settings({Key? key}) : super(key: key);
@@ -55,7 +56,7 @@ class _SettingsState extends State<Settings> {
   Future<void> toggleMode(String mode) async {
     BlocProvider.of<ThemeCubit>(context)
         .switchTheme(isDarkMode: mode == "dark" ? true : false);
-    db.collection("preferences").doc("mode").set({
+    db.collection(preferenceDatabaseName).doc("mode").set({
       "mode": mode,
     });
 
@@ -69,7 +70,7 @@ class _SettingsState extends State<Settings> {
     MatchSchedule? schedule = await structures().getMatchSchedule(
         BlocProvider.of<LoginCubit>(context).state.eventCode, "qual");
     if (schedule != null) {
-      db.collection("data").doc("schedule").set(schedule.toJson());
+      db.collection(scoutingDataDatabaseName).doc("schedule").set(schedule.toJson());
     }
     turnOffLoading();
   }
@@ -103,8 +104,8 @@ class _SettingsState extends State<Settings> {
     var db = Localstore.instance;
     var reader = ConfigFileReader.instance;
     for (var screen in reader.getScoutingMethods()) {
-      db.collection("data").doc("backup$screen").delete();
-      db.collection("data").doc("current$screen").delete();
+      db.collection(scoutingDataDatabaseName).doc("backup$screen").delete();
+      db.collection(scoutingDataDatabaseName).doc("current$screen").delete();
     }
   }
 
@@ -179,6 +180,10 @@ class _SettingsState extends State<Settings> {
       loading = false;
     });
   }
+  
+  void barLength() {
+    
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -190,6 +195,8 @@ class _SettingsState extends State<Settings> {
             color: colors.primaryColorDark, width: 4 * ScreenSize.shu),
         borderRadius: BorderRadius.all(Radius.circular(25 * ScreenSize.swu)));
 
+    ;
+
     return Scaffold(
         resizeToAvoidBottomInset: false,
         body: BlocBuilder<LoginCubit, LoginStates>(builder: (context, state) {
@@ -197,6 +204,7 @@ class _SettingsState extends State<Settings> {
           collectionName = "${state.eventCode}:${ConfigFileReader.instance.id}";
           return Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               HeaderTitle(
                   type: isSupervise ? LoginType.supervise : LoginType.scout),
@@ -222,10 +230,24 @@ class _SettingsState extends State<Settings> {
                         fit: StackFit.expand,
                         children: [
                           Align(
-                            alignment: const Alignment(0, -0.95),
+                            alignment: const Alignment(0, -1),
                             child: Text(
-                              configID ?? "no config id",
+                              collectionName, 
                               style: TextStyles.getButtonText(context),
+                            ),
+                          ),
+                          Align(
+                            alignment: const Alignment(0, -0.9),
+                            child: SizedBox(
+                              width: ScreenSize.width * 0.9,
+                              height: 10.0,
+                              child: Container(
+                                decoration: const BoxDecoration(
+                                  color: Colors.black,
+                                  shape: BoxShape.rectangle,
+                                  borderRadius: BorderRadius.all(Radius.circular(8.0)),
+                                ),
+                              ),
                             ),
                           ),
                           Align(
@@ -244,10 +266,10 @@ class _SettingsState extends State<Settings> {
                                         EdgeInsets.all(ScreenSize.width * 0.02),
                                     child: TextButton(
                                         onPressed: () => toggleMode("dark"),
-                                        child: Text(
-                                          "DARK MODE",
-                                          style: TextStyles.getButtonColoredText(Colors.white) 
-                                        )),
+                                        child: Text("DARK MODE",
+                                            style:
+                                                TextStyles.getButtonColoredText(
+                                                    Colors.white))),
                                   ),
                                 ),
                                 Container(
@@ -261,10 +283,10 @@ class _SettingsState extends State<Settings> {
                                         EdgeInsets.all(ScreenSize.width * 0.02),
                                     child: TextButton(
                                         onPressed: () => toggleMode("light"),
-                                        child: Text(
-                                          "light mode",
-                                          style: TextStyles.getButtonColoredText(Colors.black) 
-                                        )),
+                                        child: Text("light mode",
+                                            style:
+                                                TextStyles.getButtonColoredText(
+                                                    Colors.black))),
                                   ),
                                 )
                               ],
@@ -284,7 +306,8 @@ class _SettingsState extends State<Settings> {
                                             onPressed: downloadData,
                                             child: Text(
                                               "download data",
-                                              style: TextStyles.getButtonText(context),
+                                              style: TextStyles.getButtonText(
+                                                  context),
                                             )),
                                       ),
                                       Container(
@@ -293,7 +316,8 @@ class _SettingsState extends State<Settings> {
                                             onPressed: uploadData,
                                             child: Text(
                                               "upload data",
-                                              style: TextStyles.getButtonText(context),
+                                              style: TextStyles.getButtonText(
+                                                  context),
                                             )),
                                       ),
                                     ],
@@ -304,7 +328,8 @@ class _SettingsState extends State<Settings> {
                                         onPressed: downloadMatchSchedule,
                                         child: Text(
                                           "download match schedule",
-                                          style: TextStyles.getButtonText(context),
+                                          style:
+                                              TextStyles.getButtonText(context),
                                         )),
                                   ),
                           ),
@@ -374,7 +399,8 @@ class _SettingsState extends State<Settings> {
                                         ),
                                         Text(
                                           "config file",
-                                          style: TextStyles.getButtonText(context),
+                                          style:
+                                              TextStyles.getButtonText(context),
                                         ),
                                       ])),
                             ),
@@ -386,15 +412,16 @@ class _SettingsState extends State<Settings> {
                               child: isSupervise
                                   ? TextButton(
                                       onPressed: wipeData,
-                                      child: Text(
-                                        "WIPE ALL DATA",
-                                        style: TextStyles.getButtonWeightedText(context, FontWeight.w900)
-                                      ))
+                                      child: Text("WIPE ALL DATA",
+                                          style:
+                                              TextStyles.getButtonWeightedText(
+                                                  context, FontWeight.w900)))
                                   : TextButton(
                                       onPressed: downloadNames,
                                       child: Text(
                                         "download names",
-                                        style: TextStyles.getButtonText(context),
+                                        style:
+                                            TextStyles.getButtonText(context),
                                       )),
                             ),
                           ),

@@ -6,9 +6,10 @@ import "package:flutter/services.dart";
 
 // Package imports:
 import "package:localstore/localstore.dart";
+import 'package:sushi_scouts/src/logic/data/wipe_database.dart';
 
 // Project imports:
-import "../helpers/constants.dart";
+import '../constants.dart';
 import "../models/scouting_data_models/scouting_data.dart";
 
 class ConfigFileReader {
@@ -45,10 +46,27 @@ class ConfigFileReader {
       strat = parsedFile!["strat"];
       parsedFile = parsedFile!["scouting"];
       defaultConfig = true;
+
+      (await checkConfigFile());
+      logCurrentConfigFile();
+
       return;
     } catch (e) {
       rethrow;
     }
+  }
+
+  Future<void> checkConfigFile() async {
+    final lastConfig =
+        await db.collection(configFileData).doc("currentConfig").get();
+
+    if (lastConfig != null && lastConfig["id"] != null && lastConfig["id"] != id) {
+      WipeLocalStore();
+    }
+  }
+
+  Future<void> logCurrentConfigFile() async {
+    db.collection(configFileData).doc("currentConfig").set({"id": id});
   }
 
   String getSuperviseDisplayString(ScoutingData data, int number) {
@@ -61,7 +79,7 @@ class ConfigFileReader {
   }
 
   Future<void> readInitalConfig() async {
-    // var user = await db.collection("preferences").doc("user").get();
+    // var user = await db.collection(preferenceDatabaseName).doc("user").get();
 
     // if (user != null && user["teamNum"] != null) {
     //   var found = await db

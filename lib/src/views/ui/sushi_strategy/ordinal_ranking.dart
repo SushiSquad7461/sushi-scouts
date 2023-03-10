@@ -10,6 +10,7 @@ import '../../../logic/helpers/color/hex_color.dart';
 import '../../../logic/helpers/size/screen_size.dart';
 import '../../util/header/header_nav_strategy.dart';
 import '../../util/header/header_title/mobile_strategy_main.dart';
+import '../../util/strategy/RobotDisplayIcon.dart';
 
 class OrdinalRanking extends StatefulWidget {
   const OrdinalRanking({Key? key}) : super(key: key);
@@ -31,14 +32,12 @@ class _OrdinalRankingState extends State<OrdinalRanking> {
   }
 
   Future<void> getNames() async {
-    Map<String, String>? newRobotNames = await Localstore.instance
-        .collection("frcapi")
-        .doc("name")
-        .get() as Map<String, String>?;
+    Map<String, dynamic>? newRobotNames =
+        await Localstore.instance.collection(frcApiDatabaseName).doc("name").get();
 
     if (newRobotNames != null) {
       setState(() {
-        robotNames = newRobotNames;
+        robotNames = newRobotNames as Map<String, String>;
       });
     }
   }
@@ -75,91 +74,7 @@ class _OrdinalRankingState extends State<OrdinalRanking> {
       int rank = 1;
       for (int i = rankedCategory.keys.length - 1; i >= 0; --i) {
         String robotName = rankedCategory.keys.toList()[i];
-
-        ret.add(Padding(
-          padding: EdgeInsets.only(bottom: ScreenSize.height * 0.02),
-          child: Container(
-            width: ScreenSize.width * 0.6,
-            height: ScreenSize.height * 0.13,
-            decoration: BoxDecoration(
-              color: colors.primaryColorDark,
-              borderRadius:
-                  BorderRadius.all(Radius.circular(15 * ScreenSize.swu)),
-            ),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Padding(
-                  padding: EdgeInsets.only(
-                      left: ScreenSize.width * 0.03,
-                      right: ScreenSize.width * 0.02),
-                  child: SizedBox(
-                    width: ScreenSize.width * 0.08,
-                    height: ScreenSize.width * 0.08,
-                    child: Stack(children: [
-                      SvgPicture.asset(
-                        "./assets/images/upwardarrow${colors.backgroundColor == Colors.white ? "white" : "dark"}.svg",
-                        width: ScreenSize.width * 0.08,
-                      ),
-                      Center(
-                        child: Text(
-                          rank.toString(),
-                          style: TextStyle(
-                              fontFamily: "Mohave",
-                              fontSize: ScreenSize.height * 0.03,
-                              color: colors.primaryColorDark,
-                              fontWeight: FontWeight.bold),
-                        ),
-                      ),
-                    ]),
-                  ),
-                ),
-                Padding(
-                  padding: EdgeInsets.only(top: ScreenSize.height * 0.01),
-                  child: SizedBox(
-                    height: ScreenSize.height * 0.10,
-                    width: ScreenSize.width * 0.3,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          robotName,
-                          style: TextStyle(
-                            fontFamily: "Mohave",
-                            fontSize: ScreenSize.height * 0.06,
-                            height: 1,
-                            color: colors.primaryColor,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        Text(
-                          robotNames[robotName] != null
-                              ? robotNames[robotName]!.toUpperCase()
-                              : "SUSSY SQUAD",
-                          style: TextStyle(
-                            fontFamily: "Mohave",
-                            fontSize: ScreenSize.height * 0.02,
-                            height: 1,
-                            color: colors.primaryColor,
-                          ),
-                        )
-                      ],
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding: EdgeInsets.only(left: ScreenSize.width * 0.1),
-                  child: SvgPicture.asset(
-                    "./assets/images/rankingtile.svg",
-                    height: ScreenSize.height * 0.13,
-                  ),
-                )
-              ],
-            ),
-          ),
-        ));
-
+        ret.add(RobotDisplayIcon(teamNum: robotName, teamName: robotNames[robotName], rank: rank,));
         rank += 1;
       }
     }
@@ -195,16 +110,15 @@ class _OrdinalRankingState extends State<OrdinalRanking> {
                               onTap: () => setState(() {
                                 selectedRanking = i;
                               }),
-                              child: Text(
-                                i.toUpperCase(),
-                                style: TextStyle(
-                                  fontFamily: "Mohave",
-                                        fontSize: ScreenSize.height * 0.023,
-                                        fontWeight: FontWeight.bold,
-                                        color: selectedRanking == i
-                                            ? colors.primaryColorDark
-                                            : HexColor("#4F4F4F"))),
-                              ),
+                              child: Text(i.toUpperCase(),
+                                  style: TextStyle(
+                                      fontFamily: "Mohave",
+                                      fontSize: ScreenSize.height * 0.023,
+                                      fontWeight: FontWeight.bold,
+                                      color: selectedRanking == i
+                                          ? colors.primaryColorDark
+                                          : HexColor("#4F4F4F"))),
+                            ),
                         ],
                       ),
                     ),

@@ -4,7 +4,7 @@
 */
 
 // Project imports:
-import "../helpers/constants.dart";
+import '../constants.dart';
 import "../models/scouting_data_models/component.dart";
 
 class Data<ValueType> {

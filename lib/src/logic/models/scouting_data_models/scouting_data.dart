@@ -2,6 +2,7 @@
 import "package:localstore/localstore.dart";
 
 // Project imports:
+import '../../constants.dart';
 import "../../data/config_file_reader.dart";
 import "../../data/data.dart";
 import "../match_schedule.dart";
@@ -102,7 +103,7 @@ class ScoutingData {
     List<Component> components = getComponents();
 
     Localstore db = Localstore.instance;
-    var json = (await db.collection("data").doc("schedule").get());
+    var json = (await db.collection(scoutingDataDatabaseName).doc("schedule").get());
 
     bool hasSchedule;
     MatchSchedule? schedule;

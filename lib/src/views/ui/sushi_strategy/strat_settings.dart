@@ -50,7 +50,7 @@ class _StratSettingsState extends State<StratSettings> {
   Future<void> toggleMode(String mode) async {
     BlocProvider.of<ThemeCubit>(context)
         .switchTheme(isDarkMode: mode == "dark" ? true : false);
-    db.collection("preferences").doc("mode").set({
+    db.collection(preferenceDatabaseName).doc("mode").set({
       "mode": mode,
     });
 
@@ -63,8 +63,7 @@ class _StratSettingsState extends State<StratSettings> {
     int configYear = year ?? DateTime.now().year;
     int teamNum = BlocProvider.of<LoginCubit>(context).state.teamNum;
 
-    String? configFile =
-        await structures().getConfigFile(configYear, teamNum);
+    String? configFile = await structures().getConfigFile(configYear, teamNum);
     if (configFile != null) {
       var parsedFile =
           await json.decode((await json.decode(configFile))["config"]);
@@ -126,7 +125,7 @@ class _StratSettingsState extends State<StratSettings> {
         BlocProvider.of<LoginCubit>(context).state.eventCode.toUpperCase());
 
     if (teamNames != null) {
-      db.collection("frcapi").doc("name").set(teamNames);
+      db.collection(frcApiDatabaseName).doc("name").set(teamNames);
     }
 
     turnOffLoading();

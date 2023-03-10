@@ -30,7 +30,8 @@ class structures {
    * Gets dio object for using tba, sets Authorization and If-Modified-Since headers.
    */
   Future<Dio> _getTbaDioObject() async {
-    Secret secrets = await SecretLoader(secretPath: "assets/secrets.json").load();
+    Secret secrets =
+        await SecretLoader(secretPath: "assets/secrets.json").load();
     final dio = Dio();
     dio.options.headers["Authorization"] =
         'Basic ${base64.encode(utf8.encode("${secrets.getApiKey("tbaUsername")}:${secrets.getApiKey("tbaPassword")}"))}';
@@ -61,10 +62,12 @@ class structures {
           await _restClient!.getRanking(event, teamNum, DateTime.now().year);
       Map<String, dynamic> parsed = json.decode(data);
 
+      if (parsed["Rankings"].length == 0) {
+        return 0;
+      }
       return parsed["Rankings"][0]["rank"];
     } catch (error) {
       log(ErrorHelper.handleError(error as Exception));
-      return null;
     }
   }
 

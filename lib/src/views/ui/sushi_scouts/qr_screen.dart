@@ -13,6 +13,7 @@ import "package:qr_flutter/qr_flutter.dart";
 // Project imports:
 import "../../../logic/blocs/login_bloc/login_cubit.dart";
 import "../../../logic/blocs/scouting_method_bloc/scouting_method_cubit.dart";
+import '../../../logic/constants.dart';
 import "../../../logic/data/compressor.dart";
 import "../../../logic/data/config_file_reader.dart";
 import '../../../logic/types/device_type.dart';
@@ -46,7 +47,7 @@ class _QRScreenState extends State<QRScreen> {
   Future<void> convertData() async {
     if (!dataConverted && widget.hasNewData) {
       var unprocessedData =
-          await widget.db.collection("data").doc("current$currPage").get();
+          await widget.db.collection(scoutingDataDatabaseName).doc("current$currPage").get();
       Compressor compressor =
           Compressor(currentScoutingData!.getData(), pageIndex);
       String newData;
@@ -58,7 +59,7 @@ class _QRScreenState extends State<QRScreen> {
         SushiScoutsLogin state =
             BlocProvider.of<LoginCubit>(context).state as SushiScoutsLogin;
         var reader = ConfigFileReader.instance;
-        widget.db.collection("data").doc("current$currPage").set({
+        widget.db.collection(scoutingDataDatabaseName).doc("current$currPage").set({
           "data": [newData],
           "lengths": [newData.length],
           "metadata": {
@@ -83,12 +84,19 @@ class _QRScreenState extends State<QRScreen> {
   }
 
   void deleteBackup() {
-    widget.db.collection("data").doc("backup$currPage").delete();
-    widget.db.collection("data").doc("current$currPage").delete();
+    widget.db.collection(scoutingDataDatabaseName).doc("backup$currPage").delete();
+    widget.db.collection(scoutingDataDatabaseName).doc("current$currPage").delete();
     dataConverted = true;
   }
 
+  Future<int?> getStringLength() async {
+    return stringifiedData?.length;
+  }
+
+
+
   Future<void> getData() async {
+    
     await convertData();
     final compressedData = await widget.db
         .collection("data")
@@ -116,7 +124,7 @@ class _QRScreenState extends State<QRScreen> {
               .doc("backup$currPage")
               .set(dataModel.toJson());
         }
-        widget.db.collection("data").doc("current$currPage").delete();
+        widget.db.collection(scoutingDataDatabaseName).doc("current$currPage").delete();
       }
       setState(() {
         generateCode = true;
@@ -127,9 +135,9 @@ class _QRScreenState extends State<QRScreen> {
 
   Future<void> back() async {
     await convertData();
-    if(widget.hasNewData) {
+    if (widget.hasNewData) {
       currentScoutingData!.nextMatch();
-    }    
+    }
     RouteHelper.pushAndRemoveUntilToScreen(-1, 0,
         ctx: context, screen: const Scouting());
   }

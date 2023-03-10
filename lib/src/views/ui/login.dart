@@ -1,4 +1,5 @@
 // Flutter imports:
+
 import "package:flutter/foundation.dart";
 import "package:flutter/material.dart";
 import "package:flutter/services.dart";
@@ -10,6 +11,7 @@ import "package:localstore/localstore.dart";
 
 // Project imports:
 import "../../logic/blocs/login_bloc/login_cubit.dart";
+import '../../logic/constants.dart';
 import "../../logic/data/config_file_reader.dart";
 import '../../logic/types/device_type.dart';
 import "../../logic/helpers/color/hex_color.dart";
@@ -80,7 +82,7 @@ class _LoginState extends State<Login> {
   }
 
   Future<void> getSavedInfo() async {
-    var userInfo = await db.collection("preferences").doc("user").get();
+    var userInfo = await db.collection(preferenceDatabaseName).doc("user").get();
 
     if (userInfo != null) {
       setState(() {
@@ -122,7 +124,7 @@ class _LoginState extends State<Login> {
         break;
       case LoginType.scout:
         footerAsset =
-            "$footerAsset/${isPhoneScreen ? "mobile_footer.svg" : "colorbar.svg"}";
+            "$footerAsset/mobile_footer.svg";
         break;
     }
 
@@ -188,12 +190,6 @@ class _LoginState extends State<Login> {
                                         ? 0.15
                                         : 0.075
                                     : 0),
-                            // bottom: ScreenSize.height *
-                            //     (isPhoneScreen
-                            //         ? (widget.type == LoginType.scout
-                            //             ? 0.12
-                            //             : 0.085)
-                            //         : 0),
                           ),
                           child: goButton(isPhoneScreen, colors),
                         ),
@@ -205,7 +201,19 @@ class _LoginState extends State<Login> {
                 widget.type != LoginType.supervise
                     ? nameBox(isPhoneScreen, colors)
                     : passwordBox(isPhoneScreen, colors),
-                const ReturnButton(),
+                Align(
+                    // HOME button
+                    alignment: const Alignment(0, 0.5),
+                    child: IconButton(
+                      padding: EdgeInsets.zero,
+                      icon: Icon(Icons.home,
+                          size: ScreenSize.swu * 75,
+                          color: colors.primaryColorDark),
+                      onPressed: () {
+                        RouteHelper.pushAndRemoveUntilToScreen(0, 0,
+                            screen: const AppChooser(), ctx: context);
+                      },
+                    ))
               ],
             ),
           ),
@@ -282,8 +290,7 @@ class _LoginState extends State<Login> {
                 EdgeInsets.symmetric(vertical: ScreenSize.height * 0.005),
           ),
           textAlign: TextAlign.center,
-          style: 
-              TextStyle(
+          style: TextStyle(
             fontSize: ScreenSize.width * 0.07,
             color: colors.primaryColorDark,
             fontFamily: "Mohave",
@@ -327,12 +334,11 @@ class _LoginState extends State<Login> {
             ),
             textAlign: TextAlign.center,
             style: TextStyle(
-              fontSize: ScreenSize.width * 0.07,
-              color: colors.primaryColorDark,
-              fontFamily: "Mohave"
-            ),
+                fontSize: ScreenSize.width * 0.07,
+                color: colors.primaryColorDark,
+                fontFamily: "Mohave"),
             onChanged: (String? val) => setState(() {
-                  eventCode = val;
+                  eventCode = val?.toUpperCase().trim();
                 })),
       ),
     );
@@ -364,10 +370,9 @@ class _LoginState extends State<Login> {
             ),
             textAlign: TextAlign.center,
             style: TextStyle(
-              fontSize: ScreenSize.width * 0.07,
-              color: colors.primaryColorDark,
-              fontFamily: "Mohave"
-            ),
+                fontSize: ScreenSize.width * 0.07,
+                color: colors.primaryColorDark,
+                fontFamily: "Mohave"),
             onChanged: (String? val) => setState(() {
                   password = val;
                 })),
@@ -402,38 +407,13 @@ class _LoginState extends State<Login> {
             ),
             textAlign: TextAlign.center,
             style: TextStyle(
-              fontSize: ScreenSize.width * 0.07,
-              color: colors.primaryColorDark,
-              fontFamily: "Mohave"
-            ),
+                fontSize: ScreenSize.width * 0.07,
+                color: colors.primaryColorDark,
+                fontFamily: "Mohave"),
             onChanged: (String? val) => setState(() {
                   name = val;
                 })),
       ),
     );
-  }
-}
-
-class ReturnButton extends StatelessWidget {
-  const ReturnButton({
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Align(
-        // HOME button
-        alignment: const Alignment(0, 0.5),
-        child: IconButton(
-          padding: EdgeInsets.zero,
-          icon: Icon(
-            Icons.home,
-            size: ScreenSize.swu * 75,
-          ),
-          onPressed: () {
-            RouteHelper.pushAndRemoveUntilToScreen(0, 0,
-                screen: const AppChooser(), ctx: context);
-          },
-        ));
   }
 }
