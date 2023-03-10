@@ -11,9 +11,11 @@ import "package:flutter_bloc/flutter_bloc.dart";
 import "package:flutter_svg/svg.dart";
 import "package:get/get.dart";
 import "package:localstore/localstore.dart";
+import 'package:sushi_scouts/src/logic/models/scouting_data_models/scouting_data.dart';
 
 // Project imports:
 import "../../logic/blocs/login_bloc/login_cubit.dart";
+import '../../logic/blocs/scouting_method_bloc/scouting_method_cubit.dart';
 import "../../logic/blocs/theme_bloc/theme_cubit.dart";
 import "../../logic/constants.dart";
 import "../../logic/data/config_file_reader.dart";
@@ -72,6 +74,8 @@ class _SettingsState extends State<Settings> {
     if (schedule != null) {
       db.collection(scoutingDataDatabaseName).doc("schedule").set(schedule.toJson());
     }
+    ScoutingData.updateSchedule();
+    ConfigFileReader.instance.updateAllData();
     turnOffLoading();
   }
 

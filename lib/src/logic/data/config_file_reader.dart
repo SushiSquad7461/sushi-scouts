@@ -34,6 +34,12 @@ class ConfigFileReader {
 
   static ConfigFileReader get instance => _reader;
 
+  void updateAllData() {
+    for(ScoutingData scoutingData in data.values) {
+      scoutingData.nextMatch(empty: false);
+    }
+  }
+
   Future<void> readConfig() async {
     try {
       final String stringifiedFile =
