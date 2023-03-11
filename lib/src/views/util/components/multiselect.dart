@@ -5,6 +5,7 @@ import "package:flutter/material.dart";
 import "../../../logic/data/data.dart";
 import '../../../logic/types/device_type.dart';
 import "../../../logic/helpers/size/screen_size.dart";
+import "../../../logic/helpers/style/text_style.dart";
 
 class Multiselect extends StatefulWidget {
   final String name;
@@ -183,11 +184,8 @@ class MultiselectState extends State<Multiselect> {
                         change(value);
                       })),
               Text(value,
-                  style: TextStyle(
-                      fontFamily: "Sushi",
-                      fontSize: width / (isPhoneScreen ? 9 : 8),
-                      fontWeight: FontWeight.bold,
-                      color: widget.textColor)),
+                  style: TextStyles.getTitleText(
+                      width / (isPhoneScreen ? 9 : 8), widget.textColor)),
             ]),
           ),
         ));

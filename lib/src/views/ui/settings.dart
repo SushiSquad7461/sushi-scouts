@@ -34,6 +34,7 @@ import '../util/sushiloading.dart';
 import "../util/themes.dart";
 import "app_choser.dart";
 import "loading.dart";
+import "login.dart";
 
 class Settings extends StatefulWidget {
   const Settings({Key? key}) : super(key: key);
@@ -69,7 +70,10 @@ class _SettingsState extends State<Settings> {
     MatchSchedule? schedule = await structures().getMatchSchedule(
         BlocProvider.of<LoginCubit>(context).state.eventCode, "qual");
     if (schedule != null) {
-      db.collection(scoutingDataDatabaseName).doc("schedule").set(schedule.toJson());
+      db
+          .collection(scoutingDataDatabaseName)
+          .doc("schedule")
+          .set(schedule.toJson());
     }
     turnOffLoading();
   }

@@ -20,6 +20,7 @@ import '../../logic/types/login_type.dart';
 import "../util/header/header_title/header_title.dart";
 import "../util/popups/incorrect_password.dart";
 import 'app_choser.dart';
+import 'error_popup.dart';
 import "sushi_scouts/scouting.dart";
 import "sushi_strategy/robot_profiles.dart";
 import "sushi_supervise/upload.dart";
@@ -81,7 +82,8 @@ class _LoginState extends State<Login> {
   }
 
   Future<void> getSavedInfo() async {
-    var userInfo = await db.collection(preferenceDatabaseName).doc("user").get();
+    var userInfo =
+        await db.collection(preferenceDatabaseName).doc("user").get();
 
     if (userInfo != null) {
       setState(() {
@@ -206,19 +208,20 @@ class _LoginState extends State<Login> {
                 widget.type != LoginType.supervise
                     ? nameBox(isPhoneScreen, colors)
                     : passwordBox(isPhoneScreen, colors),
-                Align(
-                    // HOME button
-                    alignment: const Alignment(0, 0.5),
-                    child: IconButton(
-                      padding: EdgeInsets.zero,
-                      icon: Icon(Icons.home,
-                          size: ScreenSize.swu * 75,
-                          color: colors.primaryColorDark),
-                      onPressed: () {
-                        RouteHelper.pushAndRemoveUntilToScreen(0, 0,
-                            screen: const AppChooser(), ctx: context);
-                      },
-                    ))
+                // Align(
+                //     // HOME button
+                //     alignment: const Alignment(0, 0.5),
+                //     child: IconButton(
+                //       padding: EdgeInsets.zero,
+                //       icon: Icon(Icons.home,
+                //           size: ScreenSize.swu * 75,
+                //           color: colors.primaryColorDark),
+                //       onPressed: () {
+                //         RouteHelper.pushAndRemoveUntilToScreen(0, 0,
+                //             screen: const AppChooser(), ctx: context);
+                //       },
+                //     ))
+                // LoginIndicator()
               ],
             ),
           ),
@@ -422,3 +425,24 @@ class _LoginState extends State<Login> {
     );
   }
 }
+
+// class AppIndicator extends StatelessWidget {
+//   final LoginType loginType;
+//   final Color selectColor = Color.fromARGB(255, 255, 255, 255);
+//   Color otherColor = Color.fromARGB(255, 255, 255, 255);
+
+//   const AppIndicator({Key? key, this.loginType = LoginType.scout})
+//       : super(key: key);
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return Row(
+//       children: [
+//         Icon(Icons.circle,
+//             color: loginType == LoginType.scout
+//                 ? Color.fromARGB(1, 255, 255, 255)
+//                 : Color.fromARGB(1, 255, 255, 255))
+//       ],
+//     );
+//   }
+// }

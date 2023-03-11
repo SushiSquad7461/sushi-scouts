@@ -15,13 +15,41 @@ import '../../logic/types/login_type.dart';
 import "login.dart";
 
 class AppChooser extends StatelessWidget {
-  const AppChooser({Key? key}) : super(key: key);
+  static int SCOUTING_PAGE = 0;
+  static int SUPERVISE_PAGE = 1;
+  static int STRATEGY_PAGE = 2;
+
+  final int startingPage;
+
+  const AppChooser({Key? key, this.startingPage = 0}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     var colors = Theme.of(context);
     var phone = isPhone(context);
+    final controller = PageController(initialPage: startingPage);
 
+    return PageView(controller: controller, children: [
+      const Login(type: LoginType.scout),
+      const Login(type: LoginType.supervise),
+      const Login(type: LoginType.strategy)
+    ]);
+    //return AppChoserWidget(colors: colors, phone: phone);
+  }
+}
+/*
+class AppChoserWidget extends StatelessWidget {
+  const AppChoserWidget({
+    Key? key,
+    required this.colors,
+    required this.phone,
+  }) : super(key: key);
+
+  final ThemeData colors;
+  final bool phone;
+
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: Column(
@@ -109,8 +137,7 @@ class AppChooser extends StatelessWidget {
                         SizedBox(
                           width: ScreenSize.width * 0.3,
                           child: SvgPicture.asset(
-                            getImagePath("glitnori", context, "svg")
-                          ),
+                              getImagePath("glitnori", context, "svg")),
                         ),
                       ],
                     ),
@@ -169,9 +196,10 @@ class AppChooser extends StatelessWidget {
             Padding(
               padding: EdgeInsets.only(bottom: ScreenSize.height * 0.02),
               child: SvgPicture.asset(
-                  "./assets/images/${colors.scaffoldBackgroundColor == Colors.white ? "choicefooter.svg" : "choocerfooterdark.svg"}",                  width: ScreenSize.width),
+                  "./assets/images/${colors.scaffoldBackgroundColor == Colors.white ? "choicefooter.svg" : "choocerfooterdark.svg"}",
+                  width: ScreenSize.width),
             )
           ]),
     );
   }
-}
+}*/

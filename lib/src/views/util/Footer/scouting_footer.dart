@@ -118,8 +118,9 @@ class _ScoutingFooterState extends State<ScoutingFooter> {
                                   ? moveToPreviousPage()
                                   : RouteHelper.pushAndRemoveUntilToScreen(1, 0,
                                       ctx: context,
-                                      screen:
-                                          const Login(type: LoginType.scout));
+                                      screen: AppChooser(
+                                        startingPage: AppChooser.SCOUTING_PAGE,
+                                      ));
                             },
                             iconSize: ScreenSize.width / 6.0,
                             icon: Icon(

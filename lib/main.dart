@@ -1,4 +1,6 @@
 // Flutter imports:
+import 'dart:ui';
+
 import "package:flutter/material.dart";
 
 // Package imports:
@@ -14,6 +16,7 @@ import "src/logic/blocs/theme_bloc/theme_cubit.dart";
 import "src/logic/helpers/size/screen_size.dart";
 import "src/views/ui/loading.dart";
 import "src/views/util/themes.dart";
+import "src/views/ui/error_popup.dart";
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -21,6 +24,11 @@ Future<void> main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+
+  PlatformDispatcher.instance.onError = (exception, stackTrace) {
+    ErrorPopup.onError(exception, stackTrace);
+    return true;
+  };
 
   runApp(const Wrapper());
 }

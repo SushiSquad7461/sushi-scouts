@@ -5,6 +5,7 @@ import "package:flutter/material.dart";
 import "../../../logic/data/data.dart";
 import '../../../logic/types/device_type.dart';
 import "../../../logic/helpers/size/screen_size.dart";
+import "../../../logic/helpers/style/text_style.dart";
 
 class TextInput extends StatefulWidget {
   final String name;
@@ -119,14 +120,10 @@ class TextInputState extends State<TextInput> {
                             maxWidth: widget.width * 0.95,
                             maxHeight: widget.width * 0.56),
                       ),
-                      style: TextStyle(
-                        fontFamily: "Mohave",
-                              fontSize: phone
-                                  ? ScreenSize.height * 0.03
-                                  : widget.width / 15,
-                              fontWeight:
-                                  phone ? FontWeight.w100 : FontWeight.w400,
-                              color: widget.textColor),
+                      style: TextStyles.getStandardText(
+                          phone ? ScreenSize.height * 0.03 : widget.width / 15,
+                          phone ? FontWeight.w100 : FontWeight.w400,
+                          widget.textColor),
                       keyboardType: TextInputType.multiline,
                       onFieldSubmitted: (value) {
                         widget.data.set(double.parse(value), setByUser: true);
@@ -137,13 +134,11 @@ class TextInputState extends State<TextInput> {
                       alignment: const Alignment(0, 0),
                       child: Text(
                         widget.name,
-                        style: TextStyle(
-                            fontFamily: "Sushi",
-                            fontSize: phone
+                        style: TextStyles.getTitleText(
+                            phone
                                 ? ScreenSize.height * 0.03
                                 : widget.width / 12,
-                            fontWeight: FontWeight.bold,
-                            color: widget.textColor),
+                            widget.textColor),
                       ))
               ]),
             )));

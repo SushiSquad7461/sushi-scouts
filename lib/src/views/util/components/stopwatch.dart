@@ -3,6 +3,7 @@ import 'dart:async';
 
 import "package:flutter/material.dart";
 import "package:flutter/services.dart";
+import "../../../logic/helpers/style/text_style.dart";
 
 // Project imports:
 import "../../../logic/data/data.dart";
@@ -69,20 +70,31 @@ class StopwatchState extends State<StopwatchC> {
   @override
   void initState() {
     super.initState();
+    _value = double.parse(widget.data.get()).round();
+    _controller.text = _value.toString();
     stopwatch = Stopwatch();
-    _timer = Timer.periodic(const Duration(milliseconds: 30), (timer) {
-      setState(() {});
+    _timer = Timer.periodic(const Duration(milliseconds: 1000), (timer) {
+      setState(() {
+        if (stopwatch.isRunning) {
+          _controller.text = stopwatch.elapsed.inSeconds.toString();
+        }
+        // _controller.text = stopwatch.isRunning
+        //     ? stopwatch.elapsed.inSeconds.toString()
+        //     : _value.toString();
+      });
     });
   }
 
   //stops stopwatch if its running, if its not resets
   void stop() {
     //stop or reset
+    print("hello");
     stopwatch.isRunning ? stopwatch.stop() : stopwatch.reset();
     setState(() {
+      _controller.text = stopwatch.elapsed.inSeconds.toString();
       _value = stopwatch.elapsed.inSeconds;
+      widget.data.set(_value.toDouble(), setByUser: true);
     });
-    widget.data.set(stopwatch.elapsed.inSeconds.toDouble(), setByUser: true);
   }
 
   void start() {
@@ -115,9 +127,7 @@ class StopwatchState extends State<StopwatchC> {
   @override
   Widget build(BuildContext context) {
     _value = double.parse(widget.data.get()).round();
-    _controller.text = stopwatch.isRunning
-        ? stopwatch.elapsed.inSeconds.toString()
-        : _value.toString();
+
     double width = widget.width;
     return Padding(
         padding: EdgeInsets.only(
@@ -130,11 +140,8 @@ class StopwatchState extends State<StopwatchC> {
             child: Column(children: [
               Row(mainAxisAlignment: MainAxisAlignment.center, children: [
                 Text(widget.name,
-                    style: TextStyle(
-                        fontFamily: "Sushi",
-                        fontSize: width / 8,
-                        fontWeight: FontWeight.bold,
-                        color: widget.textColor)),
+                    style:
+                        TextStyles.getTitleText(width / 8, widget.textColor)),
               ]),
               Center(
                   child: Row(
@@ -164,18 +171,12 @@ class StopwatchState extends State<StopwatchC> {
                         constraints: BoxConstraints(
                             maxWidth: width / 5.0, maxHeight: width / 5.0),
                       ),
-                      style: TextStyle(
-                          fontFamily: "Sushi",
-                          fontSize: width / 20,
-                          fontWeight: FontWeight.bold,
-                          color: widget.textColor),
+                      style:
+                          TextStyles.getTitleText(width / 20, widget.textColor),
                       textAlign: TextAlign.center,
-                      keyboardType: TextInputType.number,
-                      inputFormatters: <TextInputFormatter>[
-                        FilteringTextInputFormatter.digitsOnly
-                      ],
                       onFieldSubmitted: (strValue) {
                         _value = int.parse(strValue);
+                        print(_value);
                         widget.data
                             .set(double.parse(strValue), setByUser: true);
                       }),

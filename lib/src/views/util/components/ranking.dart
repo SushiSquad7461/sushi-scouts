@@ -5,6 +5,7 @@ import "package:flutter/material.dart";
 import "../../../logic/data/data.dart";
 import '../../../logic/types/device_type.dart';
 import "../../../logic/helpers/size/screen_size.dart";
+import "../../../logic/helpers/style/text_style.dart";
 
 class Ranking extends StatefulWidget {
   final String name;
@@ -82,7 +83,7 @@ class RankingState extends State<Ranking> {
 
       widget.data.set(widget.data.get(), setByUser: true);
     } else {
-      widget.data.set(widget.values!.toString(), setByUser: true); 
+      widget.data.set(widget.values!.toString(), setByUser: true);
     }
 
     bool isPhoneScreen = isPhone(context);
@@ -91,12 +92,9 @@ class RankingState extends State<Ranking> {
       children: [
         Text(
           widget.values![0],
-          style: TextStyle(
-              fontFamily: "Sushi",
-              fontSize:
-                  isPhoneScreen ? ScreenSize.height * 0.03 : widget.width / 8,
-              fontWeight: FontWeight.bold,
-              color: widget.textColor),
+          style: TextStyles.getTitleText(
+              isPhoneScreen ? ScreenSize.height * 0.03 : widget.width / 8,
+              widget.textColor),
         ),
         for (int i = 1; i < widget.values!.length; i++)
           Row(
@@ -122,13 +120,9 @@ class RankingState extends State<Ranking> {
               ),
               Text(
                 widget.values![i],
-                style: TextStyle(
-                    fontFamily: "Sushi",
-                    fontSize: isPhoneScreen
-                        ? ScreenSize.height * 0.03
-                        : widget.width / 8,
-                    fontWeight: FontWeight.bold,
-                    color: widget.textColor),
+                style: TextStyles.getTitleText(
+                    isPhoneScreen ? ScreenSize.height * 0.03 : widget.width / 8,
+                    widget.textColor),
               ),
             ],
           )

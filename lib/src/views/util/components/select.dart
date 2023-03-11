@@ -5,6 +5,7 @@ import "package:flutter/material.dart";
 import "../../../logic/data/data.dart";
 import '../../../logic/types/device_type.dart';
 import "../../../logic/helpers/size/screen_size.dart";
+import "../../../logic/helpers/style/text_style.dart";
 
 class Select extends StatefulWidget {
   final String name;
@@ -168,15 +169,14 @@ class SelectState extends State<Select> {
                                 )
                               : null,
                           child: Text(value,
-                              style: TextStyle(
-                                  fontFamily: "Sushi",
-                                  fontSize: isPhone(context)
+                              style: TextStyles.getTitleText(
+                                  isPhone(context)
                                       ? ScreenSize.height * 0.03
                                       : widget.width / 8,
-                                  fontWeight: isPhoneScreen
+                                  widget.textColor,
+                                  weight: isPhoneScreen
                                       ? FontWeight.w200
-                                      : FontWeight.bold,
-                                  color: widget.textColor)),
+                                      : FontWeight.bold)),
                         ),
                       ),
                     ]),

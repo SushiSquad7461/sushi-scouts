@@ -7,6 +7,7 @@ import "../../../logic/data/config_file_reader.dart";
 import "../../../logic/data/data.dart";
 import '../../../logic/types/device_type.dart';
 import "../../../logic/helpers/size/screen_size.dart";
+import "../../../logic/helpers/style/text_style.dart";
 
 class NumberInput extends StatefulWidget {
   final String name;
@@ -119,15 +120,14 @@ class NumberInputState extends State<NumberInput> {
                               ),
                             ),
                             cursorHeight: ScreenSize.height * 0.041,
-                            style: TextStyle(
-                              fontFamily: "Mohave",
-                                    fontSize: isPhoneScreen
-                                        ? ScreenSize.height * 0.04
-                                        : widget.width / 8,
-                                    fontWeight: isPhoneScreen
-                                        ? FontWeight.w100
-                                        : FontWeight.w400,
-                                    color: widget.textColor),
+                            style: TextStyles.getStandardText(
+                                isPhoneScreen
+                                    ? ScreenSize.height * 0.04
+                                    : widget.width / 8,
+                                isPhoneScreen
+                                    ? FontWeight.w100
+                                    : FontWeight.w400,
+                                widget.textColor),
                             textAlign: TextAlign.left,
                             keyboardType: TextInputType.number,
                             inputFormatters: <TextInputFormatter>[

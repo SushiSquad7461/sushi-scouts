@@ -26,12 +26,32 @@ class TextStyles {
     );
   }
 
-  static TextStyle getButtonWeightedText(var context, FontWeight weight,) {
+  static TextStyle getButtonWeightedText(
+    var context,
+    FontWeight weight,
+  ) {
     return TextStyle(
-      fontFamily: Fonts.sushi,
-      color: Theme.of(context).primaryColorDark,
-      fontSize: Sizes.buttonFontSize,
-      fontWeight: weight
-    );
+        fontFamily: Fonts.sushi,
+        color: Theme.of(context).primaryColorDark,
+        fontSize: Sizes.buttonFontSize,
+        fontWeight: weight);
+  }
+
+  static TextStyle getTitleText(double size, Color color,
+      {FontWeight? weight}) {
+    return TextStyle(
+        fontFamily: Fonts.sushi,
+        fontSize: size,
+        fontWeight: (weight != null) ? weight : FontWeight.bold,
+        color: color);
+  }
+
+  static TextStyle getStandardText(
+      double size, FontWeight weight, Color color) {
+    return TextStyle(
+        fontFamily: Fonts.mohave,
+        fontSize: size,
+        fontWeight: weight,
+        color: color);
   }
 }

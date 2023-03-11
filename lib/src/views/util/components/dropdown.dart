@@ -5,6 +5,7 @@ import "package:flutter/material.dart";
 import "../../../logic/data/data.dart";
 import '../../../logic/types/device_type.dart';
 import "../../../logic/helpers/size/screen_size.dart";
+import "../../../../src/logic/helpers/style/text_style.dart";
 
 class Dropdown extends StatefulWidget {
   final String name;
@@ -89,18 +90,13 @@ class DropdownState extends State<Dropdown> {
                 Padding(
                   padding: EdgeInsets.only(
                       right: ScreenSize.width * (isPhoneScreen ? 0.01 : 0)),
-                  child: Text(
-                    widget.name.toUpperCase(),
-                    style: TextStyle(
-                      fontFamily: "Mohave",
-                      fontSize: isPhoneScreen
-                          ? ScreenSize.height * 0.04
-                          : widget.width / 8,
-                      fontWeight:
+                  child: Text(widget.name.toUpperCase(),
+                      style: TextStyles.getStandardText(
+                          isPhoneScreen
+                              ? ScreenSize.height * 0.04
+                              : widget.width / 8,
                           isPhoneScreen ? FontWeight.w100 : FontWeight.w400,
-                      color: widget.textColor,
-                    ),
-                  ),
+                          widget.textColor)),
                 ),
                 Expanded(
                     child: Align(
@@ -112,14 +108,10 @@ class DropdownState extends State<Dropdown> {
                           icon: const Icon(Icons.arrow_drop_down_rounded),
                           elevation: (width / 100.0 * 3).floor(),
                           dropdownColor: colors.scaffoldBackgroundColor,
-                          style: TextStyle(
-                            fontFamily: "Mohave",
-                            fontSize: widget.width / (isPhoneScreen ? 7 : 8),
-                            fontWeight: isPhoneScreen
-                                ? FontWeight.w100
-                                : FontWeight.w400,
-                            color: widget.textColor,
-                          ),
+                          style: TextStyles.getStandardText(
+                              widget.width / (isPhoneScreen ? 7 : 8),
+                              isPhoneScreen ? FontWeight.w100 : FontWeight.w400,
+                              widget.textColor),
                           alignment: AlignmentDirectional.center,
                           onChanged: (String? newValue) {
                             if (newValue != null) {

@@ -4,6 +4,7 @@ import "package:flutter/services.dart";
 
 // Project imports:
 import "../../../logic/data/data.dart";
+import "../../../logic/helpers/style/text_style.dart";
 
 class Increment extends StatefulWidget {
   final String name;
@@ -94,12 +95,10 @@ class IncrementState extends State<Increment> {
             width: width * 0.9,
             child: Column(children: [
               Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                Text(widget.name,
-                    style: TextStyle(
-                        fontFamily: "Sushi",
-                        fontSize: width / 8,
-                        fontWeight: FontWeight.bold,
-                        color: widget.textColor)),
+                Text(
+                  widget.name,
+                  style: TextStyles.getTitleText(width / 8, widget.textColor),
+                ),
               ]),
               Center(
                   child: Row(
@@ -134,20 +133,16 @@ class IncrementState extends State<Increment> {
                         constraints: BoxConstraints(
                             maxWidth: width / 5.0, maxHeight: width / 5.0),
                       ),
-                      style: TextStyle(
-                          fontFamily: "Sushi",
-                          fontSize: width / 20,
-                          fontWeight: FontWeight.bold,
-                          color: widget.textColor),
+                      style:
+                          TextStyles.getTitleText(width / 20, widget.textColor),
                       textAlign: TextAlign.center,
                       keyboardType: TextInputType.number,
                       inputFormatters: <TextInputFormatter>[
                         FilteringTextInputFormatter.digitsOnly
                       ],
                       onFieldSubmitted: (strValue) {
-                        _value = int.parse(strValue);
-                        widget.data
-                            .set(double.parse(strValue), setByUser: true);
+                        // _value = int.parse(strValue);
+                        widget.data.set(int.parse(strValue), setByUser: true);
                       }),
                   IconButton(
                     padding: const EdgeInsets.all(0),
