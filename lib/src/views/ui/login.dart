@@ -1,4 +1,5 @@
 // Flutter imports:
+
 import "package:flutter/foundation.dart";
 import "package:flutter/material.dart";
 import "package:flutter/services.dart";
@@ -125,7 +126,7 @@ class _LoginState extends State<Login> {
         break;
       case LoginType.scout:
         footerAsset =
-            "$footerAsset/${isPhoneScreen ? "mobile_footer.svg" : "colorbar.svg"}";
+            "$footerAsset/mobile_footer.svg";
         break;
     }
 
@@ -191,12 +192,6 @@ class _LoginState extends State<Login> {
                                         ? 0.15
                                         : 0.075
                                     : 0),
-                            // bottom: ScreenSize.height *
-                            //     (isPhoneScreen
-                            //         ? (widget.type == LoginType.scout
-                            //             ? 0.12
-                            //             : 0.085)
-                            //         : 0),
                           ),
                           child: goButton(isPhoneScreen, colors),
                         ),
@@ -346,7 +341,7 @@ class _LoginState extends State<Login> {
                 color: colors.primaryColorDark,
                 fontFamily: "Mohave"),
             onChanged: (String? val) => setState(() {
-                  eventCode = val;
+                  eventCode = val?.toUpperCase().trim();
                 })),
       ),
     );

@@ -34,6 +34,7 @@ import '../util/sushiloading.dart';
 import "../util/themes.dart";
 import "app_choser.dart";
 import "loading.dart";
+import "../../views/ui/sushi_scouts/qr_screen.dart";
 import "login.dart";
 
 class Settings extends StatefulWidget {
@@ -184,6 +185,8 @@ class _SettingsState extends State<Settings> {
     });
   }
 
+  void barLength() {}
+
   @override
   Widget build(BuildContext context) {
     var colors = Theme.of(context);
@@ -194,6 +197,8 @@ class _SettingsState extends State<Settings> {
             color: colors.primaryColorDark, width: 4 * ScreenSize.shu),
         borderRadius: BorderRadius.all(Radius.circular(25 * ScreenSize.swu)));
 
+    ;
+
     return Scaffold(
         resizeToAvoidBottomInset: false,
         body: BlocBuilder<LoginCubit, LoginStates>(builder: (context, state) {
@@ -201,6 +206,7 @@ class _SettingsState extends State<Settings> {
           collectionName = "${state.eventCode}:${ConfigFileReader.instance.id}";
           return Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               HeaderTitle(
                   type: isSupervise ? LoginType.supervise : LoginType.scout),
@@ -226,10 +232,25 @@ class _SettingsState extends State<Settings> {
                         fit: StackFit.expand,
                         children: [
                           Align(
-                            alignment: const Alignment(0, -0.95),
+                            alignment: const Alignment(0, -1),
                             child: Text(
-                              configID ?? "no config id",
+                              collectionName,
                               style: TextStyles.getButtonText(context),
+                            ),
+                          ),
+                          Align(
+                            alignment: const Alignment(0, -0.9),
+                            child: SizedBox(
+                              width: ScreenSize.width * 0.9,
+                              height: 10.0,
+                              child: Container(
+                                decoration: const BoxDecoration(
+                                  color: Colors.black,
+                                  shape: BoxShape.rectangle,
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(8.0)),
+                                ),
+                              ),
                             ),
                           ),
                           Align(
