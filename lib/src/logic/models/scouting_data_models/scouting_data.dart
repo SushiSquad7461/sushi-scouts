@@ -110,7 +110,9 @@ class ScoutingData {
    */
   void nextMatch({bool empty = true}) {
     var reader = ConfigFileReader.instance;
-    currPage = 0;
+    if (empty) {
+      currPage = 0;
+    }
     List<Data> data = getData();
     List<Component> components = getComponents();
 

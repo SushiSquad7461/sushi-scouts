@@ -54,7 +54,6 @@ class ScoutingLayout extends StatelessWidget {
           values = valueNames;
         }
         Data currData = section.values[i];
-        print(values);
 
         if (!componentMap.containsKey(currComponent.component)) {
           throw ErrorDescription(
