@@ -39,12 +39,12 @@ class ErrorPopup extends StatelessWidget {
         child: Container(
             color: Color.fromARGB(255, 255, 0, 0),
             child: SizedBox(
+              width: 100,
+              height: 100,
               child: Center(
                 child: Text(errorText,
                     style: TextStyles.getTitleText(10, Colors.white)),
               ),
-              width: 100,
-              height: 100,
             )));
   }
 }

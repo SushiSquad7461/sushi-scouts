@@ -14,7 +14,7 @@ import "../../logic/helpers/size/screen_size.dart";
 import '../../logic/types/login_type.dart';
 import "login.dart";
 
-class AppChooser extends StatelessWidget {
+class AppChooser extends StatefulWidget {
   static int SCOUTING_PAGE = 0;
   static int SUPERVISE_PAGE = 1;
   static int STRATEGY_PAGE = 2;
@@ -24,19 +24,102 @@ class AppChooser extends StatelessWidget {
   const AppChooser({Key? key, this.startingPage = 0}) : super(key: key);
 
   @override
+  State<AppChooser> createState() => _AppChooserState();
+}
+
+class _AppChooserState extends State<AppChooser> {
+  int index = 0;
+
+  final Color selectColor = Color.fromARGB(255, 0, 0, 0);
+  final Color otherColor = Color.fromARGB(125, 0, 0, 0);
+
+  LoginType getType(int i) {
+    if (i == AppChooser.SCOUTING_PAGE) return LoginType.scout;
+    if (i == AppChooser.SUPERVISE_PAGE) return LoginType.supervise;
+    if (i == AppChooser.STRATEGY_PAGE) return LoginType.strategy;
+    return LoginType.scout;
+  }
+
+  Widget iconWidget(int t) {
+    return Icon(
+        size: 20,
+        Icons.circle,
+        color: getType(index) == getType(t) ? selectColor : otherColor);
+  }
+
+  Widget appIndicator(PageController controller) {
+    return Positioned(
+        bottom: 20,
+        left: ScreenSize.width * 0.5 - 45,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            IconButton(
+                constraints: BoxConstraints(minWidth: 30),
+                padding: EdgeInsetsDirectional.zero,
+                onPressed: () {
+                  setState(() {
+                    controller.animateToPage(AppChooser.SCOUTING_PAGE,
+                        duration: Duration(milliseconds: 500),
+                        curve: Curves.easeInOut);
+                  });
+                },
+                iconSize: 20,
+                icon: iconWidget(AppChooser.SCOUTING_PAGE)),
+            IconButton(
+                constraints: BoxConstraints(minWidth: 30),
+                padding: EdgeInsets.all(0),
+                onPressed: () {
+                  setState(() {
+                    controller.animateToPage(AppChooser.SUPERVISE_PAGE,
+                        duration: Duration(milliseconds: 500),
+                        curve: Curves.easeInOut);
+                  });
+                },
+                iconSize: 20,
+                icon: iconWidget(AppChooser.SUPERVISE_PAGE)),
+            IconButton(
+                constraints: BoxConstraints(minWidth: 30),
+                padding: EdgeInsets.all(0),
+                onPressed: () {
+                  setState(() {
+                    controller.animateToPage(AppChooser.STRATEGY_PAGE,
+                        duration: Duration(milliseconds: 500),
+                        curve: Curves.easeInOut);
+                  });
+                },
+                iconSize: 20,
+                icon: iconWidget(AppChooser.STRATEGY_PAGE))
+          ],
+        ));
+  }
+
+  @override
   Widget build(BuildContext context) {
     var colors = Theme.of(context);
     var phone = isPhone(context);
-    final controller = PageController(initialPage: startingPage);
+    final controller = PageController(initialPage: widget.startingPage);
 
-    return PageView(controller: controller, children: [
-      const Login(type: LoginType.scout),
-      const Login(type: LoginType.supervise),
-      const Login(type: LoginType.strategy)
-    ]);
-    //return AppChoserWidget(colors: colors, phone: phone);
+    return Stack(
+      children: [
+        PageView(
+            onPageChanged: (index) {
+              setState(() {
+                this.index = index;
+              });
+            },
+            controller: controller,
+            children: [
+              const Login(type: LoginType.scout),
+              const Login(type: LoginType.supervise),
+              const Login(type: LoginType.strategy)
+            ]),
+        appIndicator(controller)
+      ],
+    );
   }
 }
+
 /*
 class AppChoserWidget extends StatelessWidget {
   const AppChoserWidget({

@@ -108,6 +108,10 @@ class _LoginState extends State<Login> {
     }
   }
 
+  LoginType getType() {
+    return widget.type;
+  }
+
   @override
   Widget build(BuildContext context) {
     var colors = Theme.of(context);
@@ -125,8 +129,7 @@ class _LoginState extends State<Login> {
             "$footerAsset/${isPhoneScreen ? "mobilesupervisefooter${colors.scaffoldBackgroundColor == Colors.black ? "dark" : ""}.svg" : colors.scaffoldBackgroundColor == Colors.black ? "loginsupervisefooterdark.svg" : "./assets/images/loginfootersupervise.svg"}";
         break;
       case LoginType.scout:
-        footerAsset =
-            "$footerAsset/mobile_footer.svg";
+        footerAsset = "$footerAsset/mobile_footer.svg";
         break;
     }
 
@@ -157,7 +160,6 @@ class _LoginState extends State<Login> {
                     : 0.9),
             child: Stack(
               fit: StackFit.expand,
-              alignment: Alignment.bottomCenter,
               children: [
                 Align(
                   alignment:
@@ -203,20 +205,6 @@ class _LoginState extends State<Login> {
                 widget.type != LoginType.supervise
                     ? nameBox(isPhoneScreen, colors)
                     : passwordBox(isPhoneScreen, colors),
-                // Align(
-                //     // HOME button
-                //     alignment: const Alignment(0, 0.5),
-                //     child: IconButton(
-                //       padding: EdgeInsets.zero,
-                //       icon: Icon(Icons.home,
-                //           size: ScreenSize.swu * 75,
-                //           color: colors.primaryColorDark),
-                //       onPressed: () {
-                //         RouteHelper.pushAndRemoveUntilToScreen(0, 0,
-                //             screen: const AppChooser(), ctx: context);
-                //       },
-                //     ))
-                // LoginIndicator()
               ],
             ),
           ),
@@ -421,23 +409,3 @@ class _LoginState extends State<Login> {
   }
 }
 
-// class AppIndicator extends StatelessWidget {
-//   final LoginType loginType;
-//   final Color selectColor = Color.fromARGB(255, 255, 255, 255);
-//   Color otherColor = Color.fromARGB(255, 255, 255, 255);
-
-//   const AppIndicator({Key? key, this.loginType = LoginType.scout})
-//       : super(key: key);
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Row(
-//       children: [
-//         Icon(Icons.circle,
-//             color: loginType == LoginType.scout
-//                 ? Color.fromARGB(1, 255, 255, 255)
-//                 : Color.fromARGB(1, 255, 255, 255))
-//       ],
-//     );
-//   }
-// }
