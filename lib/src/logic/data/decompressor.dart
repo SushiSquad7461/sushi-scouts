@@ -2,6 +2,7 @@
 import "dart:convert";
 
 // Project imports:
+import '../models/scouting_data_models/scouting_data.dart';
 import "data.dart";
 
 class Decompressor {
@@ -37,7 +38,8 @@ class Decompressor {
   }
 
   //returns true if there is more data
-  bool decompress(List<Data> data) {
+  bool decompress(ScoutingData scoutingData) {
+    List<Data> data = scoutingData.getData();
     if (!screenGotten) {
       throw ("get screen first");
     }
@@ -77,7 +79,7 @@ class Decompressor {
     for (int i = 0; i < length; i++) {
       bytes.add(getInt(8));
     }
-    return utf8.decode(bytes);
+    return String.fromCharCodes(bytes);
   }
 
   int getInt(int len) {

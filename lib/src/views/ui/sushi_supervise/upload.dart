@@ -304,7 +304,7 @@ class _UploadState extends State<Upload> {
           String screen = decompressor.getScreen();
           newData = reader.generateNewScoutingData(screen);
 
-          decompressor.decompress(newData.getData());
+          decompressor.decompress(newData);
           toAdd.add(newData);
         }
         controller?.pauseCamera();
