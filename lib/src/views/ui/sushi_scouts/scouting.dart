@@ -41,6 +41,7 @@ class ScoutingState extends State<Scouting> {
           }
           currentScoutingData = reader
               .getScoutingData((state as ScoutingMethodsInitialized).method);
+          currentScoutingData!.nextMatch(empty: false);
           return SizedBox(
             width: ScreenSize.width,
             height: ScreenSize.height,

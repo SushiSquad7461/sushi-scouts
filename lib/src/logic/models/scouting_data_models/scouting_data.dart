@@ -15,6 +15,10 @@ class ScoutingData {
   Map<String, Screen> pages = {};
   List<String> pageNames = [];
 
+  
+  static bool hasSchedule = false;
+  static MatchSchedule? schedule;
+
   // Indicates which page of the scouting data we are on
   int currPage = 0;
 
@@ -61,10 +65,6 @@ class ScoutingData {
       return false;
     }
 
-    if (currPage == 0) {
-      nextMatch(empty: false);
-    }
-
     currPage += 1;
 
     return true;
@@ -93,20 +93,9 @@ class ScoutingData {
     return pages[pageNames[currPage]];
   }
 
-  /*
-   * Resets data for the next match
-   */
-  void nextMatch({bool empty = true}) async {
-    var reader = ConfigFileReader.instance;
-    currPage = 0;
-    List<Data> data = getData();
-    List<Component> components = getComponents();
-
+  static void updateSchedule() async {
     Localstore db = Localstore.instance;
     var json = (await db.collection(scoutingDataDatabaseName).doc("schedule").get());
-
-    bool hasSchedule;
-    MatchSchedule? schedule;
 
     if (json != null) {
       hasSchedule = true;
@@ -114,6 +103,18 @@ class ScoutingData {
     } else {
       hasSchedule = false;
     }
+  }
+
+  /*
+   * Resets data for the next match
+   */
+  void nextMatch({bool empty = true}) {
+    var reader = ConfigFileReader.instance;
+    if (empty) {
+      currPage = 0;
+    }
+    List<Data> data = getData();
+    List<Component> components = getComponents();
 
     int? matchNumber;
     int? station;

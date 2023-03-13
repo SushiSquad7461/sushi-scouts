@@ -72,6 +72,9 @@ class NumberInputState extends State<NumberInput> {
         if (widget.setCommonValue) {
           reader.setCommonValue(widget.name, int.parse(_controller.text));
         }
+        if (widget.name == "match #") {
+          reader.updateAllData();
+        }
       }
     });
     super.initState();
