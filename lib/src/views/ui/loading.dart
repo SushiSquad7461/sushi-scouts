@@ -25,14 +25,14 @@ class Loading extends StatefulWidget {
 }
 
 class LoadingState extends State<Loading> with TickerProviderStateMixin {
-  late final AnimationController _controller = AnimationController(
-    duration: const Duration(seconds: 2),
-    vsync: this,
-  )..repeat(reverse: true);
-  late final Animation<double> _animation = CurvedAnimation(
-    parent: _controller,
-    curve: Curves.bounceIn,
-  );
+  // late final AnimationController _controller = AnimationController(
+  //   duration: const Duration(seconds: 2),
+  //   vsync: this,
+  // )..repeat(reverse: true);
+  // late final Animation<double> _animation = CurvedAnimation(
+  //   parent: _controller,
+  //   curve: Curves.bounceIn,
+  // );
   late Timer _timer;
 
   LoadingState() {
@@ -43,7 +43,7 @@ class LoadingState extends State<Loading> with TickerProviderStateMixin {
 
   @override
   void dispose() {
-    _controller.dispose();
+    // _controller.dispose();
     _timer.cancel();
     super.dispose();
   }
@@ -67,12 +67,33 @@ class LoadingState extends State<Loading> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     loadConfig();
+    // return Scaffold(
+    //     body: Center(
+    //         child: RotationTransition(
+    //             turns: _animation,
+    //             child: SvgPicture.asset(
+    //                 "./assets/images/${Theme.of(context).scaffoldBackgroundColor == Colors.black ? "darknori" : "nori"}.svg",
+    //                 width: ScreenSize.swu * 200))));
+
     return Scaffold(
+        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         body: Center(
-            child: RotationTransition(
-                turns: _animation,
-                child: SvgPicture.asset(
-                    "./assets/images/${Theme.of(context).scaffoldBackgroundColor == Colors.black ? "darknori" : "nori"}.svg",
-                    width: ScreenSize.swu * 200))));
+          child: SizedBox(
+            width: ScreenSize.width / 1.25,
+            child: TweenAnimationBuilder<double>(
+              duration: const Duration(milliseconds: 1900),
+              curve: Curves.easeInOut,
+              tween: Tween<double>(
+                begin: 0,
+                end: 1,
+              ),
+              builder: (context, value, _) => LinearProgressIndicator(
+                value: value,
+                color: Theme.of(context).primaryColorDark,
+                minHeight: ScreenSize.height / 30,
+              ),
+            ),
+          ),
+        ));
   }
 }

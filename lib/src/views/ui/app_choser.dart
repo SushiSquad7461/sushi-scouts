@@ -30,9 +30,6 @@ class AppChooser extends StatefulWidget {
 class _AppChooserState extends State<AppChooser> {
   int index = 0;
 
-  final Color selectColor = Color.fromARGB(255, 0, 0, 0);
-  final Color otherColor = Color.fromARGB(125, 0, 0, 0);
-
   LoginType getType(int i) {
     if (i == AppChooser.SCOUTING_PAGE) return LoginType.scout;
     if (i == AppChooser.SUPERVISE_PAGE) return LoginType.supervise;
@@ -40,11 +37,18 @@ class _AppChooserState extends State<AppChooser> {
     return LoginType.scout;
   }
 
+  Color pickColor(bool selected) {
+    if (selected) return Theme.of(context).primaryColorDark;
+    return Color.fromARGB(
+        100,
+        Theme.of(context).primaryColorDark.red,
+        Theme.of(context).primaryColorDark.green,
+        Theme.of(context).primaryColorDark.blue);
+  }
+
   Widget iconWidget(int t) {
     return Icon(
-        size: 20,
-        Icons.circle,
-        color: getType(index) == getType(t) ? selectColor : otherColor);
+        size: 20, Icons.circle, color: pickColor(getType(index) == getType(t)));
   }
 
   Widget appIndicator(PageController controller) {
@@ -109,10 +113,10 @@ class _AppChooserState extends State<AppChooser> {
               });
             },
             controller: controller,
-            children: [
-              const Login(type: LoginType.scout),
-              const Login(type: LoginType.supervise),
-              const Login(type: LoginType.strategy)
+            children: const [
+              Login(type: LoginType.scout),
+              Login(type: LoginType.supervise),
+              Login(type: LoginType.strategy)
             ]),
         appIndicator(controller)
       ],
