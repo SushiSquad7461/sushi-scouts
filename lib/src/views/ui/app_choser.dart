@@ -42,7 +42,7 @@ class _AppChooserState extends State<AppChooser> {
 
   Widget iconWidget(int t) {
     return Icon(
-        size: 20,
+        size: 15,
         Icons.circle,
         color: getType(index) == getType(t) ? selectColor : otherColor);
   }
