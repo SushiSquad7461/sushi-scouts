@@ -48,7 +48,9 @@ class _AppChooserState extends State<AppChooser> {
 
   Widget iconWidget(int t) {
     return Icon(
-        size: 20, Icons.circle, color: pickColor(getType(index) == getType(t)));
+        size: 15,
+        Icons.circle,
+        color: pickColor(getType(index) == getType(t)));
   }
 
   Widget appIndicator(PageController controller) {
