@@ -38,9 +38,26 @@ class _RobotProfilesState extends State<RobotProfiles> {
   String searchQuery = "";
   List<String> picUrls = [];
 
+  Map<String, String> robotNames = {};
+
+  Future<void> getNames() async {
+    Map<String, dynamic>? newRobotNames = await Localstore.instance
+        .collection(frcApiDatabaseName)
+        .doc("name")
+        .get();
+
+    if (newRobotNames != null) {
+      setState(() {
+        robotNames = Map<String, String>.from(newRobotNames);
+      });
+    }
+  }
+
   @override
   void initState() {
     super.initState();
+
+    getNames();
 
     search.addListener(() => setState(() {
           searchQuery = search.text;
@@ -110,7 +127,9 @@ class _RobotProfilesState extends State<RobotProfiles> {
                     )
                   : RobotDisplayIcon(
                       teamNum: i[0].getCertainDataByName(
-                          reader.strat!["profile"]["identifier"])),
+                          reader.strat!["profile"]["identifier"]), teamName: robotNames[i[0].getCertainDataByName(
+                          reader.strat!["profile"]["identifier"] as String)]
+                    ),
             )));
       }
     }
@@ -153,10 +172,9 @@ class _RobotProfilesState extends State<RobotProfiles> {
             ),
             if (selected != null)
               RobotInfo(
-                exit: exit,
-                selected: selected!,
-                versionName: reader.strat!["profile"]["version"]
-              ),
+                  exit: exit,
+                  selected: selected!,
+                  versionName: reader.strat!["profile"]["version"]),
             const HeaderTitleMobileStrategyMain(),
             Padding(
               padding: EdgeInsets.only(top: ScreenSize.height * 0.14),

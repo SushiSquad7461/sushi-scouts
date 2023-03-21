@@ -124,6 +124,8 @@ class structures {
    */
   Future<List<String>?> getImage(int teamNum) async {
     final dio = Dio();
+    Secret secrets =
+        await SecretLoader(secretPath: "assets/secrets.json").load();
 
     dio.options.headers["X-TBA-Auth-Key"] = secrets.getApiKey("tbaReadKey");
     dio.options.headers["accept"] = "application/json";
@@ -137,7 +139,6 @@ class structures {
       List<dynamic> parsed = json.decode(data);
 
       List<String> ret = [];
-
       for (final i in parsed) {
         if (i["type"]! == "imgur") {
           ret.add(i["view_url"]);

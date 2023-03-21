@@ -53,7 +53,10 @@ class _CardinalExportState extends State<CardinalExport> {
           for (var name in scoutingData.keys) {
             final toAdd = SuperviseData.fromJson(scoutingData[name]);
             if (toAdd.methodName == method && toAdd.deleted == false) {
-              String id = "${toAdd.display1}:${toAdd.display2}";
+              // String id = "${toAdd.display1}:${toAdd.display2}";
+              String id = toAdd.data.getCertainDataByName(
+                  reader.strat!["cardinal"]["identifier"]);
+
               if (robotMap.containsKey(id)) {
                 robotMap[id]!.add(toAdd);
                 robotMapScouting[id]!.add(toAdd.data);
@@ -182,12 +185,12 @@ class _CardinalExportState extends State<CardinalExport> {
 
     for (final i in robotMapScouting.values) {
       String identifier =
-          i[0].getCertainDataByName(reader.strat!["profile"]["identifier"]);
+          i[0].getCertainDataByName(reader.strat!["cardinal"]["identifier"]);
 
       bool currentlySelected = selected != null &&
           identifier ==
-              selected![0]
-                  .getCertainDataByName(reader.strat!["profile"]["identifier"]);
+              selected![0].getCertainDataByName(
+                  reader.strat!["cardinal"]["identifier"]);
 
       if (selected == null || currentlySelected) {
         ret.add(Padding(
@@ -203,7 +206,7 @@ class _CardinalExportState extends State<CardinalExport> {
                       width: ScreenSize.width * 0.8,
                       child: Text(
                         i[0].getCertainDataByName(
-                            reader.strat!["profile"]["identifier"]),
+                            reader.strat!["cardinal"]["identifier"]),
                         style: textStyle,
                       ),
                     )
@@ -245,10 +248,9 @@ class _CardinalExportState extends State<CardinalExport> {
             ),
             if (selected != null)
               RobotInfo(
-                exit: exit,
-                selected: selected!,
-                versionName: reader.strat!["cardinal"]["version"]
-              ),
+                  exit: exit,
+                  selected: selected!,
+                  versionName: reader.strat!["cardinal"]["version"]),
             if (selected == null)
               Padding(
                 padding: EdgeInsets.only(top: ScreenSize.height * 0.9),
