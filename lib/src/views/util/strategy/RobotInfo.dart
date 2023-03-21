@@ -64,7 +64,7 @@ class _RobotInfoState extends State<RobotInfo> {
       }
     }
 
-    setPic(0);
+    setPic(picIndex > widgetPicList.length-1 ? widgetPicList.length-1 : picIndex);
   }
 
   void setPic(int newIndex) {
@@ -114,7 +114,6 @@ class _RobotInfoState extends State<RobotInfo> {
       String displayString = version.getCertainDataByName(i.name).toLowerCase();
 
       if (displayString.length > 39) {
-        print("in");
         displayString = displayString.replaceFirst(RegExp(r'.'), "\n", 39);
       }
 
@@ -279,7 +278,10 @@ class _RobotInfoState extends State<RobotInfo> {
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
                     GestureDetector(
-                      onTap: () => setState(() => index -= index > 0 ? 1 : 0),
+                      onTap: () => setState(() {
+                        index -= index > 0 ? 1 : 0;
+                        generateWidgetPicList(); // TODO: make more efficent
+                      }),
                       child: Padding(
                         padding:
                             EdgeInsets.only(bottom: ScreenSize.height * 0.01),
@@ -299,8 +301,10 @@ class _RobotInfoState extends State<RobotInfo> {
                             fontFamily: "Sushi",
                             color: colors.primaryColor)),
                     GestureDetector(
-                      onTap: () => setState(() =>
-                          index += index < widget.selected.length - 1 ? 1 : 0),
+                      onTap: () => setState(() {
+                        index += index < widget.selected.length - 1 ? 1 : 0;
+                        getPicList();
+                      }),
                       child: Padding(
                         padding:
                             EdgeInsets.only(bottom: ScreenSize.height * 0.01),

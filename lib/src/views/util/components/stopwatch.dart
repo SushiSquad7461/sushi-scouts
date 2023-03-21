@@ -88,7 +88,6 @@ class StopwatchState extends State<StopwatchC> {
   //stops stopwatch if its running, if its not resets
   void stop() {
     //stop or reset
-    print("hello");
     stopwatch.isRunning ? stopwatch.stop() : stopwatch.reset();
     setState(() {
       _controller.text = stopwatch.elapsed.inSeconds.toString();
