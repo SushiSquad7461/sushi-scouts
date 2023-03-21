@@ -18,7 +18,11 @@ class RobotInfo extends StatefulWidget {
   final List<ScoutingData> selected;
   final Function exit;
   final String versionName;
-  const RobotInfo({Key? key, required this.exit, required this.selected, required this.versionName})
+  const RobotInfo(
+      {Key? key,
+      required this.exit,
+      required this.selected,
+      required this.versionName})
       : super(key: key);
 
   @override
@@ -60,7 +64,7 @@ class _RobotInfoState extends State<RobotInfo> {
       }
     }
 
-    setPic(0);
+    setPic(picIndex > widgetPicList.length-1 ? widgetPicList.length-1 : picIndex);
   }
 
   void setPic(int newIndex) {
@@ -82,8 +86,10 @@ class _RobotInfoState extends State<RobotInfo> {
     String identifier = widget.selected[index]
         .getCertainDataByName(reader.strat!["profile"]["identifier"]);
 
-    var databaseList =
-        (await db.collection(frcApiDatabaseName).doc("$identifier images").get());
+    var databaseList = (await db
+        .collection(frcApiDatabaseName)
+        .doc("$identifier images")
+        .get());
 
     picList = databaseList == null ? [] : databaseList["imageList"];
 
@@ -105,6 +111,12 @@ class _RobotInfoState extends State<RobotInfo> {
     int underlineIndex = 0;
 
     for (final i in version.getComponents()) {
+      String displayString = version.getCertainDataByName(i.name).toLowerCase();
+
+      if (displayString.length > 39) {
+        displayString = displayString.replaceFirst(RegExp(r'.'), "\n", 39);
+      }
+
       if (i.component != "text input" &&
           i.component != "ranking" &&
           i.name != reader.strat!["profile"]["identifier"] &&
@@ -134,16 +146,15 @@ class _RobotInfoState extends State<RobotInfo> {
                   ),
                 ),
                 Padding(
-                  padding: EdgeInsets.only(left: ScreenSize.width * 0.05),
-                  child: Text(
-                    version.getCertainDataByName(i.name).toLowerCase(),
-                    style: TextStyle(
-                      color: colors.primaryColor,
-                      fontFamily: "Sushi",
-                      fontSize: ScreenSize.height * 0.015,
-                    ),
-                  ),
-                )
+                    padding: EdgeInsets.only(left: ScreenSize.width * 0.05),
+                    child: Text(
+                      displayString,
+                      style: TextStyle(
+                        color: colors.primaryColor,
+                        fontFamily: "Sushi",
+                        fontSize: ScreenSize.height * 0.015,
+                      ),
+                    ))
               ],
             ),
           ),
@@ -161,10 +172,16 @@ class _RobotInfoState extends State<RobotInfo> {
   }
 
   @override
+  void initState() {
+    super.initState();
+    getPicList();
+  }
+
+  @override
   Widget build(BuildContext context) {
     var colors = Theme.of(context);
 
-    getPicList();
+    // getPicList();
 
     return Padding(
       padding: EdgeInsets.only(top: ScreenSize.height * 0.28),
@@ -261,7 +278,10 @@ class _RobotInfoState extends State<RobotInfo> {
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
                     GestureDetector(
-                      onTap: () => setState(() => index -= index > 0 ? 1 : 0),
+                      onTap: () => setState(() {
+                        index -= index > 0 ? 1 : 0;
+                        generateWidgetPicList(); // TODO: make more efficent
+                      }),
                       child: Padding(
                         padding:
                             EdgeInsets.only(bottom: ScreenSize.height * 0.01),
@@ -281,8 +301,10 @@ class _RobotInfoState extends State<RobotInfo> {
                             fontFamily: "Sushi",
                             color: colors.primaryColor)),
                     GestureDetector(
-                      onTap: () => setState(() =>
-                          index += index < widget.selected.length - 1 ? 1 : 0),
+                      onTap: () => setState(() {
+                        index += index < widget.selected.length - 1 ? 1 : 0;
+                        getPicList();
+                      }),
                       child: Padding(
                         padding:
                             EdgeInsets.only(bottom: ScreenSize.height * 0.01),

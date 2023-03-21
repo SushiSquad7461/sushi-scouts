@@ -37,7 +37,7 @@ class _OrdinalRankingState extends State<OrdinalRanking> {
 
     if (newRobotNames != null) {
       setState(() {
-        robotNames = newRobotNames as Map<String, String>;
+        robotNames = Map<String, String>.from(newRobotNames);
       });
     }
   }
