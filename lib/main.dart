@@ -25,11 +25,6 @@ Future<void> main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
 
-  // PlatformDispatcher.instance.onError = (exception, stackTrace) {
-  //   ErrorPopup.onError(exception, stackTrace);
-  //   return true;
-  // };
-
   runApp(const Wrapper());
 }
 

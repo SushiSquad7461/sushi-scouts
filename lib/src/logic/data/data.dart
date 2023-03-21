@@ -4,6 +4,9 @@
 */
 
 // Project imports:
+import 'dart:ffi';
+// import 'dart:js_util';
+
 import '../constants.dart';
 import "../models/scouting_data_models/component.dart";
 
@@ -28,7 +31,12 @@ class Data<ValueType> {
 
   // Set the current value
   void set(ValueType newVal, {setByUser = false}) {
-    currValue = newVal;
+    if (newVal.runtimeType == int) {
+      currValue = (double.parse((newVal.toString()))) as ValueType;
+    } else {
+      currValue = newVal;
+    }
+
     this.setByUser = setByUser;
 
     if (setByUser) {

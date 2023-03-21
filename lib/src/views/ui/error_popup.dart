@@ -27,10 +27,10 @@ class ErrorPopup extends StatelessWidget {
   final String errorText;
   const ErrorPopup({Key? key, required this.errorText}) : super(key: key);
 
-  static ErrorPopup onError(Object exception, StackTrace stackTrace) {
-    String txt = exception.toString();
-    return ErrorPopup(errorText: txt);
-  }
+  // static onError(Exception e, [StackTrace stackTrace]) {
+  //   ErrorPopup(errorText: errorText)
+  // }
+
 
   @override
   Widget build(BuildContext context) {

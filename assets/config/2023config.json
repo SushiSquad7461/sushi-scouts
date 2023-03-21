@@ -359,7 +359,7 @@
         "ordinal":{
             "pregame" : {
                 "footer": "info",
-                "sections" : [
+            "sections" : [
                     {
                         "properties":{
                             "title":"",
@@ -521,7 +521,7 @@
         },
         "pit":{
             "page 1" : {
-                "footer": " ",
+                "footer": "7461",
                 "sections" : [
                     {
                         "properties":{
@@ -610,7 +610,7 @@
                 ]
             },
             "page 2" : {
-                "footer": " ",
+                "footer": "7461",
                 "sections" : [
                     {
                         "properties":{
@@ -707,7 +707,7 @@
                 ]
             },
             "page 3" : {
-                "footer": " ",
+                "footer": "7461",
                 "sections" : [
                     {
                         "properties":{

@@ -65,12 +65,14 @@ class NumberInputState extends State<NumberInput> {
     reader = ConfigFileReader.instance;
     _controller = TextEditingController(
         text: widget.data.setByUser ? widget.data.get().toString() : null);
+
     _focusNode = FocusNode();
     _controller.addListener(() {
       if (_controller.text != "") {
         widget.data.set(double.parse(_controller.text), setByUser: true);
         if (widget.setCommonValue) {
-          reader.setCommonValue(widget.name, int.parse(_controller.text));
+          reader.setCommonValue(
+              widget.name, double.parse(_controller.text).toInt());
         }
         if (widget.name == "match #") {
           reader.updateAllData();
@@ -142,7 +144,9 @@ class NumberInputState extends State<NumberInput> {
                               var reader = ConfigFileReader.instance;
                               if (widget.setCommonValue) {
                                 reader.setCommonValue(
-                                    widget.name, int.parse(value));
+                                    widget.name,
+                                    int.parse(
+                                        value.replaceAll(RegExp(r'.0'), '')));
                               }
                             }),
                       ))

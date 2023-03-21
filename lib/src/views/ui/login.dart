@@ -129,7 +129,7 @@ class _LoginState extends State<Login> {
             "$footerAsset/${isPhoneScreen ? "mobilesupervisefooter${colors.scaffoldBackgroundColor == Colors.black ? "dark" : ""}.svg" : colors.scaffoldBackgroundColor == Colors.black ? "loginsupervisefooterdark.svg" : "./assets/images/loginfootersupervise.svg"}";
         break;
       case LoginType.scout:
-        // footerAsset = "$footerAsset/mobile_footer.svg";
+        footerAsset = "$footerAsset/mobile_footer.svg";
         break;
     }
 

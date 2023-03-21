@@ -73,6 +73,7 @@ class RankingState extends State<Ranking> {
   Widget build(BuildContext context) {
     double width = widget.width / (isPhone(context) ? 1.4 : 1.6);
 
+    print(widget.data.get());
     if (widget.data.get() != "") {
       List<String> newVals =
           widget.data.get().split("[")[1].split("]")[0].split(", ");
@@ -113,7 +114,7 @@ class RankingState extends State<Ranking> {
                 },
                 iconSize: width / (isPhoneScreen ? 3.5 : 3.0),
                 icon: Icon(
-                  Icons.arrow_left_rounded,
+                  Icons.fast_rewind,
                   color: widget.color,
                   semanticLabel: "Back Arrow",
                 ),
