@@ -7,6 +7,7 @@ import 'package:flutter_svg/svg.dart';
 
 // Package imports:
 import "package:localstore/localstore.dart";
+import "carindal_export.dart";
 
 // Project imports:
 import "../../../logic/constants.dart";
@@ -53,6 +54,13 @@ class _RobotProfilesState extends State<RobotProfiles> {
     }
   }
 
+  void sortRobotNumList() {
+    if (profiles == null) return;
+    // mergeSort(Map.fromEntries(robotMapScouting.entries.toList()));
+    profiles = Map.fromEntries(
+        profiles.entries.toList()..sort((e1, e2) => e1.key.compareTo(e2.key)));
+  }
+
   @override
   void initState() {
     super.initState();
@@ -94,7 +102,7 @@ class _RobotProfilesState extends State<RobotProfiles> {
       fontSize: ScreenSize.height * 0.05,
       color: colors.primaryColorDark,
     );
-
+    sortRobotNumList();
     List<Widget> ret = [];
 
     for (final i in profiles.values) {
@@ -127,9 +135,9 @@ class _RobotProfilesState extends State<RobotProfiles> {
                     )
                   : RobotDisplayIcon(
                       teamNum: i[0].getCertainDataByName(
-                          reader.strat!["profile"]["identifier"]), teamName: robotNames[i[0].getCertainDataByName(
-                          reader.strat!["profile"]["identifier"] as String)]
-                    ),
+                          reader.strat!["profile"]["identifier"]),
+                      teamName: robotNames[i[0].getCertainDataByName(
+                          reader.strat!["profile"]["identifier"] as String)]),
             )));
       }
     }

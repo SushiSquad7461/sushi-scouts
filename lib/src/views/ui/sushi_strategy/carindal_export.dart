@@ -2,6 +2,7 @@
 import 'dart:convert';
 import 'dart:io';
 import 'dart:typed_data';
+import 'dart:collection';
 
 import 'package:flutter/foundation.dart';
 import "package:flutter/material.dart";
@@ -24,6 +25,7 @@ import "../../util/header/header_nav_strategy.dart";
 import "../../util/header/header_title/mobile_strategy_main.dart";
 import '../../util/strategy/RobotDisplayIcon.dart';
 import '../../util/strategy/RobotInfo.dart';
+import '../sushi_scouts/scouting.dart';
 
 class CardinalExport extends StatefulWidget {
   const CardinalExport({Key? key}) : super(key: key);
@@ -38,12 +40,21 @@ class _CardinalExportState extends State<CardinalExport> {
   final reader = ConfigFileReader.instance;
   Map<String, List<SuperviseData>> robotMap = {};
   Map<String, List<ScoutingData>> robotMapScouting = {};
+  Map<String, String> robotNames = {};
+
+  TextEditingController search = TextEditingController();
+  String searchQuery = "";
 
   List<ScoutingData>? selected;
 
   @override
   void initState() {
     super.initState();
+    getNames();
+
+    search.addListener(() => setState(() {
+          searchQuery = search.text;
+        }));
 
     (() async {
       final scoutingData = await db.collection(stratDatabaseName).get();
@@ -69,6 +80,42 @@ class _CardinalExportState extends State<CardinalExport> {
         });
       }
     })();
+  }
+
+  void sortRobotNumList() {
+    if (robotMapScouting == null) return;
+    // mergeSort(Map.fromEntries(robotMapScouting.entries.toList()));
+    robotMapScouting = Map.fromEntries(robotMapScouting.entries.toList()
+      ..sort((e1, e2) => e1.key.compareTo(e2.key)));
+
+    for (int i = 0; i < robotMapScouting.values.length; i++) {
+      // mergeSort(robotMapScouting.values.elementAt(i), compare: (p0, p1) {
+      //   return (p0 as ScoutingData)
+      //       .getCertainDataByName(reader.strat!["cardinal"]["version"])
+      //       .compareTo((p1 as ScoutingData)
+      //           .getCertainDataByName(reader.strat!["cardinal"]["version"]));
+      // });
+
+      robotMapScouting.values.elementAt(i).sort(((a, b) {
+        return (a as ScoutingData)
+            .getCertainDataByName(reader.strat!["cardinal"]["version"])
+            .compareTo((b as ScoutingData)
+                .getCertainDataByName(reader.strat!["cardinal"]["version"]));
+      }));
+    }
+  }
+
+  Future<void> getNames() async {
+    Map<String, dynamic>? newRobotNames = await Localstore.instance
+        .collection(frcApiDatabaseName)
+        .doc("name")
+        .get();
+
+    if (newRobotNames != null) {
+      setState(() {
+        robotNames = Map<String, String>.from(newRobotNames);
+      });
+    }
   }
 
   Future<void> export() async {
@@ -183,6 +230,7 @@ class _CardinalExportState extends State<CardinalExport> {
       color: colors.primaryColorDark,
     );
 
+    sortRobotNumList();
     for (final i in robotMapScouting.values) {
       String identifier =
           i[0].getCertainDataByName(reader.strat!["cardinal"]["identifier"]);
@@ -192,7 +240,8 @@ class _CardinalExportState extends State<CardinalExport> {
               selected![0].getCertainDataByName(
                   reader.strat!["cardinal"]["identifier"]);
 
-      if (selected == null || currentlySelected) {
+      if (selected == null && identifier.contains(searchQuery) ||
+          currentlySelected) {
         ret.add(Padding(
             padding: EdgeInsets.only(bottom: ScreenSize.height * 0.01),
             child: GestureDetector(
@@ -211,6 +260,8 @@ class _CardinalExportState extends State<CardinalExport> {
                       ),
                     )
                   : RobotDisplayIcon(
+                      teamName: robotNames[i[0].getCertainDataByName(
+                          reader.strat!["profile"]["identifier"])],
                       teamNum: i[0].getCertainDataByName(
                           reader.strat!["profile"]["identifier"])),
             )));
@@ -280,7 +331,7 @@ class _CardinalExportState extends State<CardinalExport> {
               ),
             Padding(
               padding: EdgeInsets.only(top: ScreenSize.height * 0.14),
-              child: const HeaderNavStrategy(currPage: "cardinal"),
+              child: HeaderNavStrategy(currPage: "cardinal", val: search),
             ),
           ],
         ));

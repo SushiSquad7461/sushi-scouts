@@ -64,7 +64,9 @@ class _RobotInfoState extends State<RobotInfo> {
       }
     }
 
-    setPic(picIndex > widgetPicList.length-1 ? widgetPicList.length-1 : picIndex);
+    setPic(picIndex > widgetPicList.length - 1
+        ? widgetPicList.length - 1
+        : picIndex);
   }
 
   void setPic(int newIndex) {
@@ -279,7 +281,8 @@ class _RobotInfoState extends State<RobotInfo> {
                   children: [
                     GestureDetector(
                       onTap: () => setState(() {
-                        index -= index > 0 ? 1 : 0;
+                        index =
+                            index > 0 ? index - 1 : widget.selected.length - 1;
                         generateWidgetPicList(); // TODO: make more efficent
                       }),
                       child: Padding(
@@ -302,7 +305,8 @@ class _RobotInfoState extends State<RobotInfo> {
                             color: colors.primaryColor)),
                     GestureDetector(
                       onTap: () => setState(() {
-                        index += index < widget.selected.length - 1 ? 1 : 0;
+                        index =
+                            index < widget.selected.length - 1 ? index + 1 : 0;
                         getPicList();
                       }),
                       child: Padding(
