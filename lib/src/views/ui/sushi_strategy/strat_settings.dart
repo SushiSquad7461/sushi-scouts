@@ -176,6 +176,7 @@ class _StratSettingsState extends State<StratSettings> {
 
     if (teamNums != null) {
       for (final i in teamNums) {
+        print(i);
         db
             .collection("frcapi")
             .doc("$i images")

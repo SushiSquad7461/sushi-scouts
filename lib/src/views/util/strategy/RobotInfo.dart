@@ -93,7 +93,9 @@ class _RobotInfoState extends State<RobotInfo> {
         .doc("$identifier images")
         .get());
 
-    picList = databaseList == null ? [] : databaseList["imageList"];
+    picList = databaseList == null
+        ? []
+        : databaseList["imageList"];
 
     generateWidgetPicList();
   }
