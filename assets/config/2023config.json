@@ -1,6 +1,6 @@
 {
     "teamNumber": 7461,
-    "version" : 2,
+    "version" : 3,
     "password" : "temaki",
     "strat": {
         "profile": {
@@ -118,7 +118,7 @@
                             "darkColor": "#81F4E1",
                             "darkTextColor": "#ffffff",
                             "textColor" : "#000000",
-                            "componentsInRow": [3, 3]
+                            "componentsInRow": [3, 2]
                         },
                         "components":[
                             {
@@ -149,27 +149,19 @@
                                 "setCommonValue" : false
                             },
                             {
-                                "name" : "Docked",
-                                "type" : "bool",
-                                "component" : "checkbox",
-                                "required" : true,
-                                "timestamp": false,
-                                "isCommonValue" : false,
-                                "setCommonValue" : false
-                            },
-                            {
-                                "name" : "Engaged",
-                                "type" : "bool",
-                                "component" : "checkbox",
-                                "required" : true,
-                                "timestamp": false,
-                                "isCommonValue" : false,
-                                "setCommonValue" : false
-                            },
-                            {
                                 "name" : "Left Com.",
                                 "type" : "bool",
                                 "component" : "checkbox",
+                                "required" : true,
+                                "timestamp": false,
+                                "isCommonValue" : false,
+                                "setCommonValue" : false
+                            },
+                            {
+                                "name": "auto charge",
+                                "type": "number",
+                                "component": "select",
+                                "values" : ["c", "On Station", "Balanced", "No Attempt", "Failed"],
                                 "required" : true,
                                 "timestamp": false,
                                 "isCommonValue" : false,
@@ -359,7 +351,7 @@
         "ordinal":{
             "pregame" : {
                 "footer": "info",
-                "sections" : [
+            "sections" : [
                     {
                         "properties":{
                             "title":"",
@@ -521,7 +513,7 @@
         },
         "pit":{
             "page 1" : {
-                "footer": " ",
+                "footer": "7461",
                 "sections" : [
                     {
                         "properties":{
@@ -610,7 +602,7 @@
                 ]
             },
             "page 2" : {
-                "footer": " ",
+                "footer": "7461",
                 "sections" : [
                     {
                         "properties":{
@@ -707,7 +699,7 @@
                 ]
             },
             "page 3" : {
-                "footer": " ",
+                "footer": "7461",
                 "sections" : [
                     {
                         "properties":{
