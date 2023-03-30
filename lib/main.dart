@@ -25,6 +25,10 @@ Future<void> main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
 
+  ErrorWidget.builder = (FlutterErrorDetails err) {
+    return ErrorPopup(errorText: err.toString());
+  };
+
   runApp(const Wrapper());
 }
 

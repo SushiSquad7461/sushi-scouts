@@ -34,13 +34,12 @@ class ErrorPopup extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
     return Center(
         child: Container(
             color: Color.fromARGB(255, 255, 0, 0),
             child: SizedBox(
-              width: 100,
-              height: 100,
+              width: ScreenSize.width * 0.8,
+              height: ScreenSize.height * 0.8,
               child: Center(
                 child: Text(errorText,
                     style: TextStyles.getTitleText(10, Colors.white)),
