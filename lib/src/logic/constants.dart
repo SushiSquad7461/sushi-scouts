@@ -5,6 +5,7 @@ import "package:flutter/widgets.dart";
 import "../views/ui/sushi_strategy/carindal_export.dart";
 import "../views/ui/sushi_strategy/ordinal_ranking.dart";
 import "../views/ui/sushi_strategy/robot_profiles.dart";
+import "../views/ui/sushi_strategy//game_analysis.dart";
 import "../views/ui/sushi_strategy/strat_settings.dart";
 import "../views/util/components/checkbox.dart";
 import "../views/util/components/dropdown.dart";
@@ -53,5 +54,6 @@ const Map<String, Widget> stratPages = {
   "ordinal": OrdinalRanking(),
   "pit": RobotProfiles(),
   "cardinal": CardinalExport(),
+  "game": GameAnalysis(),
   "settings": StratSettings(),
 };

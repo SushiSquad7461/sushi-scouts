@@ -1,46 +1,44 @@
-// Flutter imports:
-import 'dart:convert';
-import 'dart:io';
-import 'dart:typed_data';
-import 'dart:collection';
+import "dart:async";
+import "dart:io";
 
-import 'package:flutter/foundation.dart';
-import "package:flutter/material.dart";
-import "package:flutter/services.dart";
-
-// Package imports:
 import "package:csv/csv.dart";
+import "package:flutter/cupertino.dart";
+import "package:flutter/material.dart";
+import "package:flutter_bloc/flutter_bloc.dart";
+import "package:get/get.dart";
 import "package:localstore/localstore.dart";
-import 'package:path_provider/path_provider.dart';
 import "package:statistics/statistics.dart";
+import "package:path_provider/path_provider.dart";
+import "package:sushi_scouts/src/logic/blocs/login_bloc/login_cubit.dart";
+import "package:sushi_scouts/src/logic/constants.dart";
+import "package:sushi_scouts/src/logic/data/config_file_reader.dart";
+import "package:sushi_scouts/src/logic/helpers/size/screen_size.dart";
+import "package:sushi_scouts/src/logic/models/match_schedule.dart";
+import "package:sushi_scouts/src/logic/models/scouting_data_models/page.dart";
+import "package:sushi_scouts/src/logic/models/scouting_data_models/scouting_data.dart";
+import "package:sushi_scouts/src/logic/models/supervise_data.dart";
+import "package:sushi_scouts/src/logic/network/api_repository.dart";
+import "package:sushi_scouts/src/views/util/header/header_nav_strategy.dart";
+import "package:sushi_scouts/src/views/util/header/header_title/mobile_strategy_main.dart";
+import "package:sushi_scouts/src/views/util/strategy/RobotDisplayIcon.dart";
+import "package:sushi_scouts/src/views/util/strategy/RobotInfo.dart";
 
-// Project imports:
-import "../../../logic/Constants.dart";
-import "../../../logic/data/config_file_reader.dart";
-import "../../../logic/helpers/size/screen_size.dart";
-import "../../../logic/models/scouting_data_models/page.dart";
-import '../../../logic/models/scouting_data_models/scouting_data.dart';
-import "../../../logic/models/supervise_data.dart";
-import "../../util/header/header_nav_strategy.dart";
-import "../../util/header/header_title/mobile_strategy_main.dart";
-import "../../util/strategy/RobotDisplayIcon.dart";
-import "../../util/strategy/RobotInfo.dart";
-import "../sushi_scouts/scouting.dart";
-
-class CardinalExport extends StatefulWidget {
-  const CardinalExport({Key? key}) : super(key: key);
+class GameAnalysis extends StatefulWidget {
+  const GameAnalysis({Key? key}) : super(key: key);
 
   @override
-  State<CardinalExport> createState() => _CardinalExportState();
+  State<GameAnalysis> createState() => _GameAnalysisState();
 }
 
-class _CardinalExportState extends State<CardinalExport> {
+class _GameAnalysisState extends State<GameAnalysis> {
   final method = "cardinal";
-  final db = Localstore.instance;
   final reader = ConfigFileReader.instance;
   Map<String, List<SuperviseData>> robotMap = {};
   Map<String, List<ScoutingData>> robotMapScouting = {};
+  Map<String, List<ScoutingData>> stratMapScouting = {};
   Map<String, String> robotNames = {};
+  bool hasSchedule = false;
+  MatchSchedule? schedule;
 
   TextEditingController search = TextEditingController();
   String searchQuery = "";
@@ -50,6 +48,7 @@ class _CardinalExportState extends State<CardinalExport> {
   @override
   void initState() {
     super.initState();
+    var db = Localstore.instance;
     getNames();
 
     search.addListener(() => setState(() {
@@ -82,20 +81,62 @@ class _CardinalExportState extends State<CardinalExport> {
     })();
   }
 
-  void sortRobotNumList() {
-    if (robotMapScouting == null) return;
+  bool isNumeric(String s) {
+    if (s == null) {
+      return false;
+    }
+    return double.tryParse(s) != null;
+  }
+
+  Future<void> downloadMatchSchedule() async {
+    var db = Localstore.instance;
+    MatchSchedule? schedule = await structures().getMatchSchedule(
+        BlocProvider.of<LoginCubit>(context).state.eventCode, "qual");
+    if (schedule != null) {
+      db
+          .collection(scoutingDataDatabaseName)
+          .doc("schedule")
+          .set(schedule.toJson());
+    }
+    ScoutingData.updateSchedule();
+    ConfigFileReader.instance.updateAllData();
+  }
+
+  getRobots() async {
+    downloadMatchSchedule();
+    stratMapScouting = new Map<String, List<ScoutingData>>();
+    schedule = ScoutingData.schedule;
+
+    int match = isNumeric(searchQuery) ? searchQuery.toInt() : 1;
+
+    if (schedule != null) {
+      for (Team team in schedule!.schedule[match].teams) {
+        print("${match} + ${team.number} + ${team.station}");
+        if (robotMapScouting[team.number.toString()] != null) {
+          stratMapScouting[team.number.toString()] =
+              robotMapScouting[team.number.toString()]!;
+        }
+      }
+    }
+
+    sortRobotNumList();
+  }
+
+  sortRobotNumList() {
+    if (stratMapScouting == null) return;
     // mergeSort(Map.fromEntries(robotMapScouting.entries.toList()));
-    robotMapScouting = Map.fromEntries(robotMapScouting.entries.toList()
+    stratMapScouting = Map.fromEntries(stratMapScouting.entries.toList()
       ..sort((e1, e2) => e1.key.compareTo(e2.key)));
 
-    for (int i = 0; i < robotMapScouting.values.length; i++) {
-      robotMapScouting.values.elementAt(i).sort(((a, b) {
+    for (int i = 0; i < stratMapScouting.values.length; i++) {
+      stratMapScouting.values.elementAt(i).sort(((a, b) {
         return (a as ScoutingData)
             .getCertainDataByName(reader.strat!["cardinal"]["version"])
             .compareTo((b as ScoutingData)
                 .getCertainDataByName(reader.strat!["cardinal"]["version"]));
       }));
     }
+    //get match schedule and add all teams to the current one
   }
 
   Future<void> getNames() async {
@@ -131,10 +172,6 @@ class _CardinalExportState extends State<CardinalExport> {
         i[0].flagged.toString(),
         i[0].teamNum.toString()
       ];
-
-      if (kDebugMode) {
-        print(i.length);
-      }
 
       for (final page in pages.keys) {
         for (final component in pages[page]!.getComponents()) {
@@ -201,9 +238,7 @@ class _CardinalExportState extends State<CardinalExport> {
         }
       }
     } catch (err) {
-      if (kDebugMode) {
-        print("Cannot get download folder path");
-      }
+      print("Cannot get download folder path");
     }
     return directory?.path;
   }
@@ -223,8 +258,7 @@ class _CardinalExportState extends State<CardinalExport> {
       color: colors.primaryColorDark,
     );
 
-    sortRobotNumList();
-    for (final i in robotMapScouting.values) {
+    for (final i in stratMapScouting.values) {
       String identifier =
           i[0].getCertainDataByName(reader.strat!["cardinal"]["identifier"]);
 
@@ -233,8 +267,7 @@ class _CardinalExportState extends State<CardinalExport> {
               selected![0].getCertainDataByName(
                   reader.strat!["cardinal"]["identifier"]);
 
-      if (selected == null && identifier.contains(searchQuery) ||
-          currentlySelected) {
+      if (selected == null || currentlySelected) {
         ret.add(Padding(
             padding: EdgeInsets.only(bottom: ScreenSize.height * 0.01),
             child: GestureDetector(
@@ -266,7 +299,7 @@ class _CardinalExportState extends State<CardinalExport> {
   @override
   Widget build(BuildContext context) {
     var colors = Theme.of(context);
-
+    getRobots();
     return Scaffold(
         resizeToAvoidBottomInset: false,
         body: Stack(
@@ -295,36 +328,9 @@ class _CardinalExportState extends State<CardinalExport> {
                   exit: exit,
                   selected: selected!,
                   versionName: reader.strat!["cardinal"]["version"]),
-            if (selected == null)
-              Padding(
-                padding: EdgeInsets.only(top: ScreenSize.height * 0.9),
-                child: Center(
-                  child: Container(
-                    height: ScreenSize.height * 0.05,
-                    width: ScreenSize.width * 0.5,
-                    decoration: BoxDecoration(
-                        color: colors.primaryColor,
-                        border: Border.all(
-                            color: colors.primaryColorDark,
-                            width: ScreenSize.width * 0.005),
-                        borderRadius: BorderRadius.all(
-                            Radius.circular(20 * ScreenSize.swu))),
-                    child: TextButton(
-                        onPressed: export,
-                        child: Text(
-                          "download data",
-                          style: TextStyle(
-                            fontFamily: "Sushi",
-                            color: colors.primaryColorDark,
-                            fontSize: ScreenSize.swu * 30,
-                          ),
-                        )),
-                  ),
-                ),
-              ),
             Padding(
               padding: EdgeInsets.only(top: ScreenSize.height * 0.14),
-              child: HeaderNavStrategy(currPage: "cardinal", val: search),
+              child: HeaderNavStrategy(currPage: "game", val: search),
             ),
           ],
         ));
