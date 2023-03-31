@@ -92,6 +92,7 @@ class _GameAnalysisState extends State<GameAnalysis> {
     var db = Localstore.instance;
     MatchSchedule? schedule = await structures().getMatchSchedule(
         BlocProvider.of<LoginCubit>(context).state.eventCode, "qual");
+
     if (schedule != null) {
       db
           .collection(scoutingDataDatabaseName)
@@ -107,11 +108,14 @@ class _GameAnalysisState extends State<GameAnalysis> {
     stratMapScouting = new Map<String, List<ScoutingData>>();
     schedule = ScoutingData.schedule;
 
-    int match = isNumeric(searchQuery) ? searchQuery.toInt() : 1;
+    int match = isNumeric(searchQuery)
+        ? searchQuery.toInt() >= 1
+            ? searchQuery.toInt()
+            : 1
+        : 1;
 
     if (schedule != null) {
-      for (Team team in schedule!.schedule[match].teams) {
-        print("${match} + ${team.number} + ${team.station}");
+      for (Team team in schedule!.schedule[match - 1].teams) {
         if (robotMapScouting[team.number.toString()] != null) {
           stratMapScouting[team.number.toString()] =
               robotMapScouting[team.number.toString()]!;
@@ -328,6 +332,33 @@ class _GameAnalysisState extends State<GameAnalysis> {
                   exit: exit,
                   selected: selected!,
                   versionName: reader.strat!["cardinal"]["version"]),
+            if (selected == null)
+              Padding(
+                padding: EdgeInsets.only(top: ScreenSize.height * 0.9),
+                child: Center(
+                  child: Container(
+                    height: ScreenSize.height * 0.05,
+                    width: ScreenSize.width * 0.5,
+                    decoration: BoxDecoration(
+                        color: colors.primaryColor,
+                        border: Border.all(
+                            color: colors.primaryColorDark,
+                            width: ScreenSize.width * 0.005),
+                        borderRadius: BorderRadius.all(
+                            Radius.circular(20 * ScreenSize.swu))),
+                    child: TextButton(
+                        onPressed: export,
+                        child: Text(
+                          "Qual ${search.text}",
+                          style: TextStyle(
+                            fontFamily: "Sushi",
+                            color: colors.primaryColorDark,
+                            fontSize: ScreenSize.swu * 30,
+                          ),
+                        )),
+                  ),
+                ),
+              ),
             Padding(
               padding: EdgeInsets.only(top: ScreenSize.height * 0.14),
               child: HeaderNavStrategy(currPage: "game", val: search),
