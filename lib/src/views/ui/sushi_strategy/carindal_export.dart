@@ -64,16 +64,25 @@ class _CardinalExportState extends State<CardinalExport> {
           for (var name in scoutingData.keys) {
             final toAdd = SuperviseData.fromJson(scoutingData[name]);
             if (toAdd.methodName == method && toAdd.deleted == false) {
-              // String id = "${toAdd.display1}:${toAdd.display2}";
+              String exportId = "${toAdd.display1}:${toAdd.display2}";
               String id = toAdd.data.getCertainDataByName(
                   reader.strat!["cardinal"]["identifier"]);
 
-              if (robotMap.containsKey(id)) {
-                robotMap[id]!.add(toAdd);
+              if (robotMapScouting.containsKey(id)) {
+                // robotMap[id]!.add(toAdd);
                 robotMapScouting[id]!.add(toAdd.data);
               } else {
-                robotMap[id] = [toAdd];
+                // robotMap[id] = [toAdd];
                 robotMapScouting[id] = [toAdd.data];
+              }
+
+
+              if (robotMap.containsKey(exportId)) {
+                robotMap[exportId]!.add(toAdd);
+                // robotMapScouting[id]!.add(toAdd.data);
+              } else {
+                robotMap[exportId] = [toAdd];
+                // robotMapScouting[id] = [toAdd.data];
               }
             }
           }
