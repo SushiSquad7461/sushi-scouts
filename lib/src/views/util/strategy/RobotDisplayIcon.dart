@@ -134,7 +134,7 @@ class GameRobotDisplayIcon extends StatelessWidget {
         decoration: BoxDecoration(
           color: colors.primaryColorDark,
           border: Border.all(
-                    color: schedule.schedule[matchNum - 1].teams.indexWhere((element) => element.number.toString() == teamNum) != -1 ? schedule.schedule[matchNum - 1].teams[schedule.schedule[matchNum - 1].teams.indexWhere((element) => element.number.toString() == teamNum)].station.contains("Blue") ? Color.fromARGB(255, 86, 203, 249) : Color.fromARGB(255, 255, 114, 159) : Colors.black,
+                    color: schedule.schedule[matchNum - 1].teams.indexWhere((element) => element.number.toString() == teamNum) != -1 ? schedule.schedule[matchNum - 1].teams[schedule.schedule[matchNum - 1].teams.indexWhere((element) => element.number.toString() == teamNum)].station.contains("Blue") ? Color.fromARGB(255, 86, 203, 249) : Color.fromARGB(255, 255, 114, 159) : colors.scaffoldBackgroundColor,
                     width: 3,
                   ),
           borderRadius: BorderRadius.all(Radius.circular(15 * ScreenSize.swu)),
@@ -190,7 +190,7 @@ class GameRobotDisplayIcon extends StatelessWidget {
               width: ScreenSize.width * 0.1,
               //daniel we don't speak of this line ok >:)
               child: Text(schedule.schedule[matchNum - 1].teams.indexWhere((element) => element.number.toString() == teamNum) != -1 ? "${schedule.schedule[matchNum - 1].teams[schedule.schedule[matchNum - 1].teams.indexWhere((element) => element.number.toString() == teamNum)].station.contains("Blue") ? "B" + schedule.schedule[matchNum - 1].teams[schedule.schedule[matchNum - 1].teams.indexWhere((element) => element.number.toString() == teamNum)].station.substring(schedule.schedule[matchNum - 1].teams[schedule.schedule[matchNum - 1].teams.indexWhere((element) => element.number.toString() == teamNum)].station.length - 1) : "R" + schedule.schedule[matchNum - 1].teams[schedule.schedule[matchNum - 1].teams.indexWhere((element) => element.number.toString() == teamNum)].station.substring(schedule.schedule[matchNum - 1].teams[schedule.schedule[matchNum - 1].teams.indexWhere((element) => element.number.toString() == teamNum)].station.length-1)}" : "idek what to put here",
-                  style: TextStyles.getTitleText(30, Colors.black)),
+                  style: TextStyles.getTitleText(30, colors.primaryColor)),
             )
           ],
         ),
