@@ -11,6 +11,9 @@ import "package:cloud_firestore/cloud_firestore.dart";
 import "package:flutter_bloc/flutter_bloc.dart";
 import "package:get/get.dart";
 import "package:localstore/localstore.dart";
+import "package:sushi_scouts/src/logic/helpers/style/text_style.dart";
+import "package:sushi_scouts/src/logic/models/match_schedule.dart";
+import "package:sushi_scouts/src/logic/models/scouting_data_models/scouting_data.dart";
 
 // Project imports:
 import "../../../../main.dart";
@@ -57,6 +60,21 @@ class _StratSettingsState extends State<StratSettings> {
     mode == "dark"
         ? Get.changeTheme(Themes.dark)
         : Get.changeTheme(Themes.light);
+  }
+
+  Future<void> downloadMatchSchedule() async {
+    turnOnLoading();
+    MatchSchedule? schedule = await structures().getMatchSchedule(
+        BlocProvider.of<LoginCubit>(context).state.eventCode, "qual");
+    if (schedule != null) {
+      db
+          .collection(scoutingDataDatabaseName)
+          .doc("schedule")
+          .set(schedule.toJson());
+    }
+    ScoutingData.updateSchedule();
+    ConfigFileReader.instance.updateAllData();
+    turnOffLoading();
   }
 
   Future<void> downloadConfigFile() async {
@@ -283,7 +301,7 @@ class _StratSettingsState extends State<StratSettings> {
                             ),
                             Align(
                               alignment:
-                                  Alignment(0, isPhoneScreen ? -0.1 : -0.3),
+                                  Alignment(0, isPhoneScreen ? -0 : -0.3),
                               child: Container(
                                 decoration: boxDecoration,
                                 width: ScreenSize.width * 0.47,
@@ -400,6 +418,17 @@ class _StratSettingsState extends State<StratSettings> {
                                     )),
                               ),
                             ),
+                            Align(
+                              alignment: Alignment(0, isPhoneScreen ? -0.25 : -0.5),
+                              child: Container(
+                                decoration: boxDecoration,
+                                child: TextButton(
+                                    onPressed: downloadMatchSchedule,
+                                    child: Text(
+                                      "download match schedule",
+                                      style: TextStyles.getButtonText(context),
+                                    )),
+                            )),
                             Align(
                               alignment:
                                   Alignment(0, isPhoneScreen ? 0.8 : 0.4),

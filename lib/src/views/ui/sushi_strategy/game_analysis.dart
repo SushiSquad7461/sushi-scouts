@@ -22,6 +22,7 @@ import "package:sushi_scouts/src/views/util/header/header_nav_strategy.dart";
 import "package:sushi_scouts/src/views/util/header/header_title/mobile_strategy_main.dart";
 import "package:sushi_scouts/src/views/util/strategy/RobotDisplayIcon.dart";
 import "package:sushi_scouts/src/views/util/strategy/RobotInfo.dart";
+import "package:sushi_scouts/src/logic/helpers/style/text_style.dart";
 
 class GameAnalysis extends StatefulWidget {
   const GameAnalysis({Key? key}) : super(key: key);
@@ -42,6 +43,7 @@ class _GameAnalysisState extends State<GameAnalysis> {
 
   TextEditingController search = TextEditingController();
   String searchQuery = "";
+  String type = "quals";
 
   List<ScoutingData>? selected;
 
@@ -91,7 +93,7 @@ class _GameAnalysisState extends State<GameAnalysis> {
   Future<void> downloadMatchSchedule() async {
     var db = Localstore.instance;
     MatchSchedule? schedule = await structures().getMatchSchedule(
-        BlocProvider.of<LoginCubit>(context).state.eventCode, "qual");
+        BlocProvider.of<LoginCubit>(context).state.eventCode, "quals");
 
     if (schedule != null) {
       db
@@ -108,17 +110,16 @@ class _GameAnalysisState extends State<GameAnalysis> {
     stratMapScouting = new Map<String, List<ScoutingData>>();
     schedule = ScoutingData.schedule;
 
-    int match = isNumeric(searchQuery)
-        ? searchQuery.toInt() >= 1
-            ? searchQuery.toInt()
-            : 1
-        : 1;
+    int match = getMatchNum();
 
     if (schedule != null) {
       for (Team team in schedule!.schedule[match - 1].teams) {
+        print("${match} + ${team.number} + ${team.station}");
         if (robotMapScouting[team.number.toString()] != null) {
           stratMapScouting[team.number.toString()] =
               robotMapScouting[team.number.toString()]!;
+        } else {
+          stratMapScouting[team.number.toString()] = List.empty();
         }
       }
     }
@@ -130,7 +131,7 @@ class _GameAnalysisState extends State<GameAnalysis> {
     if (stratMapScouting == null) return;
     // mergeSort(Map.fromEntries(robotMapScouting.entries.toList()));
     stratMapScouting = Map.fromEntries(stratMapScouting.entries.toList()
-      ..sort((e1, e2) => e1.key.compareTo(e2.key)));
+      ..sort((e1, e2) => schedule!.schedule[getMatchNum() - 1].teams[schedule!.schedule[getMatchNum() - 1].teams.indexWhere((element) => element.number.toString() == e1.key)].station.compareTo(schedule!.schedule[getMatchNum() - 1].teams[schedule!.schedule[getMatchNum() - 1].teams.indexWhere((element) => element.number.toString() == e2.key)].station)));
 
     for (int i = 0; i < stratMapScouting.values.length; i++) {
       stratMapScouting.values.elementAt(i).sort(((a, b) {
@@ -141,6 +142,14 @@ class _GameAnalysisState extends State<GameAnalysis> {
       }));
     }
     //get match schedule and add all teams to the current one
+  }
+
+  int getMatchNum() {
+    return isNumeric(searchQuery)
+        ? searchQuery.toInt() >= 1
+            ? searchQuery.toInt()
+            : 1
+        : 1;
   }
 
   Future<void> getNames() async {
@@ -263,6 +272,7 @@ class _GameAnalysisState extends State<GameAnalysis> {
     );
 
     for (final i in stratMapScouting.values) {
+      if (i.isEmpty) continue;
       String identifier =
           i[0].getCertainDataByName(reader.strat!["cardinal"]["identifier"]);
 
@@ -289,11 +299,13 @@ class _GameAnalysisState extends State<GameAnalysis> {
                         style: textStyle,
                       ),
                     )
-                  : RobotDisplayIcon(
+                  : GameRobotDisplayIcon(
                       teamName: robotNames[i[0].getCertainDataByName(
                           reader.strat!["profile"]["identifier"])],
                       teamNum: i[0].getCertainDataByName(
-                          reader.strat!["profile"]["identifier"])),
+                          reader.strat!["profile"]["identifier"]),
+                      schedule: schedule!,
+                      matchNum: getMatchNum()),
             )));
       }
     }
@@ -302,8 +314,9 @@ class _GameAnalysisState extends State<GameAnalysis> {
 
   @override
   Widget build(BuildContext context) {
-    var colors = Theme.of(context);
+
     getRobots();
+    var colors = Theme.of(context);
     return Scaffold(
         resizeToAvoidBottomInset: false,
         body: Stack(
@@ -320,10 +333,20 @@ class _GameAnalysisState extends State<GameAnalysis> {
                       left: ScreenSize.width * 0.04,
                       right: ScreenSize.width * 0.04,
                       top: ScreenSize.height * 0.02),
-                  child: ListView(
-                    padding: EdgeInsets.zero,
-                    children: getRobotNumList(),
-                  ),
+                  child: !hasSchedule
+                      ? stratMapScouting.isNotEmpty
+                          ? ListView(
+                              padding: EdgeInsets.zero,
+                              children: getRobotNumList(),
+                            )
+                          : Center(
+                              child: Text("No Scouting Data Found",
+                                  style: TextStyles.getTitleText(
+                                      30, colors.primaryColorDark)))
+                      : Center(
+                          child: Text("Match Schedule Not Found",
+                              style: TextStyles.getTitleText(
+                                  30, colors.primaryColorDark))),
                 ),
               ),
             ),
@@ -347,9 +370,9 @@ class _GameAnalysisState extends State<GameAnalysis> {
                         borderRadius: BorderRadius.all(
                             Radius.circular(20 * ScreenSize.swu))),
                     child: TextButton(
-                        onPressed: export,
+                        onPressed: null,
                         child: Text(
-                          "Qual ${search.text}",
+                          "${type} ${search.text}",
                           style: TextStyle(
                             fontFamily: "Sushi",
                             color: colors.primaryColorDark,
