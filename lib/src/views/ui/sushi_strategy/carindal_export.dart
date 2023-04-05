@@ -303,7 +303,8 @@ class _CardinalExportState extends State<CardinalExport> {
               RobotInfo(
                   exit: exit,
                   selected: selected!,
-                  versionName: reader.strat!["cardinal"]["version"]),
+                  versionName: reader.strat!["cardinal"]["version"],
+                  displayAverageData: true,),
             if (selected == null)
               Padding(
                 padding: EdgeInsets.only(top: ScreenSize.height * 0.9),
