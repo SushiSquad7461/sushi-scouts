@@ -114,7 +114,7 @@ class _GameAnalysisState extends State<GameAnalysis> {
 
     if (schedule != null) {
       for (Team team in schedule!.schedule[match - 1].teams) {
-        print("${match} + ${team.number} + ${team.station}");
+        // print("${match} + ${team.number} + ${team.station}");
         if (robotMapScouting[team.number.toString()] != null) {
           stratMapScouting[team.number.toString()] =
               robotMapScouting[team.number.toString()]!;
@@ -141,7 +141,6 @@ class _GameAnalysisState extends State<GameAnalysis> {
                 .getCertainDataByName(reader.strat!["cardinal"]["version"]));
       }));
     }
-    //get match schedule and add all teams to the current one
   }
 
   int getMatchNum() {
@@ -354,7 +353,8 @@ class _GameAnalysisState extends State<GameAnalysis> {
               RobotInfo(
                   exit: exit,
                   selected: selected!,
-                  versionName: reader.strat!["cardinal"]["version"]),
+                  versionName: reader.strat!["cardinal"]["version"],
+                  displayAverageData: true,),
             if (selected == null)
               Padding(
                 padding: EdgeInsets.only(top: ScreenSize.height * 0.9),

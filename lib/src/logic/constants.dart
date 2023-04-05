@@ -39,6 +39,8 @@ const frcApiDatabaseName = "frcapi";
 const scoutingDataDatabaseName = "data";
 const configFileData = "config";
 
+const one = "1.0";
+
 const int minTimestampDifference = 1000; // In milliseconds
 
 const List<String> databaseCollections = [

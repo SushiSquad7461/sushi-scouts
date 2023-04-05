@@ -7,6 +7,10 @@ import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:localstore/localstore.dart';
+import "package:statistics/statistics.dart";
+import "package:sushi_scouts/src/logic/models/scouting_data_models/component.dart";
+import "package:sushi_scouts/src/logic/models/scouting_data_models/page.dart";
+import "package:sushi_scouts/src/logic/models/scouting_data_models/section.dart";
 
 import '../../../logic/constants.dart';
 import '../../../logic/data/config_file_reader.dart';
@@ -18,12 +22,15 @@ class RobotInfo extends StatefulWidget {
   final List<ScoutingData> selected;
   final Function exit;
   final String versionName;
+  final bool displayAverageData;
   const RobotInfo(
       {Key? key,
       required this.exit,
       required this.selected,
-      required this.versionName})
+      required this.versionName,
+      this.displayAverageData = false})
       : super(key: key);
+
 
   @override
   State<RobotInfo> createState() => _RobotInfoState();
@@ -34,6 +41,7 @@ class _RobotInfoState extends State<RobotInfo> {
   int picIndex = 0;
   List<String> picList = [];
   List<Widget> widgetPicList = [];
+  Map<String, String> averageData = {};
   Widget selectedPic = const Text("");
 
   final db = Localstore.instance;
@@ -51,17 +59,28 @@ class _RobotInfoState extends State<RobotInfo> {
       ));
     }
 
-    for (final i in widget.selected[index].getComponents()) {
-      if (i.component == "text input") {
-        widgetPicList.add(Text(
-          widget.selected[index].getCertainDataByName(i.name),
-          style: TextStyle(
-            fontFamily: "Mohave",
-            fontSize: ScreenSize.height * 0.02,
-            color: colors.primaryColorDark,
-          ),
-        ));
+    if (index != -1) {
+      for (final i in widget.selected[index].getComponents()) {
+        if (i.component == "text input") {
+          widgetPicList.add(Text(
+            widget.selected[index].getCertainDataByName(i.name),
+            style: TextStyle(
+              fontFamily: "Mohave",
+              fontSize: ScreenSize.height * 0.02,
+              color: colors.primaryColorDark,
+            ),
+          ));
+        }
       }
+    } else {
+      widgetPicList.add(Text(
+            "No Notes",
+            style: TextStyle(
+              fontFamily: "Mohave",
+              fontSize: ScreenSize.height * 0.02,
+              color: colors.primaryColorDark,
+            ),
+      ));
     }
 
     setPic(picIndex > widgetPicList.length - 1
@@ -73,9 +92,7 @@ class _RobotInfoState extends State<RobotInfo> {
     setState(() {
       if (newIndex < 0) {
         newIndex = 0;
-      }
-
-      if (newIndex > widgetPicList.length - 1) {
+      } else if (newIndex > widgetPicList.length - 1) {
         newIndex = widgetPicList.length - 1;
       }
 
@@ -175,11 +192,131 @@ class _RobotInfoState extends State<RobotInfo> {
     return ret;
   }
 
+  List<Widget> getAverageInfo() {
+    List<Widget> ret = [];
+    var colors = Theme.of(context);
+
+    List<Color> underLineColors = [
+      HexColor("#FF729F"),
+      HexColor("#81F4E1"),
+      HexColor("#56CBF9"),
+      HexColor("#FCD6F6"),
+      colors.primaryColor
+    ];
+    int underlineIndex = 0;
+
+    for (final i in averageData.keys) {
+      String displayString = averageData[i]!;
+
+      if (displayString.length > 30) {
+        displayString = displayString.replaceFirst(RegExp(r'.'), "\n", 30);
+      }
+
+      ret.add(Padding(
+          padding: EdgeInsets.only(bottom: ScreenSize.height * 0.005),
+          child: SizedBox(
+            width: ScreenSize.width * 0.8,
+            height: ScreenSize.height * 0.05,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Container(
+                  decoration: BoxDecoration(
+                      border: Border(
+                          bottom: BorderSide(
+                    color: underLineColors[underlineIndex],
+                    width: ScreenSize.height * 0.002, // Underline thickness
+                  ))),
+                  child: Text(
+                    i,
+                    style: TextStyle(
+                      color: colors.primaryColor,
+                      fontFamily: "Sushi",
+                      fontSize: ScreenSize.height * 0.02,
+                    ),
+                  ),
+                ),
+                Padding(
+                    padding: EdgeInsets.only(left: ScreenSize.width * 0.05),
+                    child: Text(
+                      displayString,
+                      style: TextStyle(
+                        color: colors.primaryColor,
+                        fontFamily: "Sushi",
+                        fontSize: ScreenSize.height * 0.015,
+                      ),
+                    ))
+              ],
+            ),
+          ),
+        ));
+
+        underlineIndex += 1;
+
+        if (underlineIndex >= underLineColors.length) {
+          underlineIndex = 0;
+        }
+      }
+
+      return ret;
+    }
+
   @override
   void initState() {
     super.initState();
     getPicList();
+    getAverageData();
   }
+
+  Future<void> getAverageData() async {
+    Map<String, String> newData = {};
+
+    if (widget.selected.isNotEmpty) {
+      for (var i in widget.selected[0].getComponents()) {
+        if (i.name == "match #" || i.name == "station" || i.name == "team #" || i.name == "match type") {continue;}
+
+        
+        List<int> numberData = [];
+        Map<String, int> optionsData = {};
+
+        bool isNumber = i.type == "number" && (i.values == null || i.values!.isEmpty);
+        bool isSelectOrBool = i.type == "bool" || (i.type == "number" && (i.values != null && i.values!.isNotEmpty));
+
+        for (var data in widget.selected) {
+          if (isNumber) {
+            // Normal Number
+            numberData.add(int.parse(data.getCertainDataByName(i.name)));
+          } else if (isSelectOrBool) {
+            // Select || Bool
+            if (optionsData[data.getCertainDataByName(i.name)] == null) {
+              optionsData[data.getCertainDataByName(i.name)] = 1;
+            } else {
+              optionsData[data.getCertainDataByName(i.name)] = optionsData[data.getCertainDataByName(i.name)]! + 1;
+            }
+          }
+        }
+
+        if (isNumber) {
+          newData[i.name] = "Average: ${numberData.mean.truncateDecimals(3)}, Sd: ${numberData.standardDeviation.truncateDecimals(3)}";
+        } else if (isSelectOrBool) {
+          String addData = "";
+          for (var data in optionsData.keys) {
+            addData += "$data : ${(optionsData[data]! / widget.selected.length * 100).truncateDecimals(3)}% ";
+          }
+          newData[i.name] = addData;
+        }
+      }
+    } 
+       
+    setState(() {
+      averageData = newData;
+      
+      if (widget.displayAverageData) {
+        index = -1;
+      }
+    });
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -270,7 +407,7 @@ class _RobotInfoState extends State<RobotInfo> {
                   height: ScreenSize.height * 0.36,
                   child: ListView(
                     padding: EdgeInsets.zero,
-                    children: getRobotInfo(),
+                    children: index == -1 ? getAverageInfo(): getRobotInfo(),
                   ),
                 ),
               ),
@@ -284,7 +421,7 @@ class _RobotInfoState extends State<RobotInfo> {
                     GestureDetector(
                       onTap: () => setState(() {
                         index =
-                            index > 0 ? index - 1 : widget.selected.length - 1;
+                            (widget.displayAverageData ? (index > -1) : (index > 0)) ? index - 1 : widget.selected.length - 1;
                         generateWidgetPicList(); // TODO: make more efficent
                       }),
                       child: Padding(
@@ -300,7 +437,7 @@ class _RobotInfoState extends State<RobotInfo> {
                       ),
                     ),
                     Text(
-                        "${widget.versionName.toUpperCase().replaceAll("#", "")} ${widget.selected[index].getCertainDataByName(widget.versionName)}",
+                        index == -1 ? "AVREAGE DATA" : "${widget.versionName.toUpperCase().replaceAll("#", "")} ${widget.selected[index].getCertainDataByName(widget.versionName)}",
                         style: TextStyle(
                             fontSize: ScreenSize.height * 0.035,
                             fontFamily: "Sushi",
