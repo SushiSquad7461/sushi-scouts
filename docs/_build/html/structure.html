@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Application Structure &mdash; sushi scouts 1.4.0 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="_static/jquery.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/sphinx_highlight.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="Sushi Scouts" href="index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            sushi scouts
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Application Structure</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#user-perspective">User Perspective</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#sushi-scouts">Sushi Scouts</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#sushi-supervise">Sushi Supervise</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#sushi-strategy">Sushi Strategy</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#data-perspective">Data Perspective</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">sushi scouts</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Application Structure</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/structure.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="application-structure">
+<h1>Application Structure<a class="headerlink" href="#application-structure" title="Permalink to this heading"></a></h1>
+<p>We will split the application structure into two section. The first will
+cover the application structure from a user perspective (different app pages, how data gets uploaded, etc.)
+the second will cover the structure of how we store scouting data.</p>
+<section id="user-perspective">
+<h2>User Perspective<a class="headerlink" href="#user-perspective" title="Permalink to this heading"></a></h2>
+<p>The app is split into three sections. Sushi Scouts, Supervise, and Strategy.
+Sushi Scouts collects data (used by scouters), Supervise stores data (used by lead scout),
+and Strategy (used by strategy team) displays the data. Throughout this process the
+data flows through multiple phones. Data transfer from sushi scouts to supervise is done
+through QR codes to decrease reliance on internet connections at completions. While
+data transfer from supervise to strategy is done using a remote firebase server
+this is done to decrease the amount of time a strategy members needs to get the most
+up to date data.</p>
+<section id="sushi-scouts">
+<h3>Sushi Scouts<a class="headerlink" href="#sushi-scouts" title="Permalink to this heading"></a></h3>
+</section>
+<section id="sushi-supervise">
+<h3>Sushi Supervise<a class="headerlink" href="#sushi-supervise" title="Permalink to this heading"></a></h3>
+</section>
+<section id="sushi-strategy">
+<h3>Sushi Strategy<a class="headerlink" href="#sushi-strategy" title="Permalink to this heading"></a></h3>
+</section>
+</section>
+<section id="data-perspective">
+<h2>Data Perspective<a class="headerlink" href="#data-perspective" title="Permalink to this heading"></a></h2>
+<p>Scouting data is stored using the <em>ScoutingData</em> class. This class
+manages data by splitting it into an array of <em>Page</em> class’s. From their
+each page has an array of <em>Section</em> class’s. Finally the <em>Section</em> class has an array
+of <em>Component</em> and <em>Data</em> class’s. The structure can be seen in the diagram bellow. The scouting data
+class can be thought of as HTML DOM for the scouting app since the code in the scouting app dynamical
+renders an UI based on the contents of the <em>ScoutingData</em> class.</p>
+<img alt="_images/scoutingdatastruct.svg" src="_images/scoutingdatastruct.svg" /><p>The reason for the way the data is split up is due to the previously mentioned constraint of having to
+adapt the scouting app to each new game. Each piece of data that is collected can be represented by a component. For
+example when collecting data about a team number, a <em>TextInput</em> component might be used. However only having components
+as part of the model is not ideal, as the user now has no control over the structure of the UI. To combat this the <em>Page</em>
+class is used to create new pages of components. Furthermore pages are split into <em>Section</em> class’s. Finlay <em>Section</em> contained
+components which were split up into rows using a field in the config file. However the <em>Component</em> class only defines the physical
+appearance of the component (such as color, and component type), so each <em>Component</em> was also given a <em>Data</em> class where the data
+was stored. The bellow figure shows a screenshot from our 2023 scouting app, and is split up in the it would be in the code.</p>
+<img alt="_images/uibreakdown.svg" src="_images/uibreakdown.svg" /></section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="index.html" class="btn btn-neutral float-left" title="Sushi Scouts" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, daniel gorbatron, sidarth ragapalutiii, winston luuuuuu.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

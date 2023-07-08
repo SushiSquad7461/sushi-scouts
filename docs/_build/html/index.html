@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sushi Scouts &mdash; sushi scouts 1.4.0 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="_static/jquery.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/sphinx_highlight.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Application Structure" href="structure.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="#" class="icon icon-home">
+            sushi scouts
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="structure.html">Application Structure</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="#">sushi scouts</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="#" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Sushi Scouts</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/index.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="sushi-scouts">
+<h1>Sushi Scouts<a class="headerlink" href="#sushi-scouts" title="Permalink to this heading"></a></h1>
+<section id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this heading"></a></h2>
+<p>Sushi Scouts is an FRC scouting application. It is build using the flutter platform and as
+such supports Android, and IOS. The main goal of Sushi Scouts is to be able to adapt to new FRC games
+as such it supports config file system, where a json file defines the app structure.</p>
+</section>
+<section id="running-the-app">
+<h2>Running The App<a class="headerlink" href="#running-the-app" title="Permalink to this heading"></a></h2>
+<p>Make sure flutter and dart are installed.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp"># </span>Install<span class="w"> </span>required<span class="w">  </span>dependencies
+<span class="go">dart pub update</span>
+
+<span class="gp"># </span>Run<span class="w"> </span>the<span class="w"> </span>app
+<span class="go">flutter run</span>
+</pre></div>
+</div>
+</section>
+<section id="sushi-scouts-docs">
+<h2>Sushi Scouts Docs<a class="headerlink" href="#sushi-scouts-docs" title="Permalink to this heading"></a></h2>
+<p>While reading the Sushi Scouts Docs please keep the following key
+design restraints.</p>
+<ol class="arabic simple">
+<li><p>The application must be easily adaptable to a new FRC game, and throughout the season to meet the strategy teams requirements.</p></li>
+<li><p>The application must be easily used in a competition environment (often bad cell service) by a large number of people</p></li>
+<li><p>The application must be easily used by other teams to increase our ability to collect data</p></li>
+</ol>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This project is under active development. These docs might be slightly out of date.
+For the most up to date answers please consult our developers at our <a class="reference external" href="https://sushisquad.org">website</a>.</p>
+</div>
+</section>
+</section>
+<section id="contents">
+<h1>Contents<a class="headerlink" href="#contents" title="Permalink to this heading"></a></h1>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="structure.html">Application Structure</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="structure.html#user-perspective">User Perspective</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="structure.html#sushi-scouts">Sushi Scouts</a></li>
+<li class="toctree-l3"><a class="reference internal" href="structure.html#sushi-supervise">Sushi Supervise</a></li>
+<li class="toctree-l3"><a class="reference internal" href="structure.html#sushi-strategy">Sushi Strategy</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="structure.html#data-perspective">Data Perspective</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="structure.html" class="btn btn-neutral float-right" title="Application Structure" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, daniel gorbatron, sidarth ragapalutiii, winston luuuuuu.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
