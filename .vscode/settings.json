@@ -11,4 +11,5 @@
     "editor.formatOnSave": true
   },
   "java.configuration.updateBuildConfiguration": "interactive",
+  "esbonio.sphinx.confDir": "",
 }
