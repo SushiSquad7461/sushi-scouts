@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Config File Format &mdash; sushi scouts 1.4.0 documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Config File Reader" href="reader.html" />
+    <link rel="prev" title="Application Structure" href="../structure.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            sushi scouts
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../overview.html">Scouting Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../structure.html">Application Structure</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Config File</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Config File Format</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#general-info">General Info</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#scouting">Scouting</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#supervise">Supervise</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#strat">Strat</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#example">Example</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="reader.html">Config File Reader</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Scouting Data Structure</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../data/data.html">Data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../data/section-page.html">Sections and Pages</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">sushi scouts</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Config File Format</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/config/format.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="config-file-format">
+<h1>Config File Format<a class="headerlink" href="#config-file-format" title="Permalink to this heading"></a></h1>
+<p>The config file is a JSON file, and as such follows standard JSON formatting.</p>
+<section id="general-info">
+<h2>General Info<a class="headerlink" href="#general-info" title="Permalink to this heading"></a></h2>
+<p>Each config file contains a <em>teamNumber</em>, <em>version</em>, and <em>password</em> field. The teamNumber and version fields
+are used in the creation of a Config File Id. This Id is used to determine where to upload match data (you cant scan a qr code
+of a user with a different id, and you will upload to a different database if you have a different id). This Id also contains
+the year of the game, as such the file naming convention for config files is <em>[current year]config.json</em>. This Id also for different
+config files to be used at the same time, notably thanks to the <em>teamNumber</em> attribute it allows two teams to have different config files
+and different data storage locations.</p>
+</section>
+<section id="scouting">
+<h2>Scouting<a class="headerlink" href="#scouting" title="Permalink to this heading"></a></h2>
+<p>The scouting section is one of the most important as it identifies how the app will be structured.
+The scouting section contains subsections for cardinal, ordinal, and pit scouting.</p>
+</section>
+<section id="supervise">
+<h2>Supervise<a class="headerlink" href="#supervise" title="Permalink to this heading"></a></h2>
+</section>
+<section id="strat">
+<h2>Strat<a class="headerlink" href="#strat" title="Permalink to this heading"></a></h2>
+</section>
+<section id="example">
+<h2>Example<a class="headerlink" href="#example" title="Permalink to this heading"></a></h2>
+<div class="literal-block-wrapper docutils container" id="id1">
+<div class="code-block-caption"><span class="caption-text">A shortened config file example from the 2022 game (full one can be viewed on the Sushi Scouts github in assets)</span><a class="headerlink" href="#id1" title="Permalink to this code"></a></div>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span> {
+     &quot;teamNumber&quot;: 7461,
+     &quot;version&quot; : 5,
+     &quot;password&quot; : &quot;7461&quot;,
+     &quot;strat&quot;: {
+         &quot;profile&quot;: {
+             &quot;method-name&quot;: &quot;pit&quot;,
+             &quot;identifier&quot;: &quot;team #&quot;,
+             &quot;version&quot;: &quot;day #&quot;
+         },
+         &quot;ranking&quot;: {
+             &quot;method-name&quot;: &quot;ordinal&quot;
+         }
+     },
+     &quot;supervise&quot;: {
+         &quot;cardinal&quot;: {
+             &quot;first&quot; : {
+                 &quot;page&quot;: &quot;pregame&quot;,
+                 &quot;name&quot;: &quot;match #&quot;
+             },
+             &quot;second&quot; : {
+                 &quot;page&quot;: &quot;pregame&quot;,
+                 &quot;name&quot;: &quot;station&quot;
+             }
+         },
+         .... (ordinal, and pit follow)
+     },
+     &quot;scouting&quot;: {
+         &quot;cardinal&quot;:{
+             &quot;pregame&quot; : {
+                 &quot;footer&quot;: &quot;info&quot;,
+                 &quot;sections&quot; : [
+                     {
+                         &quot;properties&quot;:{
+                             &quot;title&quot;:&quot;&quot;,
+                             &quot;color&quot;: &quot;#ff76a2&quot;,
+                             &quot;rows&quot;: 2,
+                             &quot;textColor&quot;: &quot;#000000&quot;,
+                             &quot;darkColor&quot;: &quot;#81F4E1&quot;,
+                             &quot;darkTextColor&quot;: &quot;#ffffff&quot;,
+                             &quot;componentsInRow&quot;: [3, 1]
+                         },
+                         &quot;components&quot;:[
+                             {
+                                 &quot;name&quot; : &quot;match #&quot;,
+                                 &quot;type&quot; : &quot;number&quot;,
+                                 &quot;component&quot; : &quot;number input&quot;,
+                                 &quot;required&quot; : true,
+                                 &quot;timestamp&quot;: false,
+                                 &quot;isCommonValue&quot; : false,
+                                 &quot;setCommonValue&quot; : false
+                             },
+                             ..... (more components follow)
+                         ]
+                     }
+                 ]
+                 }
+             }
+         }
+     }
+ }
+</pre></div>
+</div>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../structure.html" class="btn btn-neutral float-left" title="Application Structure" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="reader.html" class="btn btn-neutral float-right" title="Config File Reader" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, daniel gorbatron, sidarth ragapalutiii, winston luuuuuu.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

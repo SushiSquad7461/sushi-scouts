@@ -21,4 +21,17 @@ Contents
 --------
 
 .. toctree::
+   overview
    structure
+
+.. toctree::
+   :caption: Config File
+
+   config/format
+   config/reader
+
+.. toctree::
+   :caption: Scouting Data Structure
+
+   data/data
+   data/section-page

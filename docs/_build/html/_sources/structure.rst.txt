@@ -17,19 +17,6 @@ data transfer from supervise to strategy is done using a remote firebase server
 this is done to decrease the amount of time a strategy members needs to get the most
 up to date data.
 
---------------
-Sushi Scouts
---------------
-
-------------------
-Sushi Supervise
-------------------
-
-----------------
-Sushi Strategy 
-----------------
-
-
 Data Perspective
 ----------------
 Scouting data is stored using the *ScoutingData* class. This class
