@@ -90,6 +90,7 @@
              
   <section id="config-file-format">
 <h1>Config File Format<a class="headerlink" href="#config-file-format" title="Permalink to this heading"></a></h1>
+<p><em>Location: /assets/config/{year}config.json</em></p>
 <p>The config file is a JSON file, and as such follows standard JSON formatting.</p>
 <section id="general-info">
 <h2>General Info<a class="headerlink" href="#general-info" title="Permalink to this heading"></a></h2>
@@ -98,7 +99,8 @@ are used in the creation of a Config File Id. This Id is used to determine where
 of a user with a different id, and you will upload to a different database if you have a different id). This Id also contains
 the year of the game, as such the file naming convention for config files is <em>[current year]config.json</em>. This Id also for different
 config files to be used at the same time, notably thanks to the <em>teamNumber</em> attribute it allows two teams to have different config files
-and different data storage locations.</p>
+and different data storage locations. The <em>password</em> field contains the password that lead scouts need to enter
+to access sushi supervise.</p>
 </section>
 <section id="scouting">
 <h2>Scouting<a class="headerlink" href="#scouting" title="Permalink to this heading"></a></h2>
@@ -136,7 +138,7 @@ Components have the following properties.</p>
 </ul>
 </section>
 <section id="supervise">
-<h2>Supervise<a class="headerlink" href="#supervise" title="Permalink to this heading"></a></h2>
+<span id="supervise-identifier"></span><h2>Supervise<a class="headerlink" href="#supervise" title="Permalink to this heading"></a></h2>
 <p>The supervise section contains fields that will be used to identify scouting data. Each piece of data has three unique identifiers
 intended to differentiate it from other data. The first one is always the first letter of the scouting type, for example cardinal scouting
 will have “C” be the first identifier. The other tow identifier’s are identified in the config file, by giving their page name, and

@@ -49,7 +49,12 @@
 <p class="caption" role="heading"><span class="caption-text">Config File</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="format.html">Config File Format</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Config File Reader</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Config File Reader</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#overview">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#fields">Fields</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#methods">Methods</a></li>
+</ul>
+</li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Scouting Data Structure</span></p>
 <ul>
@@ -83,6 +88,51 @@
              
   <section id="config-file-reader">
 <h1>Config File Reader<a class="headerlink" href="#config-file-reader" title="Permalink to this heading"></a></h1>
+<p><em>Location: /lib/src/logic/data/config_file_reader.dart</em></p>
+<section id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this heading"></a></h2>
+<p>The config file reader class is in charge of reading the config file. Along with the it manages the array scouting data
+that is in the progress of being filled out, and the common values database. Note: this class is a singleton and as such
+should be accessed through the instance getter method.</p>
+</section>
+<section id="fields">
+<h2>Fields<a class="headerlink" href="#fields" title="Permalink to this heading"></a></h2>
+<ul class="simple">
+<li><p>configFileFolder: Contains the path for the config file</p></li>
+<li><p>year: Contains the year the config file should be</p></li>
+<li><p>teamNum: Team number that is read from the config file</p></li>
+<li><p>parsedFile: Contains the file in a Map&lt;String, dynamic&gt; format</p></li>
+<li><p>supervise:  Contains the supervise section in a Map&lt;String, dynamic&gt; format</p></li>
+<li><p>strat: Contains the strat section in a Map&lt;String, dynamic&gt; format</p></li>
+<li><p>data: Contains ScoutingData classes for each type of scouting method, holds the current scouting data being filled out</p></li>
+<li><p>commonValues: Contains the common values</p></li>
+<li><p>password: Contains password for sushi supervise</p></li>
+<li><p>_version: Config file version</p></li>
+<li><p>_name: No idea wtf this is (figure out later)</p></li>
+<li><p>defaultConfig: true if the config file was read in from the assets folder, false if a custom one was used from the database</p></li>
+</ul>
+</section>
+<section id="methods">
+<h2>Methods<a class="headerlink" href="#methods" title="Permalink to this heading"></a></h2>
+<ul class="simple">
+<li><p>readConfig: Reads config file stored in the assets folder, and updates fields and class <em>logCurrentConfigFile</em></p></li>
+<li><p>checkConfigFile: Check if the current config file matches the last logged config file, if it doesn’t wipe all user data so that data from different config files doesn’t mix</p></li>
+<li><p>logCurrentConfigFile: Logs the current config files id</p></li>
+<li><p>getSuperviseDisplayString: Gets the identifier for a ScoutingData object, the parameter number defines which identifier to get (<span class="xref std std-ref">supervise-identifier`</span>)</p></li>
+<li><p>updateAllData:</p></li>
+<li><p>readInitalConfig:</p></li>
+<li><p>readConfigFromDatabase:</p></li>
+<li><p>getScoutingMethods:</p></li>
+<li><p>getScoutingData:</p></li>
+<li><p>generateNewScoutingData:</p></li>
+<li><p>extraFeatureAccess:</p></li>
+<li><p>setCommonValue:</p></li>
+<li><p>commonValuesExists:</p></li>
+<li><p>getCommonValue:</p></li>
+<li><p>checkPassword:</p></li>
+<li><p>id:</p></li>
+</ul>
+</section>
 </section>
 
 

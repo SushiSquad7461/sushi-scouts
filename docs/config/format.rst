@@ -1,6 +1,8 @@
 Config File Format
 ===================
 
+*Location: /assets/config/{year}config.json*
+
 The config file is a JSON file, and as such follows standard JSON formatting.
 
 General Info
@@ -8,9 +10,11 @@ General Info
 Each config file contains a *teamNumber*, *version*, and *password* field. The teamNumber and version fields
 are used in the creation of a Config File Id. This Id is used to determine where to upload match data (you cant scan a qr code
 of a user with a different id, and you will upload to a different database if you have a different id). This Id also contains
-the year of the game, as such the file naming convention for config files is *[current year]config.json*. This Id also for different
+the year of the game, as such the file naming convention for config files is *[current year]config.json*. This Id allows for different
 config files to be used at the same time, notably thanks to the *teamNumber* attribute it allows two teams to have different config files
-and different data storage locations.
+and different data storage locations. Note: If a config file is modified its id **MUST** be different from previously used config files, that is
+why the version field exists. The *password* field contains the password that lead scouts need to enter
+to access sushi supervise.
 
 Scouting
 ----------
