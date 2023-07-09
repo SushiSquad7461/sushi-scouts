@@ -52,7 +52,7 @@
 <li class="toctree-l2"><a class="reference internal" href="#general-info">General Info</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#scouting">Scouting</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#supervise">Supervise</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#strat">Strat</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#strategy">Strategy</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#example">Example</a></li>
 </ul>
 </li>
@@ -103,79 +103,126 @@ and different data storage locations.</p>
 <section id="scouting">
 <h2>Scouting<a class="headerlink" href="#scouting" title="Permalink to this heading"></a></h2>
 <p>The scouting section is one of the most important as it identifies how the app will be structured.
-The scouting section contains subsections for cardinal, ordinal, and pit scouting.</p>
+The scouting section contains subsections for cardinal, ordinal, and pit scouting. Note that these sections
+are not required, for example ordinal scouting can be removed and sushi scouts, and supervise will work, however
+some parts of sushi strategy will need to be adjusted.</p>
+<p>Each subsection is split into pages. A page is simply what it implies, its a single page that contains scouting fields,
+each new page added, will add a new page that the user needs to fill out. Each page has a name, and a footer. The footer
+is simply the name the user sees at the bottom of the page, while the name of the page is an important identifier.</p>
+<p>Each page also contains a field called <em>sections</em>. The <em>sections</em> field is an array of sections. Each section is essentially one row,
+sections are rendered sequentially, so if a section appears before another section in the array its row of components will be rendered
+above the other section.</p>
+<p>Each section has a list of the following properties:</p>
+<ul class="simple">
+<li><p>title: Just like pages can have titles viewable to user, sections can to. Each title is displayed at the top of the section.</p></li>
+<li><p>color: This is the color components will be in the section</p></li>
+<li><p>rows: This defines the number of <strong>columns</strong> this section will have (don’t worry about it, someone needs to fix this).</p></li>
+<li><p>textColor: This is the color text will be in the section</p></li>
+<li><p>darkColor: This is the color the component will have in the section in dark mode.</p></li>
+<li><p>darkTextColor: This is the color text will be in dark mode.</p></li>
+<li><p>componentsInRow: This defines how many components will be in each column. For example given the array [3,1], this says that the the first three components will be in column 0, while the last component will be in column 1.</p></li>
+</ul>
+<p>Finally each section is broken down into components. Note: due to the <em>componentsInRow</em> field the order of components matters.
+Components have the following properties.</p>
+<ul class="simple">
+<li><p>name: The name of the component <strong>NOTE: No two components may have the same name in the same page as the name is used as an identifier in the code</strong></p></li>
+<li><p>type: The type of data collected (String, number, boolean, etc..), supported types are described in the Data class section</p></li>
+<li><p>component: The type of component that will be rendered, support components are described in the component sections</p></li>
+<li><p>required: Whether the completion of this field is required to submit the scouting data</p></li>
+<li><p>timestamp: When true, this will record the timestamps of changes to the value of the component. Note: currently has no support for data export</p></li>
+<li><p>isCommonValue: When true the value of the component will be replaced with the value stored in the common values database (See common values page)</p></li>
+<li><p>setCommonValue: When true will create an entry in the common values database with the key being the name, and the value being the value of the component (used in ordinal scouting to translate robot numbers from one page to the next)</p></li>
+<li><p>values (Optional): Only needed when the component requires it. It is an array of values. For example a multiselect component will need an array of choices.</p></li>
+</ul>
 </section>
 <section id="supervise">
 <h2>Supervise<a class="headerlink" href="#supervise" title="Permalink to this heading"></a></h2>
+<p>The supervise section contains fields that will be used to identify scouting data. Each piece of data has three unique identifiers
+intended to differentiate it from other data. The first one is always the first letter of the scouting type, for example cardinal scouting
+will have “C” be the first identifier. The other tow identifier’s are identified in the config file, by giving their page name, and
+component name. Currently the identifiers for cardinal are the match number and station. So an example of a full cardinal identifier
+would be C - B1 - 15. Note: when storing data, names of scouters are added to the identifiers so that scouters can be “doubled” up on robots
+however when displaying data names are removed from the identifiers and extra data with the same identifier is in some cases averaged out and in others
+discarded. Also note that each type of scouting needs to have defined identifiers as for example in Pit scouting their is not match number.</p>
 </section>
-<section id="strat">
-<h2>Strat<a class="headerlink" href="#strat" title="Permalink to this heading"></a></h2>
+<section id="strategy">
+<h2>Strategy<a class="headerlink" href="#strategy" title="Permalink to this heading"></a></h2>
+<p>The strategy section is split into two small parts, profile and ranking.</p>
+<p>Ranking simply defines which scouting method contains ordinal scouting (this allows for the name to be changed), however still
+requires the use ranking components.</p>
+<p>Profile defines which scouting method to look at to create profiles. Currently team profiles are done with pit data, but
+could also be done with cardinal data. It has the following field:</p>
+<ul class="simple">
+<li><p>method-name - which scouting method to look at for data (currently pit)</p></li>
+<li><p>identifier - which component name to look at to split data into profiles (currently team #), each different identifier will have a new profile</p></li>
+<li><p>version - component name that identifies the version of the data (currently day #), this allows a profile to have multiple different data points displayed for example if displaying cardinal, match number could be used to display multiple matches worth of data.</p></li>
+</ul>
 </section>
 <section id="example">
 <h2>Example<a class="headerlink" href="#example" title="Permalink to this heading"></a></h2>
 <div class="literal-block-wrapper docutils container" id="id1">
 <div class="code-block-caption"><span class="caption-text">A shortened config file example from the 2022 game (full one can be viewed on the Sushi Scouts github in assets)</span><a class="headerlink" href="#id1" title="Permalink to this code"></a></div>
-<div class="highlight-json notranslate"><div class="highlight"><pre><span></span> {
-     &quot;teamNumber&quot;: 7461,
-     &quot;version&quot; : 5,
-     &quot;password&quot; : &quot;7461&quot;,
-     &quot;strat&quot;: {
-         &quot;profile&quot;: {
-             &quot;method-name&quot;: &quot;pit&quot;,
-             &quot;identifier&quot;: &quot;team #&quot;,
-             &quot;version&quot;: &quot;day #&quot;
-         },
-         &quot;ranking&quot;: {
-             &quot;method-name&quot;: &quot;ordinal&quot;
-         }
-     },
-     &quot;supervise&quot;: {
-         &quot;cardinal&quot;: {
-             &quot;first&quot; : {
-                 &quot;page&quot;: &quot;pregame&quot;,
-                 &quot;name&quot;: &quot;match #&quot;
-             },
-             &quot;second&quot; : {
-                 &quot;page&quot;: &quot;pregame&quot;,
-                 &quot;name&quot;: &quot;station&quot;
-             }
-         },
-         .... (ordinal, and pit follow)
-     },
-     &quot;scouting&quot;: {
-         &quot;cardinal&quot;:{
-             &quot;pregame&quot; : {
-                 &quot;footer&quot;: &quot;info&quot;,
-                 &quot;sections&quot; : [
-                     {
-                         &quot;properties&quot;:{
-                             &quot;title&quot;:&quot;&quot;,
-                             &quot;color&quot;: &quot;#ff76a2&quot;,
-                             &quot;rows&quot;: 2,
-                             &quot;textColor&quot;: &quot;#000000&quot;,
-                             &quot;darkColor&quot;: &quot;#81F4E1&quot;,
-                             &quot;darkTextColor&quot;: &quot;#ffffff&quot;,
-                             &quot;componentsInRow&quot;: [3, 1]
-                         },
-                         &quot;components&quot;:[
-                             {
-                                 &quot;name&quot; : &quot;match #&quot;,
-                                 &quot;type&quot; : &quot;number&quot;,
-                                 &quot;component&quot; : &quot;number input&quot;,
-                                 &quot;required&quot; : true,
-                                 &quot;timestamp&quot;: false,
-                                 &quot;isCommonValue&quot; : false,
-                                 &quot;setCommonValue&quot; : false
-                             },
-                             ..... (more components follow)
-                         ]
-                     }
-                 ]
-                 }
-             }
-         }
-     }
- }
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span> <span class="p">{</span>
+     <span class="s2">&quot;teamNumber&quot;</span><span class="p">:</span> <span class="mi">7461</span><span class="p">,</span>
+     <span class="s2">&quot;version&quot;</span> <span class="p">:</span> <span class="mi">5</span><span class="p">,</span>
+     <span class="s2">&quot;password&quot;</span> <span class="p">:</span> <span class="s2">&quot;7461&quot;</span><span class="p">,</span>
+     <span class="s2">&quot;strat&quot;</span><span class="p">:</span> <span class="p">{</span>
+         <span class="s2">&quot;profile&quot;</span><span class="p">:</span> <span class="p">{</span>
+             <span class="s2">&quot;method-name&quot;</span><span class="p">:</span> <span class="s2">&quot;pit&quot;</span><span class="p">,</span>
+             <span class="s2">&quot;identifier&quot;</span><span class="p">:</span> <span class="s2">&quot;team #&quot;</span><span class="p">,</span>
+             <span class="s2">&quot;version&quot;</span><span class="p">:</span> <span class="s2">&quot;day #&quot;</span>
+         <span class="p">},</span>
+         <span class="s2">&quot;ranking&quot;</span><span class="p">:</span> <span class="p">{</span>
+             <span class="s2">&quot;method-name&quot;</span><span class="p">:</span> <span class="s2">&quot;ordinal&quot;</span>
+         <span class="p">}</span>
+     <span class="p">},</span>
+     <span class="s2">&quot;supervise&quot;</span><span class="p">:</span> <span class="p">{</span>
+         <span class="s2">&quot;cardinal&quot;</span><span class="p">:</span> <span class="p">{</span>
+             <span class="s2">&quot;first&quot;</span> <span class="p">:</span> <span class="p">{</span>
+                 <span class="s2">&quot;page&quot;</span><span class="p">:</span> <span class="s2">&quot;pregame&quot;</span><span class="p">,</span>
+                 <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;match #&quot;</span>
+             <span class="p">},</span>
+             <span class="s2">&quot;second&quot;</span> <span class="p">:</span> <span class="p">{</span>
+                 <span class="s2">&quot;page&quot;</span><span class="p">:</span> <span class="s2">&quot;pregame&quot;</span><span class="p">,</span>
+                 <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;station&quot;</span>
+             <span class="p">}</span>
+         <span class="p">},</span>
+         <span class="o">....</span> <span class="p">(</span><span class="n">ordinal</span><span class="p">,</span> <span class="ow">and</span> <span class="n">pit</span> <span class="n">follow</span><span class="p">)</span>
+     <span class="p">},</span>
+     <span class="s2">&quot;scouting&quot;</span><span class="p">:</span> <span class="p">{</span>
+         <span class="s2">&quot;cardinal&quot;</span><span class="p">:{</span>
+             <span class="s2">&quot;pregame&quot;</span> <span class="p">:</span> <span class="p">{</span>
+                 <span class="s2">&quot;footer&quot;</span><span class="p">:</span> <span class="s2">&quot;info&quot;</span><span class="p">,</span>
+                 <span class="s2">&quot;sections&quot;</span> <span class="p">:</span> <span class="p">[</span>
+                     <span class="p">{</span>
+                         <span class="s2">&quot;properties&quot;</span><span class="p">:{</span>
+                             <span class="s2">&quot;title&quot;</span><span class="p">:</span><span class="s2">&quot;&quot;</span><span class="p">,</span>
+                             <span class="s2">&quot;color&quot;</span><span class="p">:</span> <span class="s2">&quot;#ff76a2&quot;</span><span class="p">,</span>
+                             <span class="s2">&quot;rows&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
+                             <span class="s2">&quot;textColor&quot;</span><span class="p">:</span> <span class="s2">&quot;#000000&quot;</span><span class="p">,</span>
+                             <span class="s2">&quot;darkColor&quot;</span><span class="p">:</span> <span class="s2">&quot;#81F4E1&quot;</span><span class="p">,</span>
+                             <span class="s2">&quot;darkTextColor&quot;</span><span class="p">:</span> <span class="s2">&quot;#ffffff&quot;</span><span class="p">,</span>
+                             <span class="s2">&quot;componentsInRow&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+                         <span class="p">},</span>
+                         <span class="s2">&quot;components&quot;</span><span class="p">:[</span>
+                             <span class="p">{</span>
+                                 <span class="s2">&quot;name&quot;</span> <span class="p">:</span> <span class="s2">&quot;match #&quot;</span><span class="p">,</span>
+                                 <span class="s2">&quot;type&quot;</span> <span class="p">:</span> <span class="s2">&quot;number&quot;</span><span class="p">,</span>
+                                 <span class="s2">&quot;component&quot;</span> <span class="p">:</span> <span class="s2">&quot;number input&quot;</span><span class="p">,</span>
+                                 <span class="s2">&quot;required&quot;</span> <span class="p">:</span> <span class="n">true</span><span class="p">,</span>
+                                 <span class="s2">&quot;timestamp&quot;</span><span class="p">:</span> <span class="n">false</span><span class="p">,</span>
+                                 <span class="s2">&quot;isCommonValue&quot;</span> <span class="p">:</span> <span class="n">false</span><span class="p">,</span>
+                                 <span class="s2">&quot;setCommonValue&quot;</span> <span class="p">:</span> <span class="n">false</span>
+                             <span class="p">},</span>
+                             <span class="o">.....</span> <span class="p">(</span><span class="n">more</span> <span class="n">components</span> <span class="n">follow</span><span class="p">)</span>
+                         <span class="p">]</span>
+                     <span class="p">}</span>
+                 <span class="p">]</span>
+                 <span class="p">}</span>
+             <span class="p">}</span>
+         <span class="p">}</span>
+     <span class="p">}</span>
+ <span class="p">}</span>
 </pre></div>
 </div>
 </div>
