@@ -28,7 +28,7 @@ class ConfigFileReader {
   bool defaultConfig = true;
 
   static final ConfigFileReader _reader =
-      ConfigFileReader._(configFilePath, 2023);
+      ConfigFileReader._(configFilePath, 2023); // TODO: change this to be variable
 
   ConfigFileReader._(this.configFileFolder, this.year);
 
