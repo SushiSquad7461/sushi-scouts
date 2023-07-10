@@ -75,6 +75,7 @@ class Data<ValueType> {
             : (currValue as String);
   }
 
+  // gets current value but converts to int if double.
   String getSimplified() {
     return (currValue is double)
         ? (currValue as double).floor().toString()
@@ -83,6 +84,7 @@ class Data<ValueType> {
             : (currValue as String);
   }
 
+  // Resets data class
   void empty() {
     setByUser = false;
     timestamps = {};
@@ -93,6 +95,7 @@ class Data<ValueType> {
             : (currValue = "" as ValueType);
   }
 
+  // Logs the change between timestamps.
   void logeTimeStamp() {
     if (timestamps.isEmpty) {
       timestamps[0] = currValue;
