@@ -118,19 +118,19 @@ should be accessed through the instance getter method.</p>
 <li><p>readConfig: Reads config file stored in the assets folder, and updates fields and class <em>logCurrentConfigFile</em></p></li>
 <li><p>checkConfigFile: Check if the current config file matches the last logged config file, if it doesn’t wipe all user data so that data from different config files doesn’t mix</p></li>
 <li><p>logCurrentConfigFile: Logs the current config files id</p></li>
-<li><p>getSuperviseDisplayString: Gets the identifier for a ScoutingData object, the parameter number defines which identifier to get (<span class="xref std std-ref">supervise-identifier`</span>)</p></li>
+<li><p>getSuperviseDisplayString: Gets the identifier for a ScoutingData object, the parameter number defines which identifier to get</p></li>
 <li><p>updateAllData:</p></li>
-<li><p>readInitalConfig:</p></li>
-<li><p>readConfigFromDatabase:</p></li>
-<li><p>getScoutingMethods:</p></li>
-<li><p>getScoutingData:</p></li>
-<li><p>generateNewScoutingData:</p></li>
-<li><p>extraFeatureAccess:</p></li>
-<li><p>setCommonValue:</p></li>
-<li><p>commonValuesExists:</p></li>
-<li><p>getCommonValue:</p></li>
-<li><p>checkPassword:</p></li>
-<li><p>id:</p></li>
+<li><p>readInitalConfig: Supposed to read the config file associated with a team, currently defaults to <em>readConfig</em></p></li>
+<li><p>readConfigFromDatabase: Read config file reads a config file stored in the LocalStore database that was previously downloaded by a user. Allow for custom config files.</p></li>
+<li><p>getScoutingMethods: Gets the list of scouting methods (currently: cardinal, ordinal, pit)</p></li>
+<li><p>getScoutingData: Gets the ScoutingData stored in the <em>data</em> field associated with the same <em>scoutingMethod</em>. <strong>Does NOT generate a new ScoutingData class just retriviews the current one that is being filled out</strong></p></li>
+<li><p>generateNewScoutingData: Generates a new ScoutingData class based on the <em>scoutingMethod</em></p></li>
+<li><p>extraFeatureAccess: Checks if a team has access to restricted features</p></li>
+<li><p>setCommonValue: Sets a common value</p></li>
+<li><p>commonValuesExists: Checks if a common value exists</p></li>
+<li><p>getCommonValue: Gets a common value.</p></li>
+<li><p>checkPassword: Checks supervise password</p></li>
+<li><p>id: Gets the config file id. Id’s are generated as such {teamNumber}+{year}+{version}, ex: 7461+2023+4</p></li>
 </ul>
 </section>
 </section>

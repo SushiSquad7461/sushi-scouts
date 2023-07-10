@@ -1,0 +1,5 @@
+Intro
+=========
+
+The scouting data class's are at the core of the application. These class's dictate how the application will work. As such they required
+to be understood when doing any work on the application.

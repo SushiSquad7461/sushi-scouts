@@ -31,16 +31,16 @@ Methods
 - readConfig: Reads config file stored in the assets folder, and updates fields and class *logCurrentConfigFile*
 - checkConfigFile: Check if the current config file matches the last logged config file, if it doesn't wipe all user data so that data from different config files doesn't mix
 - logCurrentConfigFile: Logs the current config files id
-- getSuperviseDisplayString: Gets the identifier for a ScoutingData object, the parameter number defines which identifier to get (:ref:`supervise-identifier``)
+- getSuperviseDisplayString: Gets the identifier for a ScoutingData object, the parameter number defines which identifier to get
 - updateAllData:
-- readInitalConfig:
-- readConfigFromDatabase:
-- getScoutingMethods:
-- getScoutingData:
-- generateNewScoutingData: 
-- extraFeatureAccess: 
-- setCommonValue: 
-- commonValuesExists:
-- getCommonValue:
-- checkPassword:
-- id:
+- readInitalConfig: Supposed to read the config file associated with a team, currently defaults to *readConfig*
+- readConfigFromDatabase: Read config file reads a config file stored in the LocalStore database that was previously downloaded by a user. Allow for custom config files.
+- getScoutingMethods: Gets the list of scouting methods (currently: cardinal, ordinal, pit)
+- getScoutingData: Gets the ScoutingData stored in the *data* field associated with the same *scoutingMethod*. **Does NOT generate a new ScoutingData class just retriviews the current one that is being filled out**
+- generateNewScoutingData: Generates a new ScoutingData class based on the *scoutingMethod*
+- extraFeatureAccess: Checks if a team has access to restricted features
+- setCommonValue: Sets a common value
+- commonValuesExists: Checks if a common value exists
+- getCommonValue: Gets a common value.
+- checkPassword: Checks supervise password
+- id: Gets the config file id. Id's are generated as such {teamNumber}+{year}+{version}, ex: 7461+2023+4

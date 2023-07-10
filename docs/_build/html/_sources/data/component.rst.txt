@@ -1,0 +1,8 @@
+Component Class
+================
+
+*Path: lib/src/logic/models/scouting_data_models/component.dart*
+
+This class essentially just holds the Components values.
+It uses the json serializable library to assist in this, more
+can be found at: https://pub.dev/packages/json_serializable.

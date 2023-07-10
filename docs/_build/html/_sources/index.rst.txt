@@ -27,11 +27,14 @@ Contents
 .. toctree::
    :caption: Config File
 
+   config/intro
    config/format
    config/reader
 
 .. toctree::
    :caption: Scouting Data Structure
 
+   data/intro
    data/data
-   data/section-page
+   data/comp-section-page
+   data/scouting-data
