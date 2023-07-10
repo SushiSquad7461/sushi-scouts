@@ -38,3 +38,5 @@ Contents
    data/data
    data/comp-section-page
    data/scouting-data
+   data/supervise-schedule
+   data/compression
