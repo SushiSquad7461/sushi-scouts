@@ -230,7 +230,7 @@ class _SettingsState extends State<Settings> {
                       width: ScreenSize.width,
                       height: ScreenSize.height *
                           (isSupervise
-                              ? (isPhoneScreen ? 0.62 : 0.63)
+                              ? (isPhoneScreen ? 0.72 : 0.63)
                               : (isPhoneScreen ? 0.608 : 0.64)),
                       child: Stack(
                         fit: StackFit.expand,
@@ -301,7 +301,7 @@ class _SettingsState extends State<Settings> {
                           ),
                           Align(
                             alignment:
-                                Alignment(0, isPhoneScreen ? -0.4 : -0.5),
+                                Alignment(0, isPhoneScreen ? -0.45 : -0.5),
                             child: isSupervise
                                 ? Row(
                                     mainAxisAlignment:
@@ -341,7 +341,7 @@ class _SettingsState extends State<Settings> {
                                   ),
                           ),
                           Align(
-                            alignment: Alignment(0, isPhoneScreen ? 0 : -0.2),
+                            alignment: Alignment(0, isPhoneScreen ? -0.1 : -0.2),
                             child: Container(
                               decoration: boxDecoration,
                               width: ScreenSize.width * 0.47,
@@ -413,7 +413,7 @@ class _SettingsState extends State<Settings> {
                             ),
                           ),
                           Align(
-                            alignment: Alignment(0, isPhoneScreen ? 0.4 : 0.01),
+                            alignment: Alignment(0, isPhoneScreen ? 0.2 : 0.01),
                             child: Container(
                               decoration: boxDecoration,
                               child: isSupervise
@@ -433,7 +433,7 @@ class _SettingsState extends State<Settings> {
                             ),
                           ),
                           Align(
-                            alignment: Alignment(0, isPhoneScreen ? 0.8 : 0.4),
+                            alignment: Alignment(0, isPhoneScreen ? 0.55 : 0.4),
                             child: Container(
                               decoration: boxDecoration,
                               child: TextButton(

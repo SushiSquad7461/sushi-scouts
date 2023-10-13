@@ -141,7 +141,7 @@ class _LoginState extends State<Login> {
           if (widget.type == LoginType.strategy)
             Container(
               width: ScreenSize.width,
-              height: ScreenSize.height * 0.03,
+              height: ScreenSize.height * 0.012,
               decoration: BoxDecoration(
                   color: colors.primaryColorDark,
                   borderRadius: BorderRadius.only(
@@ -155,7 +155,7 @@ class _LoginState extends State<Login> {
                     ? (widget.type == LoginType.scout
                         ? 0.89
                         : widget.type == LoginType.strategy
-                            ? 0.83
+                            ? 0.825
                             : 0.88)
                     : 0.9),
             child: Stack(
@@ -180,18 +180,24 @@ class _LoginState extends State<Login> {
                                 (isPhoneScreen
                                     ? isPhoneScreen
                                         ? widget.type == LoginType.strategy
-                                            ? 0.08
+                                        ? 0.08
                                             : widget.type == LoginType.scout
-                                                ? 0.15
-                                                : 0.085
+                                                ? 0.185
+                                                : 0.065
                                         : (widget.type == LoginType.scout
-                                            ? 0.32
-                                            : 0.09)
-                                    : 0.2),
+                                            ? 1.2
+                                            : 0.9)
+                                    : 0.9),
                             left: ScreenSize.width *
                                 (isPhoneScreen
                                     ? widget.type == LoginType.strategy
-                                        ? 0.15
+                                        ? 0.08
+                                        : 0.075
+                                    : 0),
+                            right: ScreenSize.width *
+                                (isPhoneScreen
+                                    ? widget.type == LoginType.strategy
+                                        ? 0.075
                                         : 0.075
                                     : 0),
                           ),
@@ -218,15 +224,25 @@ class _LoginState extends State<Login> {
         width: ScreenSize.width *
             (isPhoneScreen
                 ? widget.type == LoginType.strategy
-                    ? 0.7
-                    : 0.85
-                : 1),
-        height: ScreenSize.height * 0.06,
+                    ? 3
+                    : 0.9
+                : 0.1),        
+        //"height" = button thickness
+        height: ScreenSize.height *
+            (isPhoneScreen
+                ? isPhoneScreen
+                    ? widget.type == LoginType.strategy
+                        ? 0.06
+                        : widget.type == LoginType.scout
+                            ? 0.06
+                            : 0.06
+                    : (widget.type == LoginType.scout ? 0.06 : 0.09)
+                : 0.6),
         decoration: BoxDecoration(
           color: widget.type == LoginType.supervise && isPhoneScreen
               ? colors.scaffoldBackgroundColor == Colors.black
                   ? HexColor("#D0D0D0")
-                  : HexColor("#4F4F4F")
+                  : HexColor("#000000")
               : colors.primaryColorDark,
           borderRadius: BorderRadius.all(
               Radius.circular(ScreenSize.swu * (isPhoneScreen ? 20 : 0))),
@@ -337,7 +353,7 @@ class _LoginState extends State<Login> {
 
   Align passwordBox(bool isPhoneScreen, ThemeData colors) {
     return Align(
-      alignment: const Alignment(0, 0.2),
+      alignment: const Alignment(0, 0.1),
       child: SizedBox(
         width: ScreenSize.width * 0.75,
         height: ScreenSize.height * 0.07,

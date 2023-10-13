@@ -15,7 +15,7 @@ class SuperviseFooter extends StatelessWidget {
     return Container(
       color: colors.primaryColor,
       width: ScreenSize.width,
-      height: ScreenSize.height * (phone ? 0.17 : 0.2),
+      height: ScreenSize.height * (phone ? 0.1911 : 0.2),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
