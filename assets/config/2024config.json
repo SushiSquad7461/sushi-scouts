@@ -1,7 +1,7 @@
 {
     "teamNumber": 7461,
-    "version" : 3,
-    "password" : "temaki",
+    "version" : 1,
+    "password" : "oshi",
     "strat": {
         "profile": {
             "method-name": "pit",
@@ -272,7 +272,7 @@
                             "textColor": "#000000",
                             "darkColor": "#FCD6F6",
                             "darkTextColor": "#ffffff",
-                            "componentsInRow": [1,1]
+                            "componentsInRow": [2,2]
                         },
                         "components":[
                             {
@@ -286,6 +286,24 @@
                             },
                             {
                                 "name" : "defense",
+                                "type" : "bool",
+                                "component" : "checkbox",
+                                "required" : true,
+                                "timestamp": false,
+                                "isCommonValue" : false,
+                                "setCommonValue" : false
+                            },
+                            {
+                                "name" : "Yellow Card",
+                                "type" : "bool",
+                                "component" : "checkbox",
+                                "required" : true,
+                                "timestamp": false,
+                                "isCommonValue" : false,
+                                "setCommonValue" : false
+                            },
+                            {
+                                "name" : "Red Card",
                                 "type" : "bool",
                                 "component" : "checkbox",
                                 "required" : true,
@@ -611,57 +629,10 @@
                         },
                         "components":[
                             {
-                                "name" : "auto",
-                                "type" : "number",
-                                "component" : "multiselect",
-                                "values" : ["#o", "6", "l", "2", "2", "2", "c", "1 piece", "2 piece", "3 piece", "balance", "1b piece", "2b piece"],
-                                "required" : true,
-                                "timestamp": false,
-                                "isCommonValue" : false,
-                                "setCommonValue" : false
-                            }
-                        ]
-                    },
-                    {
-                        "properties":{
-                            "title":"Balance",
-                            "color": "#56cbf9",
-                            "rows": 1,
-                            "textColor": "#000000",
-                            "darkColor": "#56CBF9",
-                            "darkTextColor": "#ffffff",
-                            "componentsInRow": [1]
-                        },
-                        "components":[
-                            {
-                                "name" : "balance",
-                                "type" : "number",
-                                "component" : "select",
-                                "values" : ["r", "Manual", "Auto", "None"],
-                                "required" : true,
-                                "timestamp": false,
-                                "isCommonValue" : false,
-                                "setCommonValue" : false
-                            }
-                        ]
-                    },
-                    {
-                        "properties":{
-                            "title":"Placement Cube",
-                            "color": "#ff76a2",
-                            "rows": 1,
-                            "textColor": "#000000",
-                            "darkColor": "#FF729F",
-                            "darkTextColor": "#ffffff",
-                            "componentsInRow": [1]
-                        },
-                        "components":[
-                            {
-                                "name" : "placement",
-                                "type" : "number",
-                                "component" : "multiselect",
-                                "values" : ["#o", "3", "l", "1", "1", "1", "c", "L1", "L2", "L3"],
-                                "required" : true,
+                                "name" : "Autos",
+                                "type" : "string",
+                                "component" : "text input",
+                                "required" : false,
                                 "timestamp": false,
                                 "isCommonValue" : false,
                                 "setCommonValue" : false
@@ -675,20 +646,20 @@
                 "sections" : [
                     {
                         "properties":{
-                            "title":"Placement Cone",
-                            "color": "#ff76a2",
+                            "title":"Climb",
+                            "color": "#56cbf9",
                             "rows": 1,
                             "textColor": "#000000",
-                            "darkColor": "#FF729F",
+                            "darkColor": "#56CBF9",
                             "darkTextColor": "#ffffff",
                             "componentsInRow": [1]
                         },
                         "components":[
                             {
-                                "name" : "placement",
+                                "name" : "climb",
                                 "type" : "number",
-                                "component" : "multiselect",
-                                "values" : ["#o", "3", "l", "1", "1", "1", "c", "L1", "L2", "L3"],
+                                "component" : "select",
+                                "values" : ["r", "Trap", "Climb", "None"],
                                 "required" : true,
                                 "timestamp": false,
                                 "isCommonValue" : false,
@@ -696,6 +667,75 @@
                             }
                         ]
                     },
+                    {
+                        "properties":{
+                            "title":"Shooter",
+                            "color": "#56cbf9",
+                            "rows": 2,
+                            "textColor": "#000000",
+                            "darkColor": "#56CBF9",
+                            "darkTextColor": "#ffffff",
+                            "componentsInRow": [1,1]
+                        },
+                        "components":[
+                            {
+                                "name" : "Type",
+                                "type" : "number",
+                                "component" : "multiselect",
+                                "values" : ["#o", "3", "l", "3", "c", "Adjustable", "Turret", "Moving"],
+                                "required" : false,
+                                "timestamp": false,
+                                "isCommonValue" : false,
+                                "setCommonValue" : false
+                            },
+                            {
+                                "name" : "Distance",
+                                "type" : "number",
+                                "component" : "increment",
+                                "required" : false,
+                                "timestamp": false,
+                                "isCommonValue" : false,
+                                "setCommonValue" : false
+                            }
+                        ]
+                    },
+                    {
+                        "properties":{
+                            "title":"Intake",
+                            "color": "#56cbf9",
+                            "rows": 2,
+                            "textColor": "#000000",
+                            "darkColor": "#56CBF9",
+                            "darkTextColor": "#ffffff",
+                            "componentsInRow": [1,1]
+                        },
+                        "components":[
+                            {
+                                "name" : "Type",
+                                "type" : "number",
+                                "component" : "multiselect",
+                                "values" : ["#o", "1", "l", "2", "c", "slap-down", "under-bumper"],
+                                "required" : false,
+                                "timestamp": false,
+                                "isCommonValue" : false,
+                                "setCommonValue" : false
+                            },
+                            {
+                                "name" : "Width",
+                                "type" : "number",
+                                "component" : "increment",
+                                "required" : true,
+                                "timestamp": false,
+                                "isCommonValue" : false,
+                                "setCommonValue" : false
+                            } 
+                        ]
+                    }
+                ]
+            },
+            "page 4" : {
+                "footer": "7461",
+                "sections" : [
                     {
                         "properties":{
                             "title":"Preference",
@@ -721,7 +761,7 @@
                     },
                     {
                         "properties":{
-                            "title":"Problem",
+                            "title":"Problems",
                             "color": "#56cbf9",
                             "rows": 1,
                             "textColor": "#000000",
@@ -731,10 +771,9 @@
                         }, 
                         "components":[
                             {
-                                "name" : "problems",
-                                "type" : "number",
-                                "component" : "multiselect",
-                                "values" : ["#o", "7", "l", "3", "2", "2", "c", "Climb", "Prog", "Shooter", "Intake", "DT", "Hopper", "Electric"],
+                                "name" : "Problems",
+                                "type" : "string",
+                                "component" : "text input",
                                 "required" : true,
                                 "timestamp": false,
                                 "isCommonValue" : false,
