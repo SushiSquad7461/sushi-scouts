@@ -82,7 +82,10 @@ Ensure the correct platform is selected via the selector in the bottom right. Yo
 - iPhone (iOS)
 You will only see available options, so if you don't see what you are looking for, your required emulator is likely not running.
 
-Now you can run the program by pressing `F5` or going to the "Run and Debug" tab on VSCode and clicking the "Run and Debug" button.
+Now you can run the program by pressing `F5`, or going to the "Run and Debug" tab on VSCode and clicking the "Run and Debug" button, or by clicking the run and debug icon on the tab bar.
+
+Tips
+- Invoke "debug painting" (choose the "Toggle Debug Paint" action in the IDE, or press "p" in the console), to see the wireframe for each widget.
 
 ## Deployment
 
